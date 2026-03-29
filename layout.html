@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CURATOR | The Editorial Edit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-bright": "#fcf9f8",
+              "on-surface-variant": "#5f5f5f",
+              "tertiary-fixed": "#f4f3f3",
+              "on-primary-fixed": "#3d412f",
+              "outline": "#7b7b7a",
+              "on-primary-fixed-variant": "#595d4a",
+              "on-tertiary-fixed": "#494a4a",
+              "surface-container": "#f0eded",
+              "on-tertiary-container": "#5b5c5c",
+              "primary-fixed-dim": "#d3d7be",
+              "error-dim": "#4e0309",
+              "surface-container-highest": "#e4e2e2",
+              "surface-container-low": "#f6f3f2",
+              "on-error": "#fff7f6",
+              "error": "#9f403d",
+              "on-secondary-fixed": "#3f3f3f",
+              "inverse-primary": "#fbffe4",
+              "surface-container-high": "#eae8e7",
+              "secondary-fixed-dim": "#d6d4d3",
+              "surface-variant": "#e4e2e2",
+              "on-secondary-fixed-variant": "#5c5b5b",
+              "tertiary-container": "#f4f3f3",
+              "tertiary": "#5f5f5f",
+              "error-container": "#fe8983",
+              "secondary-fixed": "#e4e2e1",
+              "secondary": "#5f5f5f",
+              "on-secondary": "#fbf8f8",
+              "background": "#fcf9f8",
+              "outline-variant": "#b2b2b1",
+              "surface-container-lowest": "#ffffff",
+              "primary": "#5c604c",
+              "surface-tint": "#5c604c",
+              "surface": "#fcf9f8",
+              "tertiary-fixed-dim": "#e6e5e5",
+              "surface-dim": "#dbdad9",
+              "secondary-dim": "#535353",
+              "on-background": "#323233",
+              "tertiary-dim": "#525353",
+              "primary-dim": "#505441",
+              "on-surface": "#323233",
+              "on-secondary-container": "#525151",
+              "inverse-surface": "#0e0e0e",
+              "secondary-container": "#e4e2e1",
+              "on-error-container": "#752121",
+              "on-tertiary": "#faf8f8",
+              "on-primary-container": "#505440",
+              "on-primary": "#f7fae0",
+              "on-tertiary-fixed-variant": "#666666",
+              "primary-fixed": "#e1e5cb",
+              "primary-container": "#e1e5cb",
+              "inverse-on-surface": "#9e9c9c"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .editorial-gradient {
+            background: linear-gradient(135deg, #5c604c 0%, #505441 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body antialiased">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-stone-50/80 dark:bg-neutral-900/80 backdrop-blur-xl">
+<nav class="flex justify-between items-center px-6 py-5 max-w-full mx-auto w-full">
+<div class="flex items-center gap-8">
+<a class="text-xl font-bold tracking-tighter text-stone-900 dark:text-stone-50 font-headline" href="#">CURATOR</a>
+<div class="hidden md:flex gap-6 items-center">
+<a class="font-manrope uppercase tracking-widest text-xs text-stone-900 dark:text-stone-50 border-b border-stone-900 dark:border-stone-50 pb-1 hover:text-stone-900 dark:hover:text-stone-50 transition-colors duration-300" href="#">Shop</a>
+<a class="font-manrope uppercase tracking-widest text-xs text-stone-400 dark:text-neutral-500 hover:text-stone-900 dark:hover:text-stone-50 transition-colors duration-300" href="#">Collections</a>
+<a class="font-manrope uppercase tracking-widest text-xs text-stone-400 dark:text-neutral-500 hover:text-stone-900 dark:hover:text-stone-50 transition-colors duration-300" href="#">Journal</a>
+<a class="font-manrope uppercase tracking-widest text-xs text-stone-400 dark:text-neutral-500 hover:text-stone-900 dark:hover:text-stone-50 transition-colors duration-300" href="#">About</a>
+</div>
+</div>
+<div class="flex items-center gap-5 text-olive-700 dark:text-olive-400">
+<div class="hidden md:block relative">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-stone-400">search</span>
+<input class="bg-stone-100 dark:bg-neutral-800 border-none text-xs rounded-md pl-4 pr-10 py-2 focus:ring-1 focus:ring-primary outline-none" placeholder="Search..." type="text"/>
+</div>
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+</button>
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="px-6 py-20 md:py-32 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
+<div class="md:col-span-7 lg:col-span-6 space-y-8">
+<h1 class="text-on-background font-headline font-extrabold text-5xl md:text-7xl tracking-tighter leading-[0.9] uppercase">
+                        The Art of <span class="text-primary italic font-normal">Living</span> Well.
+                    </h1>
+<p class="text-on-surface-variant font-body text-lg max-w-md leading-relaxed">
+                        A curated selection of tactile essentials designed to elevate the everyday. From hand-thrown ceramics to architectural textiles.
+                    </p>
+<div class="flex gap-4 items-center">
+<button class="editorial-gradient text-on-primary px-8 py-4 rounded-md font-label uppercase tracking-widest text-xs font-medium shadow-sm active:scale-95 transition-all">
+                            Explore Collection
+                        </button>
+<button class="text-on-surface hover:underline font-label uppercase tracking-widest text-xs px-4 py-4 transition-all">
+                            View Lookbook
+                        </button>
+</div>
+</div>
+<div class="md:col-span-5 lg:col-span-6">
+<div class="aspect-[4/5] bg-surface-container-low rounded-lg overflow-hidden relative group">
+<img alt="minimalist home decor" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Close-up of a minimalist ceramic vase with dried pampas grass on a light stone table with soft morning shadows and neutral tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpCpj6OUFZfCTI7AtDznYnJKhjk5Ka_ufcA8NVB51FqXorQ45cQf6kuSVrOvxWlgYD89-kK9g-E2f7RT6gU1ZUI-ixPepHIJYiSFvWPdOudhyaibAqtflOljaoKnHpW3g3VcFTHMmxZmmDEBCa39fl1AWni2JUMJ6xIPRSmadoXwhT606cPgO1im6GIjK-Hk9POT5mFCYXhq7dwQawQLg1iw3PfmXBlWKhAHsQORM-djswN3-XZ4egUYUtnvvGkQAJDRPIaB5Ouhk"/>
+<div class="absolute bottom-6 right-6 bg-white/40 backdrop-blur-md p-4 rounded-sm border border-white/20">
+<span class="text-[10px] font-headline uppercase tracking-widest text-stone-900 block mb-1">Featured Item</span>
+<span class="text-xs font-body font-semibold">The Ochre Vase — $120</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Grid Section -->
+<section class="bg-surface-container-low py-32 px-6">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
+<div class="space-y-4">
+<span class="font-manrope uppercase tracking-[0.2em] text-[10px] text-primary font-bold">New Arrivals</span>
+<h2 class="text-on-background font-headline font-bold text-4xl tracking-tight">Summer 24 Edit</h2>
+</div>
+<div class="flex gap-8 border-b border-outline-variant/20 pb-2">
+<button class="text-xs font-label uppercase tracking-widest text-on-background font-semibold">All</button>
+<button class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Objects</button>
+<button class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Linen</button>
+<button class="text-xs font-label uppercase tracking-widest text-on-surface-variant">Aroma</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-16">
+<!-- Product Card 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container-lowest rounded-lg overflow-hidden mb-6 relative">
+<img alt="white linen shirt" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Luxury white linen shirt hanging on a wooden hanger against a clean white textured wall with soft directional natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVyFGe-D-isk2Qw5dGdXVKcmPJtYnjcLelr61-Yi7Hqo32Gtz9QM2HL2WzpsXJzjQIDZWM3zzel4ok2aSzeE526XhNLjU6XEHKpMlLJXviH-1cTTJ2I4wGT6R5pGfeaja83MO9Mnyfjt48kbmd20GODDi7Bnco8qvJ5uN_vmaUxjspSwC28Wc8tcFoncxp9P5G3yIYsIXFiyc-Jv1uAug4NGyjHp74H9_2KjFw5R2sH0rd6Ajrho2yHaMpaQGwx3L7oqfrZ563cNk"/>
+<div class="absolute top-4 left-4">
+<span class="bg-stone-900 text-stone-50 text-[10px] font-bold uppercase tracking-widest px-2 py-1">Limited</span>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-start">
+<h3 class="font-headline font-bold text-lg text-on-background group-hover:text-primary transition-colors">The Raw Linen Shirt</h3>
+<span class="text-on-surface-variant font-body text-sm font-medium">$185</span>
+</div>
+<p class="text-on-surface-variant font-body text-xs uppercase tracking-widest">Off-White / 100% Organic</p>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group cursor-pointer translate-y-0 md:translate-y-12">
+<div class="aspect-[3/4] bg-surface-container-lowest rounded-lg overflow-hidden mb-6 relative">
+<img alt="minimalist coffee table" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Minimalist low-profile oak coffee table with a single design book and a small candle in a sunlit modern living room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmpieCqqT6RKCzi5dwE-sK0ZAkUmui4ScIaXhrS2en8psBrD2OdN-7KxlQoccogNIrPzTHB5FHLVE6DZStX7BU0ioKPK8tVsOsmTVt_Tf5kbONNf70G4iGD2KuQUlI-7QJJJmTIFMphe3d1TQRJZFzribL8_s8AurBNK7CLx4L0Vh6m2xa-hkacIVfAaB9jGRxP7Y15gNLp1h6H0A0sqxBcrag3TPUaPi-ekfv2AMQGc6UQxOpaS3SsjLOEABF3aK4F5MPiVBh_KY"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-start">
+<h3 class="font-headline font-bold text-lg text-on-background group-hover:text-primary transition-colors">Sculptural Low Table</h3>
+<span class="text-on-surface-variant font-body text-sm font-medium">$840</span>
+</div>
+<p class="text-on-surface-variant font-body text-xs uppercase tracking-widest">Solid Oak / Hand-Finished</p>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container-lowest rounded-lg overflow-hidden mb-6 relative">
+<img alt="botanical perfume" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A heavy glass perfume bottle with a black cap sitting on a rough piece of natural basalt rock, dramatic lighting, moody aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxoF94C2A2klcEQ_HTYlXeE7na1LmxQkxlsajvU65Ow7it5IHzyf1IjWk8t4xrd2_Wv-FegbTMJUNmr91uhgjG8nAJxc90Lrp5KvSz4MObNf5awT72Olp-xXDuwdinuIVGKSOXmRslGGArvumKqssT-wCa-NAMH97-x8GsnzO9WgOmtTzZVWMMk0fhaH2hDxUKyCHGZqbyOw1UAnoauEQxURuQsDztggUqBvOaH1lKqizB39oPxRi2MkZZNwt0AJqGFy9uU9YqO-s"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-start">
+<h3 class="font-headline font-bold text-lg text-on-background group-hover:text-primary transition-colors">Dusk Botanical Extract</h3>
+<span class="text-on-surface-variant font-body text-sm font-medium">$145</span>
+</div>
+<p class="text-on-surface-variant font-body text-xs uppercase tracking-widest">50ml / Sandalwood &amp; Fig</p>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container-lowest rounded-lg overflow-hidden mb-6 relative">
+<img alt="ceramic bowl" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Set of three organic-shaped matte black ceramic bowls stacked on a reclaimed wood surface, soft ambient lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3kiwNFz4idCCP85EMxdUl00IptXN57GyLBqY97OnlXa5Ay-iagccW9InyNmiOivwumnjuY5YK9zdz7m9j3zurzFn6HbHLtVAFBuXz80tLfdEse7dFuN1JaHAMmINo0TNuCXRaaorKeJ3-U_35visT4N1jY5tkY15EEGB6DMviOrdl9_-TOEcOHFQDuBzo9xdpY20Yaz5zUtMH5dBqpHs_U15ZWTOWOffeBMGu4_5UMVrx92N0yZ6hHxFACVefzJr5KjWbLRFodYY"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-start">
+<h3 class="font-headline font-bold text-lg text-on-background group-hover:text-primary transition-colors">Obsidian Breakfast Set</h3>
+<span class="text-on-surface-variant font-body text-sm font-medium">$95</span>
+</div>
+<p class="text-on-surface-variant font-body text-xs uppercase tracking-widest">Matte Stoneware / Set of 3</p>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="group cursor-pointer translate-y-0 md:translate-y-12">
+<div class="aspect-[3/4] bg-surface-container-lowest rounded-lg overflow-hidden mb-6 relative">
+<img alt="leather journal" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Close-up of a dark tan leather-bound journal with a wrap-around cord on a marble desk next to a brass fountain pen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmG1XJ47i3sHYwUFq5qd3c0tSRpq1W19M7Sp9rj2zE3hJoArRVBnp_cfxNU_SBZ5zb6eQb7aUOpsyIHyrr6GgJcAvKfYJe8Y2f-0sLVLuIf7jH5Sq3afinXC3Ur0K9o9UcEC6Gh37-FlcnoFN3wcYpI1IJ5JPLIbG5q7TwQfnjhtf7JRFkSHviLcorAyn6QWOAdPqvF9drS3cUtWDvvrkKLOuQZrt_q7snZCbs5QL78mLVvTuHx_5S6nomPvf4Lqz_ktYnPs-aSQ8"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-start">
+<h3 class="font-headline font-bold text-lg text-on-background group-hover:text-primary transition-colors">The Archivist Journal</h3>
+<span class="text-on-surface-variant font-body text-sm font-medium">$65</span>
+</div>
+<p class="text-on-surface-variant font-body text-xs uppercase tracking-widest">Vegetable Tanned Leather</p>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] bg-surface-container-lowest rounded-lg overflow-hidden mb-6 relative">
+<img alt="architectural lamp" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A minimalist brushed metal floor lamp with a thin stem and a small circular head lighting a dark corner of a concrete room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVGIlY1pj74xtKKAmpZ5GOcSMII3GiPTbLmAOdebNRaedrY-Mbz4hj_JPQGhDP-4XjsqdfcdoZOXvomQGk25XA8rb5V55f5qAoL9Vysq_jGU4yOwYiWVtedQNP_I19F6AHN2eIlfNg84YQB3Q4lgJQTyeW5eSbOnxPWSjSRPAqyBajEfifF9G0t3-lwksQeG6WEAmau0zL2Elk4-TcAaeAYuCv2v-_VWLR1wvuCUk8djw9Bc6hDhQcHJKxxuqc83Yt0u_K6om8gHY"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-start">
+<h3 class="font-headline font-bold text-lg text-on-background group-hover:text-primary transition-colors">Linear Brass Floor Lamp</h3>
+<span class="text-on-surface-variant font-body text-sm font-medium">$420</span>
+</div>
+<p class="text-on-surface-variant font-body text-xs uppercase tracking-widest">Architectural Series / Dimmable</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Editorial Feature Section -->
+<section class="py-40 px-6">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-20 items-center">
+<div class="w-full md:w-1/2">
+<img alt="studio space" class="w-full h-[600px] object-cover rounded-lg" data-alt="Wide shot of a clean, bright artist studio with high ceilings, tall windows, and minimalist furniture in shades of beige and white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_no1GcT1uMztNIE1dgpr2HigzBjpI_lV3X8vuPjdPXHbNOtHzXjcPNMeV6_NXrow4ZylTXpVMR0EkNY7SNIRgy4USI55lbY_hqWo9tNI8-bb2exE2bj79a1488hm_oSpgvpIxwAZVr_2oiXPqT89Q2Uf0nJ9K-Por056WrHbnXEvyVgYEd-8pSq00Jm2qe-BkgTFAtP2StnCdASBIJuWljGgAFlCvzPlcWXMpTC42Eo0AtQAaZqdawQREWe_hy_ulIRpvoP1suNI"/>
+</div>
+<div class="w-full md:w-1/2 space-y-10">
+<span class="font-manrope uppercase tracking-[0.3em] text-[10px] text-stone-400">The Journal</span>
+<h2 class="text-on-background font-headline font-bold text-5xl tracking-tight leading-tight">Beyond the Object: A Conversation on Craft.</h2>
+<p class="text-on-surface-variant text-lg leading-relaxed">
+                        We visited the studio of master weaver Elena Rossi to discuss the intersection of ancient technique and contemporary form. Discover the story behind our new 'Ethos' textile collection.
+                    </p>
+<a class="inline-block border-b-2 border-primary pb-1 font-label uppercase tracking-widest text-xs font-bold hover:text-primary transition-colors" href="#">
+                        Read the Article
+                    </a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-20 px-6 bg-stone-100 dark:bg-neutral-950">
+<div class="flex flex-col md:flex-row justify-between items-start gap-8 max-w-7xl mx-auto">
+<div class="space-y-6 max-w-xs">
+<span class="font-manrope font-bold text-stone-900 dark:text-stone-50 text-2xl tracking-tighter">CURATOR</span>
+<p class="font-inter text-xs tracking-tight text-stone-500">
+                    A digital destination for refined aesthetics and functional design. Curating the exceptional for the everyday.
+                </p>
+<div class="text-stone-900 dark:text-stone-50 font-inter text-xs tracking-tight">
+                    © 2024 THE EDITORIAL CURATOR
+                </div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-16">
+<div class="flex flex-col gap-4">
+<span class="font-manrope font-bold text-stone-900 dark:text-stone-50 text-[10px] uppercase tracking-widest">Shop</span>
+<a class="font-inter text-xs tracking-tight text-stone-500 hover:text-stone-900 dark:hover:text-stone-50" href="#">New Arrivals</a>
+<a class="font-inter text-xs tracking-tight text-stone-500 hover:text-stone-900 dark:hover:text-stone-50" href="#">Best Sellers</a>
+<a class="font-inter text-xs tracking-tight text-stone-500 hover:text-stone-900 dark:hover:text-stone-50" href="#">Archive</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-manrope font-bold text-stone-900 dark:text-stone-50 text-[10px] uppercase tracking-widest">Information</span>
+<a class="font-inter text-xs tracking-tight text-stone-500 hover:text-stone-900 dark:hover:text-stone-50" href="#">Privacy</a>
+<a class="font-inter text-xs tracking-tight text-stone-500 hover:text-stone-900 dark:hover:text-stone-50" href="#">Terms</a>
+<a class="font-inter text-xs tracking-tight text-stone-500 hover:text-stone-900 dark:hover:text-stone-50" href="#">Shipping</a>
+<a class="font-inter text-xs tracking-tight text-stone-500 hover:text-stone-900 dark:hover:text-stone-50" href="#">Returns</a>
+</div>
+<div class="flex flex-col gap-4">
+<span class="font-manrope font-bold text-stone-900 dark:text-stone-50 text-[10px] uppercase tracking-widest">Connect</span>
+<a class="font-inter text-xs tracking-tight text-stone-500 hover:text-stone-900 dark:hover:text-stone-50" href="#">Instagram</a>
+<a class="font-inter text-xs tracking-tight text-stone-500 hover:text-stone-900 dark:hover:text-stone-50" href="#">Pinterest</a>
+<a class="font-inter text-xs tracking-tight text-stone-500 hover:text-stone-900 dark:hover:text-stone-50" href="#">Newsletter</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 md:hidden bg-stone-50/90 dark:bg-neutral-900/90 backdrop-blur-lg border-t border-stone-200 dark:border-neutral-800 flex justify-around items-center px-4 pb-safe pt-3 shadow-sm">
+<a class="flex flex-col items-center justify-center text-stone-900 dark:text-stone-50" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-inter text-[10px] font-medium uppercase tracking-tighter mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-neutral-600" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-inter text-[10px] font-medium uppercase tracking-tighter mt-1">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-neutral-600" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-inter text-[10px] font-medium uppercase tracking-tighter mt-1">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center text-stone-400 dark:text-neutral-600" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-inter text-[10px] font-medium uppercase tracking-tighter mt-1">Profile</span>
+</a>
+</nav>
+</body></html>
