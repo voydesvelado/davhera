@@ -32,8 +32,7 @@ export default function PhotoCarousel({ photos, name }: { photos: string[]; name
     function writePill(i: number) {
       if (i === currentIndex) return
       currentIndex = i
-      // Direct DOM write — bypasses React reconciliation entirely
-      pill.textContent = `${i + 1} / ${photos.length}`
+      pill!.textContent = `${i + 1} / ${photos.length}`
     }
 
     function findClosestSlide(): number {
@@ -56,14 +55,12 @@ export default function PhotoCarousel({ photos, name }: { photos: string[]; name
       if (sl === lastSL) {
         stableFrames++
         if (stableFrames > 12) {
-          // Settled — final update
           writePill(findClosestSlide())
           polling = false
           return
         }
       } else {
         stableFrames = 0
-        // Live update while scrolling
         writePill(findClosestSlide())
       }
       lastSL = sl
@@ -78,12 +75,10 @@ export default function PhotoCarousel({ photos, name }: { photos: string[]; name
       rafId = requestAnimationFrame(poll)
     }
 
-    // Attach to EVERY event that could indicate interaction
     el.addEventListener("scroll", startPoll, { passive: true })
     el.addEventListener("touchstart", startPoll, { passive: true })
     el.addEventListener("touchmove", startPoll, { passive: true })
     el.addEventListener("touchend", startPoll, { passive: true })
-    // Pointer events as extra fallback
     el.addEventListener("pointerdown", startPoll, { passive: true })
     el.addEventListener("pointermove", startPoll, { passive: true })
     el.addEventListener("pointerup", startPoll, { passive: true })
@@ -164,10 +159,7 @@ export default function PhotoCarousel({ photos, name }: { photos: string[]; name
         ))}
       </div>
 
-      {/* Counter pill — NOT driven by React state.
-          textContent is written directly via pillRef.
-          transform: translate3d forces its own compositing layer
-          so iOS Safari actually repaints it. */}
+      {/* Counter pill — direct DOM writes via pillRef, bypasses React reconciliation */}
       <div
         ref={pillRef}
         style={{
@@ -183,7 +175,6 @@ export default function PhotoCarousel({ photos, name }: { photos: string[]; name
           letterSpacing: "0.06em",
           padding: "4px 10px",
           pointerEvents: "none",
-          // Force own compositing layer — iOS Safari repaint fix
           transform: "translate3d(0,0,0)",
           willChange: "contents",
         }}
