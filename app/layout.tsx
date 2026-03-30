@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={plusJakartaSans.variable}>
       <body>{children}
-        {/* {<Analytics />} */}
+        <Analytics />
       </body>
     </html>
   )
