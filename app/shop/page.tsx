@@ -25,7 +25,7 @@ export default function Home() {
           textTransform: "uppercase",
           color: "#a3a39f",
         }}>
-          Seminuevos en perfecto estado
+          DAVE'S STORE
         </p>
         <h1 style={{
           fontSize: "clamp(1.1rem, 4vw, 1.6rem)",

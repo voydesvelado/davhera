@@ -1,20 +1,104 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState, useCallback } from "react"
 import Image from "next/image"
 import { Skeleton } from "@/components/ui/skeleton"
 
 export default function PhotoCarousel({ photos, name }: { photos: string[]; name: string }) {
-  const [index, setIndex] = useState(0)
   const [loaded, setLoaded] = useState<boolean[]>(photos.map(() => false))
   const containerRef = useRef<HTMLDivElement>(null)
+  const pillRef = useRef<HTMLDivElement>(null)
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([])
 
-  function onScroll() {
+  const setSlideRef = useCallback(
+    (i: number) => (node: HTMLDivElement | null) => {
+      slideRefs.current[i] = node
+    },
+    []
+  )
+
+  // ── Counter logic: NO React state, direct DOM writes ──
+  useEffect(() => {
     const el = containerRef.current
-    if (!el) return
-    const i = Math.round(el.scrollLeft / el.offsetWidth)
-    setIndex(i)
-  }
+    const pill = pillRef.current
+    if (!el || !pill || photos.length <= 1) return
+
+    let currentIndex = 0
+    let rafId: number | null = null
+    let polling = false
+    let lastSL = -1
+    let stableFrames = 0
+
+    function writePill(i: number) {
+      if (i === currentIndex) return
+      currentIndex = i
+      // Direct DOM write — bypasses React reconciliation entirely
+      pill.textContent = `${i + 1} / ${photos.length}`
+    }
+
+    function findClosestSlide(): number {
+      const rect = el!.getBoundingClientRect()
+      const cx = rect.left + rect.width / 2
+      let best = 0
+      let bestD = Infinity
+      for (let i = 0; i < slideRefs.current.length; i++) {
+        const s = slideRefs.current[i]
+        if (!s) continue
+        const sr = s.getBoundingClientRect()
+        const d = Math.abs(sr.left + sr.width / 2 - cx)
+        if (d < bestD) { bestD = d; best = i }
+      }
+      return best
+    }
+
+    function poll() {
+      const sl = el!.scrollLeft
+      if (sl === lastSL) {
+        stableFrames++
+        if (stableFrames > 12) {
+          // Settled — final update
+          writePill(findClosestSlide())
+          polling = false
+          return
+        }
+      } else {
+        stableFrames = 0
+        // Live update while scrolling
+        writePill(findClosestSlide())
+      }
+      lastSL = sl
+      rafId = requestAnimationFrame(poll)
+    }
+
+    function startPoll() {
+      if (polling) return
+      polling = true
+      lastSL = -1
+      stableFrames = 0
+      rafId = requestAnimationFrame(poll)
+    }
+
+    // Attach to EVERY event that could indicate interaction
+    el.addEventListener("scroll", startPoll, { passive: true })
+    el.addEventListener("touchstart", startPoll, { passive: true })
+    el.addEventListener("touchmove", startPoll, { passive: true })
+    el.addEventListener("touchend", startPoll, { passive: true })
+    // Pointer events as extra fallback
+    el.addEventListener("pointerdown", startPoll, { passive: true })
+    el.addEventListener("pointermove", startPoll, { passive: true })
+    el.addEventListener("pointerup", startPoll, { passive: true })
+
+    return () => {
+      el.removeEventListener("scroll", startPoll)
+      el.removeEventListener("touchstart", startPoll)
+      el.removeEventListener("touchmove", startPoll)
+      el.removeEventListener("touchend", startPoll)
+      el.removeEventListener("pointerdown", startPoll)
+      el.removeEventListener("pointermove", startPoll)
+      el.removeEventListener("pointerup", startPoll)
+      if (rafId !== null) cancelAnimationFrame(rafId)
+    }
+  }, [photos.length])
 
   function markLoaded(i: number) {
     setLoaded((prev) => {
@@ -45,7 +129,6 @@ export default function PhotoCarousel({ photos, name }: { photos: string[]; name
     <div style={{ position: "relative" }}>
       <div
         ref={containerRef}
-        onScroll={onScroll}
         style={{
           display: "flex",
           overflowX: "auto",
@@ -58,6 +141,7 @@ export default function PhotoCarousel({ photos, name }: { photos: string[]; name
         {photos.map((src, i) => (
           <div
             key={i}
+            ref={setSlideRef(i)}
             style={{
               position: "relative",
               flexShrink: 0,
@@ -80,46 +164,31 @@ export default function PhotoCarousel({ photos, name }: { photos: string[]; name
         ))}
       </div>
 
-      {/* Counter pill */}
-      <div style={{
-        position: "absolute",
-        bottom: 12,
-        right: 14,
-        background: "rgba(12,12,12,0.65)",
-        backdropFilter: "blur(6px)",
-        color: "#fafaf7",
-        fontSize: 11,
-        fontWeight: 600,
-        letterSpacing: "0.06em",
-        padding: "4px 10px",
-        pointerEvents: "none",
-      }}>
-        {index + 1} / {photos.length}
-      </div>
-
-      {/* Dots */}
-      <div style={{
-        position: "absolute",
-        bottom: 14,
-        left: 0,
-        right: 0,
-        display: "flex",
-        justifyContent: "center",
-        gap: 5,
-        pointerEvents: "none",
-      }}>
-        {photos.map((_, i) => (
-          <div
-            key={i}
-            style={{
-              width: i === index ? 16 : 5,
-              height: 5,
-              borderRadius: 99,
-              background: i === index ? "#c8ff00" : "rgba(255,255,255,0.45)",
-              transition: "width 0.25s ease, background 0.25s ease",
-            }}
-          />
-        ))}
+      {/* Counter pill — NOT driven by React state.
+          textContent is written directly via pillRef.
+          transform: translate3d forces its own compositing layer
+          so iOS Safari actually repaints it. */}
+      <div
+        ref={pillRef}
+        style={{
+          position: "absolute",
+          bottom: 12,
+          right: 14,
+          background: "rgba(12,12,12,0.65)",
+          backdropFilter: "blur(6px)",
+          WebkitBackdropFilter: "blur(6px)",
+          color: "#fafaf7",
+          fontSize: 11,
+          fontWeight: 600,
+          letterSpacing: "0.06em",
+          padding: "4px 10px",
+          pointerEvents: "none",
+          // Force own compositing layer — iOS Safari repaint fix
+          transform: "translate3d(0,0,0)",
+          willChange: "contents",
+        }}
+      >
+        1 / {photos.length}
       </div>
     </div>
   )
