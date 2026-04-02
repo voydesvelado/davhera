@@ -1,3 +1,28 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.75, ease, delay },
+});
+
+const fadeIn = (delay = 0) => ({
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { duration: 0.9, ease: "easeOut", delay },
+});
+
+const inView = (delay = 0) => ({
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.75, ease, delay },
+});
+
 export default function JafraBiolab() {
   return (
     <>
@@ -105,7 +130,7 @@ export default function JafraBiolab() {
         .hero {
           position: relative;
           width: 100%;
-          min-height: 640px;
+          min-height: 700px;
           height: 75vh;
           max-height: 780px;
           border-radius: var(--radius-hero);
@@ -120,10 +145,8 @@ export default function JafraBiolab() {
           height: 100%;
           object-fit: cover;
           object-position: center top;
-          animation: fadeIn 1s ease 0s both;
         }
 
-  
         .hero__content {
           position: relative;
           z-index: 2;
@@ -136,7 +159,6 @@ export default function JafraBiolab() {
 
         .headline {
           max-width: 460px;
-          animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
         }
 
         .headline h1 {
@@ -167,7 +189,6 @@ export default function JafraBiolab() {
           max-width: 380px;
           border: 1px solid rgba(255,255,255,0.6);
           box-shadow: 0 2px 20px rgba(0,0,0,0.04);
-          animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
         }
 
         .testimonial__avatar {
@@ -182,7 +203,6 @@ export default function JafraBiolab() {
         .avatar-placeholder {
           width: 100%;
           height: 100%;
-        //   background: linear-gradient(135deg, #d4cfc7 0%, #c2bbb2 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -206,89 +226,86 @@ export default function JafraBiolab() {
         }
 
         .product-card {
-          background: rgba(255, 255, 255, 0.82);
+          background: rgba(255, 250, 251, 0.28);
           backdrop-filter: blur(16px);
           -webkit-backdrop-filter: blur(16px);
-          border-radius: var(--radius-card);
-          padding: 16px 18px 18px;
-          width: 260px;
+          border-radius: 20px;
+          padding: 18px 18px 18px;
+          width: 300px;
           flex-shrink: 0;
-          border: 1px solid rgba(255,255,255,0.6);
-          box-shadow: 0 2px 20px rgba(0,0,0,0.04);
-          animation: fadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
+          border: 1px solid rgba(228, 232, 236, 0.5);
         }
 
         .product-card__pills {
           display: flex;
           gap: 6px;
-          margin-bottom: 14px;
+          margin-bottom: 16px;
         }
 
         .pill {
           font-size: 11px;
           font-weight: 400;
-          padding: 5px 14px;
+          padding: 6px 16px;
           border-radius: var(--radius-pill);
-          background: rgba(58, 54, 50, 0.08);
-          color: var(--text-secondary);
+          background: rgba(255, 255, 255, 0.18);
+          color: rgba(255, 255, 255, 0.85);
           letter-spacing: 0.02em;
           white-space: nowrap;
+          border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .product-card__header {
           display: flex;
           align-items: flex-start;
           justify-content: space-between;
-          margin-bottom: 12px;
+          gap: 12px;
+          margin-bottom: 16px;
         }
 
         .product-card__meta { flex: 1; }
 
         .product-card__tag {
-          font-size: 10.5px;
+          font-size: 12px;
           font-weight: 400;
-          color: var(--text-secondary);
-          letter-spacing: 0.04em;
-          margin-bottom: 4px;
+          color: rgba(255, 255, 255, 0.65);
+          letter-spacing: 0.03em;
+          margin-bottom: 6px;
         }
 
         .product-card__name {
           font-family: var(--font-serif);
-          font-size: 20px;
-          line-height: 1.2;
-          color: var(--text-primary);
-          letter-spacing: -0.2px;
+          font-size: 28px;
+          font-weight: 700;
+          line-height: 1.15;
+          color: #ffffff;
+          letter-spacing: -0.3px;
         }
 
         .product-card__arrow {
-          width: 32px;
-          height: 32px;
-          border-radius: 8px;
-          background: transparent;
-          border: 1px solid #d0cbc4;
+          width: 46px;
+          height: 46px;
+          border-radius: 50%;
+          background: var(--text-primary);
+          border: none;
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
-          margin-top: 2px;
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: transform 0.2s ease, background 0.2s ease;
+          box-shadow: 0 2px 12px rgba(0,0,0,0.18);
         }
 
         .product-card__arrow:hover {
-          background: var(--pill-bg);
-          border-color: var(--pill-bg);
-        }
-
-        .product-card__arrow:hover svg {
-          stroke: white;
+          transform: scale(1.07);
+          background: #2a2622;
         }
 
         .product-card__arrow svg {
-          width: 14px;
-          height: 14px;
-          stroke: var(--text-primary);
-          stroke-width: 2;
+          width: 16px;
+          height: 16px;
+          stroke: #ffffff;
+          stroke-width: 2.2;
           fill: none;
         }
 
@@ -296,27 +313,17 @@ export default function JafraBiolab() {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #f7f5f2;
-          border-radius: 10px;
-          padding: 12px;
-          min-height: 100px;
+          background: #ffffff;
+          border-radius: 14px;
+          padding: 20px 16px;
+          min-height: 170px;
         }
 
         .product-card__image-row img {
-          height: 90px;
+          height: 140px;
           width: auto;
           object-fit: contain;
-          filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));
-        }
-
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(22px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.1));
         }
 
         .mission {
@@ -383,7 +390,7 @@ export default function JafraBiolab() {
         }
 
         .cat-card {
-          background: #f5f4f2;
+          background: #f5f5f5;
           border-radius: 14px;
           padding: 16px;
           display: flex;
@@ -492,58 +499,100 @@ export default function JafraBiolab() {
       `}</style>
 
       <div className="jafra-body">
-        <nav className="navbar">
+        {/* Navbar */}
+        <motion.nav
+          className="navbar"
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease }}
+        >
           <div className="logo">
             <span className="logo-brand">jafra</span>
             <span className="logo-name">Biolab</span>
           </div>
           <div className="nav-links">
-            <a href="#" className="nav-link">Catalog</a>
-            <a href="#" className="nav-link">About Us</a>
-            <a href="#" className="nav-link">Reviews</a>
-            <a href="#" className="nav-link nav-link--cta">Contact Us</a>
+            <a href="#" className="nav-link">
+              Catalog
+            </a>
+            <a href="#" className="nav-link">
+              About Us
+            </a>
+            <a href="#" className="nav-link">
+              Reviews
+            </a>
+            <a href="#" className="nav-link nav-link--cta">
+              Contact Us
+            </a>
           </div>
-        </nav>
+        </motion.nav>
 
+        {/* Hero */}
         <div className="hero-wrapper">
-          <section className="hero">
-            <img
+          <motion.section
+            className="hero"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, ease }}
+          >
+            <motion.img
               className="hero__image"
               src="https://rvivezcozdjpgkwqgroq.supabase.co/storage/v1/object/public/store/hero.png"
               alt="Hero"
+              {...fadeIn(0.1)}
             />
             <div className="hero__overlay" />
             <div className="hero__content">
-              <div className="headline">
-                <h1>Skincare for the whole body. <strong>For every body.</strong></h1>
-              </div>
+              <motion.div className="headline" {...fadeUp(0.25)}>
+                <h1>
+                  Skincare for the whole body. <strong>For every body.</strong>
+                </h1>
+              </motion.div>
 
               <div className="hero__bottom">
-                <div className="testimonial">
+                <motion.div className="testimonial" {...fadeUp(0.5)}>
                   <div className="testimonial__avatar">
                     <div className="avatar-placeholder">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="#8a8480" strokeWidth="1.5" width="24" height="24">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#8a8480"
+                        strokeWidth="1.5"
+                        width="24"
+                        height="24"
+                      >
                         <circle cx="12" cy="8" r="4" />
                         <path d="M4 21c0-4.418 3.582-7 8-7s8 2.582 8 7" />
                       </svg>
                     </div>
                   </div>
                   <div className="testimonial__text">
-                    <div className="testimonial__quote">We were inspired by you and wanted to turn everyday care into a special ritual.</div>
-                    <div className="testimonial__body">In the moment of realizing our value, the moment where we are in the first place</div>
+                    <div className="testimonial__quote">
+                      We were inspired by you and wanted to turn everyday care
+                      into a special ritual.
+                    </div>
+                    <div className="testimonial__body">
+                      In the moment of realizing our value, the moment where we
+                      are in the first place
+                    </div>
                   </div>
-                </div>
+                </motion.div>
 
-                <div className="product-card">
-                  <div className="product-card__pills">
+                <motion.div className="product-card" {...fadeUp(0.65)}>
+                  {/* <div className="product-card__pills">
                     <span className="pill">Aesthetics</span>
                     <span className="pill">Comfort</span>
                     <span className="pill">Care</span>
-                  </div>
+                  </div> */}
                   <div className="product-card__header">
                     <div className="product-card__meta">
-                      <div className="product-card__tag">[ save -15% ]</div>
-                      <div className="product-card__name">SPF 50+<br />Facial Fluid</div>
+                      <div className="product-card__tag">
+                        &#123; sale -15% &#125;
+                      </div>
+                      <div className="product-card__name">
+                        SPF 50+
+                        <br />
+                        Facial Fluid
+                      </div>
                     </div>
                     <button className="product-card__arrow">
                       <svg viewBox="0 0 14 14">
@@ -552,27 +601,65 @@ export default function JafraBiolab() {
                     </button>
                   </div>
                   <div className="product-card__image-row">
-                    <img src="/product.png" alt="JAFRA BIOLAB SPF 50+ Facial Fluid" />
+                    <img
+                      src="https://rvivezcozdjpgkwqgroq.supabase.co/storage/v1/object/public/store/67653_Jafra_Royal_Jelly_Crema_Hidratante_para_el_Contorno_de_Ojos_15ml.webp"
+                      alt="JAFRA BIOLAB SPF 50+ Facial Fluid"
+                    />
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
-          </section>
+          </motion.section>
         </div>
 
+        {/* Mission */}
         <div className="mission">
-          <span className="mission__label">Brand Mission</span>
+          <motion.span
+            className="mission__label"
+            initial={{ opacity: 0, x: -16 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, ease }}
+          >
+            Brand Mission
+          </motion.span>
           <div className="mission__right">
-            <p className="mission__text">
-              The brand&apos;s goal is to give a feeling of luxury spa care without being over the top. We want to focus on the skincare experience and packaging should not be distracting.
-            </p>
-            <a href="#" className="mission__btn">Learn more</a>
+            <motion.p className="mission__text" {...inView(0.1)}>
+              The brand&apos;s goal is to give a feeling of luxury spa care
+              without being over the top. We want to focus on the skincare
+              experience and packaging should not be distracting.
+            </motion.p>
+            <motion.a href="#" className="mission__btn" {...inView(0.22)}>
+              Learn more
+            </motion.a>
           </div>
         </div>
 
-        <div className="categories">
+        {/* Categories */}
+        <motion.div
+          className="categories"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.1 } },
+          }}
+        >
           {["body", "face", "hair", "other"].map((cat) => (
-            <div className="cat-card" key={cat}>
+            <motion.div
+              className="cat-card"
+              key={cat}
+              variants={{
+                hidden: { opacity: 0, y: 32 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.65, ease },
+                },
+              }}
+              whileHover={{ y: -4, transition: { duration: 0.25 } }}
+            >
               <div className="cat-card__header">
                 <span className="cat-card__label">( {cat} )</span>
                 <button className="cat-card__arrow" aria-label={`Go to ${cat}`}>
@@ -587,9 +674,9 @@ export default function JafraBiolab() {
                   alt={`${cat} product`}
                 />
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </>
   );
