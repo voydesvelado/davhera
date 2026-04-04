@@ -42,7 +42,7 @@
 :root {
   /* Core palette */
   --black:   #0c0c0c;
-  --white:   #fafaf7;
+  --white:   #FAFCFD;
   --accent:  #c8ff00;
 
   /* Grays */
@@ -51,6 +51,10 @@
   --gray-200: #e0e0dc;
   --gray-400: #a3a39f;
   --gray-600: #6b6b67;
+
+  /* Project palette */
+  --project-ink:       #32404F;
+  --project-ink-muted: #32404F95;
 
   /* Mapped tokens */
   --background:         var(--white);
@@ -85,6 +89,36 @@
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
   100% { background-position:  200% 0; }
+}
+
+.project-layout p {
+  font-family: var(--font-geist);
+  font-size: 15px;
+  color: var(--project-ink-muted);
+}
+
+.project-layout h1 {
+  font-family: var(--font-lora);
+  font-size: 52px;
+  color: var(--project-ink);
+}
+
+.project-layout h2 {
+  font-family: var(--font-lora);
+  font-size: 32px;
+  color: var(--project-ink);
+}
+
+.project-layout h3 {
+  font-family: var(--font-lora);
+  font-size: 20px;
+  color: var(--project-ink);
+}
+
+.project-layout h4 {
+  font-family: var(--font-geist-mono);
+  color: var(--project-ink-muted);
+  text-transform: uppercase;
 }
 
 @layer base {

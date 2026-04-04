@@ -13,7 +13,7 @@ const fadeUp = (delay = 0) => ({
 const fadeIn = (delay = 0) => ({
   initial: { opacity: 0 },
   animate: { opacity: 1 },
-  transition: { duration: 0.9, ease: "easeOut", delay },
+  transition: { duration: 0.9, ease: "easeOut" as const, delay },
 });
 
 const inView = (delay = 0) => ({
