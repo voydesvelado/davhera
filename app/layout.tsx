@@ -46,7 +46,7 @@ export default function RootLayout({
     <html lang="en" className={`${plusJakartaSans.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
       <body>
         {children}
-        {/* <Analytics /> */}
+         <Analytics /> 
       </body>
     </html>
   );
