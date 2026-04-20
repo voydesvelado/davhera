@@ -6,7 +6,7 @@ import CaseStudyFooter from "@/components/CaseStudyFooter";
 
 // ─── Animated SVG Components ───────────────────────────────────────
 
-function PhoneFrame({ children, className = "" }) {
+function PhoneFrame({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <div className={`relative mx-auto ${className}`} style={{ width: 220 }}>
       <div
@@ -209,7 +209,7 @@ function AnimatedPDFvsMenura() {
   );
 }
 
-function FlowDiagram({ steps, activeStep }) {
+function FlowDiagram({ steps, activeStep }: { steps: string[]; activeStep: number }) {
   return (
     <div className="flex items-center gap-1 justify-center flex-wrap">
       {steps.map((step, i) => (
@@ -234,7 +234,7 @@ function FlowDiagram({ steps, activeStep }) {
   );
 }
 
-function StatBlock({ value, label, suffix = "" }) {
+function StatBlock({ value, label, suffix = "" }: { value: string | number; label: string; suffix?: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -289,7 +289,7 @@ function useScrollReveal() {
   return [ref, isVisible];
 }
 
-function Section({ children, className = "" }) {
+function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const [ref, isVisible] = useScrollReveal();
   return (
     <section
