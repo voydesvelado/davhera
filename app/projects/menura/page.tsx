@@ -238,7 +238,7 @@ function StatBlock({ value, label, suffix = "" }: { value: string | number; labe
   const [count, setCount] = useState(0);
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
-  const numericValue = parseInt(value.replace(/[^0-9]/g, ""));
+  const numericValue = parseInt(String(value).replace(/[^0-9]/g, ""));
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -253,7 +253,7 @@ function StatBlock({ value, label, suffix = "" }: { value: string | number; labe
     if (!isVisible) return;
     let start = 0;
     const duration = 1200;
-    const step = (timestamp) => {
+    const step = (timestamp: number) => {
       if (!start) start = timestamp;
       const progress = Math.min((timestamp - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
@@ -266,7 +266,7 @@ function StatBlock({ value, label, suffix = "" }: { value: string | number; labe
   return (
     <div ref={ref} className="text-center">
       <p className="text-3xl font-bold text-stone-900 tabular-nums tracking-tight">
-        {value.startsWith("<") && "<"}{value.startsWith("+") && "+"}{count}{suffix}
+        {String(value).startsWith("<") && "<"}{String(value).startsWith("+") && "+"}{count}{suffix}
       </p>
       <p className="text-xs text-stone-400 mt-1">{label}</p>
     </div>
@@ -286,7 +286,7 @@ function useScrollReveal() {
     return () => observer.disconnect();
   }, []);
 
-  return [ref, isVisible];
+  return [ref, isVisible] as const;
 }
 
 function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
