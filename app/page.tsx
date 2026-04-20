@@ -89,7 +89,7 @@ function StatusBadge() {
 
 // ─── Project Card ──────────────────────────────────────────────────
 
-function ProjectCard({ project, index }) {
+function ProjectCard({ project, index }: { project: typeof PROJECTS[number]; index: number }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [isHovered, setIsHovered] = useState(false);
