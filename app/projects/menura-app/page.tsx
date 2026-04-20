@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import CaseStudyFooter from "@/components/CaseStudyFooter";
+import VideoWithSkeleton from "@/components/VideoWithSkeleton";
 
 function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   const ref = useRef(null);
@@ -118,13 +119,13 @@ export default function MenuraAppCaseStudy() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
             <motion.div ref={useRef(null)} initial={{ opacity: 0, y: 30, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }} className="group relative">
               <div className="aspect-square rounded-[24px] overflow-hidden bg-stone-100 border border-stone-200 relative transition-all duration-300 group-hover:border-stone-300 group-hover:shadow-lg group-hover:shadow-stone-200/40">
-                <video src="/videos/menura-app/1.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                <VideoWithSkeleton src="/videos/menura-app/1.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute top-3 left-3"><span className="px-2 py-0.5 text-[9px] font-mono font-medium text-stone-400 bg-white/90 backdrop-blur-sm rounded-md border border-stone-100">Wizard — Full Flow</span></div>
               </div>
             </motion.div>
             <motion.div ref={useRef(null)} initial={{ opacity: 0, y: 30, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, delay: 0.12, ease: [0.25, 0.1, 0.25, 1] }} className="group relative">
               <div className="aspect-square rounded-[24px] overflow-hidden bg-stone-100 border border-stone-200 relative transition-all duration-300 group-hover:border-stone-300 group-hover:shadow-lg group-hover:shadow-stone-200/40">
-                <video src="/videos/menura-app/2.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                <VideoWithSkeleton src="/videos/menura-app/2.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute top-3 left-3"><span className="px-2 py-0.5 text-[9px] font-mono font-medium text-stone-400 bg-white/90 backdrop-blur-sm rounded-md border border-stone-100">Preview = Public Menu</span></div>
               </div>
             </motion.div>
@@ -147,13 +148,13 @@ export default function MenuraAppCaseStudy() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
             <motion.div ref={useRef(null)} initial={{ opacity: 0, y: 30, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }} className="group relative">
               <div className="aspect-square rounded-[24px] overflow-hidden bg-stone-100 border border-stone-200 relative transition-all duration-300 group-hover:border-stone-300 group-hover:shadow-lg group-hover:shadow-stone-200/40">
-                <video src="/videos/menura-app/3.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                <VideoWithSkeleton src="/videos/menura-app/3.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute top-3 left-3"><span className="px-2 py-0.5 text-[9px] font-mono font-medium text-stone-400 bg-white/90 backdrop-blur-sm rounded-md border border-stone-100">Browse, Filter & Search</span></div>
               </div>
             </motion.div>
             <motion.div ref={useRef(null)} initial={{ opacity: 0, y: 30, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, delay: 0.12, ease: [0.25, 0.1, 0.25, 1] }} className="group relative">
               <div className="aspect-square rounded-[24px] overflow-hidden bg-stone-100 border border-stone-200 relative transition-all duration-300 group-hover:border-stone-300 group-hover:shadow-lg group-hover:shadow-stone-200/40">
-                <video src="/videos/menura-app/4.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                <VideoWithSkeleton src="/videos/menura-app/4.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute top-3 left-3"><span className="px-2 py-0.5 text-[9px] font-mono font-medium text-stone-400 bg-white/90 backdrop-blur-sm rounded-md border border-stone-100">Dish Detail Drawer</span></div>
               </div>
             </motion.div>
@@ -177,13 +178,13 @@ export default function MenuraAppCaseStudy() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
             <motion.div ref={useRef(null)} initial={{ opacity: 0, y: 30, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }} className="group relative">
               <div className="aspect-square rounded-[24px] overflow-hidden bg-stone-100 border border-stone-200 relative transition-all duration-300 group-hover:border-stone-300 group-hover:shadow-lg group-hover:shadow-stone-200/40">
-                <video src="/videos/menura-app/5.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                <VideoWithSkeleton src="/videos/menura-app/5.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute top-3 left-3"><span className="px-2 py-0.5 text-[9px] font-mono font-medium text-stone-400 bg-white/90 backdrop-blur-sm rounded-md border border-stone-100">Inline Editing — All Fields</span></div>
               </div>
             </motion.div>
             <motion.div ref={useRef(null)} initial={{ opacity: 0, y: 30, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, delay: 0.12, ease: [0.25, 0.1, 0.25, 1] }} className="group relative">
               <div className="aspect-square rounded-[24px] overflow-hidden bg-stone-100 border border-stone-200 relative transition-all duration-300 group-hover:border-stone-300 group-hover:shadow-lg group-hover:shadow-stone-200/40">
-                <video src="/videos/menura-app/6.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                <VideoWithSkeleton src="/videos/menura-app/6.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute top-3 left-3"><span className="px-2 py-0.5 text-[9px] font-mono font-medium text-stone-400 bg-white/90 backdrop-blur-sm rounded-md border border-stone-100">Organize & Manage</span></div>
               </div>
             </motion.div>
@@ -206,13 +207,13 @@ export default function MenuraAppCaseStudy() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
             <motion.div ref={useRef(null)} initial={{ opacity: 0, y: 30, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }} className="group relative">
               <div className="aspect-square rounded-[24px] overflow-hidden bg-stone-100 border border-stone-200 relative transition-all duration-300 group-hover:border-stone-300 group-hover:shadow-lg group-hover:shadow-stone-200/40">
-                <video src="/videos/menura-app/7.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                <VideoWithSkeleton src="/videos/menura-app/7.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute top-3 left-3"><span className="px-2 py-0.5 text-[9px] font-mono font-medium text-stone-400 bg-white/90 backdrop-blur-sm rounded-md border border-stone-100">Multi-Carta Flow</span></div>
               </div>
             </motion.div>
             <motion.div ref={useRef(null)} initial={{ opacity: 0, y: 30, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, delay: 0.12, ease: [0.25, 0.1, 0.25, 1] }} className="group relative">
               <div className="aspect-square rounded-[24px] overflow-hidden bg-stone-100 border border-stone-200 relative transition-all duration-300 group-hover:border-stone-300 group-hover:shadow-lg group-hover:shadow-stone-200/40">
-                <video src="/videos/menura-app/8.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                <VideoWithSkeleton src="/videos/menura-app/8.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute top-3 left-3"><span className="px-2 py-0.5 text-[9px] font-mono font-medium text-stone-400 bg-white/90 backdrop-blur-sm rounded-md border border-stone-100">Appearance Settings</span></div>
               </div>
             </motion.div>
@@ -234,19 +235,19 @@ export default function MenuraAppCaseStudy() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
             <motion.div ref={useRef(null)} initial={{ opacity: 0, y: 30, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }} className="group relative">
               <div className="aspect-square rounded-[24px] overflow-hidden bg-stone-100 border border-stone-200 relative transition-all duration-300 group-hover:border-stone-300 group-hover:shadow-lg group-hover:shadow-stone-200/40">
-                <video src="/videos/menura-app/9.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                <VideoWithSkeleton src="/videos/menura-app/9.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute top-3 left-3"><span className="px-2 py-0.5 text-[9px] font-mono font-medium text-stone-400 bg-white/90 backdrop-blur-sm rounded-md border border-stone-100">Dashboard Navigation</span></div>
               </div>
             </motion.div>
             <motion.div ref={useRef(null)} initial={{ opacity: 0, y: 30, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, delay: 0.12, ease: [0.25, 0.1, 0.25, 1] }} className="group relative">
               <div className="aspect-square rounded-[24px] overflow-hidden bg-stone-100 border border-stone-200 relative transition-all duration-300 group-hover:border-stone-300 group-hover:shadow-lg group-hover:shadow-stone-200/40">
-                <video src="/videos/menura-app/10.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                <VideoWithSkeleton src="/videos/menura-app/10.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute top-3 left-3"><span className="px-2 py-0.5 text-[9px] font-mono font-medium text-stone-400 bg-white/90 backdrop-blur-sm rounded-md border border-stone-100">Upgrade to Pro</span></div>
               </div>
             </motion.div>
             <motion.div ref={useRef(null)} initial={{ opacity: 0, y: 30, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-40px" }} transition={{ duration: 0.6, delay: 0.24, ease: [0.25, 0.1, 0.25, 1] }} className="group relative">
               <div className="aspect-square rounded-[24px] overflow-hidden bg-stone-100 border border-stone-200 relative transition-all duration-300 group-hover:border-stone-300 group-hover:shadow-lg group-hover:shadow-stone-200/40">
-                <video src="/videos/menura-app/11.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+                <VideoWithSkeleton src="/videos/menura-app/11.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
                 <div className="absolute top-3 left-3"><span className="px-2 py-0.5 text-[9px] font-mono font-medium text-stone-400 bg-white/90 backdrop-blur-sm rounded-md border border-stone-100">Menu Invitation</span></div>
               </div>
             </motion.div>

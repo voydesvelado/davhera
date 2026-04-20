@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
+import VideoWithSkeleton from "@/components/VideoWithSkeleton";
 
 // ─── Constants ─────────────────────────────────────────────────────
 
@@ -121,11 +123,11 @@ function ProjectCard({ project, index }: { project: typeof PROJECTS[number]; ind
         {/* Thumbnail */}
         {project.video ? (
           <motion.div className="absolute inset-0" animate={{ scale: isHovered ? 1.03 : 1 }} transition={{ duration: 0.5, ease: "easeOut" }}>
-            <video src={project.video} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
+            <VideoWithSkeleton src={project.video} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover" />
           </motion.div>
         ) : project.image && (
           <motion.div className="absolute inset-0" animate={{ scale: isHovered ? 1.03 : 1 }} transition={{ duration: 0.5, ease: "easeOut" }}>
-            <Image src={project.image} alt={project.title} fill style={{ objectFit: "cover" }} sizes="(max-width: 768px) 100vw, 50vw" />
+            <ImageWithSkeleton src={project.image} alt={project.title} fill style={{ objectFit: "cover" }} sizes="(max-width: 768px) 100vw, 50vw" />
           </motion.div>
         )}
 
@@ -392,7 +394,7 @@ export default function Portfolio() {
                     boxShadow: "0 20px 60px rgba(28,25,23,0.12), 0 4px 16px rgba(28,25,23,0.06)",
                   }}
                 >
-                  <Image src="/profile.jpg" alt="David Herrera" fill className="object-cover" priority />
+                  <ImageWithSkeleton src="/profile.jpg" alt="David Herrera" fill className="object-cover" priority />
                 </div>
 
                 {/* Decorative accent */}

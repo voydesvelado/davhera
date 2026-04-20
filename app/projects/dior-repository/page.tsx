@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import Image from "next/image";
+import ImageWithSkeleton from "@/components/ImageWithSkeleton";
 import CaseStudyFooter from "@/components/CaseStudyFooter";
 
 function Section({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -36,13 +37,13 @@ function BeforeAfter({ src1, alt1, src2, alt2 }: { src1: string; alt1: string; s
         <div className="px-3 pt-3 pb-1 flex items-center gap-2 bg-stone-50">
           <span className="px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-stone-400 bg-white rounded border border-stone-100">Before</span>
         </div>
-        <Image src={src1} alt={alt1} width={1600} height={1000} className="w-full h-auto" />
+        <ImageWithSkeleton src={src1} alt={alt1} width={1600} height={1000} className="w-full h-auto" />
       </div>
       <div className="rounded-[20px] overflow-hidden border border-orange-100">
         <div className="px-3 pt-3 pb-1 flex items-center gap-2 bg-orange-50/60">
           <span className="px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-orange-600 bg-white rounded border border-orange-100">After</span>
         </div>
-        <Image src={src2} alt={alt2} width={1600} height={1000} className="w-full h-auto" />
+        <ImageWithSkeleton src={src2} alt={alt2} width={1600} height={1000} className="w-full h-auto" />
       </div>
     </motion.div>
   );
@@ -118,7 +119,7 @@ export default function DiorRepositoryCaseStudy() {
             </div>
             <motion.div initial={{ opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: 0.4, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
               className="rounded-[24px] overflow-hidden border border-stone-200 shadow-lg shadow-stone-200/40">
-              <Image src="/case-studies/dior/hero101.png" alt="Dior LatAm repository redesign" width={1040} height={760} priority className="w-full h-auto" />
+              <ImageWithSkeleton src="/case-studies/dior/hero101.png" alt="Dior LatAm repository redesign" width={1040} height={760} priority className="w-full h-auto" />
             </motion.div>
           </div>
         </div>
@@ -131,7 +132,7 @@ export default function DiorRepositoryCaseStudy() {
           <SectionTitle>Upgrading Dior LatAm's file management experience</SectionTitle>
           <SectionDescription>Dior Latin America teams relied on a file repository that was difficult to navigate and inefficient to use. Poor UI decisions and a fragmented information structure made it hard to locate assets quickly. As a result, everyday tasks took longer than necessary, increasing frustration and reducing overall productivity.</SectionDescription>
           <div className="rounded-[24px] overflow-hidden border border-stone-200 shadow-sm">
-            <Image src="/case-studies/dior/repository/background-n.png" alt="New Dior LatAm repository interface" width={2200} height={1240} className="w-full h-auto" />
+            <ImageWithSkeleton src="/case-studies/dior/repository/background-n.png" alt="New Dior LatAm repository interface" width={2200} height={1240} className="w-full h-auto" />
           </div>
         </div>
       </Section>
@@ -161,7 +162,7 @@ export default function DiorRepositoryCaseStudy() {
           <SectionTitle>We focused on validating usability before scaling the solution</SectionTitle>
           <SectionDescription>Early concepts were rapidly prototyped and validated with users to ensure improvements addressed real needs. Research insights allowed us to reduce risk and deliver a solution that measurably improved everyday efficiency.</SectionDescription>
           <div className="rounded-[24px] overflow-hidden border border-stone-200 shadow-sm">
-            <Image src="/case-studies/dior/approach02.png" alt="Early validation sessions and iterative prototyping" width={2200} height={1240} className="w-full h-auto" />
+            <ImageWithSkeleton src="/case-studies/dior/approach02.png" alt="Early validation sessions and iterative prototyping" width={2200} height={1240} className="w-full h-auto" />
           </div>
         </div>
       </Section>
