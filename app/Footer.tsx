@@ -1,4 +1,4 @@
-const mono = "font-[family-name:var(--font-geist-mono)]";
+const mono = "font-[family-name:var(--font-mono)]";
 
 const links = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/daveherv/", external: true },

@@ -59,7 +59,7 @@ export default function ProductGrid() {
           padding: 0 4px;
         }
         .product-card-name {
-          font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+          font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
           font-size: 12px;
           font-weight: 500;
           letter-spacing: 0.06em;
@@ -70,7 +70,7 @@ export default function ProductGrid() {
           max-width: 100%;
         }
         .product-card-price {
-          font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+          font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
           font-size: 11px;
           font-weight: 400;
           letter-spacing: 0.04em;

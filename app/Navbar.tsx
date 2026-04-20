@@ -9,7 +9,7 @@ const StarIcon = ({ size = 16 }: { size?: number }) => (
   </svg>
 );
 
-const mono = "font-[family-name:var(--font-geist-mono)] uppercase";
+const mono = "font-[family-name:var(--font-mono)] uppercase";
 
 const navLinks = [
   { href: "/", label: "Work", activeExact: true },
