@@ -13,9 +13,10 @@ interface DeviceFrameProps {
 export function DeviceFrame({ children, floatingSlot, caption }: DeviceFrameProps) {
   return (
     <div className="min-h-[100dvh] w-full bg-[radial-gradient(ellipse_at_top,_#0B1424_0%,_#040710_70%)]">
-      {/* Mobile: full-bleed prototype. Desktop (lg+): centered phone frame. */}
-      <div className="block lg:hidden min-h-[100dvh] bg-stadium-midnight">
-        <div className="mx-auto max-w-[430px] min-h-[100dvh]">{children}</div>
+      {/* Mobile: full-bleed prototype with a definite height so descendants
+          using h-full / flex-1 resolve correctly (using min-h breaks the chain). */}
+      <div className="block lg:hidden h-[100dvh] overflow-hidden bg-stadium-midnight">
+        <div className="mx-auto h-full w-full max-w-[430px]">{children}</div>
       </div>
 
       <div className="hidden lg:flex min-h-[100dvh] flex-col items-center justify-center py-12">
