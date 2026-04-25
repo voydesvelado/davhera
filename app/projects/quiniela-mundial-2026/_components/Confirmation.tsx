@@ -10,6 +10,7 @@ interface ConfirmationProps {
   questions: Question[];
   answers: Answers;
   onBackHome?: () => void;
+  onViewResults?: () => void;
 }
 
 function formatTimestamp(d: Date): string {
@@ -30,7 +31,7 @@ const WhatsAppIcon = () => (
   </svg>
 );
 
-export function Confirmation({ match, questions, answers, onBackHome }: ConfirmationProps) {
+export function Confirmation({ match, questions, answers, onBackHome, onViewResults }: ConfirmationProps) {
   const reduced = useReducedMotion();
   const [timestamp] = useState<Date>(() => new Date());
   const [shareToast, setShareToast] = useState<string | null>(null);
@@ -180,10 +181,23 @@ export function Confirmation({ match, questions, answers, onBackHome }: Confirma
         COMPARTIR EN WHATSAPP
       </motion.button>
 
+      {onViewResults && (
+        <motion.button
+          {...fadeUp}
+          transition={{ duration: 0.3, delay: ctaDelay + 0.04 }}
+          type="button"
+          onClick={onViewResults}
+          className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-[10px] border border-stadium-border bg-stadium-surface-elevated px-4 text-[14px] font-semibold text-stadium-text-primary transition-colors hover:bg-stadium-surface-hover cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stadium-pitch focus-visible:ring-offset-2 focus-visible:ring-offset-stadium-midnight"
+          style={{ minHeight: 48 }}
+        >
+          Ver mis resultados <span aria-hidden="true">→</span>
+        </motion.button>
+      )}
+
       {onBackHome && (
         <motion.button
           {...fadeUp}
-          transition={{ duration: 0.3, delay: ctaDelay + 0.05 }}
+          transition={{ duration: 0.3, delay: ctaDelay + 0.08 }}
           type="button"
           onClick={onBackHome}
           className="mt-3 text-[13px] text-stadium-text-secondary hover:text-stadium-text-primary transition-colors cursor-pointer"

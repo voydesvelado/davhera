@@ -2,12 +2,16 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-export function TransitionSplash() {
+interface TransitionSplashProps {
+  label?: string;
+}
+
+export function TransitionSplash({ label = "Preparando tu quiniela…" }: TransitionSplashProps) {
   const reduced = useReducedMotion();
   return (
     <div className="absolute inset-0 z-40 flex items-center justify-center bg-stadium-midnight">
       <div className="flex flex-col items-center gap-3">
-        <p className="text-[15px] font-medium text-stadium-text-secondary">Preparando tu quiniela…</p>
+        <p className="text-[15px] font-medium text-stadium-text-secondary">{label}</p>
         <div className="flex items-center gap-1.5" aria-hidden="true">
           {[0, 1, 2].map((i) => (
             <motion.span
