@@ -1,4 +1,4 @@
-import type { Match, Question, WindowInfo } from "../_lib/types";
+import type { Match, MatchStatus, Question, WindowInfo } from "../_lib/types";
 
 export const match: Match = {
   id: "mex-vs-bra-2026-06-18",
@@ -8,6 +8,70 @@ export const match: Match = {
   status: "halftime",
   minute: 45,
 };
+
+export const landingMatchMeta = {
+  venue: "Estadio Azteca, CDMX",
+  group: "Grupo C",
+  matchday: "Jornada 2",
+};
+
+export interface HeroCopy {
+  headline: string;
+  /** Optional substring inside `headline` to highlight in the pitch color. */
+  highlight?: string;
+  subheadline: string;
+}
+
+export const heroCopy: Record<MatchStatus, HeroCopy> = {
+  halftime: {
+    headline: "México va ganando.",
+    highlight: "México",
+    subheadline: "¿Cómo termina? Participa en 60 segundos.",
+  },
+  live: {
+    headline: "El partido está en vivo.",
+    highlight: "en vivo",
+    subheadline: "¿Quién gana? Participa ahora.",
+  },
+  upcoming: {
+    headline: "¿Quién ganará hoy?",
+    subheadline: "Participa en 60 segundos y compite con tus amigos.",
+  },
+  finished: {
+    headline: "El partido terminó.",
+    subheadline: "Prepárate para el siguiente. Regístrate ahora.",
+  },
+};
+
+export interface FriendStub {
+  name: string;
+  initials: string;
+  accent: "pitch" | "electric" | "gold";
+}
+
+export const socialProof = {
+  activeParticipants: 12_847,
+  friends: [
+    { name: "Ana", initials: "A", accent: "pitch" as const },
+    { name: "Jorge", initials: "J", accent: "electric" as const },
+    { name: "Luis", initials: "L", accent: "gold" as const },
+  ] satisfies FriendStub[],
+};
+
+export interface UpcomingMatch {
+  id: string;
+  homeCode: string;
+  homeFlag: string;
+  awayCode: string;
+  awayFlag: string;
+  when: string;
+}
+
+export const upcomingMatches: UpcomingMatch[] = [
+  { id: "arg-ger", homeCode: "ARG", homeFlag: "🇦🇷", awayCode: "GER", awayFlag: "🇩🇪", when: "Mañana 12:00" },
+  { id: "esp-jpn", homeCode: "ESP", homeFlag: "🇪🇸", awayCode: "JPN", awayFlag: "🇯🇵", when: "Mañana 15:00" },
+  { id: "fra-usa", homeCode: "FRA", homeFlag: "🇫🇷", awayCode: "USA", awayFlag: "🇺🇸", when: "Mañana 18:00" },
+];
 
 export const questions: Question[] = [
   {
@@ -70,4 +134,9 @@ export function makeWindowInfo(): WindowInfo {
     type: "halftime",
     endsAt: Date.now() + 12 * 60 * 1000,
   };
+}
+
+/** Kickoff target for "upcoming" demo state — 2h15m in the future. */
+export function makeUpcomingKickoff(): number {
+  return Date.now() + (2 * 60 + 15) * 60 * 1000;
 }

@@ -7,13 +7,18 @@ import { ResetButton } from "./ResetButton";
 import { QuestionFlow } from "./QuestionFlow";
 import { Summary } from "./Summary";
 import { Confirmation } from "./Confirmation";
+import { LandingPage } from "./landing/LandingPage";
+import { DemoControls } from "./landing/DemoControls";
+import { TransitionSplash } from "./landing/TransitionSplash";
 import { fadeOnlyVariants, fadeScaleVariants, slideVariants, slideTransition } from "./motion/variants";
 import type { Direction } from "./motion/variants";
-import { match, questions, makeWindowInfo } from "../_data/mockData";
-import type { Answers, WindowInfo } from "../_lib/types";
+import { match, questions, makeWindowInfo, makeUpcomingKickoff } from "../_data/mockData";
+import type { Answers, MatchStatus, WindowInfo } from "../_lib/types";
 import { clearState, loadState, saveState } from "../_lib/storage";
 
-type Step = "questions" | "summary" | "confirmation";
+type Step = "landing" | "questions" | "summary" | "confirmation";
+
+const SPLASH_MS = 500;
 
 function firstUnansweredIndex(answers: Answers): number {
   for (let i = 0; i < questions.length; i++) {
@@ -26,11 +31,14 @@ export function QuinielaApp() {
   const reduced = useReducedMotion();
   const [hydrated, setHydrated] = useState(false);
   const [windowInfo, setWindowInfo] = useState<WindowInfo>(() => ({ type: "halftime", endsAt: 0 }));
-  const [step, setStep] = useState<Step>("questions");
+  const [upcomingKickoffMs, setUpcomingKickoffMs] = useState(0);
+  const [step, setStep] = useState<Step>("landing");
   const [answers, setAnswers] = useState<Answers>({});
   const [currentIndex, setCurrentIndex] = useState(0);
   const [expired, setExpired] = useState(false);
   const [stepDirection, setStepDirection] = useState<Direction>(1);
+  const [landingStatus, setLandingStatus] = useState<MatchStatus>("halftime");
+  const [splashing, setSplashing] = useState(false);
 
   // Hydrate state from localStorage and pin window endsAt on the client only.
   // setState-in-effect is the canonical pattern for hydrating from a non-SSR-safe
@@ -38,17 +46,19 @@ export function QuinielaApp() {
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     const stored = loadState(match.id);
-    if (stored) {
+    if (stored && Object.keys(stored.answers).length > 0) {
       setAnswers(stored.answers);
       const allAnswered = questions.every((q) => stored.answers[q.id]);
       if (allAnswered) {
         setStep("summary");
         setCurrentIndex(questions.length - 1);
       } else {
+        setStep("questions");
         setCurrentIndex(firstUnansweredIndex(stored.answers));
       }
     }
     setWindowInfo(makeWindowInfo());
+    setUpcomingKickoffMs(makeUpcomingKickoff());
     setHydrated(true);
   }, []);
   /* eslint-enable react-hooks/set-state-in-effect */
@@ -104,9 +114,28 @@ export function QuinielaApp() {
     setCurrentIndex(0);
     setExpired(false);
     setStepDirection(1);
-    setStep("questions");
+    setStep("landing");
+    setLandingStatus("halftime");
     setWindowInfo(makeWindowInfo());
+    setUpcomingKickoffMs(makeUpcomingKickoff());
   }, []);
+
+  const handleParticipate = useCallback(() => {
+    // Upcoming/finished states would normally branch (reminder, results); for the
+    // prototype, all paths funnel into the question flow so reviewers can complete it.
+    if (splashing) return;
+    setSplashing(true);
+    window.setTimeout(() => {
+      setStepDirection(1);
+      setStep("questions");
+      setSplashing(false);
+    }, SPLASH_MS);
+  }, [splashing]);
+
+  const handleLogin = useCallback(() => {
+    // Portfolio prototype — no auth. Funnel to the same flow.
+    handleParticipate();
+  }, [handleParticipate]);
 
   const direction = stepDirection;
 
@@ -114,9 +143,34 @@ export function QuinielaApp() {
     <DeviceFrame
       caption="Quiniela Mundial 2026 — Prototipo UX"
       floatingSlot={<ResetButton onReset={handleReset} />}
+      belowFrameSlot={
+        step === "landing" ? (
+          <DemoControls status={landingStatus} onChange={setLandingStatus} />
+        ) : null
+      }
     >
       <div lang="es" className="stadium-nights relative h-full bg-stadium-midnight text-stadium-text-primary">
         <AnimatePresence mode="wait" initial={false} custom={direction}>
+          {step === "landing" && (
+            <motion.div
+              key="landing"
+              custom={direction}
+              variants={reduced ? fadeOnlyVariants : slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={reduced ? { duration: 0.18 } : slideTransition}
+              className="absolute inset-0 overflow-y-auto"
+            >
+              <LandingPage
+                status={landingStatus}
+                upcomingKickoffMs={upcomingKickoffMs}
+                onParticipate={handleParticipate}
+                onLogin={handleLogin}
+              />
+            </motion.div>
+          )}
+
           {step === "questions" && (
             <motion.div
               key="questions"
@@ -180,7 +234,26 @@ export function QuinielaApp() {
               transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
               className="absolute inset-0 overflow-y-auto"
             >
-              <Confirmation match={match} questions={questions} answers={answers} />
+              <Confirmation
+                match={match}
+                questions={questions}
+                answers={answers}
+                onBackHome={handleReset}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {splashing && (
+            <motion.div
+              key="splash"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18 }}
+            >
+              <TransitionSplash />
             </motion.div>
           )}
         </AnimatePresence>
