@@ -1,0 +1,42 @@
+"use client";
+
+import type { ReactNode } from "react";
+import { StatusBar } from "./StatusBar";
+
+interface DeviceFrameProps {
+  children: ReactNode;
+  /** Slot for a floating control rendered inside the frame (desktop only). */
+  floatingSlot?: ReactNode;
+  caption?: string;
+}
+
+export function DeviceFrame({ children, floatingSlot, caption }: DeviceFrameProps) {
+  return (
+    <div className="min-h-[100dvh] w-full bg-[radial-gradient(ellipse_at_top,_#0B1424_0%,_#040710_70%)]">
+      {/* Mobile: full-bleed prototype. Desktop (lg+): centered phone frame. */}
+      <div className="block lg:hidden min-h-[100dvh] bg-stadium-midnight">
+        <div className="mx-auto max-w-[430px] min-h-[100dvh]">{children}</div>
+      </div>
+
+      <div className="hidden lg:flex min-h-[100dvh] flex-col items-center justify-center py-12">
+        <div className="relative">
+          <div
+            className="relative overflow-hidden rounded-[40px] border border-stadium-border bg-stadium-midnight shadow-[0_50px_120px_rgb(0_0_0_/_0.6),0_0_0_2px_rgb(255_255_255_/_0.02)_inset]"
+            style={{ width: 375, height: 812 }}
+          >
+            {/* Notch */}
+            <div className="pointer-events-none absolute left-1/2 top-2 z-30 h-[28px] w-[130px] -translate-x-1/2 rounded-full bg-stadium-deep" />
+            {floatingSlot}
+            <div className="relative z-10 flex h-full flex-col">
+              <StatusBar />
+              <div className="flex-1 overflow-hidden">{children}</div>
+            </div>
+          </div>
+          {caption && (
+            <p className="mt-6 text-center text-[13px] text-stadium-text-muted">{caption}</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

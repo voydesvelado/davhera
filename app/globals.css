@@ -39,6 +39,32 @@
   --radius-xl: calc(var(--radius) * 1.4);
 }
 
+/* Stadium Nights — scoped utility palette for /projects/quiniela-mundial-2026.
+   Names are unique (stadium-*) so they do not collide with existing tokens. */
+@theme {
+  --color-stadium-midnight: #0B1120;
+  --color-stadium-deep: #111827;
+  --color-stadium-surface: #1A2332;
+  --color-stadium-surface-elevated: #1F2D3D;
+  --color-stadium-surface-hover: #263547;
+  --color-stadium-border: #2A3A4E;
+  --color-stadium-border-subtle: #1E2E42;
+  --color-stadium-pitch: #00E676;
+  --color-stadium-pitch-dark: #00C853;
+  --color-stadium-pitch-glow: rgb(0 230 118 / 0.15);
+  --color-stadium-gold: #FFD740;
+  --color-stadium-gold-dark: #FFC400;
+  --color-stadium-gold-glow: rgb(255 215 64 / 0.12);
+  --color-stadium-coral: #FF5252;
+  --color-stadium-coral-dark: #FF1744;
+  --color-stadium-coral-glow: rgb(255 82 82 / 0.12);
+  --color-stadium-electric: #448AFF;
+  --color-stadium-text-primary: #F1F5F9;
+  --color-stadium-text-secondary: #94A3B8;
+  --color-stadium-text-muted: #64748B;
+  --color-stadium-text-inverse: #0B1120;
+}
+
 :root {
   /* Core palette — stone (warm gray) + orange brand */
   --black:   #0C0A09;   /* stone-950 */
@@ -119,6 +145,20 @@
   font-family: var(--font-mono);
   color: var(--project-ink-muted);
   text-transform: uppercase;
+}
+
+/* Cascade reset for the Stadium Nights wrapper so the .project-layout
+   descendant rules above don't override the dark prototype's typography. */
+.project-layout .stadium-nights :where(p, h1, h2, h3, h4) {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  text-transform: inherit;
+}
+
+@keyframes stadium-shimmer-sweep {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 @layer base {
