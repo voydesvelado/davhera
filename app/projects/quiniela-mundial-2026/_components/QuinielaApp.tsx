@@ -10,15 +10,17 @@ import { Confirmation } from "./Confirmation";
 import { LandingPage } from "./landing/LandingPage";
 import { DemoControls } from "./landing/DemoControls";
 import { TransitionSplash } from "./landing/TransitionSplash";
+import { ResultsApp } from "./results/ResultsApp";
 import { fadeOnlyVariants, fadeScaleVariants, slideVariants, slideTransition } from "./motion/variants";
 import type { Direction } from "./motion/variants";
 import { match, questions, makeWindowInfo, makeUpcomingKickoff } from "../_data/mockData";
 import type { Answers, MatchStatus, WindowInfo } from "../_lib/types";
 import { clearState, loadState, saveState } from "../_lib/storage";
 
-type Step = "landing" | "questions" | "summary" | "confirmation";
+type Step = "landing" | "questions" | "summary" | "confirmation" | "results";
 
 const SPLASH_MS = 500;
+const RESULTS_SPLASH_MS = 400;
 
 function firstUnansweredIndex(answers: Answers): number {
   for (let i = 0; i < questions.length; i++) {
@@ -38,7 +40,7 @@ export function QuinielaApp() {
   const [expired, setExpired] = useState(false);
   const [stepDirection, setStepDirection] = useState<Direction>(1);
   const [landingStatus, setLandingStatus] = useState<MatchStatus>("halftime");
-  const [splashing, setSplashing] = useState(false);
+  const [splashing, setSplashing] = useState<null | "questions" | "results">(null);
 
   // Hydrate state from localStorage and pin window endsAt on the client only.
   // setState-in-effect is the canonical pattern for hydrating from a non-SSR-safe
@@ -124,12 +126,22 @@ export function QuinielaApp() {
     // Upcoming/finished states would normally branch (reminder, results); for the
     // prototype, all paths funnel into the question flow so reviewers can complete it.
     if (splashing) return;
-    setSplashing(true);
+    setSplashing("questions");
     window.setTimeout(() => {
       setStepDirection(1);
       setStep("questions");
-      setSplashing(false);
+      setSplashing(null);
     }, SPLASH_MS);
+  }, [splashing]);
+
+  const handleViewResults = useCallback(() => {
+    if (splashing) return;
+    setSplashing("results");
+    window.setTimeout(() => {
+      setStepDirection(1);
+      setStep("results");
+      setSplashing(null);
+    }, RESULTS_SPLASH_MS);
   }, [splashing]);
 
   const handleLogin = useCallback(() => {
@@ -239,7 +251,22 @@ export function QuinielaApp() {
                 questions={questions}
                 answers={answers}
                 onBackHome={handleReset}
+                onViewResults={handleViewResults}
               />
+            </motion.div>
+          )}
+
+          {step === "results" && (
+            <motion.div
+              key="results"
+              variants={reduced ? fadeOnlyVariants : fadeScaleVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+              className="absolute inset-0"
+            >
+              <ResultsApp />
             </motion.div>
           )}
         </AnimatePresence>
@@ -253,7 +280,9 @@ export function QuinielaApp() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.18 }}
             >
-              <TransitionSplash />
+              <TransitionSplash
+                label={splashing === "results" ? "Calculando resultados…" : undefined}
+              />
             </motion.div>
           )}
         </AnimatePresence>
