@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import type { HeroCopy } from "../../_data/mockData";
 import type { MatchStatus } from "../../_lib/types";
@@ -10,8 +11,8 @@ interface HeroSectionProps {
 }
 
 function splitWithHighlight(headline: string, highlight?: string) {
-  if (!highlight) return [{ word: headline, highlighted: false }];
-  const parts: { word: string; highlighted: boolean }[] = [];
+  if (!highlight) return [{ word: headline, highlighted: false, trailing: "" }];
+  const parts: { word: string; highlighted: boolean; trailing: string }[] = [];
   const segments = headline.split(new RegExp(`(${highlight})`, "i"));
   for (const seg of segments) {
     if (!seg) continue;
@@ -20,10 +21,10 @@ function splitWithHighlight(headline: string, highlight?: string) {
       if (!word) continue;
       if (/^\s+$/.test(word)) {
         const last = parts[parts.length - 1];
-        if (last) last.word += word;
+        if (last) last.trailing += word;
         continue;
       }
-      parts.push({ word, highlighted: isHi });
+      parts.push({ word, highlighted: isHi, trailing: "" });
     }
   }
   return parts;
@@ -58,19 +59,21 @@ export function HeroSection({ copy, status }: HeroSectionProps) {
       {/* Headline */}
       <h1 className="mt-12 text-left text-[34px] font-black leading-[1.05] tracking-tight text-stadium-text-primary">
         {words.map((w, i) => (
-          <motion.span
-            key={`${w.word}-${i}`}
-            initial={reduced ? { opacity: 0 } : { opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: reduced ? 0.18 : 0.42,
-              delay: reduced ? 0 : i * 0.08,
-              ease: [0.2, 0.8, 0.2, 1],
-            }}
-            className={`inline-block ${w.highlighted ? "text-stadium-pitch" : "text-stadium-text-primary"}`}
-          >
-            {w.word}
-          </motion.span>
+          <Fragment key={`${w.word}-${i}`}>
+            <motion.span
+              initial={reduced ? { opacity: 0 } : { opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: reduced ? 0.18 : 0.42,
+                delay: reduced ? 0 : i * 0.08,
+                ease: [0.2, 0.8, 0.2, 1],
+              }}
+              className={`inline-block ${w.highlighted ? "text-stadium-pitch" : "text-stadium-text-primary"}`}
+            >
+              {w.word}
+            </motion.span>
+            {w.trailing}
+          </Fragment>
         ))}
       </h1>
 
