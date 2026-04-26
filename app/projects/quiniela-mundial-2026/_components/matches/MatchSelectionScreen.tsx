@@ -17,6 +17,7 @@ interface MatchSelectionScreenProps {
   onSelectMatch: (match: SelectableMatch) => void;
   userName?: string;
   windowEndsAt: number | null;
+  contentBottomClass?: string;
 }
 
 const STATUS_ORDER: Record<SelectableMatch["status"], number> = {
@@ -95,6 +96,7 @@ export function MatchSelectionScreen({
   onSelectMatch,
   userName,
   windowEndsAt,
+  contentBottomClass = "pb-8",
 }: MatchSelectionScreenProps) {
   const reduced = useReducedMotion();
   const [selectedGroup, setSelectedGroup] = useState<"all" | string>("all");
@@ -174,7 +176,7 @@ export function MatchSelectionScreen({
         />
       </div>
 
-      <div className="px-4 pb-8">
+      <div className={`px-4 ${contentBottomClass}`}>
         {selectedGroup === "all" ? (
           <div className="mt-2 grid grid-cols-2 gap-3">
             {worldCupGroups.map((g, i) => (

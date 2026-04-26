@@ -6,23 +6,10 @@ import { BottomNav, type ResultsTab } from "./BottomNav";
 import { ResultsScreen } from "./ResultsScreen";
 import { RankingsScreen } from "./RankingsScreen";
 import { HistoryScreen } from "./HistoryScreen";
+import { MatchSelectionScreen } from "../matches/MatchSelectionScreen";
 
 interface ResultsAppProps {
   initialTab?: ResultsTab;
-}
-
-function MatchesPlaceholder() {
-  return (
-    <div className="flex h-full items-center justify-center px-6 pb-24">
-      <div className="rounded-[14px] border border-stadium-border-subtle bg-stadium-surface px-6 py-8 text-center">
-        <p className="text-[28px]" aria-hidden="true">📅</p>
-        <p className="mt-2 text-[15px] font-medium text-stadium-text-secondary">
-          Calendario de partidos
-        </p>
-        <p className="text-[13px] text-stadium-text-muted">Próximamente</p>
-      </div>
-    </div>
-  );
 }
 
 export function ResultsApp({ initialTab = "today" }: ResultsAppProps) {
@@ -51,7 +38,13 @@ export function ResultsApp({ initialTab = "today" }: ResultsAppProps) {
             className="min-h-full"
           >
             {tab === "today" && <ResultsScreen onViewRankings={handleViewRankings} />}
-            {tab === "matches" && <MatchesPlaceholder />}
+            {tab === "matches" && (
+              <MatchSelectionScreen
+                onSelectMatch={() => {}}
+                windowEndsAt={null}
+                contentBottomClass="pb-24"
+              />
+            )}
             {tab === "rankings" && <RankingsScreen />}
             {tab === "profile" && <HistoryScreen />}
           </motion.div>
