@@ -95,7 +95,7 @@ export function MatchCard({ match, venue, group, matchday, status, upcomingKicko
           {isUpcoming ? (
             <span className="font-display text-[28px] font-extrabold text-stadium-text-muted">VS</span>
           ) : (
-            <div className="font-mono text-[40px] font-black leading-none tabular-nums text-stadium-text-primary">
+            <div className="whitespace-nowrap font-mono text-[40px] font-black leading-none tabular-nums text-stadium-text-primary">
               <span>{match.score.home}</span>
               <span className="px-2 text-stadium-text-muted">–</span>
               <span>{match.score.away}</span>
