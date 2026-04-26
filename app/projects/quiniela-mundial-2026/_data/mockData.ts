@@ -1,9 +1,9 @@
 import type { Match, MatchStatus, Question, WindowInfo } from "../_lib/types";
 
 export const match: Match = {
-  id: "mex-vs-bra-2026-06-18",
+  id: "mex-vs-kor-2026-06-18",
   homeTeam: { name: "México", code: "MEX", flag: "🇲🇽" },
-  awayTeam: { name: "Brasil", code: "BRA", flag: "🇧🇷" },
+  awayTeam: { name: "Corea del Sur", code: "KOR", flag: "🇰🇷" },
   score: { home: 1, away: 0 },
   status: "halftime",
   minute: 45,
@@ -11,7 +11,7 @@ export const match: Match = {
 
 export const landingMatchMeta = {
   venue: "Estadio Azteca, CDMX",
-  group: "Grupo C",
+  group: "Grupo A",
   matchday: "Jornada 2",
 };
 
@@ -81,7 +81,7 @@ export const questions: Question[] = [
     options: [
       { id: "home", label: "Gana México" },
       { id: "draw", label: "Empate" },
-      { id: "away", label: "Gana Brasil" },
+      { id: "away", label: "Gana Corea del Sur" },
     ],
   },
   {
@@ -101,7 +101,7 @@ export const questions: Question[] = [
     text: "¿Quién marca el próximo gol?",
     options: [
       { id: "mex", label: "México" },
-      { id: "bra", label: "Brasil" },
+      { id: "kor", label: "Corea del Sur" },
       { id: "none", label: "No hay más goles" },
     ],
   },

@@ -40,15 +40,15 @@ export interface MatchResult {
 
 export const matchResult: MatchResult = {
   match: {
-    id: "mex-vs-bra-2026-06-15",
+    id: "mex-vs-kor-2026-06-18",
     homeTeam: { name: "México", code: "MEX", flag: "🇲🇽" },
-    awayTeam: { name: "Brasil", code: "BRA", flag: "🇧🇷" },
+    awayTeam: { name: "Corea del Sur", code: "KOR", flag: "🇰🇷" },
     score: { home: 2, away: 1 },
     status: "finished",
     minute: 90,
     venue: "Estadio Azteca, CDMX",
-    group: "Grupo C",
-    date: "15 Jun 2026",
+    group: "Grupo A",
+    date: "18 Jun 2026",
   },
   userScore: {
     correct: 3,
@@ -76,7 +76,7 @@ export const matchResult: MatchResult = {
     {
       id: "q3",
       text: "¿Quién marca el próximo gol?",
-      userAnswer: "Brasil",
+      userAnswer: "Corea del Sur",
       correctAnswer: "México",
       isCorrect: false,
     },
@@ -155,7 +155,7 @@ export interface PastMatch {
 }
 
 export const participationHistory: PastMatch[] = [
-  { id: "h1", matchday: "J3", home: "🇲🇽 MEX", away: "BRA 🇧🇷", score: "2-1", correct: 3, total: 5, points: 15, date: "15 Jun" },
+  { id: "h1", matchday: "J2", home: "🇲🇽 MEX", away: "KOR 🇰🇷", score: "2-1", correct: 3, total: 5, points: 15, date: "18 Jun" },
   { id: "h2", matchday: "J2", home: "🇲🇽 MEX", away: "POL 🇵🇱", score: "1-0", correct: 4, total: 5, points: 20, date: "11 Jun" },
   { id: "h3", matchday: "J1", home: "🇲🇽 MEX", away: "CAN 🇨🇦", score: "3-1", correct: 2, total: 5, points: 10, date: "8 Jun" },
   { id: "h4", matchday: "J2", home: "🇦🇷 ARG", away: "JPN 🇯🇵", score: "2-2", correct: 1, total: 5, points: 5, date: "10 Jun" },

@@ -23,7 +23,7 @@ interface LandingPageProps {
 }
 
 function matchForStatus(status: MatchStatus): Match {
-  // For non-upcoming states show the live MEX 1-0 BRA. For upcoming, hide score.
+  // For non-upcoming states show the live MEX 1-0 KOR. For upcoming, hide score.
   const m: Match = { ...defaultMatch, status };
   if (status === "upcoming") {
     m.score = { home: 0, away: 0 };
