@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { DeviceFrame } from "./DeviceFrame";
 import { ResetButton } from "./ResetButton";
@@ -11,13 +11,32 @@ import { LandingPage } from "./landing/LandingPage";
 import { DemoControls } from "./landing/DemoControls";
 import { TransitionSplash } from "./landing/TransitionSplash";
 import { ResultsApp } from "./results/ResultsApp";
+import { RegisterScreen } from "./auth/RegisterScreen";
+import { LoginScreen } from "./auth/LoginScreen";
+import { OnboardingCarousel } from "./auth/OnboardingCarousel";
+import { MatchSelectionScreen } from "./matches/MatchSelectionScreen";
 import { fadeOnlyVariants, fadeScaleVariants, slideVariants, slideTransition } from "./motion/variants";
 import type { Direction } from "./motion/variants";
-import { match, questions, makeWindowInfo, makeUpcomingKickoff } from "../_data/mockData";
-import type { Answers, MatchStatus, WindowInfo } from "../_lib/types";
+import { match as defaultMatch, questions, makeWindowInfo, makeUpcomingKickoff } from "../_data/mockData";
+import type { SelectableMatch } from "../_data/matchesData";
+import type { Answers, Match, MatchStatus, WindowInfo } from "../_lib/types";
 import { clearState, loadState, saveState } from "../_lib/storage";
 
-type Step = "landing" | "questions" | "summary" | "confirmation" | "results";
+type Step =
+  | "landing"
+  | "register"
+  | "login"
+  | "onboarding"
+  | "matchSelection"
+  | "questions"
+  | "summary"
+  | "confirmation"
+  | "results";
+
+interface User {
+  name: string;
+  email: string;
+}
 
 const SPLASH_MS = 500;
 const RESULTS_SPLASH_MS = 400;
@@ -27,6 +46,20 @@ function firstUnansweredIndex(answers: Answers): number {
     if (!answers[questions[i].id]) return i;
   }
   return questions.length - 1;
+}
+
+// Wrap a SelectableMatch in the existing Match shape so QuestionFlow's MatchHeader
+// shows the user's chosen teams. The question copy itself stays mock-static.
+function toMatch(selectable: SelectableMatch): Match {
+  const status: MatchStatus = selectable.status;
+  return {
+    id: selectable.id,
+    homeTeam: selectable.homeTeam,
+    awayTeam: selectable.awayTeam,
+    score: selectable.score ?? { home: 0, away: 0 },
+    status,
+    minute: status === "halftime" ? 45 : status === "live" ? 67 : 0,
+  };
 }
 
 export function QuinielaApp() {
@@ -41,13 +74,15 @@ export function QuinielaApp() {
   const [stepDirection, setStepDirection] = useState<Direction>(1);
   const [landingStatus, setLandingStatus] = useState<MatchStatus>("halftime");
   const [splashing, setSplashing] = useState<null | "questions" | "results">(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [selectedMatch, setSelectedMatch] = useState<SelectableMatch | null>(null);
 
   // Hydrate state from localStorage and pin window endsAt on the client only.
   // setState-in-effect is the canonical pattern for hydrating from a non-SSR-safe
   // source (localStorage) on first mount; reading during render would cause a mismatch.
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
-    const stored = loadState(match.id);
+    const stored = loadState(defaultMatch.id);
     if (stored && Object.keys(stored.answers).length > 0) {
       setAnswers(stored.answers);
       const allAnswered = questions.every((q) => stored.answers[q.id]);
@@ -69,8 +104,13 @@ export function QuinielaApp() {
   useEffect(() => {
     if (!hydrated) return;
     if (Object.keys(answers).length === 0 && currentIndex === 0) return;
-    saveState(match.id, answers, currentIndex);
+    saveState(defaultMatch.id, answers, currentIndex);
   }, [answers, currentIndex, hydrated]);
+
+  const activeMatch = useMemo<Match>(
+    () => (selectedMatch ? toMatch(selectedMatch) : defaultMatch),
+    [selectedMatch],
+  );
 
   const handleAnswer = useCallback((questionId: string, optionId: string) => {
     setAnswers((prev) => ({ ...prev, [questionId]: optionId }));
@@ -98,8 +138,7 @@ export function QuinielaApp() {
   const handleSubmit = useCallback(() => {
     setStepDirection(1);
     setStep("confirmation");
-    // Wipe local progress: the participation is "sent".
-    clearState(match.id);
+    clearState(defaultMatch.id);
   }, []);
 
   const handleExpired = useCallback(() => {
@@ -111,7 +150,7 @@ export function QuinielaApp() {
   }, [answers, step, handleComplete]);
 
   const handleReset = useCallback(() => {
-    clearState(match.id);
+    clearState(defaultMatch.id);
     setAnswers({});
     setCurrentIndex(0);
     setExpired(false);
@@ -120,11 +159,11 @@ export function QuinielaApp() {
     setLandingStatus("halftime");
     setWindowInfo(makeWindowInfo());
     setUpcomingKickoffMs(makeUpcomingKickoff());
+    setUser(null);
+    setSelectedMatch(null);
   }, []);
 
-  const handleParticipate = useCallback(() => {
-    // Upcoming/finished states would normally branch (reminder, results); for the
-    // prototype, all paths funnel into the question flow so reviewers can complete it.
+  const goToQuestionsWithSplash = useCallback(() => {
     if (splashing) return;
     setSplashing("questions");
     window.setTimeout(() => {
@@ -133,6 +172,21 @@ export function QuinielaApp() {
       setSplashing(null);
     }, SPLASH_MS);
   }, [splashing]);
+
+  // Landing → Register (or directly to selection if already logged in).
+  const handleParticipate = useCallback(() => {
+    setStepDirection(1);
+    if (user) {
+      setStep("matchSelection");
+    } else {
+      setStep("register");
+    }
+  }, [user]);
+
+  const handleLogin = useCallback(() => {
+    setStepDirection(1);
+    setStep(user ? "matchSelection" : "login");
+  }, [user]);
 
   const handleViewResults = useCallback(() => {
     if (splashing) return;
@@ -144,19 +198,42 @@ export function QuinielaApp() {
     }, RESULTS_SPLASH_MS);
   }, [splashing]);
 
-  const handleLogin = useCallback(() => {
-    // Portfolio prototype — no auth. Funnel to the same flow.
-    handleParticipate();
-  }, [handleParticipate]);
+  // Register success → onboarding (new users).
+  const handleRegisterSuccess = useCallback((u: User) => {
+    setUser(u);
+    setStepDirection(1);
+    setStep("onboarding");
+  }, []);
+
+  // Login success → match selection (returning users skip onboarding).
+  const handleLoginSuccess = useCallback((u: User) => {
+    setUser(u);
+    setStepDirection(1);
+    setStep("matchSelection");
+  }, []);
+
+  const handleOnboardingDone = useCallback(() => {
+    setStepDirection(1);
+    setStep("matchSelection");
+  }, []);
+
+  const handleSelectMatch = useCallback(
+    (m: SelectableMatch) => {
+      setSelectedMatch(m);
+      goToQuestionsWithSplash();
+    },
+    [goToQuestionsWithSplash],
+  );
 
   const direction = stepDirection;
+  const showDemoControls = step === "landing";
 
   return (
     <DeviceFrame
       caption="Quiniela Mundial 2026 — Prototipo UX"
       floatingSlot={<ResetButton onReset={handleReset} />}
       belowFrameSlot={
-        step === "landing" ? (
+        showDemoControls ? (
           <DemoControls status={landingStatus} onChange={setLandingStatus} />
         ) : null
       }
@@ -183,6 +260,91 @@ export function QuinielaApp() {
             </motion.div>
           )}
 
+          {step === "register" && (
+            <motion.div
+              key="register"
+              variants={reduced ? fadeOnlyVariants : slideVariants}
+              custom={1}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={reduced ? { duration: 0.18 } : { duration: 0.3, ease: "easeOut" }}
+              className="absolute inset-0"
+            >
+              <RegisterScreen
+                onRegister={handleRegisterSuccess}
+                onGoToLogin={() => {
+                  setStepDirection(1);
+                  setStep("login");
+                }}
+                onBack={() => {
+                  setStepDirection(-1);
+                  setStep("landing");
+                }}
+              />
+            </motion.div>
+          )}
+
+          {step === "login" && (
+            <motion.div
+              key="login"
+              variants={reduced ? fadeOnlyVariants : slideVariants}
+              custom={1}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={reduced ? { duration: 0.18 } : { duration: 0.3, ease: "easeOut" }}
+              className="absolute inset-0"
+            >
+              <LoginScreen
+                onLogin={handleLoginSuccess}
+                onGoToRegister={() => {
+                  setStepDirection(-1);
+                  setStep("register");
+                }}
+                onBack={() => {
+                  setStepDirection(-1);
+                  setStep("landing");
+                }}
+              />
+            </motion.div>
+          )}
+
+          {step === "onboarding" && (
+            <motion.div
+              key="onboarding"
+              variants={reduced ? fadeOnlyVariants : fadeScaleVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="absolute inset-0"
+            >
+              <OnboardingCarousel
+                onComplete={handleOnboardingDone}
+                onSkip={handleOnboardingDone}
+              />
+            </motion.div>
+          )}
+
+          {step === "matchSelection" && (
+            <motion.div
+              key="matchSelection"
+              variants={reduced ? fadeOnlyVariants : fadeScaleVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="absolute inset-0"
+            >
+              <MatchSelectionScreen
+                onSelectMatch={handleSelectMatch}
+                userName={user?.name.split(" ")[0]}
+                windowEndsAt={windowInfo.endsAt > 0 ? windowInfo.endsAt : null}
+              />
+            </motion.div>
+          )}
+
           {step === "questions" && (
             <motion.div
               key="questions"
@@ -196,7 +358,7 @@ export function QuinielaApp() {
             >
               {hydrated && windowInfo.endsAt > 0 ? (
                 <QuestionFlow
-                  match={match}
+                  match={activeMatch}
                   questions={questions}
                   windowInfo={windowInfo}
                   answers={answers}
@@ -225,7 +387,7 @@ export function QuinielaApp() {
               className="absolute inset-0"
             >
               <Summary
-                match={match}
+                match={activeMatch}
                 questions={questions}
                 answers={answers}
                 windowInfo={windowInfo}
@@ -247,7 +409,7 @@ export function QuinielaApp() {
               className="absolute inset-0 overflow-y-auto"
             >
               <Confirmation
-                match={match}
+                match={activeMatch}
                 questions={questions}
                 answers={answers}
                 onBackHome={handleReset}
