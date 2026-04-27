@@ -2055,8 +2055,8 @@ const SolutionPreview: React.FC = () => {
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <span style={{ fontSize: 22 }}>🇧🇷</span>
-                    <span style={{ fontFamily: T.display, fontWeight: 700, fontSize: 12, color: T.textPrimary }}>BRA</span>
+                    <span style={{ fontSize: 22 }}>🇲🇽</span>
+                    <span style={{ fontFamily: T.display, fontWeight: 700, fontSize: 12, color: T.textPrimary }}>MEX</span>
                   </div>
                   <div style={{ textAlign: "center" }}>
                     <div style={{ fontFamily: T.mono, fontSize: 22, fontWeight: 900, color: T.textPrimary, lineHeight: 1 }}>
@@ -2067,8 +2067,8 @@ const SolutionPreview: React.FC = () => {
                     </div>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <span style={{ fontFamily: T.display, fontWeight: 700, fontSize: 12, color: T.textPrimary }}>ARG</span>
-                    <span style={{ fontSize: 22 }}>🇦🇷</span>
+                    <span style={{ fontFamily: T.display, fontWeight: 700, fontSize: 12, color: T.textPrimary }}>KOR</span>
+                    <span style={{ fontSize: 22 }}>🇰🇷</span>
                   </div>
                 </div>
 
@@ -2115,8 +2115,8 @@ const SolutionPreview: React.FC = () => {
 
                 {/* Options */}
                 {[
-                  { id: "A", label: "Brasil" },
-                  { id: "B", label: "Argentina" },
+                  { id: "A", label: "México" },
+                  { id: "B", label: "Corea del Sur" },
                   { id: "C", label: "Nadie marca" },
                 ].map((opt) => {
                   const isSel = selected === opt.id;

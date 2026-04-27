@@ -664,7 +664,7 @@ export default function QuinielaCaseStudy() {
       color: t.gold,
       badge: "⚡",
       steps: [
-        { number: 1, phase: "Activar", emotion: "Urgencia", screen: "Push contextual: \"Medio tiempo BRA 1-0 ARG\"", time: "—" },
+        { number: 1, phase: "Activar", emotion: "Urgencia", screen: "Push contextual: \"Medio tiempo MEX 1-0 KOR\"", time: "—" },
         { number: 2, phase: "Abrir", emotion: "Expectativa", screen: "Deep link directo al partido (sin intermedios)", time: "< 2s" },
         { number: 3, phase: "Evaluar", emotion: "Concentración", screen: "Cards + contexto del partido visible", time: "< 5s" },
         { number: 4, phase: "Responder", emotion: "Confianza / duda", screen: "Botones 48px, navegación atrás, timer sutil", time: "< 30s" },
@@ -932,9 +932,9 @@ export default function QuinielaCaseStudy() {
                           <div style={{ fontSize: 11, color: t.textMuted, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 12 }}>Hoy</div>
                           <div style={{ background: t.surfaceElevated, borderRadius: 10, padding: 12, border: `1px solid ${t.border}`, marginBottom: 10 }}>
                             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-                              <span style={{ fontSize: 11, fontWeight: 700 }}>🇧🇷 BRA</span>
+                              <span style={{ fontSize: 11, fontWeight: 700 }}>🇲🇽 MEX</span>
                               <span style={{ fontFamily: "'JetBrains Mono'", fontSize: 18, fontWeight: 900 }}>1 – 0</span>
-                              <span style={{ fontSize: 11, fontWeight: 700 }}>ARG 🇦🇷</span>
+                              <span style={{ fontSize: 11, fontWeight: 700 }}>KOR 🇰🇷</span>
                             </div>
                             <div style={{ display: "flex", justifyContent: "center" }}>
                               <span style={{ fontSize: 9, fontWeight: 700, color: t.gold, background: t.goldGlow, padding: "2px 8px", borderRadius: 9999 }}>
@@ -959,7 +959,7 @@ export default function QuinielaCaseStudy() {
                               <span key={i} style={{ fontSize: 10, padding: "4px 10px", borderRadius: 9999, background: i === 0 ? t.pitch : t.surfaceElevated, color: i === 0 ? t.textInverse : t.textSecondary, fontWeight: 600, whiteSpace: "nowrap" }}>{f}</span>
                             ))}
                           </div>
-                          {[{ l: "🇧🇷 BRA", r: "ARG 🇦🇷", s: "1–0", st: "HT", c: t.gold }, { l: "🇲🇽 MEX", r: "GER 🇩🇪", s: "16:00", st: "Próx", c: t.textMuted }].map((m, i) => (
+                          {[{ l: "🇲🇽 MEX", r: "KOR 🇰🇷", s: "1–0", st: "HT", c: t.gold }, { l: "🇦🇷 ARG", r: "GER 🇩🇪", s: "16:00", st: "Próx", c: t.textMuted }].map((m, i) => (
                             <div key={i} style={{ background: t.surfaceElevated, borderRadius: 8, padding: 10, marginBottom: 8, border: `1px solid ${t.borderSubtle}` }}>
                               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                                 <span style={{ fontSize: 10, fontWeight: 600 }}>{m.l}</span>
