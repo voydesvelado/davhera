@@ -21,7 +21,7 @@ export function Summary({ match, questions, answers, windowInfo, onEdit, onSubmi
     <div className="flex h-full flex-col px-4 pt-3 pb-6">
       <MatchHeader match={match} />
 
-      <div className="mt-4 flex">
+      <div className="mt-4 flex flex-col">
         <Timer endsAt={windowInfo.endsAt} onExpired={onExpired} />
       </div>
 
