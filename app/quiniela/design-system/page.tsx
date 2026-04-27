@@ -273,7 +273,7 @@ function BottomNav({ active = 0 }) {
   );
 }
 
-function MatchHeader({ team1, team2, score1, score2, status, flag1 = "🇧🇷", flag2 = "🇦🇷" }) {
+function MatchHeader({ team1, team2, score1, score2, status, flag1 = "🇲🇽", flag2 = "🇰🇷" }) {
   return (
     <div style={{
       display: "flex", alignItems: "center", justifyContent: "center", gap: 20,
@@ -432,18 +432,18 @@ function ConfirmationCheck({ visible }) {
 function NotificationPreview({ type = "halftime" }) {
   const configs = {
     halftime: {
-      title: "⚽ Medio tiempo: BRA 1 – 0 ARG",
+      title: "⚽ Medio tiempo: MEX 1 – 0 KOR",
       body: "¿Quién marca primero en el 2T? Participa ahora.",
       time: "Ahora",
     },
     result: {
-      title: "🏆 Resultados: BRA 2 – 1 ARG",
+      title: "🏆 Resultados: MEX 2 – 1 KOR",
       body: "Acertaste 3/5 · Posición #42 · +15 pts",
       time: "Hace 2 min",
     },
     reminder: {
       title: "⏰ Últimos 5 minutos",
-      body: "¡No te quedes fuera! BRA-ARG cierra pronto.",
+      body: "¡No te quedes fuera! MEX-KOR cierra pronto.",
       time: "Ahora",
     },
   };
@@ -903,7 +903,7 @@ export default function DesignSystem() {
                 Máximo 3 campos. Login social como alternativa. Cumple heurística de "prevención de errores".
               </p>
               <div style={{ maxWidth: 360, display: "flex", flexDirection: "column", gap: 16 }}>
-                <InputField label="Nombre o apodo" placeholder="Ej: Carlos_BRA" />
+                <InputField label="Nombre o apodo" placeholder="Ej: Carlos_MEX" />
                 <InputField label="Email o teléfono" placeholder="tu@email.com" type="email" />
                 <InputField label="Contraseña" placeholder="Mínimo 6 caracteres" type="password" error="" />
                 <Button variant="primary" fullWidth>Crear cuenta</Button>
@@ -961,7 +961,7 @@ export default function DesignSystem() {
                 Visible pero no compite con la pregunta. Marcador + estado en header para dar referencia sin sobrecarga.
               </p>
               <div style={{ maxWidth: 400 }}>
-                <MatchHeader team1="Brasil" team2="Argentina" score1={1} score2={0} status="HT" />
+                <MatchHeader team1="México" team2="Corea del Sur" score1={1} score2={0} status="HT" />
               </div>
             </div>
 
@@ -976,7 +976,7 @@ export default function DesignSystem() {
                     number={3}
                     total={5}
                     question="¿Quién marca el próximo gol?"
-                    options={["Brasil", "Argentina", "Ninguno (sin goles en 2T)"]}
+                    options={["México", "Corea del Sur", "Ninguno (sin goles en 2T)"]}
                     selected={selectedOption}
                     onSelect={setSelectedOption}
                   />
