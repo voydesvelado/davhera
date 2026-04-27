@@ -13,7 +13,7 @@ export function ProgressBar({ current, total }: ProgressBarProps) {
       aria-valuemax={total}
       aria-valuenow={Math.min(current, total)}
       aria-label={`Pregunta ${current} de ${total}`}
-      className="flex flex-col gap-2 flex-1"
+      className="flex w-full flex-col gap-2"
     >
       <div className="flex items-center gap-1.5">
         {Array.from({ length: total }).map((_, i) => {

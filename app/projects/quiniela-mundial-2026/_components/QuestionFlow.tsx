@@ -89,11 +89,9 @@ export function QuestionFlow({
     <div className="flex h-full flex-col px-4 pt-3 pb-6">
       <MatchHeader match={match} />
 
-      <div className="mt-4 flex items-stretch gap-3">
+      <div className="mt-4 flex flex-col gap-3">
         <Timer endsAt={windowInfo.endsAt} onExpired={onExpired} />
-        <div className="flex flex-1 items-end pb-1">
-          <ProgressBar current={currentIndex + 1} total={total} />
-        </div>
+        <ProgressBar current={currentIndex + 1} total={total} />
       </div>
 
       <div className="relative mt-6 flex-1 overflow-hidden">
