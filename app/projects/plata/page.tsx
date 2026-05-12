@@ -19,12 +19,9 @@ export default function PlataPage() {
       />
       
       {/* TOP NAV */}
-      <nav className="top-nav">
-        <div className="top-nav-inner">
-          <div className="author">David <span>·</span> Design Engineer</div>
-          <div className="right">
-            <a href="#contact">Contact</a>
-          </div>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-stone-50/80 backdrop-blur-md border-b border-stone-200/50">
+        <div className="max-w-5xl mx-auto px-6 sm:px-0 h-14 flex items-center">
+          <a href="/" className="text-sm font-semibold text-stone-600 hover:text-stone-900 transition-colors">← Portfolio</a>
         </div>
       </nav>
       

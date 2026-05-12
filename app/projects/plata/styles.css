@@ -148,42 +148,6 @@
   .container-wide { max-width: var(--maxw-wide); margin: 0 auto; padding: 0 var(--space-6); }
   .container-narrow { max-width: var(--maxw-narrow); margin: 0 auto; padding: 0 var(--space-6); }
 
-  /* ─────── TOP NAV ─────── */
-  .top-nav {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    background: rgba(250, 250, 249, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-subtle);
-  }
-  .top-nav-inner {
-    max-width: var(--maxw-wide);
-    margin: 0 auto;
-    padding: var(--space-4) var(--space-6);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .top-nav .author {
-    font-family: var(--font-display);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-bold);
-    color: var(--text-primary);
-  }
-  .top-nav .author span { color: var(--color-brand-500); }
-  .top-nav .right {
-    display: flex;
-    gap: var(--space-6);
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-  .top-nav .right a:hover { color: var(--color-brand-600); }
-
   /* ─────── HERO COVER ─────── */
   .hero {
     background: var(--color-neutral-50);
@@ -1490,8 +1454,6 @@
     .container, .container-wide, .container-narrow { padding: 0 var(--space-5); }
     .hero { padding: var(--space-16) 0 var(--space-12); }
     .hero-meta { grid-template-columns: 1fr 1fr; gap: var(--space-5); }
-    .top-nav-inner { padding: var(--space-3) var(--space-5); }
-    .top-nav .right { gap: var(--space-4); }
     .ab-tests { grid-template-columns: 1fr; }
     .ds-row { grid-template-columns: 1fr; gap: var(--space-6); }
     .skill-grid { grid-template-columns: 1fr; }
@@ -1546,5 +1508,3 @@
     font-weight: var(--weight-medium);
   }
 
-  /* Hide the legacy .top-nav since the page now uses a Tailwind fixed nav */
-  nav.top-nav { display: none; }
