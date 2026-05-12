@@ -1,7 +1,7 @@
 const mono = "font-[family-name:var(--font-mono)]";
 
 const links = [
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/daveherv/", external: true },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/herreraux/", external: true },
   { label: "X", href: "https://x.com/daveherv", external: true },
   { label: "Github", href: "https://github.com/daveherv", external: true },
 ];
@@ -46,9 +46,12 @@ export default function Footer() {
                 {label}
               </a>
             ))}
-            <button className="text-sm text-foreground/60 hover:text-foreground transition-colors duration-150 text-start">
+            <a
+              href="mailto:ework.dave@gmail.com"
+              className="text-sm text-foreground/60 hover:text-foreground transition-colors duration-150 text-start"
+            >
               Email
-            </button>
+            </a>
           </div>
         </div>
 
