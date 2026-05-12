@@ -20,7 +20,7 @@ export default function PlataPage() {
       
       {/* TOP NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-stone-50/80 backdrop-blur-md border-b border-stone-200/50">
-        <div className="max-w-5xl mx-auto h-14 flex items-center" style={{ paddingLeft: "1.5rem", paddingRight: "1.5rem" }}>
+        <div className="container-wide h-14 flex items-center">
           <a href="/" className="text-sm font-semibold text-stone-600 hover:text-stone-900 transition-colors">← Portfolio</a>
         </div>
       </nav>
@@ -951,7 +951,7 @@ export default function PlataPage() {
           <div className="contact-buttons">
             <a href="mailto:david@example.com" className="contact-btn">Email</a>
             <a href="https://menura.mx" target="_blank" className="contact-btn outline">See Menura</a>
-            <a href="#" className="contact-btn outline">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/herreraux/" target="_blank" rel="noopener noreferrer" className="contact-btn outline">LinkedIn</a>
           </div>
         </div>
       </section>
