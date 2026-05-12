@@ -934,7 +934,7 @@ export default function PlataPage() {
         <div className="container">
           <FadeIn as="div" className="section-title">Лично от меня</FadeIn>
           <FadeIn as="h2" className="section-heading" delay={0.05}>Хочу работать с вами над Plata.</FadeIn>
-          <FadeIn as="p" className="section-desc" delay={0.1}>Plata — российская компания, строящая банк в Мексике. Это редкое сочетание, и оно совпадает со мной: я свободно говорю на русском, английском и испанском, живу и работаю в Мексике, и уже пять лет проектирую цифровые продукты для малого бизнеса именно на этом рынке.</FadeIn>
+          <FadeIn as="p" className="section-desc" delay={0.1}>Plata — российская компания, строящая банк в Мексике. Это редкое сочетание, и оно совпадает со мной: я свободно говорю на русском, английском и испанском.</FadeIn>
 
           <div className="insight" style={{ marginTop: "var(--space-8)" }}>
             <span className="insight-label">Почему именно я</span>
