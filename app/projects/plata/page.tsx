@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./styles.css";
+import { FadeIn, Stagger, StaggerItem } from "./motion";
 
 export const metadata: Metadata = {
   title: "Plata Business Platform · A V1 design exercise by David",
@@ -30,9 +31,9 @@ export default function PlataPage() {
       {/* HERO */}
       <header className="hero">
         <div className="container-wide hero-inner">
-          <span className="hero-tag">Self-initiated · For Plata's Business Platform Design role</span>
-          <h1>Plata Business Platform. <span>A V1 design exercise.</span></h1>
-          <p className="hero-sub">Onboarding, daily operations, permissions, states, edge cases. The operational layer of a Mexican B2B banking platform — designed end-to-end across mobile and web.</p>
+          <FadeIn as="span" className="hero-tag" onMount>Self-initiated · For Plata's Business Platform Design role</FadeIn>
+          <FadeIn as="h1" onMount delay={0.08}>Plata Business Platform. <span>A V1 design exercise.</span></FadeIn>
+          <FadeIn as="p" className="hero-sub" onMount delay={0.16}>Onboarding, daily operations, permissions, states, edge cases. The operational layer of a Mexican B2B banking platform — designed end-to-end across mobile and web.</FadeIn>
           <div className="hero-meta">
             <div className="hero-meta-cell">
               <span className="label">Surfaces</span>
@@ -57,12 +58,12 @@ export default function PlataPage() {
       {/* VISUAL HERO — MOCKUPS UP FRONT */}
       <section className="chapter surface-tertiary">
         <div className="container-wide">
-          <div className="phone-block-label">The work · part 1 of 3</div>
-          <div className="phone-block-title">A 10-minute mobile onboarding for a Mexican PFAE, with CLABE as the first delivered value and graceful recovery from every failure mode.</div>
-      
-          <div className="phone-row">
-      
-            <div className="phone-mock">
+          <FadeIn as="div" className="phone-block-label">The work · part 1 of 3</FadeIn>
+          <FadeIn as="div" className="phone-block-title" delay={0.05}>A 10-minute mobile onboarding for a Mexican PFAE, with CLABE as the first delivered value.</FadeIn>
+
+          <Stagger className="phone-row">
+
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>9:41</span><span>●●●</span></div>
@@ -84,9 +85,9 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>Welcome</strong>Promise before friction</div>
-            </div>
+            </StaggerItem>
       
-            <div className="phone-mock">
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>9:41</span><span>●●●</span></div>
@@ -123,9 +124,9 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>Business type</strong>Honest about V1 scope</div>
-            </div>
+            </StaggerItem>
       
-            <div className="phone-mock">
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>9:41</span><span>●●●</span></div>
@@ -143,9 +144,9 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>ID capture</strong>Photo, not form</div>
-            </div>
+            </StaggerItem>
       
-            <div className="phone-mock">
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>9:41</span><span>●●●</span></div>
@@ -163,9 +164,9 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>Liveness</strong>Trust, not surveillance</div>
-            </div>
+            </StaggerItem>
       
-            <div className="phone-mock">
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>9:51</span><span>●●●</span></div>
@@ -187,9 +188,9 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>Success</strong>CLABE as first value</div>
-            </div>
+            </StaggerItem>
       
-            <div className="phone-mock">
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>9:52</span><span>●●●</span></div>
@@ -211,18 +212,18 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>Home</strong>3 actions, no empty dashboard</div>
-            </div>
-      
-          </div>
+            </StaggerItem>
+
+          </Stagger>
         </div>
       </section>
       
       {/* CONTEXT */}
       <section className="chapter">
         <div className="container">
-          <div className="section-title">Context</div>
-          <h2 className="section-heading">Why a business platform, not a business app.</h2>
-          <p className="section-desc">A business banking product isn't a feature set. It's an operational system that has to behave correctly across many client types, many states, and many edge cases — most of which the user only sees when something goes wrong. That's the design problem this exercise focuses on.</p>
+          <FadeIn as="div" className="section-title">Context</FadeIn>
+          <FadeIn as="h2" className="section-heading" delay={0.05}>Why a business platform, not a business app.</FadeIn>
+          <FadeIn as="p" className="section-desc" delay={0.1}>A business banking product isn't a feature set. It's an operational system that has to behave correctly across many client types, many states, and many edge cases — most of which the user only sees when something goes wrong. That's the design problem this exercise focuses on.</FadeIn>
       
           <p style={{ fontSize: "var(--text-base)", color: "var(--text-secondary)", lineHeight: "var(--leading-relaxed)", maxWidth: "680px" }}>Plata's banking license unlocks B2B. The market is 4.5 million Mexican SMBs, mostly underserved by incumbents and partially served by competitors that each own one slice — Konfío owns SMB credit, Clara owns expense management, Clip owns acceptance. <strong style={{ color: "var(--text-primary)" }}>Nobody owns the operational bank.</strong> The V1 designed here is the foundation that makes everything else possible.</p>
       
@@ -250,8 +251,8 @@ export default function PlataPage() {
       {/* STRATEGIC BETS — hidden */}
       <section className="chapter" style={{ display: "none" }}>
         <div className="container">
-          <div className="section-title">Five product bets</div>
-          <h2 className="section-heading">The non-negotiables that ordered every decision.</h2>
+          <FadeIn as="div" className="section-title">Five product bets</FadeIn>
+          <FadeIn as="h2" className="section-heading" delay={0.05}>The non-negotiables that ordered every decision.</FadeIn>
       
           <div className="decisions">
             <div className="decision">
@@ -291,9 +292,9 @@ export default function PlataPage() {
       {/* STATES & PERMISSIONS */}
       <section className="chapter">
         <div className="container">
-          <div className="section-title">States & permissions</div>
-          <h2 className="section-heading">An account is a state machine. The UI follows.</h2>
-          <p className="section-desc">A business account isn't always "active". It moves through nine states across its lifecycle, each with different permissions and different UI affordances. The state machine is the source of truth — every screen renders from it, not from a hardcoded happy path.</p>
+          <FadeIn as="div" className="section-title">States & permissions</FadeIn>
+          <FadeIn as="h2" className="section-heading" delay={0.05}>An account is a state machine. The UI follows.</FadeIn>
+          <FadeIn as="p" className="section-desc" delay={0.1}>A business account isn't always "active". It moves through nine states across its lifecycle, each with different permissions and different UI affordances. The state machine is the source of truth — every screen renders from it, not from a hardcoded happy path.</FadeIn>
       
           <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-xl)", fontWeight: "var(--weight-bold)", marginBottom: "var(--space-3)", letterSpacing: "-0.01em" }}>Account state machine</h3>
       
@@ -405,13 +406,13 @@ export default function PlataPage() {
       {/* EDGE CASES */}
       <section className="chapter surface-tertiary">
         <div className="container-wide">
-          <div className="section-title">Edge cases</div>
-          <h2 className="section-heading">Three failure modes. Three recovery flows.</h2>
-          <p className="section-desc">A bank that only works on the happy path is not a bank. The screens below show how three common failure modes resolve into states the user can act on, without ever exposing an error code or a dead-end.</p>
+          <FadeIn as="div" className="section-title">Edge cases</FadeIn>
+          <FadeIn as="h2" className="section-heading" delay={0.05}>Three failure modes. Three recovery flows.</FadeIn>
+          <FadeIn as="p" className="section-desc" delay={0.1}>A bank that only works on the happy path is not a bank. The screens below show how three common failure modes resolve into states the user can act on, without ever exposing an error code or a dead-end.</FadeIn>
       
-          <div className="phone-row">
+          <Stagger className="phone-row">
       
-            <div className="phone-mock">
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>9:43</span><span>●●●</span></div>
@@ -431,9 +432,9 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>OCR failed</strong>Diagnose, suggest, allow retry</div>
-            </div>
+            </StaggerItem>
       
-            <div className="phone-mock">
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>9:52</span><span>●●●</span></div>
@@ -456,9 +457,9 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>Manual review</strong>Never "rejected" — always "in progress"</div>
-            </div>
+            </StaggerItem>
       
-            <div className="phone-mock">
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>14:22</span><span>●●●</span></div>
@@ -488,10 +489,10 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>Card frozen</strong>Protect first, ask later</div>
-            </div>
-      
-          </div>
-      
+            </StaggerItem>
+
+          </Stagger>
+
           <div className="container" style={{ padding: "0", marginTop: "var(--space-10)" }}>
             <div className="insight">
               <span className="insight-label">Insight</span>
@@ -504,13 +505,13 @@ export default function PlataPage() {
       {/* OPERATIONAL FLOWS */}
       <section className="chapter">
         <div className="container-wide">
-          <div className="section-title">Operational flows</div>
-          <h2 className="section-heading">The day after onboarding. What the product actually does.</h2>
-          <p className="section-desc">Onboarding is one day. Operations are every day after that. Four flows account for roughly 90% of the daily sessions in a typical business account: receiving, sending, categorizing, and reconciling. Each one is designed to be a single tap from the home screen.</p>
+          <FadeIn as="div" className="section-title">Operational flows</FadeIn>
+          <FadeIn as="h2" className="section-heading" delay={0.05}>The day after onboarding. What the product actually does.</FadeIn>
+          <FadeIn as="p" className="section-desc" delay={0.1}>Onboarding is one day. Operations are every day after that. Four flows account for roughly 90% of the daily sessions in a typical business account: receiving, sending, categorizing, and reconciling. Each one is designed to be a single tap from the home screen.</FadeIn>
       
-          <div className="phone-row" style={{ marginTop: "var(--space-10)" }}>
+          <Stagger className="phone-row" style={{ marginTop: "var(--space-10)" }} amount={0.15}>
       
-            <div className="phone-mock">
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>10:14</span><span>●●●</span></div>
@@ -540,9 +541,9 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>Cobrar · Receive</strong>Three methods, one tap each</div>
-            </div>
+            </StaggerItem>
       
-            <div className="phone-mock">
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>10:15</span><span>●●●</span></div>
@@ -578,9 +579,9 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>Pagar · Send</strong>Memory by frequency, not alphabet</div>
-            </div>
+            </StaggerItem>
       
-            <div className="phone-mock">
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>10:18</span><span>●●●</span></div>
@@ -612,9 +613,9 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>Movement detail</strong>Categorize & receipt in one place</div>
-            </div>
+            </StaggerItem>
       
-            <div className="phone-mock">
+            <StaggerItem className="phone-mock">
               <div className="phone-frame">
                 <div className="phone-screen">
                   <div className="phone-status"><span>10:20</span><span>●●●</span></div>
@@ -653,10 +654,10 @@ export default function PlataPage() {
                 </div>
               </div>
               <div className="mock-caption"><strong>Activity</strong>Smart category + manual override</div>
-            </div>
-      
-          </div>
-      
+            </StaggerItem>
+
+          </Stagger>
+
           <div className="container" style={{ padding: "0", marginTop: "var(--space-10)" }}>
             <div className="insight">
               <span className="insight-label">Insight</span>
@@ -669,9 +670,9 @@ export default function PlataPage() {
       {/* WEB COMPANION */}
       <section className="chapter surface-tertiary">
         <div className="container-wide">
-          <div className="section-title">Web · accountant console</div>
-          <h2 className="section-heading">A second surface, scoped by permission.</h2>
-          <p className="section-desc">Mexican accountants work on desktop. They serve 20–50 small businesses each. The web console is built for them: a multi-client list, read-only access to each client's account, exportable to the formats their software actually uses. Same backend as the mobile app. Different permissions enforced server-side, different UI rendered client-side.</p>
+          <FadeIn as="div" className="section-title">Web · accountant console</FadeIn>
+          <FadeIn as="h2" className="section-heading" delay={0.05}>A second surface, scoped by permission.</FadeIn>
+          <FadeIn as="p" className="section-desc" delay={0.1}>Mexican accountants work on desktop. They serve 20–50 small businesses each. The web console is built for them: a multi-client list, read-only access to each client's account, exportable to the formats their software actually uses. Same backend as the mobile app. Different permissions enforced server-side, different UI rendered client-side.</FadeIn>
       
           <div className="laptop">
             <div className="laptop-frame">
@@ -744,9 +745,9 @@ export default function PlataPage() {
       {/* A/B TESTS */}
       <section className="chapter">
         <div className="container">
-          <div className="section-title">Validation plan</div>
-          <h2 className="section-heading">Six A/B tests, ranked by activation impact.</h2>
-          <p className="section-desc">Hypotheses I'd ship in the first six months. Each one has a falsifiable prediction and a single metric that decides.</p>
+          <FadeIn as="div" className="section-title">Validation plan</FadeIn>
+          <FadeIn as="h2" className="section-heading" delay={0.05}>Six A/B tests, ranked by activation impact.</FadeIn>
+          <FadeIn as="p" className="section-desc" delay={0.1}>Hypotheses I'd ship in the first six months. Each one has a falsifiable prediction and a single metric that decides.</FadeIn>
       
           <div className="ab-tests">
       
@@ -799,9 +800,9 @@ export default function PlataPage() {
       {/* DESIGN SYSTEM */}
       <section className="chapter">
         <div className="container">
-          <div className="section-title">Design system</div>
-          <h2 className="section-heading">Built on Menura DS · my own system foundations.</h2>
-          <p className="section-desc">This case isn't styled in a vacuum. Every token, type scale, and component comes from Menura DS — the design system I built for my own SaaS company. Bringing a mature system into a new product is faster than reinventing one each time, and it forces consistency across everything I ship.</p>
+          <FadeIn as="div" className="section-title">Design system</FadeIn>
+          <FadeIn as="h2" className="section-heading" delay={0.05}>Built on Menura DS · my own system foundations.</FadeIn>
+          <FadeIn as="p" className="section-desc" delay={0.1}>This case isn't styled in a vacuum. Every token, type scale, and component comes from Menura DS — the design system I built for my own SaaS company. Bringing a mature system into a new product is faster than reinventing one each time, and it forces consistency across everything I ship.</FadeIn>
       
           <div className="ds-intro-card">
             <div className="ds-intro-card-inner">
@@ -889,8 +890,8 @@ export default function PlataPage() {
       {/* SKILLS — MATCHING KATE'S BULLETS */}
       <section className="chapter">
         <div className="container">
-          <div className="section-title">What this work demonstrates</div>
-          <h2 className="section-heading">Side by side with the hiring post.</h2>
+          <FadeIn as="div" className="section-title">What this work demonstrates</FadeIn>
+          <FadeIn as="h2" className="section-heading" delay={0.05}>Side by side with the hiring post.</FadeIn>
       
           <div className="skill-grid">
             <div className="skill-cell">
