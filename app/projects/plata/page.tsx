@@ -511,7 +511,7 @@ export default function PlataPage() {
           <FadeIn as="h2" className="section-heading" delay={0.05}>The day after onboarding. What the product actually does.</FadeIn>
           <FadeIn as="p" className="section-desc" delay={0.1}>Onboarding is one day. Operations are every day after that. Four flows account for roughly 90% of the daily sessions in a typical business account: receiving, sending, categorizing, and reconciling. Each one is designed to be a single tap from the home screen.</FadeIn>
       
-          <Stagger className="phone-row" style={{ marginTop: "var(--space-10)" }} amount={0.15}>
+          <Stagger className="phone-row phone-row-4" style={{ marginTop: "var(--space-10)" }} amount={0.15}>
       
             <StaggerItem className="phone-mock">
               <div className="phone-frame">
