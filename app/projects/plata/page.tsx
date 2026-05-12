@@ -20,7 +20,7 @@ export default function PlataPage() {
       
       {/* TOP NAV */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-stone-50/80 backdrop-blur-md border-b border-stone-200/50">
-        <div className="max-w-5xl mx-auto px-6 sm:px-0 h-14 flex items-center">
+        <div className="max-w-5xl mx-auto h-14 flex items-center" style={{ paddingLeft: "1.5rem", paddingRight: "1.5rem" }}>
           <a href="/" className="text-sm font-semibold text-stone-600 hover:text-stone-900 transition-colors">← Portfolio</a>
         </div>
       </nav>
