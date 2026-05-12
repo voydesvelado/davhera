@@ -438,10 +438,21 @@
     letter-spacing: -0.015em;
   }
   .phone-row {
-    display: flex;
-    gap: var(--space-6);
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-10) var(--space-6);
+    justify-items: center;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .phone-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 600px) {
+    .phone-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
   }
   .phone-grid {
     display: grid;
