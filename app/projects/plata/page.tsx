@@ -745,7 +745,7 @@ export default function PlataPage() {
       </section>
       
       {/* A/B TESTS */}
-      <section className="chapter">
+      <section className="chapter" style={{ display: "none" }}>
         <div className="container">
           <FadeIn as="div" className="section-title">Validation plan</FadeIn>
           <FadeIn as="h2" className="section-heading" delay={0.05}>Six A/B tests, ranked by activation impact.</FadeIn>
@@ -890,7 +890,7 @@ export default function PlataPage() {
       </section>
       
       {/* SKILLS — MATCHING KATE'S BULLETS */}
-      <section className="chapter">
+      <section className="chapter" style={{ display: "none" }}>
         <div className="container">
           <FadeIn as="div" className="section-title">What this work demonstrates</FadeIn>
           <FadeIn as="h2" className="section-heading" delay={0.05}>Side by side with the hiring post.</FadeIn>
@@ -932,6 +932,20 @@ export default function PlataPage() {
         </div>
       </section>
       
+      {/* PERSONAL NOTE — RU */}
+      <section className="chapter surface-tertiary" lang="ru">
+        <div className="container">
+          <FadeIn as="div" className="section-title">Лично от меня</FadeIn>
+          <FadeIn as="h2" className="section-heading" delay={0.05}>Хочу работать с вами над Plata.</FadeIn>
+          <FadeIn as="p" className="section-desc" delay={0.1}>Plata — российская компания, строящая банк в Мексике. Это редкое сочетание, и оно совпадает со мной: я свободно говорю на русском, английском и испанском, живу и работаю в Мексике, и уже пять лет проектирую цифровые продукты для малого бизнеса именно на этом рынке.</FadeIn>
+
+          <div className="insight" style={{ marginTop: "var(--space-8)" }}>
+            <span className="insight-label">Почему именно я</span>
+            <p>Каждый пункт в описании вакансии — то, чем я занимаюсь каждый день: сложные B2B-продукты в финтехе, веб и мобайл одновременно, нативные паттерны iOS / Android / web, матрицы прав, состояния, edge-кейсы и собственная дизайн-система, на которой я строю свой SaaS. Этот кейс — две недели соло, с чистого листа — показатель того, как я веду задачу целиком: от ресёрча до DS. Я подхожу под эту роль не на 80%, а полностью — и мне действительно хочется делать этот продукт вместе с вами.</p>
+          </div>
+        </div>
+      </section>
+
       {/* CONTACT */}
       <section id="contact" className="contact-cta">
         <div className="contact-cta-inner container">
