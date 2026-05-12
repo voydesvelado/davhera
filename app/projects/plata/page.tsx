@@ -333,8 +333,9 @@ export default function PlataPage() {
             </div>
           </div>
       
+          <div style={{ display: "none" }}>
           <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-xl)", fontWeight: "var(--weight-bold)", marginTop: "var(--space-10)", marginBottom: "var(--space-3)", letterSpacing: "-0.01em" }}>Roles and permissions matrix</h3>
-      
+
           <table className="perm-table">
             <thead>
               <tr>
@@ -400,9 +401,10 @@ export default function PlataPage() {
             <span className="insight-label">Insight</span>
             <p>The matrix doubles as the contract with engineering. Every screen has a permission requirement; every UI state checks it before render. A read-only accountant viewing the same balance screen as the owner sees the same data, with destructive actions hidden — not greyed out, hidden — because permission-by-removal is easier to reason about than permission-by-state.</p>
           </div>
+          </div>
         </div>
       </section>
-      
+
       {/* EDGE CASES */}
       <section className="chapter surface-tertiary">
         <div className="container-wide">
