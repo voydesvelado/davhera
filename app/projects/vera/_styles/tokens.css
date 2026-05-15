@@ -1,0 +1,120 @@
+/* Vera · Design tokens
+   Scoped exclusively under .proj-vera to avoid leaking into davhera.com
+   or any sibling project. Editorial mode is the default; .mode-product
+   redefines the subset of tokens that differs.
+
+   Source of truth: app/projects/vera/_research/design-system.md (§3–9). */
+
+.proj-vera {
+  /* ── COLOR (Editorial mode, default) ──────────────────────── */
+  --bg:           #F4EFE4;
+  --bg-2:         #EBE4D3;
+  --bg-3:         #E4DBC5;
+  --ink:          #1A1816;
+  --ink-soft:     #2C2924;
+  --muted:        #6E665A;
+  --rule:         #CFC6B3;
+  --rule-soft:    #DDD4C1;
+  --accent:       #8B2E1F;
+  --accent-soft:  #B85940;
+  --accent-pale:  #F1E3DE;
+
+  /* Semantic states — present for completeness, used in product mode */
+  --success:      #4A6B3F;
+  --warning:      #B8851F;
+  --danger:       #8B2E1F;
+
+  /* ── TYPE SCALE ───────────────────────────────────────────── */
+  --text-caption: 12px;
+  --text-small:   13px;
+  --text-sm:      15px;
+  --text-base:    17px;
+  --text-body:    19px;
+  --text-lead:    22px;
+  --text-h4:      24px;
+  --text-h3:      28px;
+  --text-h2:      38px;
+  --text-h1:      54px;
+  --text-display: 72px;
+
+  /* ── LINE-HEIGHT & TRACKING ──────────────────────────────── */
+  --leading-tight:   1.05;
+  --leading-snug:    1.2;
+  --leading-normal:  1.45;
+  --leading-relaxed: 1.55;
+
+  --tracking-tight:  -0.025em;
+  --tracking-snug:   -0.015em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.18em;
+  --tracking-wider:  0.22em;
+
+  /* ── SPACING ─────────────────────────────────────────────── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ── LAYOUT ─────────────────────────────────────────────── */
+  --max-prose:   680px;
+  --max-product: 720px;
+  --max-wide:    1080px;
+
+  --page-px-mobile:  20px;
+  --page-px-tablet:  28px;
+  --page-px-desktop: 28px;
+
+  /* ── RADII ──────────────────────────────────────────────── */
+  --radius-none: 0;
+  --radius-xs:   2px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-pill: 9999px;
+
+  /* ── ELEVATION ──────────────────────────────────────────── */
+  --shadow-sm: 0 1px 2px rgba(15, 20, 24, 0.04),
+               0 1px 3px rgba(15, 20, 24, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 20, 24, 0.06),
+               0 2px 4px rgba(15, 20, 24, 0.04);
+  --shadow-lg: 0 16px 40px rgba(15, 20, 24, 0.08),
+               0 4px 12px rgba(15, 20, 24, 0.04);
+
+  /* ── MOTION ─────────────────────────────────────────────── */
+  --dur-instant: 100ms;
+  --dur-fast:    150ms;
+  --dur-base:    250ms;
+  --dur-slow:    400ms;
+  --dur-ambient: 700ms;
+
+  --ease-out:      cubic-bezier(0.2, 0, 0, 1);
+  --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── PRODUCT MODE OVERRIDES ──────────────────────────────────
+   Either a page's root carries .proj-vera.mode-product, or an inner
+   wrapper carries .mode-product. Both selectors covered. */
+.proj-vera.mode-product,
+.proj-vera .mode-product {
+  --bg:          #FAFAF7;
+  --bg-2:        #F2F0EA;
+  --bg-3:        #E8E5DD;
+  --ink:         #0F1418;
+  --ink-soft:    #2A2F35;
+  --muted:       #6B7280;
+  --rule:        #E3DFD5;
+  --rule-soft:   #EEEAE0;
+  --accent:      #A04030;
+  --accent-soft: #C76957;
+  --accent-pale: #F5E8E3;
+}
