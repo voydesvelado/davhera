@@ -9,11 +9,10 @@ export function Label({ children, style, ...rest }: LabelProps) {
     <label
       {...rest}
       style={{
-        fontFamily: "var(--font-fraunces), serif",
-        fontVariationSettings: '"opsz" 9, "SOFT" 0',
-        fontWeight: 600,
-        fontSize: "12px",
-        letterSpacing: "0.18em",
+        fontFamily: "var(--font-geist), system-ui, sans-serif",
+        fontSize: "var(--text-xs)",
+        fontWeight: 500,
+        letterSpacing: "var(--tracking-widest)",
         textTransform: "uppercase",
         color: "var(--muted)",
         display: "inline-block",

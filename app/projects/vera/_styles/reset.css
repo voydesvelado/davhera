@@ -1,13 +1,9 @@
 /* Vera · Cascade reset
-   davhera's globals.css declares typography for `.project-layout p/h1/h2/h3/h4`
-   (see app/globals.css lines 120–148). Those rules cascade into our pages
-   because we inherit the parent .project-layout wrapper.
-
-   We re-anchor every text element under .proj-vera to the project's own
-   typography. :where() keeps specificity low (0,2,0 with .project-layout
-   .proj-vera) so component-level overrides still win, but it's high enough
-   to beat the bare `.project-layout p` (0,1,1) and `.project-layout h1`
-   etc. rules in the parent. */
+   davhera's globals.css declares `.project-layout p/h1/h2/h3/h4` styles
+   that would otherwise bleed in (they map to Plus Jakarta / DM Sans, not
+   Geist). We re-anchor every text element under .proj-vera. :where()
+   keeps specificity low (0,2,0) but high enough to beat the parent's
+   `.project-layout p` (0,1,1) rule. */
 
 .project-layout .proj-vera :where(p, h1, h2, h3, h4, h5, h6, a, li, dd, dt) {
   font-family: inherit;
@@ -19,32 +15,7 @@
   text-transform: none;
 }
 
-/* Same for links — globals.css doesn't style them, but we want consistency. */
 .proj-vera a {
   color: inherit;
   text-decoration: none;
-}
-
-/* Box-model defaults are inherited from globals.css's @layer base. We keep
-   them. No need to re-declare. */
-
-/* The body background comes from davhera globals (--background → white).
-   Vera pages paint their own bg via the PageShell, so the davhera body
-   stays white outside our scope. */
-.proj-vera {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-newsreader), Georgia, serif;
-  font-weight: 380;
-  font-size: var(--text-body);
-  line-height: var(--leading-relaxed);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-feature-settings: "kern", "liga", "calt";
-}
-
-/* Selection — uses the accent across both modes */
-.proj-vera ::selection {
-  background: var(--accent-pale);
-  color: var(--ink);
 }

@@ -1,120 +1,166 @@
-/* Vera · Design tokens
-   Scoped exclusively under .proj-vera to avoid leaking into davhera.com
-   or any sibling project. Editorial mode is the default; .mode-product
-   redefines the subset of tokens that differs.
-
-   Source of truth: app/projects/vera/_research/design-system.md (§3–9). */
+/* Vera · Design tokens · v0.3 — Premium Product
+   Source of truth: app/projects/vera/_research/design-system-v3.md §5–§11
+   Scoped exclusively under .proj-vera. All colors in OKLCH (hex documented
+   alongside for reference only — OKLCH is canonical). */
 
 .proj-vera {
-  /* ── COLOR (Editorial mode, default) ──────────────────────── */
-  --bg:           #F4EFE4;
-  --bg-2:         #EBE4D3;
-  --bg-3:         #E4DBC5;
-  --ink:          #1A1816;
-  --ink-soft:     #2C2924;
-  --muted:        #6E665A;
-  --rule:         #CFC6B3;
-  --rule-soft:    #DDD4C1;
-  --accent:       #8B2E1F;
-  --accent-soft:  #B85940;
-  --accent-pale:  #F1E3DE;
+  /* ── COLOR · LIGHT (default) ─────────────────────────────── */
+  /* Surfaces */
+  --bg:           oklch(0.985 0.002 250);  /* #FAFAFB */
+  --bg-raised:    oklch(1.000 0 0);        /* #FFFFFF */
+  --bg-sunken:    oklch(0.965 0.003 250);  /* #F3F4F5 */
+  --bg-overlay:   oklch(0.995 0.001 250);  /* #FCFCFD */
 
-  /* Semantic states — present for completeness, used in product mode */
-  --success:      #4A6B3F;
-  --warning:      #B8851F;
-  --danger:       #8B2E1F;
+  /* Ink */
+  --ink:          oklch(0.18 0.005 250);   /* #16181C */
+  --ink-soft:     oklch(0.32 0.005 250);   /* #2E3239 */
+  --ink-faint:    oklch(0.48 0.005 250);   /* #545962 */
+  --muted:        oklch(0.58 0.005 250);   /* #717680 */
 
-  /* ── TYPE SCALE ───────────────────────────────────────────── */
-  --text-caption: 12px;
-  --text-small:   13px;
-  --text-sm:      15px;
-  --text-base:    17px;
-  --text-body:    19px;
-  --text-lead:    22px;
-  --text-h4:      24px;
-  --text-h3:      28px;
-  --text-h2:      38px;
-  --text-h1:      54px;
-  --text-display: 72px;
+  /* Lines */
+  --rule:         oklch(0.92 0.003 250);   /* #E5E6E8 */
+  --rule-strong:  oklch(0.85 0.005 250);   /* #D2D4D7 */
+  --rule-faint:   oklch(0.95 0.003 250);   /* #EFF0F1 */
 
-  /* ── LINE-HEIGHT & TRACKING ──────────────────────────────── */
-  --leading-tight:   1.05;
-  --leading-snug:    1.2;
-  --leading-normal:  1.45;
-  --leading-relaxed: 1.55;
+  /* Accent */
+  --accent:       oklch(0.52 0.17 32);     /* #A6402F */
+  --accent-soft:  oklch(0.62 0.15 32);     /* #C46550 */
+  --accent-pale:  oklch(0.94 0.025 32);    /* #F5E8E3 */
+  --accent-ink:   oklch(0.99 0.005 32);    /* #FCFAF9 */
 
-  --tracking-tight:  -0.025em;
-  --tracking-snug:   -0.015em;
-  --tracking-normal: 0;
-  --tracking-wide:   0.18em;
-  --tracking-wider:  0.22em;
+  /* Semantic */
+  --success:      oklch(0.58 0.13 150);    /* #4E8B5C */
+  --warning:      oklch(0.72 0.14 75);     /* #BE9028 */
+  --danger:       oklch(0.55 0.20 27);     /* #B33B26 */
+
+  /* Focus */
+  --focus-ring:           oklch(0.52 0.17 32 / 0.45);
+  --focus-ring-width:     2px;
+  --focus-ring-offset:    2px;
+
+  /* ── SHADOWS · LIGHT ─────────────────────────────────────── */
+  --shadow-sm: 0 1px 2px oklch(0.18 0.005 250 / 0.04),
+               0 1px 1px oklch(0.18 0.005 250 / 0.03);
+  --shadow-md: 0 4px 12px oklch(0.18 0.005 250 / 0.06),
+               0 2px 4px oklch(0.18 0.005 250 / 0.04);
+  --shadow-lg: 0 12px 32px oklch(0.18 0.005 250 / 0.10),
+               0 4px 8px oklch(0.18 0.005 250 / 0.06);
+  --shadow-xl: 0 24px 64px oklch(0.18 0.005 250 / 0.12),
+               0 8px 16px oklch(0.18 0.005 250 / 0.08);
+
+  /* ── TYPE SCALE ──────────────────────────────────────────── */
+  --text-2xs: 11px;
+  --text-xs:  12px;
+  --text-sm:  13px;
+  --text-base:14px;
+  --text-md:  15px;
+  --text-lg:  16px;
+  --text-xl:  18px;
+  --text-2xl: 22px;
+  --text-3xl: 28px;
+  --text-4xl: 36px;
+  --text-5xl: 48px;
+  --text-6xl: 64px;
+  --text-7xl: 80px;
+
+  /* Weights */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* Tracking */
+  --tracking-tight:   -0.04em;
+  --tracking-snug:    -0.02em;
+  --tracking-normal:  -0.005em;
+  --tracking-wide:    0.04em;
+  --tracking-wider:   0.10em;
+  --tracking-widest:  0.18em;
+
+  /* Line-height */
+  --leading-none:     1.00;
+  --leading-tight:    1.10;
+  --leading-snug:     1.25;
+  --leading-normal:   1.45;
+  --leading-relaxed:  1.6;
 
   /* ── SPACING ─────────────────────────────────────────────── */
-  --space-1:  4px;
-  --space-2:  8px;
-  --space-3:  12px;
-  --space-4:  16px;
-  --space-5:  20px;
-  --space-6:  24px;
-  --space-8:  32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
-  --space-20: 80px;
-  --space-24: 96px;
-  --space-32: 128px;
+  --space-0:    0;
+  --space-0_5:  2px;
+  --space-1:    4px;
+  --space-1_5:  6px;
+  --space-2:    8px;
+  --space-3:    12px;
+  --space-4:    16px;
+  --space-5:    20px;
+  --space-6:    24px;
+  --space-8:    32px;
+  --space-10:   40px;
+  --space-12:   48px;
+  --space-16:   64px;
+  --space-20:   80px;
+  --space-24:   96px;
 
-  /* ── LAYOUT ─────────────────────────────────────────────── */
-  --max-prose:   680px;
-  --max-product: 720px;
-  --max-wide:    1080px;
+  /* ── LAYOUT ──────────────────────────────────────────────── */
+  --max-narrow:    560px;
+  --max-content:   720px;
+  --max-wide:      1080px;
+  --max-dashboard: 1440px;
 
-  --page-px-mobile:  20px;
-  --page-px-tablet:  28px;
-  --page-px-desktop: 28px;
+  --px-mobile:  16px;
+  --px-tablet:  20px;
+  --px-desktop: 24px;
 
-  /* ── RADII ──────────────────────────────────────────────── */
-  --radius-none: 0;
-  --radius-xs:   2px;
-  --radius-sm:   4px;
+  /* Density */
+  --row-height-base:      40px;
+  --row-height-compact:   32px;
+  --field-height-base:    36px;
+  --field-height-compact: 32px;
+
+  /* ── RADII ───────────────────────────────────────────────── */
+  --radius-xs:   4px;
+  --radius-sm:   6px;
   --radius-md:   8px;
   --radius-lg:   12px;
+  --radius-xl:   16px;
   --radius-pill: 9999px;
 
-  /* ── ELEVATION ──────────────────────────────────────────── */
-  --shadow-sm: 0 1px 2px rgba(15, 20, 24, 0.04),
-               0 1px 3px rgba(15, 20, 24, 0.06);
-  --shadow-md: 0 4px 12px rgba(15, 20, 24, 0.06),
-               0 2px 4px rgba(15, 20, 24, 0.04);
-  --shadow-lg: 0 16px 40px rgba(15, 20, 24, 0.08),
-               0 4px 12px rgba(15, 20, 24, 0.04);
+  /* ── MOTION ──────────────────────────────────────────────── */
+  --dur-instant: 60ms;
+  --dur-quick:   100ms;
+  --dur-base:    180ms;
+  --dur-snap:    240ms;
+  --dur-smooth:  400ms;
+  --dur-ambient: 800ms;
 
-  /* ── MOTION ─────────────────────────────────────────────── */
-  --dur-instant: 100ms;
-  --dur-fast:    150ms;
-  --dur-base:    250ms;
-  --dur-slow:    400ms;
-  --dur-ambient: 700ms;
-
-  --ease-out:      cubic-bezier(0.2, 0, 0, 1);
-  --ease-in-out:   cubic-bezier(0.4, 0, 0.2, 1);
-  --ease-emphasis: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out:      cubic-bezier(0.2, 0.0, 0.0, 1.0);
+  --ease-snap:     cubic-bezier(0.32, 0.72, 0.0, 1.0);
+  --ease-glide:    cubic-bezier(0.4, 0.0, 0.2, 1.0);
+  --ease-emphasis: cubic-bezier(0.16, 1.0, 0.3, 1.0);
 }
 
-/* ── PRODUCT MODE OVERRIDES ──────────────────────────────────
-   Either a page's root carries .proj-vera.mode-product, or an inner
-   wrapper carries .mode-product. Both selectors covered. */
-.proj-vera.mode-product,
-.proj-vera .mode-product {
-  --bg:          #FAFAF7;
-  --bg-2:        #F2F0EA;
-  --bg-3:        #E8E5DD;
-  --ink:         #0F1418;
-  --ink-soft:    #2A2F35;
-  --muted:       #6B7280;
-  --rule:        #E3DFD5;
-  --rule-soft:   #EEEAE0;
-  --accent:      #A04030;
-  --accent-soft: #C76957;
-  --accent-pale: #F5E8E3;
+/* ── Base typography & background for the project root ──────── */
+.proj-vera {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-geist), system-ui, -apple-system, sans-serif;
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern", "liga", "calt", "cv11" 1;
+}
+
+/* Tabular numerics utility */
+.proj-vera .tabular {
+  font-feature-settings: "tnum" 1, "cv11" 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Density variants */
+.proj-vera .density-comfortable {
+  --row-height-base: 48px;
+  --field-height-base: 44px;
 }

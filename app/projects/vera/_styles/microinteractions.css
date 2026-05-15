@@ -1,0 +1,89 @@
+/* Vera · Microinteractions
+   Focus rings, selection, scrollbars, cursor states. Scoped under .proj-vera. */
+
+/* Focus — visible on keyboard, hidden on mouse click */
+.proj-vera :focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  border-radius: inherit;
+}
+
+/* Reset the default focus ring on mouse interactions */
+.proj-vera :focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Selection */
+.proj-vera ::selection {
+  background: var(--accent-pale);
+  color: var(--accent);
+}
+
+.proj-vera.theme-dark ::selection,
+.proj-vera .theme-dark ::selection {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+/* Scrollbars */
+.proj-vera * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule) transparent;
+}
+
+.proj-vera *::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.proj-vera *::-webkit-scrollbar-thumb {
+  background: var(--rule);
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.proj-vera *::-webkit-scrollbar-thumb:hover {
+  background: var(--rule-strong);
+  background-clip: content-box;
+}
+
+.proj-vera *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Smooth in-page anchor scrolling */
+.proj-vera {
+  scroll-behavior: smooth;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .proj-vera,
+  .proj-vera * {
+    scroll-behavior: auto;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Skeleton pulse */
+@keyframes vera-skeleton-pulse {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+.proj-vera .vera-skeleton {
+  background: var(--bg-sunken);
+  border-radius: var(--radius-sm);
+  animation: vera-skeleton-pulse var(--dur-ambient) ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proj-vera .vera-skeleton {
+    animation: none;
+    opacity: 0.7;
+  }
+}

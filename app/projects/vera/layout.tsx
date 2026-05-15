@@ -1,27 +1,12 @@
 import type { Metadata } from "next";
-import { Fraunces, Newsreader, Geist, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 
 import "./_styles/tokens.css";
 import "./_styles/reset.css";
-import "./_styles/editorial.css";
-import "./_styles/product.css";
-import "./_styles/grain.css";
+import "./_styles/dark.css";
+import "./_styles/microinteractions.css";
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-fraunces",
-  style: ["normal", "italic"],
-  axes: ["SOFT", "opsz"],
-  display: "swap",
-});
-
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  variable: "--font-newsreader",
-  style: ["normal", "italic"],
-  axes: ["opsz"],
-  display: "swap",
-});
+import { ThemeProvider, themeInitScript } from "./_lib/theme";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -29,17 +14,16 @@ const geist = Geist({
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-mono-vera",
-  weight: ["400", "500"],
+  variable: "--font-geist-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Vera · Davhera",
   description:
-    "Vera — una plataforma de reservas para el profesional de la salud independiente en México. Proyecto en concepto.",
+    "Reservas para profesionales independientes. Una pieza de portafolio de Davhera.",
 };
 
 export default function VeraLayout({
@@ -47,16 +31,10 @@ export default function VeraLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const fontClasses = [
-    fraunces.variable,
-    newsreader.variable,
-    geist.variable,
-    jetbrainsMono.variable,
-  ].join(" ");
-
   return (
-    <div className={`proj-vera ${fontClasses}`}>
-      {children}
+    <div className={`proj-vera ${geist.variable} ${geistMono.variable}`}>
+      <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      <ThemeProvider>{children}</ThemeProvider>
     </div>
   );
 }
