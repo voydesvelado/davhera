@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio Build Scope — Document № 004</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #F4EFE4;
+    --bg-2: #EBE4D3;
+    --ink: #1A1816;
+    --ink-soft: #2C2924;
+    --muted: #6E665A;
+    --rule: #CFC6B3;
+    --rule-soft: #DDD4C1;
+    --accent: #8B2E1F;
+    --accent-soft: #B85940;
+    --accent-pale: #F1E3DE;
+    --green: #4A6B3F;
+    --max: 720px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 380;
+    font-size: 19px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(139, 46, 31, 0.025), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(110, 102, 90, 0.04), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 1;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  .page {
+    position: relative; z-index: 2;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 64px 28px 120px;
+  }
+
+  /* COVER */
+  .cover {
+    padding-bottom: 48px;
+    margin-bottom: 56px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .cover-meta {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 100;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 56px;
+  }
+
+  .cover-meta .right { text-align: right; }
+  .cover-meta div { display: flex; flex-direction: column; gap: 4px; }
+
+  .eyebrow {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 0;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    display: inline-block;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--accent);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+    font-weight: 360;
+    font-size: clamp(40px, 8vw, 66px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin: 0 0 24px;
+    color: var(--ink);
+  }
+
+  h1 em {
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+    font-style: italic;
+    font-weight: 320;
+    color: var(--accent);
+  }
+
+  .deck {
+    font-family: 'Newsreader', serif;
+    font-variation-settings: "opsz" 24;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 21px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    max-width: 560px;
+  }
+
+  /* SECTIONS */
+  section { margin-top: 64px; }
+
+  .section-head {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-num {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 100;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 72, "SOFT" 50;
+    font-weight: 380;
+    font-size: clamp(28px, 4.8vw, 38px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  h2 em {
+    font-variation-settings: "opsz" 72, "SOFT" 100;
+    font-style: italic;
+    font-weight: 340;
+  }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 50;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    margin: 36px 0 14px;
+    color: var(--ink);
+  }
+
+  h4 {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 32px 0 14px;
+  }
+
+  p { margin: 0 0 18px; color: var(--ink-soft); }
+
+  p.lede {
+    font-size: 21px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+
+  strong { font-weight: 600; color: var(--ink); }
+  em, i { font-style: italic; }
+
+  code, .mono {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.86em;
+    font-weight: 400;
+    background: var(--bg-2);
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+
+  /* REAL vs FAKE TABLE */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 28px 0;
+  }
+
+  .col {
+    padding: 24px;
+    background: var(--bg-2);
+    border-top: 2px solid var(--rule);
+  }
+
+  .col.real { border-top-color: var(--green); }
+  .col.fake { border-top-color: var(--accent); }
+
+  .col-label {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 0;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .col.real .col-label { color: var(--green); }
+  .col.fake .col-label { color: var(--accent); }
+
+  .col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .col li {
+    padding: 8px 0;
+    border-bottom: 1px dotted var(--rule);
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+  }
+
+  .col li:last-child { border-bottom: none; }
+
+  /* ROUTES */
+  .routes {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 14.5px;
+  }
+
+  .routes th, .routes td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+  }
+
+  .routes th {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 0;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg-2);
+  }
+
+  .routes td:first-child {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .routes td .role {
+    display: inline-block;
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 0;
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border: 1px solid var(--rule);
+    border-radius: 99px;
+    color: var(--muted);
+    margin-right: 6px;
+  }
+
+  .routes td .role.public { border-color: var(--green); color: var(--green); }
+  .routes td .role.doctor { border-color: var(--accent); color: var(--accent); }
+  .routes td .role.marketing { border-color: var(--muted); color: var(--muted); }
+
+  /* SCHEMA */
+  .schema {
+    margin: 28px 0;
+    padding: 24px;
+    background: var(--bg-2);
+    border-left: 2px solid var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    overflow-x: auto;
+  }
+
+  .schema .table-name {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 30;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--accent);
+    margin: 16px 0 8px;
+    display: block;
+  }
+
+  .schema .table-name:first-child { margin-top: 0; }
+  .schema .col-row { padding-left: 16px; }
+  .schema .col-type { color: var(--muted); }
+  .schema .col-note {
+    color: var(--muted);
+    font-style: italic;
+    font-family: 'Newsreader', serif;
+    font-size: 14px;
+  }
+
+  /* COMPONENT LIST */
+  .components {
+    margin: 24px 0;
+  }
+
+  .comp-group {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .comp-group:last-child { border-bottom: none; }
+
+  .comp-label {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 100;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .comp-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 16px;
+    padding: 8px 0;
+    font-size: 15px;
+    border-bottom: 1px dotted var(--rule-soft);
+  }
+
+  .comp-row:last-child { border-bottom: none; }
+
+  .comp-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .comp-desc { color: var(--ink-soft); font-size: 14.5px; }
+
+  /* WEEK PLAN */
+  .week {
+    margin: 24px 0;
+    padding: 24px 0;
+    border-top: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .week-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 20px;
+    padding: 14px 0;
+    border-bottom: 1px dotted var(--rule-soft);
+  }
+
+  .week-row:last-child { border-bottom: none; }
+
+  .week-num {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 72, "SOFT" 30;
+    font-weight: 380;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .week-title {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 50;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .week-body {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  /* PULL & SIDENOTE */
+  .pull {
+    margin: 36px 0;
+    padding: 0 0 0 22px;
+    border-left: 2px solid var(--accent);
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 100;
+    font-style: italic;
+    font-weight: 340;
+    font-size: 22px;
+    line-height: 1.32;
+    color: var(--ink);
+  }
+
+  .sidenote {
+    margin: 24px 0;
+    padding: 18px 22px;
+    background: var(--bg-2);
+    border-left: 2px solid var(--rule);
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .sidenote .label {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 0;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  hr.ornament {
+    border: none;
+    text-align: center;
+    margin: 56px 0;
+    color: var(--muted);
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    letter-spacing: 1em;
+  }
+  hr.ornament::before { content: '·  ·  ·'; }
+
+  .colophon {
+    margin-top: 96px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 100;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 44px 20px 80px; }
+    .two-col { grid-template-columns: 1fr; gap: 16px; }
+    .comp-row { grid-template-columns: 1fr; gap: 4px; }
+    .week-row { grid-template-columns: 70px 1fr; gap: 14px; }
+    .week-num { font-size: 24px; }
+    body { font-size: 18px; }
+    .pull { font-size: 19px; }
+    .routes { font-size: 13px; }
+    .routes th, .routes td { padding: 9px 6px; }
+  }
+</style>
+</head>
+<body>
+
+<article class="page">
+
+  <!-- COVER -->
+  <header class="cover">
+    <div class="cover-meta">
+      <div>
+        <span>Research Document № 004</span>
+        <span>Build Scope — Portfolio</span>
+      </div>
+      <div class="right">
+        <span>Draft v0.1</span>
+        <span>May 2026</span>
+      </div>
+    </div>
+
+    <span class="eyebrow">The Portfolio Build</span>
+    <h1>Real on top,<br/><em>thin</em> underneath.</h1>
+    <p class="deck">A scope for the portfolio-grade version of the booking product. Production-quality frontend, persistence via Supabase free tier, zero outbound costs. Buildable in two focused weeks.</p>
+  </header>
+
+  <!-- SECTION I — PHILOSOPHY -->
+  <section>
+    <div class="section-head">
+      <div class="section-num">Section I</div>
+      <h2>Build <em>philosophy.</em></h2>
+    </div>
+
+    <p class="lede">A clickable demo is a screenshot. A working demo is a product. The difference matters more for the portfolio than the actual product matters for the user.</p>
+
+    <p>The goal is to ship something a hiring manager can play with end-to-end and leave thinking <em>this person can build the entire thing</em>. The principle is to make everything that touches the visitor feel completely real, and to fake only the parts a visitor would never see anyway — outbound notifications, payments, account creation.</p>
+
+    <div class="pull">
+      The portfolio piece is not a prototype of the product. It is the product, minus the parts that cost money.
+    </div>
+
+    <h3>What this gets you</h3>
+    <p>A live URL where any reviewer can be either a doctor (seeing her dashboard, today's appointments, the onboarding flow) or a patient (browsing Dra. Sofía's profile, picking a time, booking, getting a tokenized confirmation, returning later to reschedule). Their state persists because Supabase is real. Nothing they do affects another visitor's experience because every session is scoped to its own cookie.</p>
+
+    <p>It also gets you a design system documented in code, an obvious "Direct Design" exhibit, and a project that maps cleanly onto the Lumina-tier role descriptions you have been preparing for.</p>
+  </section>
+
+  <!-- SECTION II — REAL VS FAKE -->
+  <section>
+    <div class="section-head">
+      <div class="section-num">Section II</div>
+      <h2>What is <em>real,</em> what is <em>faked.</em></h2>
+    </div>
+
+    <p>The split below is non-negotiable. Every "real" item is built to production quality; every "faked" item is designed as a UI artifact so the absence becomes its own showcase.</p>
+
+    <div class="two-col">
+      <div class="col real">
+        <div class="col-label">Real · production-grade</div>
+        <ul>
+          <li>Public doctor profile (Dra. Sofía Ramírez)</li>
+          <li>Service catalog with prices and durations</li>
+          <li>Availability rules &amp; slot generation</li>
+          <li>End-to-end booking flow</li>
+          <li>Persistent bookings in Supabase</li>
+          <li>Tokenized reschedule / cancel</li>
+          <li>Doctor dashboard with today's appointments</li>
+          <li>Week view calendar</li>
+          <li>Block time / vacation</li>
+          <li>Doctor onboarding flow (fully navigable)</li>
+          <li>Timezone handling</li>
+          <li>Conflict prevention (DB-level unique constraint)</li>
+          <li>Mobile-first responsive everywhere</li>
+          <li>Full design system, documented</li>
+        </ul>
+      </div>
+      <div class="col fake">
+        <div class="col-label">Designed as artifact · not wired</div>
+        <ul>
+          <li>WhatsApp notifications (rendered as preview component)</li>
+          <li>Email sending (preview component, not actually sent)</li>
+          <li>Doctor authentication (single demo doctor seeded)</li>
+          <li>Patient accounts (intentionally — they shouldn't exist)</li>
+          <li>Stripe / Mercado Pago payments</li>
+          <li>Reminder cron job (shown as "next reminders" panel)</li>
+          <li>Patient clinical records (out of v1 anyway)</li>
+          <li>Marketing site form submissions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <span class="label">The faked-as-feature move</span>
+      The <code>WhatsAppPreview</code> component should be the most over-designed piece in the build. A pixel-perfect phone frame, real WhatsApp visual style, the actual Spanish microcopy from the templates. When a reviewer clicks "Confirm booking" they see the real WhatsApp message render on a fake phone next to the confirmation screen. The absence of a real send becomes a design exhibit.
+    </div>
+  </section>
+
+  <!-- SECTION III — DEMO MODE -->
+  <section>
+    <div class="section-head">
+      <div class="section-num">Section III</div>
+      <h2>The <em>demo mode</em> mechanic.</h2>
+    </div>
+
+    <p>Every visitor lands on the same content but each gets their own state, so they can play without colliding with each other or affecting Dra. Sofía's seeded data.</p>
+
+    <h4>Session identity</h4>
+    <p>On first visit, an anonymous session ID is set in a cookie. Every booking created during that visit is tagged with the session ID. The visitor can reschedule and cancel their own bookings only; Sofía's seeded bookings are read-only.</p>
+
+    <h4>What persists, what doesn't</h4>
+    <p>Bookings persist for 30 days then auto-expire via a Supabase scheduled function. Slots taken by one visitor's bookings remain unavailable to other visitors until the booking is cancelled or expires — which makes the conflict-prevention story visible and real.</p>
+
+    <h4>The ribbon</h4>
+    <p>A small persistent indicator in the corner: <strong>Demo · concepto</strong>. Tappable, opens a sheet explaining what is real and what is faked. This protects against any confusion if the URL is shared and it doubles as a design-thinking exhibit.</p>
+
+    <h4>Mode picker</h4>
+    <p>The marketing site has two CTAs alongside the standard ones: <em>Ver el producto como doctora</em> and <em>Ver el producto como paciente</em>. The reviewer can context-switch between the two sides without losing their state.</p>
+  </section>
+
+  <!-- SECTION IV — ROUTES -->
+  <section>
+    <div class="section-head">
+      <div class="section-num">Section IV</div>
+      <h2>Routes &amp; <em>pages.</em></h2>
+    </div>
+
+    <table class="routes">
+      <thead>
+        <tr>
+          <th>Route</th>
+          <th>What it is</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>/</td>
+          <td><span class="role marketing">Marketing</span> Editorial-style landing. The product pitch, the two demo CTAs, sections drawn from Research № 001.</td>
+        </tr>
+        <tr>
+          <td>/manifesto</td>
+          <td><span class="role marketing">Marketing</span> Long-form "what we believe" page (the editorial style at full strength).</td>
+        </tr>
+        <tr>
+          <td>/dra-sofia-ramirez</td>
+          <td><span class="role public">Patient</span> The hero asset. Sofía's public profile. Photo, bio, services, "Reservar cita" CTA, location.</td>
+        </tr>
+        <tr>
+          <td>/dra-sofia-ramirez/reservar</td>
+          <td><span class="role public">Patient</span> Booking flow as a mobile sheet over the profile. Service → date → time → form → confirm.</td>
+        </tr>
+        <tr>
+          <td>/cita/[token]</td>
+          <td><span class="role public">Patient</span> Post-booking confirmation. Details, calendar add, reschedule &amp; cancel buttons. The <code>WhatsAppPreview</code> renders here.</td>
+        </tr>
+        <tr>
+          <td>/cita/[token]/reagendar</td>
+          <td><span class="role public">Patient</span> Tokenized reschedule flow. No auth.</td>
+        </tr>
+        <tr>
+          <td>/cita/[token]/cancelar</td>
+          <td><span class="role public">Patient</span> Tokenized cancellation. Single confirmation step.</td>
+        </tr>
+        <tr>
+          <td>/panel</td>
+          <td><span class="role doctor">Doctor</span> Today's appointments. The most-used screen.</td>
+        </tr>
+        <tr>
+          <td>/panel/semana</td>
+          <td><span class="role doctor">Doctor</span> Week view calendar.</td>
+        </tr>
+        <tr>
+          <td>/panel/servicios</td>
+          <td><span class="role doctor">Doctor</span> Manage services (name, price, duration).</td>
+        </tr>
+        <tr>
+          <td>/panel/disponibilidad</td>
+          <td><span class="role doctor">Doctor</span> Availability grid &amp; block-time interface.</td>
+        </tr>
+        <tr>
+          <td>/panel/perfil</td>
+          <td><span class="role doctor">Doctor</span> Profile editor — bio, photo, location.</td>
+        </tr>
+        <tr>
+          <td>/panel/proximos-recordatorios</td>
+          <td><span class="role doctor">Doctor</span> Showcase screen. Shows the next 10 reminders that <em>would</em> be sent in the next 48 hours, rendered as WhatsApp previews.</td>
+        </tr>
+        <tr>
+          <td>/registro</td>
+          <td><span class="role doctor">Doctor</span> The 2-minute onboarding flow. Six screens; ends with a "your page is live" celebration that links to the seeded profile.</td>
+        </tr>
+        <tr>
+          <td>/sistema</td>
+          <td><span class="role marketing">Showcase</span> Living style guide. Typography, color, components, motion. The design-engineering exhibit.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>That's <strong>fourteen routes</strong>. Some — the <code>/cita/[token]</code> family, the panel sub-routes — share heavy component overlap and don't add proportional build time.</p>
+  </section>
+
+  <!-- SECTION V — DATA MODEL -->
+  <section>
+    <div class="section-head">
+      <div class="section-num">Section V</div>
+      <h2>Data <em>model.</em></h2>
+    </div>
+
+    <p>Lean. Five tables. Everything Sofía-related is seeded once; everything visitor-created is scoped to a session.</p>
+
+    <div class="schema">
+      <span class="table-name">doctors</span>
+      <div class="col-row">id <span class="col-type">uuid pk</span> <span class="col-note">— Sofía's row is seeded</span></div>
+      <div class="col-row">slug <span class="col-type">text unique</span> <span class="col-note">— dra-sofia-ramirez</span></div>
+      <div class="col-row">name <span class="col-type">text</span></div>
+      <div class="col-row">specialty <span class="col-type">text</span></div>
+      <div class="col-row">bio <span class="col-type">text</span></div>
+      <div class="col-row">photo_url <span class="col-type">text</span></div>
+      <div class="col-row">location <span class="col-type">jsonb</span> <span class="col-note">— address or "online"</span></div>
+      <div class="col-row">timezone <span class="col-type">text</span> <span class="col-note">— America/Mexico_City</span></div>
+      <div class="col-row">instagram <span class="col-type">text nullable</span></div>
+      <div class="col-row">whatsapp_e164 <span class="col-type">text</span> <span class="col-note">— display only, never sent to</span></div>
+
+      <span class="table-name">services</span>
+      <div class="col-row">id <span class="col-type">uuid pk</span></div>
+      <div class="col-row">doctor_id <span class="col-type">uuid fk</span></div>
+      <div class="col-row">name <span class="col-type">text</span> <span class="col-note">— "Consulta inicial"</span></div>
+      <div class="col-row">duration_minutes <span class="col-type">int</span></div>
+      <div class="col-row">price_mxn <span class="col-type">int</span></div>
+      <div class="col-row">description <span class="col-type">text nullable</span></div>
+      <div class="col-row">active <span class="col-type">bool default true</span></div>
+
+      <span class="table-name">availability_rules</span>
+      <div class="col-row">id <span class="col-type">uuid pk</span></div>
+      <div class="col-row">doctor_id <span class="col-type">uuid fk</span></div>
+      <div class="col-row">weekday <span class="col-type">int 0-6</span> <span class="col-note">— 0 = Sunday</span></div>
+      <div class="col-row">start_time <span class="col-type">time</span></div>
+      <div class="col-row">end_time <span class="col-type">time</span></div>
+
+      <span class="table-name">blocked_periods</span>
+      <div class="col-row">id <span class="col-type">uuid pk</span></div>
+      <div class="col-row">doctor_id <span class="col-type">uuid fk</span></div>
+      <div class="col-row">starts_at <span class="col-type">timestamptz</span></div>
+      <div class="col-row">ends_at <span class="col-type">timestamptz</span></div>
+      <div class="col-row">reason <span class="col-type">text nullable</span></div>
+
+      <span class="table-name">bookings</span>
+      <div class="col-row">id <span class="col-type">uuid pk</span></div>
+      <div class="col-row">token <span class="col-type">text unique</span> <span class="col-note">— for tokenized links</span></div>
+      <div class="col-row">doctor_id <span class="col-type">uuid fk</span></div>
+      <div class="col-row">service_id <span class="col-type">uuid fk</span></div>
+      <div class="col-row">starts_at <span class="col-type">timestamptz</span></div>
+      <div class="col-row">ends_at <span class="col-type">timestamptz</span></div>
+      <div class="col-row">patient_name <span class="col-type">text</span></div>
+      <div class="col-row">patient_phone <span class="col-type">text</span></div>
+      <div class="col-row">patient_email <span class="col-type">text</span></div>
+      <div class="col-row">patient_note <span class="col-type">text nullable</span></div>
+      <div class="col-row">status <span class="col-type">text</span> <span class="col-note">— confirmed / cancelled / completed</span></div>
+      <div class="col-row">demo_session_id <span class="col-type">text</span> <span class="col-note">— scopes to visitor cookie</span></div>
+      <div class="col-row">created_at <span class="col-type">timestamptz default now()</span></div>
+      <div class="col-row">expires_at <span class="col-type">timestamptz</span> <span class="col-note">— 30 days, for cleanup</span></div>
+      <div class="col-row col-note">UNIQUE (doctor_id, starts_at) WHERE status = 'confirmed'</div>
+    </div>
+
+    <p>Slot generation happens client-side from <code>availability_rules</code> minus existing <code>bookings</code> minus <code>blocked_periods</code>. No <code>slots</code> table — slots are derived, not stored. This is the right pattern and the same one used by every calendar product worth modeling.</p>
+
+    <h4>Row Level Security</h4>
+    <p>RLS on bookings: visitors can read/write only rows where <code>demo_session_id</code> matches their cookie. Sofía's seeded bookings are readable by all (so the calendar feels populated) but writable by none. Two policies, both short.</p>
+  </section>
+
+  <!-- SECTION VI — COMPONENTS -->
+  <section>
+    <div class="section-head">
+      <div class="section-num">Section VI</div>
+      <h2>Component <em>inventory.</em></h2>
+    </div>
+
+    <p>The components that need to exist. Each one is a portfolio asset on its own — design them like they belong in a system, because they do.</p>
+
+    <div class="components">
+      <div class="comp-group">
+        <div class="comp-label">Foundation</div>
+        <div class="comp-row"><span class="comp-name">Button</span><span class="comp-desc">Primary, secondary, ghost, icon. Three sizes.</span></div>
+        <div class="comp-row"><span class="comp-name">Input</span><span class="comp-desc">Text, email, phone (with MX format hint), textarea.</span></div>
+        <div class="comp-row"><span class="comp-name">Sheet / Modal</span><span class="comp-desc">Bottom sheet on mobile, modal on desktop. Same component.</span></div>
+        <div class="comp-row"><span class="comp-name">Toast</span><span class="comp-desc">Success, info, error. Auto-dismiss.</span></div>
+        <div class="comp-row"><span class="comp-name">Badge</span><span class="comp-desc">Status indicator. Used for booking states and the demo ribbon.</span></div>
+      </div>
+
+      <div class="comp-group">
+        <div class="comp-label">Booking surface</div>
+        <div class="comp-row"><span class="comp-name">ServiceCard</span><span class="comp-desc">Title, duration, price, description, CTA. Listed on profile.</span></div>
+        <div class="comp-row"><span class="comp-name">DateStrip</span><span class="comp-desc">Horizontal date picker. Days with availability vs. dimmed.</span></div>
+        <div class="comp-row"><span class="comp-name">SlotList</span><span class="comp-desc">Vertical list of available times for selected day.</span></div>
+        <div class="comp-row"><span class="comp-name">BookingForm</span><span class="comp-desc">Name, phone, email, optional note. Submits to Supabase.</span></div>
+        <div class="comp-row"><span class="comp-name">ConfirmationCard</span><span class="comp-desc">Post-booking detail card. Add-to-calendar, links.</span></div>
+        <div class="comp-row"><span class="comp-name">WhatsAppPreview</span><span class="comp-desc">The faked-as-feature centerpiece. Phone frame, message bubble, real microcopy.</span></div>
+      </div>
+
+      <div class="comp-group">
+        <div class="comp-label">Doctor surface</div>
+        <div class="comp-row"><span class="comp-name">AppointmentRow</span><span class="comp-desc">Time, patient, service. Expandable inline.</span></div>
+        <div class="comp-row"><span class="comp-name">WeekCalendar</span><span class="comp-desc">Seven-column grid with booking density.</span></div>
+        <div class="comp-row"><span class="comp-name">AvailabilityGrid</span><span class="comp-desc">Weekday × hour editor. Tap to toggle.</span></div>
+        <div class="comp-row"><span class="comp-name">NextSlotPill</span><span class="comp-desc">Persistent "próximo hueco libre: jueves 11:00" indicator.</span></div>
+        <div class="comp-row"><span class="comp-name">ServiceEditor</span><span class="comp-desc">Inline editing for services list.</span></div>
+        <div class="comp-row"><span class="comp-name">BlockTimeSheet</span><span class="comp-desc">Date range + reason. Surfaces affected bookings.</span></div>
+      </div>
+
+      <div class="comp-group">
+        <div class="comp-label">Profile &amp; brand</div>
+        <div class="comp-row"><span class="comp-name">ProfileHero</span><span class="comp-desc">Photo, name, specialty, next-available pill, primary CTA.</span></div>
+        <div class="comp-row"><span class="comp-name">CredentialBadge</span><span class="comp-desc">Cédula profesional displayed cleanly.</span></div>
+        <div class="comp-row"><span class="comp-name">LocationCard</span><span class="comp-desc">Address + embedded map, or "Online" + platform.</span></div>
+      </div>
+
+      <div class="comp-group">
+        <div class="comp-label">Marketing &amp; meta</div>
+        <div class="comp-row"><span class="comp-name">DemoRibbon</span><span class="comp-desc">Persistent corner indicator. Sheet on tap explaining real vs. faked.</span></div>
+        <div class="comp-row"><span class="comp-name">ModePicker</span><span class="comp-desc">"Be the doctor" / "Be a patient" — landing CTAs.</span></div>
+        <div class="comp-row"><span class="comp-name">EditorialBlock</span><span class="comp-desc">Marketing site sections (drop cap, pull quote, sidenote) — reuses the editorial system.</span></div>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <span class="label">Two design systems, one project</span>
+      The marketing site (/, /manifesto, /sistema) uses the editorial neutral aesthetic from these research documents. The product itself (/dra-sofia-ramirez, /panel, /registro) uses a softer, more modern product aesthetic appropriate for Sofía's brand-conscious persona. Showing both in one project is its own design-engineering exhibit.
+    </div>
+  </section>
+
+  <!-- SECTION VII — BUILD ORDER -->
+  <section>
+    <div class="section-head">
+      <div class="section-num">Section VII</div>
+      <h2>Build <em>sequence.</em></h2>
+    </div>
+
+    <p>Two weeks of focused build. Each "week" is roughly 30–40 hours; compressible if you go hard, expandable if other obligations interrupt.</p>
+
+    <div class="week">
+      <div class="week-row">
+        <div class="week-num">Day 1</div>
+        <div>
+          <div class="week-title">Foundation</div>
+          <div class="week-body">Next.js + TS + Tailwind + Framer Motion project setup. Supabase project, schema, seed Sofía's profile, services, availability. RLS policies. Cookie-based session middleware. Deploy first version to Vercel with a placeholder homepage. The pipeline is now real.</div>
+        </div>
+      </div>
+      <div class="week-row">
+        <div class="week-num">Day 2–3</div>
+        <div>
+          <div class="week-title">Design system</div>
+          <div class="week-body">Type scale, color tokens, spacing, motion primitives. Build the foundation components (Button, Input, Sheet, Toast, Badge). Stand up <code>/sistema</code> as the living style guide. Every later screen pulls from this.</div>
+        </div>
+      </div>
+      <div class="week-row">
+        <div class="week-num">Day 4–6</div>
+        <div>
+          <div class="week-title">Public profile + booking flow</div>
+          <div class="week-body">The hero asset. <code>/dra-sofia-ramirez</code>, the booking sheet, slot generation logic, confirmation page, tokenized reschedule and cancel. The <code>WhatsAppPreview</code> component. End of day six: a visitor can book Sofía and the booking persists.</div>
+        </div>
+      </div>
+      <div class="week-row">
+        <div class="week-num">Day 7–9</div>
+        <div>
+          <div class="week-title">Doctor dashboard</div>
+          <div class="week-body">Today view, week calendar, availability editor, services editor, block-time sheet, the "próximos recordatorios" showcase screen. Profile editor. End of day nine: the doctor side is complete.</div>
+        </div>
+      </div>
+      <div class="week-row">
+        <div class="week-num">Day 10–11</div>
+        <div>
+          <div class="week-title">Onboarding flow</div>
+          <div class="week-body">The 2-minute <code>/registro</code> sequence. Six screens that feel like one continuous gesture. Doesn't actually create a doctor — culminates in a "your page is live" screen that links to the seeded Sofía profile. This is one of the most-watched flows for a reviewer; design it carefully.</div>
+        </div>
+      </div>
+      <div class="week-row">
+        <div class="week-num">Day 12–13</div>
+        <div>
+          <div class="week-title">Marketing site</div>
+          <div class="week-body">Landing page, manifesto, mode picker, demo ribbon. The editorial-neutral aesthetic at full strength. Drop the research documents in as deep links from the manifesto for the curious reviewer.</div>
+        </div>
+      </div>
+      <div class="week-row">
+        <div class="week-num">Day 14</div>
+        <div>
+          <div class="week-title">Polish, motion, edge cases</div>
+          <div class="week-body">Loading states. Empty states. Error states. Mobile spot-checks. Slot-taken-mid-flow handling. Animations between screens. Open Graph images. Favicon. The 24-hour pass that turns a build into a portfolio piece.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION VIII — POSITIONING -->
+  <section>
+    <div class="section-head">
+      <div class="section-num">Section VIII</div>
+      <h2>Portfolio <em>framing.</em></h2>
+    </div>
+
+    <p>The build is only half of the value. How you present it determines whether reviewers see a "design exploration" or a "design engineer who can ship product." Two things make the difference.</p>
+
+    <h3>The case study page</h3>
+    <p>A dedicated long-form page on your portfolio site that links to the live demo, walks through the research and decisions, and embeds key screens. The four research documents in this series become the substance of that page — they show the strategic layer beneath the visual one. Reviewers spend more time on case studies that demonstrate thinking than on Dribbble shots.</p>
+
+    <h3>The opening line</h3>
+    <p>Lead with the right framing. Something close to:</p>
+
+    <div class="pull">
+      A working concept product for Mexico's independent healthcare professionals — researched, designed, and built end-to-end in code. Two-week solo build.
+    </div>
+
+    <p>"Concept product" is honest — it isn't live with paying customers. "Working" is also honest — every flow functions. "Researched, designed, and built end-to-end in code" is your positioning as a design engineer, written in one sentence.</p>
+
+    <h3>The technical artifacts that matter</h3>
+    <p>Link the Supabase schema, the component inventory, the design system page. These are not Dribbble assets — they are evidence. The role you are targeting wants to see the system, not the screenshot.</p>
+
+    <hr class="ornament" />
+
+    <p class="lede">Two weeks of focused work for a portfolio asset that maps to the exact role you are aiming for — and a fully-formed product you can decide to turn real if the demand signal arrives.</p>
+
+    <p>Whichever way that goes, the cost is the same.</p>
+  </section>
+
+  <div class="colophon">
+    <strong style="font-style:normal;font-variation-settings:'opsz' 9, 'SOFT' 0;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;font-size:11px;color:var(--ink);">Colophon</strong>
+    <p style="margin-top:12px;font-size:13px;">Fourth in the series. The point at which research becomes build.</p>
+  </div>
+
+</article>
+
+</body>
+</html>

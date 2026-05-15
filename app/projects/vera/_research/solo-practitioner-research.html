@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Solo Practitioner Problem — UX Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #F4EFE4;
+    --bg-2: #EBE4D3;
+    --ink: #1A1816;
+    --ink-soft: #2C2924;
+    --muted: #6E665A;
+    --rule: #CFC6B3;
+    --rule-soft: #DDD4C1;
+    --accent: #8B2E1F;
+    --accent-soft: #B85940;
+    --max: 680px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 380;
+    font-size: 19px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(139, 46, 31, 0.025), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(110, 102, 90, 0.04), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  /* Subtle grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  .page {
+    position: relative;
+    z-index: 2;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 80px 28px 160px;
+  }
+
+  /* COVER */
+  .cover {
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 40px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 80px;
+  }
+
+  .cover-meta {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 100;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .cover-meta .left, .cover-meta .right {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cover-meta .right { text-align: right; }
+
+  .cover-title-block {
+    margin-top: 80px;
+    margin-bottom: 60px;
+  }
+
+  .eyebrow {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 0;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    display: inline-block;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--accent);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+    font-weight: 360;
+    font-size: clamp(44px, 9vw, 76px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin: 0 0 28px;
+    color: var(--ink);
+  }
+
+  h1 em {
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+    font-style: italic;
+    font-weight: 320;
+    color: var(--accent);
+  }
+
+  .deck {
+    font-family: 'Newsreader', serif;
+    font-variation-settings: "opsz" 24;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    max-width: 540px;
+  }
+
+  .cover-foot {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9";
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    border-top: 1px solid var(--rule);
+    padding-top: 20px;
+  }
+
+  /* TOC */
+  .toc {
+    margin: 60px 0 100px;
+    padding: 32px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .toc-label {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9";
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .toc ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: toc;
+  }
+
+  .toc li {
+    counter-increment: toc;
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--rule-soft);
+    font-size: 17px;
+  }
+
+  .toc li:last-child { border-bottom: none; }
+
+  .toc li::before {
+    content: counter(toc, upper-roman);
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9";
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding-top: 4px;
+  }
+
+  .toc li a {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'Newsreader', serif;
+  }
+
+  .toc li a:hover { color: var(--accent); }
+
+  .toc li .pg {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9";
+    font-size: 12px;
+    color: var(--muted);
+    padding-top: 4px;
+  }
+
+  /* SECTIONS */
+  section {
+    margin-top: 80px;
+  }
+
+  .section-head {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-num {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9", "SOFT" 100;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 72, "SOFT" 50;
+    font-weight: 380;
+    font-size: clamp(32px, 5.5vw, 44px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  h2 em {
+    font-variation-settings: "opsz" 72, "SOFT" 100;
+    font-style: italic;
+    font-weight: 340;
+  }
+
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 50;
+    font-weight: 480;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    margin: 48px 0 16px;
+    color: var(--ink);
+  }
+
+  h4 {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9";
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 36px 0 12px;
+  }
+
+  p {
+    margin: 0 0 22px;
+    color: var(--ink-soft);
+  }
+
+  p.lede {
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--ink);
+    font-weight: 360;
+  }
+
+  p.lede::first-letter {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+    font-weight: 380;
+    font-size: 76px;
+    line-height: 0.85;
+    float: left;
+    margin: 6px 12px 0 0;
+    color: var(--accent);
+  }
+
+  strong, b {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  em, i {
+    font-style: italic;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-soft);
+  }
+
+  /* PULL QUOTE */
+  .pull {
+    margin: 48px 0;
+    padding: 0 0 0 24px;
+    border-left: 2px solid var(--accent);
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 100;
+    font-style: italic;
+    font-weight: 340;
+    font-size: 26px;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+
+  .pull .attr {
+    display: block;
+    margin-top: 16px;
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9", "SOFT" 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* SIDENOTE */
+  .sidenote {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: var(--bg-2);
+    border-left: 2px solid var(--rule);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .sidenote .label {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9";
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* RULE */
+  hr.ornament {
+    border: none;
+    text-align: center;
+    margin: 64px 0;
+    color: var(--muted);
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 144";
+    font-size: 14px;
+    letter-spacing: 1em;
+  }
+
+  hr.ornament::before {
+    content: '·  ·  ·';
+  }
+
+  /* LISTS */
+  ul.findings, ol.findings {
+    list-style: none;
+    padding: 0;
+    margin: 24px 0 32px;
+    counter-reset: finding;
+  }
+
+  ul.findings li, ol.findings li {
+    counter-increment: finding;
+    padding: 20px 0 20px 56px;
+    border-bottom: 1px solid var(--rule-soft);
+    position: relative;
+  }
+
+  ul.findings li:last-child, ol.findings li:last-child { border-bottom: none; }
+
+  ol.findings li::before {
+    content: counter(finding, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 22px;
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9", "SOFT" 0;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+
+  ul.findings li::before {
+    content: '—';
+    position: absolute;
+    left: 16px;
+    top: 18px;
+    font-family: 'Fraunces', serif;
+    color: var(--accent);
+    font-size: 18px;
+  }
+
+  .finding-title {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 30;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: -0.005em;
+  }
+
+  .finding-body {
+    font-size: 16.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  /* PERSONA CARD */
+  .persona {
+    margin: 32px 0;
+    padding: 28px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .persona-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .persona-name {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 72, "SOFT" 80;
+    font-style: italic;
+    font-weight: 380;
+    font-size: 28px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+
+  .persona-tag {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9", "SOFT" 0;
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .persona-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 18px;
+    margin: 20px 0;
+    padding: 18px 0;
+    border-top: 1px dotted var(--rule);
+    border-bottom: 1px dotted var(--rule);
+  }
+
+  .persona-meta dt {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9";
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .persona-meta dd {
+    margin: 0;
+    font-size: 15px;
+    color: var(--ink);
+    font-family: 'Newsreader', serif;
+  }
+
+  .persona-quote {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 24, "SOFT" 100;
+    font-style: italic;
+    font-weight: 360;
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--ink);
+    margin: 16px 0;
+    padding-left: 16px;
+    border-left: 2px solid var(--accent-soft);
+  }
+
+  /* TABLE */
+  .matrix {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 32px 0;
+    font-size: 15px;
+  }
+
+  .matrix th, .matrix td {
+    text-align: left;
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+  }
+
+  .matrix th {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9";
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg-2);
+  }
+
+  .matrix tr:hover td { background: rgba(139, 46, 31, 0.02); }
+
+  .matrix td:first-child {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 50;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* FOOTNOTES */
+  .footnote-ref {
+    font-size: 11px;
+    vertical-align: super;
+    color: var(--accent);
+    margin-left: 1px;
+  }
+
+  .footnotes {
+    margin-top: 100px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .footnotes h4 {
+    color: var(--muted);
+    margin-top: 0;
+  }
+
+  .footnotes ol {
+    padding-left: 24px;
+    margin: 0;
+  }
+
+  .footnotes li { margin-bottom: 8px; }
+
+  /* COLOPHON */
+  .colophon {
+    margin-top: 120px;
+    padding-top: 40px;
+    border-top: 1px solid var(--rule);
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9", "SOFT" 100;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .colophon strong {
+    font-style: normal;
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9", "SOFT" 0;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: var(--ink);
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 48px 22px 100px; }
+    p.lede { font-size: 19px; }
+    p.lede::first-letter { font-size: 60px; }
+    .pull { font-size: 21px; padding-left: 18px; }
+    .persona-name { font-size: 24px; }
+    body { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<article class="page">
+
+  <!-- COVER -->
+  <header class="cover">
+    <div class="cover-meta">
+      <div class="left">
+        <span>Research Document № 001</span>
+        <span>Internal — Pre-Build</span>
+      </div>
+      <div class="right">
+        <span>Draft v0.1</span>
+        <span>May 2026</span>
+      </div>
+    </div>
+
+    <div class="cover-title-block">
+      <span class="eyebrow">A UX Research Study</span>
+      <h1>The Solo<br/>Practitioner<br/><em>Problem.</em></h1>
+      <p class="deck">On the gap between Mexico's independent healthcare professionals and the digital tools meant to serve them — and what a doctor-first booking product would actually need to be.</p>
+    </div>
+
+    <div class="cover-foot">
+      Prepared in Rio de Janeiro · Field reference: Brazil &amp; Mexico · For internal product strategy
+    </div>
+  </header>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <div class="toc-label">Contents</div>
+    <ol>
+      <li><a href="#i">The Premise</a><span class="pg">01</span></li>
+      <li><a href="#ii">Market Landscape</a><span class="pg">02</span></li>
+      <li><a href="#iii">Doctor-Side Pain Points</a><span class="pg">03</span></li>
+      <li><a href="#iv">Patient-Side Pain Points</a><span class="pg">04</span></li>
+      <li><a href="#v">Competitive Teardown</a><span class="pg">05</span></li>
+      <li><a href="#vi">Personas</a><span class="pg">06</span></li>
+      <li><a href="#vii">Design Principles</a><span class="pg">07</span></li>
+      <li><a href="#viii">The Wedge</a><span class="pg">08</span></li>
+      <li><a href="#ix">Recommended Field Research</a><span class="pg">09</span></li>
+      <li><a href="#x">V1 Scope</a><span class="pg">10</span></li>
+    </ol>
+  </nav>
+
+  <!-- SECTION I -->
+  <section id="i">
+    <div class="section-head">
+      <div class="section-num">Section I</div>
+      <h2>The <em>premise.</em></h2>
+    </div>
+
+    <p class="lede">There is a particular kind of Mexican professional who lives between two worlds. She has a thousand followers on Instagram, a personal style, a thoughtful approach to her practice — and she runs her entire calendar through WhatsApp messages on the same phone she uses to text her mother.</p>
+
+    <p>She is a psicóloga in Roma Norte. Or a nutrióloga in Guadalajara. Or a fisioterapeuta who travels to patients across Puebla. She charges between 600 and 1,500 pesos per session. She sees fifteen to twenty-five patients per week. She is, by every meaningful measure, a small business — and she is being served by no software at all.</p>
+
+    <p>The platforms that exist for her — Doctoralia chief among them — are built as <em>directories</em>, not as tools. They monetize her by selling her name as a lead alongside her competitors. The platforms built for clinics — Nimbo-X, MediSoftware, the various enterprise EMRs — assume an administrative staff, a reception desk, a level of operational scale she does not have and does not want.</p>
+
+    <p>What she has, instead, is a Google Calendar she sometimes updates, a notebook beside the consultation chair, and a phone that buzzes from 7 a.m. to 11 p.m. with "Doctora, ¿tendrá espacio el jueves?"</p>
+
+    <div class="pull">
+      The opportunity is not to digitize medicine. The opportunity is to give the solo practitioner the same product surface a modern café owner now expects.
+    </div>
+
+    <p>This document is a working hypothesis: that a booking and presence layer designed <em>for</em> the solo healthcare professional — not for clinics, not for directories, not for the platform's lead-generation business model — represents an underserved category in Mexico, and that the design quality currently absent from the category is itself a defensible wedge.</p>
+  </section>
+
+  <!-- SECTION II -->
+  <section id="ii">
+    <div class="section-head">
+      <div class="section-num">Section II</div>
+      <h2>Market <em>landscape.</em></h2>
+    </div>
+
+    <p>Mexico's digital health booking layer is roughly two to three years behind Brazil's, and the delta is felt most acutely at the solo-practitioner tier.</p>
+
+    <h3>Brazil, briefly.</h3>
+
+    <p>Brazilian patients have come to expect a particular shape of experience: a doctor's personal page (often as part of a clinic platform like Doctoralia BR, BoaConsulta, or Doutor Agora), a reservation flow that takes under a minute, automated reminders, and reschedule links that don't require contacting anyone. The category is mature enough that even small private practices treat a digital booking presence as table stakes.<sup class="footnote-ref">1</sup></p>
+
+    <h3>Mexico, currently.</h3>
+
+    <p>The Mexican market is bifurcated. At the top, clinical groups (Médica Sur, Ángeles, ABC) run their own portals — competent but generic. In the middle, Doctoralia MX dominates discovery but functions primarily as a paid-lead engine; the doctor's profile is surrounded by competitor cards and upsells. At the bottom — where the volume lives — the operational tool is WhatsApp, supplemented by a paper agenda or, occasionally, Google Calendar.</p>
+
+    <div class="sidenote">
+      <span class="label">Field Note</span>
+      The most telling signal: in Brazil, when you book an appointment, the doctor's first message to you is typically the appointment confirmation. In Mexico, it is typically the entire negotiation — "Doctora, ¿tendrá espacio? — Sí, ¿qué día?" — conducted in real time.
+    </div>
+
+    <h3>What the gap actually means.</h3>
+
+    <p>The Mexico gap is not a discovery problem. Doctoralia handles discovery, however imperfectly. The gap is a <em>tooling</em> problem: independent professionals have no operating layer designed for how they actually work — solo, on WhatsApp, mobile-first, with personal brand as their primary marketing channel.</p>
+  </section>
+
+  <!-- SECTION III -->
+  <section id="iii">
+    <div class="section-head">
+      <div class="section-num">Section III</div>
+      <h2>Doctor-side <em>pain points.</em></h2>
+    </div>
+
+    <p>The following are extracted from a combination of observed behavior, market analysis, and adjacent learnings from the SMB SaaS category (where the operational patterns repeat almost identically across hospitality, fitness, and personal services).</p>
+
+    <ol class="findings">
+      <li>
+        <span class="finding-title">The WhatsApp Cognitive Tax</span>
+        <span class="finding-body">Every booking conversation requires the doctor to mentally cross-reference her calendar in real time. The cost is not the message — it is the constant context-switching across forty active chats, the inability to see the week at a glance, and the lost slot when a tentative "déjame revisar" never gets a follow-up.</span>
+      </li>
+      <li>
+        <span class="finding-title">No Boundary Between Work and Personal Phone</span>
+        <span class="finding-body">Patients message at 11 p.m. The doctor responds because the alternative is losing the appointment. Over time this is a meaningful contributor to burnout — and a problem no clinical software addresses because clinical software assumes a receptionist.</span>
+      </li>
+      <li>
+        <span class="finding-title">No Professional Web Presence</span>
+        <span class="finding-body">Instagram is the de facto storefront. But Instagram cannot accept a booking, cannot show availability, cannot remind a patient. The Linktree-or-bio-link improvisation that solo practitioners use is functional but visibly amateur — which matters for trust in a category where trust is the entire product.</span>
+      </li>
+      <li>
+        <span class="finding-title">Manual Reminder Labor</span>
+        <span class="finding-body">A meaningful share of doctors still type "te recuerdo tu cita mañana a las 4" by hand. The no-show rate in solo practice is substantial — anecdotally 10–20% — and the gap between sending a reminder and not sending one is well-documented as decisive.<sup class="footnote-ref">2</sup></span>
+      </li>
+      <li>
+        <span class="finding-title">No Deposit Mechanism</span>
+        <span class="finding-body">No-shows are a direct revenue hit. The standard remedy elsewhere — a deposit or card-on-file — is essentially unavailable to solo practitioners in Mexico without enterprise integration. This is a particularly clear unmet need.</span>
+      </li>
+      <li>
+        <span class="finding-title">Existing Tools Feel Built for Clinics</span>
+        <span class="finding-body">Nimbo-X and its peers require configuration that assumes an admin role. The doctor who is also her own admin abandons the setup at the third or fourth screen. The mental model "this is not for me" forms in under two minutes.</span>
+      </li>
+      <li>
+        <span class="finding-title">The Directory Trap</span>
+        <span class="finding-body">Doctoralia treats the doctor as inventory to be monetized rather than as the customer. The doctor pays to surface above competitors on her own profile page. This generates persistent low-grade resentment — and a clear opening for a product that is unambiguously on the doctor's side.</span>
+      </li>
+      <li>
+        <span class="finding-title">Scattered Patient Information</span>
+        <span class="finding-body">Patient name in WhatsApp, history in a notebook, prescription photos in the phone's gallery. The doctor compensates with memory — until she doesn't. This is the eventual on-ramp to clinical records as a v2 product, but it is not the wedge.</span>
+      </li>
+    </ol>
+
+    <hr class="ornament" />
+  </section>
+
+  <!-- SECTION IV -->
+  <section id="iv">
+    <div class="section-head">
+      <div class="section-num">Section IV</div>
+      <h2>Patient-side <em>pain points.</em></h2>
+    </div>
+
+    <p>The patient is not the buyer — but the patient's experience determines whether the doctor's bookings convert, and whether they recommend the platform to peers. The patient is, effectively, the product's marketing surface.</p>
+
+    <ol class="findings">
+      <li>
+        <span class="finding-title">"Did they see my message?"</span>
+        <span class="finding-body">The dominant emotional state of booking a Mexican solo practitioner is mild uncertainty — the WhatsApp double-check has been read but not responded to, the appointment is half-confirmed, the patient does not know if she has a slot until she has it.</span>
+      </li>
+      <li>
+        <span class="finding-title">No Pricing Transparency Until Engagement</span>
+        <span class="finding-body">Price is typically not on Instagram. It is revealed via DM, often after the patient has invested in the conversation. This is friction at exactly the wrong moment.</span>
+      </li>
+      <li>
+        <span class="finding-title">Rescheduling Feels Socially Costly</span>
+        <span class="finding-body">Canceling via WhatsApp is a tiny social transaction the patient would rather avoid. The result is the no-show — easier than the awkward message.</span>
+      </li>
+      <li>
+        <span class="finding-title">Trust Signals Are Scattered</span>
+        <span class="finding-body">Reviews on Google, testimonials on Instagram stories, "recomendada por X" by word of mouth. The patient assembles trust manually across surfaces. A single profile that consolidates these is meaningfully more efficient.</span>
+      </li>
+      <li>
+        <span class="finding-title">Directory UX Erodes Trust</span>
+        <span class="finding-body">Doctoralia's ad density signals to patients that the doctor is an advertiser, not a recommendation. This is the exact opposite of what a trust-dependent purchase requires.</span>
+      </li>
+      <li>
+        <span class="finding-title">No Reminder, or Inconsistent Reminders</span>
+        <span class="finding-body">The reminder is the single highest-leverage micro-interaction in the entire booking flow. Where it is absent, no-shows rise; where it is present and well-crafted, the patient feels cared-for.</span>
+      </li>
+    </ol>
+
+    <div class="pull">
+      The patient does not want an app. The patient wants the certainty that the appointment exists.
+      <span class="attr">Working hypothesis</span>
+    </div>
+  </section>
+
+  <!-- SECTION V -->
+  <section id="v">
+    <div class="section-head">
+      <div class="section-num">Section V</div>
+      <h2>Competitive <em>teardown.</em></h2>
+    </div>
+
+    <p>A condensed reading of the current landscape, with emphasis on what each incumbent does not do.</p>
+
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Strength</th>
+          <th>Where it fails the solo practitioner</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Doctoralia MX</td>
+          <td>Discovery, SEO, scale</td>
+          <td>Lead-gen business model misaligns incentives; cluttered profile; doctor as inventory</td>
+        </tr>
+        <tr>
+          <td>Nimbo-X</td>
+          <td>Clinical depth, EMR features</td>
+          <td>Built for clinics with admin staff; setup friction; over-featured for solo use</td>
+        </tr>
+        <tr>
+          <td>Agenda Pro</td>
+          <td>Broad SMB scheduling</td>
+          <td>Not health-specific; lacks reminder, deposit, and patient-context nuance</td>
+        </tr>
+        <tr>
+          <td>Calendly + Linktree</td>
+          <td>Free, fast to set up</td>
+          <td>Generic; no medical context; no WhatsApp-native flow; no trust signals</td>
+        </tr>
+        <tr>
+          <td>WhatsApp + notebook</td>
+          <td>Zero learning curve, free</td>
+          <td>Everything described in Section III</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>The notable absence: a product that treats the doctor's <em>profile</em> as the primary surface (not as an entry in a directory), is WhatsApp-native by default (not as an integration), and operates on a subscription model rather than a lead-sale model.</p>
+  </section>
+
+  <!-- SECTION VI -->
+  <section id="vi">
+    <div class="section-head">
+      <div class="section-num">Section VI</div>
+      <h2>Personas.</h2>
+    </div>
+
+    <p>Three working personas — two doctor-side, one patient-side. These are scaffolds for design decisions, to be sharpened with field interviews.</p>
+
+    <div class="persona">
+      <div class="persona-head">
+        <span class="persona-name">Dra. Sofía</span>
+        <span class="persona-tag">Primary — Beachhead</span>
+      </div>
+      <dl class="persona-meta">
+        <div><dt>Specialty</dt><dd>Psicóloga clínica</dd></div>
+        <div><dt>Age</dt><dd>32</dd></div>
+        <div><dt>Location</dt><dd>CDMX, Roma Norte</dd></div>
+        <div><dt>Volume</dt><dd>18–22 sessions/wk</dd></div>
+        <div><dt>Fee</dt><dd>$900–1,200 MXN</dd></div>
+        <div><dt>Channel</dt><dd>Instagram (4.2k)</dd></div>
+      </dl>
+      <p class="persona-quote">"Quiero verme profesional sin parecer corporativa. Mi cuenta de Instagram dice quién soy mejor que cualquier perfil de Doctoralia."</p>
+      <p>Sofía is the beachhead. She is design-literate, brand-conscious, and has watched her café-owner peers adopt tools like Menura. She will pay $400–600 MXN/month for something that looks like an extension of her aesthetic rather than a clinical platform.</p>
+    </div>
+
+    <div class="persona">
+      <div class="persona-head">
+        <span class="persona-name">Dr. Andrés</span>
+        <span class="persona-tag">Secondary</span>
+      </div>
+      <dl class="persona-meta">
+        <div><dt>Specialty</dt><dd>Fisioterapeuta</dd></div>
+        <div><dt>Age</dt><dd>36</dd></div>
+        <div><dt>Location</dt><dd>Puebla, mobile</dd></div>
+        <div><dt>Volume</dt><dd>25–30 sessions/wk</dd></div>
+        <div><dt>Fee</dt><dd>$500–700 MXN</dd></div>
+        <div><dt>Channel</dt><dd>Word of mouth + WhatsApp</dd></div>
+      </dl>
+      <p class="persona-quote">"Yo voy a las casas. Si no tengo bien mi agenda, pierdo media hora en tráfico para nada."</p>
+      <p>Andrés has higher operational pain than Sofía but lower brand consciousness. He will pay only if the time savings are obvious in week one. He is the test for the product's functional core — not its aesthetic shell.</p>
+    </div>
+
+    <div class="persona">
+      <div class="persona-head">
+        <span class="persona-name">Laura</span>
+        <span class="persona-tag">Patient-side</span>
+      </div>
+      <dl class="persona-meta">
+        <div><dt>Age</dt><dd>29</dd></div>
+        <div><dt>Location</dt><dd>CDMX</dd></div>
+        <div><dt>Books</dt><dd>3–4 services/mo</dd></div>
+        <div><dt>Discovery</dt><dd>Instagram, referral</dd></div>
+        <div><dt>Device</dt><dd>iPhone, mobile-first</dd></div>
+        <div><dt>Trust signals</dt><dd>Reviews + IG aesthetic</dd></div>
+      </dl>
+      <p class="persona-quote">"Si tengo que esperar dos horas a que me respondan por WhatsApp para saber si tienen lugar, ya me distraje y se me pasó."</p>
+      <p>Laura is the conversion engine. Her drop-off point is the gap between intent and confirmation. The product wins her by closing that gap to under sixty seconds.</p>
+    </div>
+  </section>
+
+  <!-- SECTION VII -->
+  <section id="vii">
+    <div class="section-head">
+      <div class="section-num">Section VII</div>
+      <h2>Design <em>principles.</em></h2>
+    </div>
+
+    <p>Eight principles, derived from the pain points above, intended to operate as decision filters when scope and aesthetic questions arise.</p>
+
+    <ul class="findings">
+      <li>
+        <span class="finding-title">The doctor's page belongs to the doctor.</span>
+        <span class="finding-body">No competitor cards. No upsell modals. No "doctores similares." The profile is a personal site, not a directory entry. This is the single most important principle and the clearest differentiation from Doctoralia.</span>
+      </li>
+      <li>
+        <span class="finding-title">WhatsApp is the channel, not an integration.</span>
+        <span class="finding-body">Every notification — confirmation, reminder, reschedule, cancellation — flows through WhatsApp by default. Email is a fallback, not the primary. The product meets the user where they already live.</span>
+      </li>
+      <li>
+        <span class="finding-title">Two minutes to first booking-ready state.</span>
+        <span class="finding-body">Doctor signup → public page live and accepting bookings in under two minutes. Defaults over configuration. Every clinical-feeling field is post-onboarding.</span>
+      </li>
+      <li>
+        <span class="finding-title">Sixty seconds from landing to booked.</span>
+        <span class="finding-body">Patient flow: pick service, pick slot, fill three fields, confirm. No account creation. No app download. Tokenized links for everything subsequent.</span>
+      </li>
+      <li>
+        <span class="finding-title">Price and duration are above the fold.</span>
+        <span class="finding-body">The information that currently requires a DM exchange is the information shown first.</span>
+      </li>
+      <li>
+        <span class="finding-title">Reminders are a first-class product feature.</span>
+        <span class="finding-body">Not a setting, not an add-on. The 24-hour reminder is the single highest-leverage touchpoint and is treated as such.</span>
+      </li>
+      <li>
+        <span class="finding-title">Optional deposits, frictionlessly.</span>
+        <span class="finding-body">A deposit toggle the doctor can flip without configuration. Stripe or Mercado Pago. This is the no-show insurance that no incumbent offers cleanly at this tier.</span>
+      </li>
+      <li>
+        <span class="finding-title">Aesthetic is functional.</span>
+        <span class="finding-body">For Sofía, the look of the product is the product. Generic SaaS aesthetics fail the brand-conscious user. This is the design-engineering wedge — and the place where competing as a solo founder is genuinely possible.</span>
+      </li>
+    </ul>
+
+    <hr class="ornament" />
+  </section>
+
+  <!-- SECTION VIII -->
+  <section id="viii">
+    <div class="section-head">
+      <div class="section-num">Section VIII</div>
+      <h2>The <em>wedge.</em></h2>
+    </div>
+
+    <p>If the product must be defensible in a sentence:</p>
+
+    <div class="pull">
+      A doctor-first booking platform for the Instagram-native solo practitioner — not a directory, not a clinical EMR — designed with the same care those professionals put into their own practice.
+    </div>
+
+    <p>The wedge is the intersection of three things competitors do not combine: (1) a profile surface that is the doctor's, not the platform's; (2) a WhatsApp-native operating layer rather than a web-app interface; and (3) an aesthetic quality that signals belonging to the Sofía persona's existing visual world.</p>
+
+    <p>Volume is irrelevant in the first year. The right metric is not "doctors acquired" but "doctors who would be upset if the product disappeared." Forty such doctors is enough to validate; four hundred is enough to build a real business.</p>
+  </section>
+
+  <!-- SECTION IX -->
+  <section id="ix">
+    <div class="section-head">
+      <div class="section-num">Section IX</div>
+      <h2>Recommended <em>field research.</em></h2>
+    </div>
+
+    <p>Before scoping V1 in detail, four research efforts — none requiring more than a week, all parallel-runnable.</p>
+
+    <h3>1. Diary study — Rio &amp; CDMX.</h3>
+    <p>Book five appointments across both cities with solo practitioners (psicólogo, nutriólogo, dentista, fisio, dermatólogo). Document the booking flow at every touchpoint: discovery, message, confirmation, reminder, attendance, follow-up. The delta between the two cities is the product roadmap.</p>
+
+    <h3>2. Doctor interviews — five, semi-structured.</h3>
+    <p>Three CDMX, two Puebla/GDL. 45 minutes each. Topics: current scheduling workflow, weekly time-on-admin estimate, no-show frequency, willingness to pay, opinion of Doctoralia, presence on Instagram. Lean Sofía-heavy in the sample.</p>
+
+    <h3>3. Patient interviews — five, lighter.</h3>
+    <p>20 minutes each. Topics: most recent booking experience, frustration moments, what would have made it better, opinion of having to use WhatsApp vs. a web form.</p>
+
+    <h3>4. Competitive audit — instrumented.</h3>
+    <p>Create test accounts on Doctoralia MX, Doctoralia BR, Nimbo-X, Agenda Pro. Document every screen, every email, every default. Build a visual reference deck.</p>
+
+    <div class="sidenote">
+      <span class="label">Suggested Timing</span>
+      All four efforts can complete in seven to ten days. Field interviews can be conducted by video for remote, but at least two doctor interviews should be in person. The Rio half of the diary study is already partially underway and should be formalized rather than reset.
+    </div>
+  </section>
+
+  <!-- SECTION X -->
+  <section id="x">
+    <div class="section-head">
+      <div class="section-num">Section X</div>
+      <h2>V1 <em>scope.</em></h2>
+    </div>
+
+    <p>A minimum product that respects the design principles and ships in two to three weeks of focused build.</p>
+
+    <h4>Doctor-Side</h4>
+    <ul class="findings">
+      <li><span class="finding-title">Signup, profile, slug</span><span class="finding-body">Email + Google auth. Personal URL (e.g., dominio.com/dra-sofia). Photo, bio, specialty, address (or "online").</span></li>
+      <li><span class="finding-title">Services</span><span class="finding-body">Name, duration, price, optional description. Multiple services per doctor.</span></li>
+      <li><span class="finding-title">Availability</span><span class="finding-body">Per-weekday windows. Block-out dates. Buffer time between sessions.</span></li>
+      <li><span class="finding-title">Bookings view</span><span class="finding-body">Calendar + list. Today, week, month. Click to see patient details.</span></li>
+      <li><span class="finding-title">Notifications</span><span class="finding-body">WhatsApp + email on new booking, cancellation, reschedule.</span></li>
+    </ul>
+
+    <h4>Patient-Side</h4>
+    <ul class="findings">
+      <li><span class="finding-title">Public profile</span><span class="finding-body">Editorial-quality page. Services with price + duration. Availability preview. Photo, bio, location.</span></li>
+      <li><span class="finding-title">Booking flow</span><span class="finding-body">Service → slot → name, phone, email, reason. Confirm. Done. No account.</span></li>
+      <li><span class="finding-title">Confirmation + reminder</span><span class="finding-body">WhatsApp + email immediately. WhatsApp reminder 24h before.</span></li>
+      <li><span class="finding-title">Reschedule / cancel link</span><span class="finding-body">Tokenized URL in confirmation. One tap.</span></li>
+    </ul>
+
+    <h4>Explicitly Out of Scope for V1</h4>
+    <ul class="findings">
+      <li><span class="finding-title">Clinical records</span><span class="finding-body">Regulatory surface (NOM-024-SSA3-2012, LFPDPPP) materially changes the build. V2 at earliest, with proper compliance scoping.</span></li>
+      <li><span class="finding-title">Deposits / payments</span><span class="finding-body">High-value but adds Stripe Connect or Mercado Pago Marketplace complexity. V1.5.</span></li>
+      <li><span class="finding-title">Reviews</span><span class="finding-body">Adds moderation surface and incentive to game. Post-PMF.</span></li>
+      <li><span class="finding-title">Multi-location, team accounts</span><span class="finding-body">Adds permission system. Solo practitioners do not need this.</span></li>
+    </ul>
+  </section>
+
+  <!-- FOOTNOTES -->
+  <div class="footnotes">
+    <h4>Notes</h4>
+    <ol>
+      <li>Brazil's relative maturity is partly a function of Doctoralia's Polish-Brazilian origin and earlier consolidation; Mexico's market followed a different trajectory and remains more fragmented at the solo-practitioner tier.</li>
+      <li>No-show rates and reminder efficacy are well-documented in healthcare operations literature; the figure cited here is anecdotal from adjacent Mexican SMB conversations and should be sharpened with primary interviews.</li>
+    </ol>
+  </div>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    <strong>Colophon</strong>
+    <p style="margin-top: 16px; font-size: 13px;">Set in Fraunces and Newsreader. Composed in Rio de Janeiro, May 2026. A working draft — to be sharpened in the field.</p>
+  </div>
+
+</article>
+
+</body>
+</html>

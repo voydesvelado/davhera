@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>User Flows &amp; Jobs to Be Done — Document № 002</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #F4EFE4;
+    --bg-2: #EBE4D3;
+    --bg-3: #E4DBC5;
+    --ink: #1A1816;
+    --ink-soft: #2C2924;
+    --muted: #6E665A;
+    --rule: #CFC6B3;
+    --rule-soft: #DDD4C1;
+    --accent: #8B2E1F;
+    --accent-soft: #B85940;
+    --accent-pale: #F1E3DE;
+    --max: 700px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 380;
+    font-size: 19px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(139, 46, 31, 0.025), transparent 40%),
+      radial-gradient(circle at 80% 90%, rgba(110, 102, 90, 0.04), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0 0.1 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  .page {
+    position: relative;
+    z-index: 2;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 80px 28px 160px;
+  }
+
+  /* COVER */
+  .cover {
+    min-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 40px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 80px;
+  }
+
+  .cover-meta {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 100;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .cover-meta .left, .cover-meta .right {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cover-meta .right { text-align: right; }
+
+  .cover-title-block {
+    margin-top: 80px;
+    margin-bottom: 60px;
+  }
+
+  .eyebrow {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 0;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    display: inline-block;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--accent);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+    font-weight: 360;
+    font-size: clamp(42px, 8.5vw, 72px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin: 0 0 28px;
+    color: var(--ink);
+  }
+
+  h1 em {
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+    font-style: italic;
+    font-weight: 320;
+    color: var(--accent);
+  }
+
+  .deck {
+    font-family: 'Newsreader', serif;
+    font-variation-settings: "opsz" 24;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    max-width: 560px;
+  }
+
+  .cover-foot {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9;
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    border-top: 1px solid var(--rule);
+    padding-top: 20px;
+  }
+
+  /* DOC RIBBON */
+  .ribbon {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .ribbon .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  /* TOC */
+  .toc {
+    margin: 60px 0 100px;
+    padding: 32px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .toc-label {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .toc-group {
+    margin-bottom: 24px;
+  }
+
+  .toc-group-label {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 100;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 16px 0 10px;
+  }
+
+  .toc ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .toc li {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    gap: 16px;
+    padding: 9px 0;
+    border-bottom: 1px dotted var(--rule-soft);
+    font-size: 16px;
+  }
+
+  .toc li:last-child { border-bottom: none; }
+
+  .toc .num {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    padding-top: 4px;
+  }
+
+  .toc li a {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'Newsreader', serif;
+    border: none;
+  }
+
+  .toc li a:hover { color: var(--accent); }
+
+  .toc .pg {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9;
+    font-size: 12px;
+    color: var(--muted);
+    padding-top: 4px;
+  }
+
+  /* PART HEADERS */
+  .part-header {
+    margin: 120px 0 80px;
+    text-align: center;
+    padding: 40px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .part-label {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 100;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .part-title {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+    font-weight: 360;
+    font-size: clamp(36px, 6vw, 54px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .part-title em {
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+    font-style: italic;
+  }
+
+  /* JOB SECTION */
+  .job {
+    margin: 80px 0;
+  }
+
+  .job-header {
+    margin-bottom: 40px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .job-num {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 100;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .job-title {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 72, "SOFT" 50;
+    font-weight: 380;
+    font-size: clamp(28px, 4.8vw, 38px);
+    line-height: 1.08;
+    letter-spacing: -0.012em;
+    margin: 0 0 24px;
+    color: var(--ink);
+  }
+
+  .job-title em {
+    font-variation-settings: "opsz" 72, "SOFT" 100;
+    font-style: italic;
+    font-weight: 340;
+  }
+
+  .job-statement {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 100;
+    font-style: italic;
+    font-weight: 340;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--ink);
+    padding: 20px 0 20px 22px;
+    border-left: 2px solid var(--accent);
+    margin: 0;
+  }
+
+  .job-statement .label {
+    display: block;
+    font-style: normal;
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 0;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin: 0 0 22px;
+    color: var(--ink-soft);
+  }
+
+  p.lede {
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--ink);
+    font-weight: 360;
+  }
+
+  p.lede::first-letter {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 144, "SOFT" 50;
+    font-weight: 380;
+    font-size: 72px;
+    line-height: 0.85;
+    float: left;
+    margin: 6px 12px 0 0;
+    color: var(--accent);
+  }
+
+  h4 {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 44px 0 18px;
+  }
+
+  strong { font-weight: 600; color: var(--ink); }
+  em, i { font-style: italic; }
+
+  /* FLOW */
+  .flow {
+    margin: 32px 0 48px;
+    padding: 28px 0;
+    border-top: 1px solid var(--rule-soft);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .flow-label {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .flow-label .meta {
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+  }
+
+  .flow-title {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 50;
+    font-weight: 480;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    margin: 0 0 24px;
+    color: var(--ink);
+  }
+
+  /* STEPS */
+  ol.steps {
+    list-style: none;
+    counter-reset: step;
+    padding: 0;
+    margin: 16px 0 0;
+  }
+
+  ol.steps > li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 18px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  ol.steps > li:last-child { border-bottom: none; }
+
+  ol.steps > li::before {
+    content: counter(step, decimal-leading-zero);
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 0;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    padding-top: 4px;
+  }
+
+  .step-title {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 30;
+    font-weight: 500;
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 5px;
+    letter-spacing: -0.003em;
+  }
+
+  .step-body {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  /* MICRO ANNOTATIONS INSIDE STEPS */
+  .annot {
+    display: block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-size: 13.5px;
+    line-height: 1.45;
+    background: var(--bg-2);
+    border-left: 2px solid var(--rule);
+    color: var(--ink-soft);
+  }
+
+  .annot .tag {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 0;
+    font-weight: 600;
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-right: 8px;
+  }
+
+  .annot.copy {
+    background: var(--accent-pale);
+    border-left-color: var(--accent-soft);
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+  }
+
+  .annot.copy .tag {
+    color: var(--accent);
+    font-style: normal;
+  }
+
+  /* PULL */
+  .pull {
+    margin: 48px 0;
+    padding: 0 0 0 24px;
+    border-left: 2px solid var(--accent);
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 100;
+    font-style: italic;
+    font-weight: 340;
+    font-size: 24px;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+
+  /* SIDENOTE */
+  .sidenote {
+    margin: 28px 0;
+    padding: 18px 22px;
+    background: var(--bg-2);
+    border-left: 2px solid var(--rule);
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .sidenote .label {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* ORNAMENT */
+  hr.ornament {
+    border: none;
+    text-align: center;
+    margin: 56px 0;
+    color: var(--muted);
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    letter-spacing: 1em;
+  }
+
+  hr.ornament::before { content: '·  ·  ·'; }
+
+  /* EVENT TABLE */
+  .matrix {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0 32px;
+    font-size: 14.5px;
+  }
+
+  .matrix th, .matrix td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+  }
+
+  .matrix th {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--rule);
+    background: var(--bg-2);
+  }
+
+  .matrix td:first-child {
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 36, "SOFT" 50;
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  /* COLOPHON */
+  .colophon {
+    margin-top: 120px;
+    padding-top: 40px;
+    border-top: 1px solid var(--rule);
+    font-family: 'Fraunces', serif;
+    font-variation-settings: "opsz" 9, "SOFT" 100;
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .colophon strong {
+    font-style: normal;
+    font-variation-settings: "opsz" 9, "SOFT" 0;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: var(--ink);
+  }
+
+  @media (max-width: 600px) {
+    .page { padding: 48px 22px 100px; }
+    p.lede { font-size: 19px; }
+    p.lede::first-letter { font-size: 56px; }
+    .pull { font-size: 20px; padding-left: 18px; }
+    body { font-size: 18px; }
+    ol.steps > li { grid-template-columns: 30px 1fr; gap: 12px; }
+    .job-statement { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<article class="page">
+
+  <!-- COVER -->
+  <header class="cover">
+    <div class="cover-meta">
+      <div class="left">
+        <span>Research Document № 002</span>
+        <span>Internal — Pre-Build</span>
+      </div>
+      <div class="right">
+        <span>Draft v0.1</span>
+        <span>May 2026</span>
+      </div>
+    </div>
+
+    <div class="cover-title-block">
+      <div class="ribbon"><span class="dot"></span><span>A continuation of № 001 — The Solo Practitioner Problem</span></div>
+      <span class="eyebrow">User Flows &amp; Jobs to Be Done</span>
+      <h1>How the<br/>work <em>actually</em><br/>moves.</h1>
+      <p class="deck">Eleven jobs, eleven flows. A working specification of every meaningful path through the product — written around the progress the user is trying to make, not the features that would deliver it.</p>
+    </div>
+
+    <div class="cover-foot">
+      Rio de Janeiro · For internal product strategy · To be revised after field interviews
+    </div>
+  </header>
+
+  <!-- PREFACE -->
+  <section>
+    <p class="lede">A flow is not a feature. A flow is the path a person walks to make a piece of their life better, briefly. Software is just the surface they happen to be walking on.</p>
+
+    <p>This document organizes the product's surface around jobs — moments of intended progress — rather than around the things we will build. Each job is followed by the flow that delivers it. Where two jobs share a flow, the flow appears once. Where a flow exists primarily to support a system rather than a user (notifications, reminders, the WhatsApp layer), it is grouped at the end.</p>
+
+    <p>The structure follows three premises from the prior research:</p>
+
+    <p><strong>One.</strong> The doctor's job is to practice medicine; everything the software does for her is, ultimately, in service of removing administrative load from that practice.</p>
+
+    <p><strong>Two.</strong> The patient's job is to receive care with the least possible friction; everything the software does for her is in service of certainty — that the appointment exists, that she will be reminded, that she can change it.</p>
+
+    <p><strong>Three.</strong> The product is a tool, not a directory. Its loyalty is to the doctor, who pays for it. The patient experience exists because patient delight is the doctor's marketing engine.</p>
+
+    <div class="pull">
+      Every flow in this document should fail one test if it does anything that does not serve the job. The test is severe and intentional.
+    </div>
+  </section>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <div class="toc-label">Contents</div>
+
+    <div class="toc-group">
+      <div class="toc-group-label">Part One — Doctor</div>
+      <ol>
+        <li><span class="num">J 01</span><a href="#j01">Get my practice online quickly and credibly</a><span class="pg">F·01</span></li>
+        <li><span class="num">J 02</span><a href="#j02">Know what my week looks like at a glance</a><span class="pg">F·02</span></li>
+        <li><span class="num">J 03</span><a href="#j03">Receive new bookings without context-switching</a><span class="pg">F·03</span></li>
+        <li><span class="num">J 04</span><a href="#j04">Protect my time when I am unavailable</a><span class="pg">F·04</span></li>
+        <li><span class="num">J 05</span><a href="#j05">Hand off changes to the patient, not the calendar</a><span class="pg">F·05</span></li>
+        <li><span class="num">J 06</span><a href="#j06">Reduce no-shows</a><span class="pg">F·06</span></li>
+      </ol>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-label">Part Two — Patient</div>
+      <ol>
+        <li><span class="num">J 07</span><a href="#j07">Decide whether to book without an awkward DM</a><span class="pg">F·07</span></li>
+        <li><span class="num">J 08</span><a href="#j08">Book quickly, with certainty</a><span class="pg">F·08</span></li>
+        <li><span class="num">J 09</span><a href="#j09">Change my plans without social cost</a><span class="pg">F·09</span></li>
+        <li><span class="num">J 10</span><a href="#j10">Show up to the right place at the right time</a><span class="pg">F·10</span></li>
+        <li><span class="num">J 11</span><a href="#j11">Trust this professional before I commit</a><span class="pg">F·11</span></li>
+      </ol>
+    </div>
+
+    <div class="toc-group">
+      <div class="toc-group-label">Part Three — The System</div>
+      <ol>
+        <li><span class="num">§</span><a href="#system">The notification layer</a><span class="pg">F·12</span></li>
+        <li><span class="num">§</span><a href="#edges">Edge cases &amp; failure modes</a><span class="pg">F·13</span></li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ====================================== -->
+  <!-- PART ONE -->
+  <!-- ====================================== -->
+  <div class="part-header">
+    <div class="part-label">Part One</div>
+    <h2 class="part-title">The <em>Doctor.</em></h2>
+  </div>
+
+  <!-- JOB 01 -->
+  <section class="job" id="j01">
+    <div class="job-header">
+      <div class="job-num">Job № 01</div>
+      <h3 class="job-title">Get my practice <em>online quickly and credibly.</em></h3>
+      <div class="job-statement">
+        <span class="label">JTBD</span>
+        When I decide it is time to have a real online presence, I want to look professional within minutes — not days — so that I can share my page the same afternoon and stop sending my Instagram bio as a substitute for a website.
+      </div>
+    </div>
+
+    <p>The first session with the product is the entire pitch. If the doctor does not have a shareable, presentable page within two minutes of signing up, she has decided — silently, irreversibly — that the product is not for her.</p>
+
+    <div class="flow">
+      <div class="flow-label"><span>Flow F·01 — Onboarding</span><span class="meta">Target: 2 min</span></div>
+      <div class="flow-title">Sign-up to live profile.</div>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <span class="step-title">Land &amp; sign in</span>
+            <span class="step-body">Doctor arrives via referral, ad, or organic search. Single screen with two options: continue with Google, or email. No password creation on signup.</span>
+            <span class="annot copy"><span class="tag">Copy</span>Tu consultorio online, en dos minutos.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Name &amp; specialty</span>
+            <span class="step-body">Doctor enters her name and selects specialty from a list. The slug auto-generates from the name (e.g., <em>menura.app/dra-sofia-ramirez</em>), with one-click edit if she prefers a shorter variant.</span>
+            <span class="annot"><span class="tag">System</span>Slug uniqueness checked live; collisions get a numeric suffix or alternate suggestion.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">First service</span>
+            <span class="step-body">A single service is created with three fields: name (e.g., "Consulta inicial"), duration, and price. The product refuses to advance without at least one service — this is the entire commercial surface.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Availability — visual grid</span>
+            <span class="step-body">A week grid pre-populated with sensible defaults (Mon–Fri, 09:00–18:00). Doctor adjusts by tapping cells. No timezone questions; the product infers from device and shows it as confirmation.</span>
+            <span class="annot"><span class="tag">Edge</span>If device timezone differs from the slug country expectation (e.g., Mexican doctor signing up while traveling), surface a one-line confirmation rather than a dialog.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Connect WhatsApp</span>
+            <span class="step-body">Doctor enters the WhatsApp number where she wants to receive booking notifications. A test message is sent on confirm. This is the most important single field in the flow.</span>
+            <span class="annot copy"><span class="tag">Copy</span>Aquí recibirás cada nueva reserva. Sin descargar nada.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Page live — share screen</span>
+            <span class="step-body">The public URL is now active. Doctor sees her page in a preview frame and three primary actions: <em>Copiar enlace</em>, <em>Compartir en Instagram</em>, <em>Ver mi página</em>. Optional secondary: <em>Agregar foto y bio</em>.</span>
+            <span class="annot copy"><span class="tag">Copy</span>Listo. Tu página está en vivo en menura.app/dra-sofia-ramirez.</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <h4>Deferred — post-onboarding</h4>
+    <p>Photo upload, bio, additional services, location/address or "consulta online" toggle, custom branding, multiple availability rules. None of these block first-booking-ready state. They are surfaced as gentle nudges on the dashboard after first sign-in.</p>
+  </section>
+
+  <!-- JOB 02 -->
+  <section class="job" id="j02">
+    <div class="job-header">
+      <div class="job-num">Job № 02</div>
+      <h3 class="job-title">Know what my week <em>looks like</em> at a glance.</h3>
+      <div class="job-statement">
+        <span class="label">JTBD</span>
+        When my workday begins, I want to see today's appointments in one glance — names, times, services — without scrolling, scanning, or thinking, so that I can mentally prepare for who I am about to see.
+      </div>
+    </div>
+
+    <p>This is the most-used screen in the product. It must be readable in two seconds, on a phone, in the elevator on the way up to the consultorio.</p>
+
+    <div class="flow">
+      <div class="flow-label"><span>Flow F·02 — Daily dashboard</span><span class="meta">Most-used screen</span></div>
+      <div class="flow-title">Open app to today's view.</div>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <span class="step-title">Open — land on today</span>
+            <span class="step-body">No splash, no greeting, no metrics. Today's appointments in a vertical list. Each row: time, patient first name + last initial, service, duration.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Tap an appointment</span>
+            <span class="step-body">Expands inline to show patient phone, reason for visit, notes from prior visits (if any), and three actions: call, WhatsApp, mark complete.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Swipe horizontally — day navigation</span>
+            <span class="step-body">Left/right swipe moves between days. A small week strip at the top shows which days have bookings (subtle dot indicator).</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Switch to week view</span>
+            <span class="step-body">Tap to toggle. Week grid showing booking density. Useful for the doctor planning the next week's marketing push or knowing when to block time.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Next available slot — passive widget</span>
+            <span class="step-body">Persistent footer line: "Próximo hueco libre: jueves 11:00". A signal of demand health. When this line says "esta tarde", the doctor knows it is time to post.</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="sidenote">
+      <span class="label">Design Note</span>
+      The dashboard's restraint is the feature. No metrics, no graphs, no engagement loops. The doctor opens the app to find out what is happening today, and that information is the first thing she sees. Everything else is a setting.
+    </div>
+  </section>
+
+  <!-- JOB 03 -->
+  <section class="job" id="j03">
+    <div class="job-header">
+      <div class="job-num">Job № 03</div>
+      <h3 class="job-title">Receive new bookings <em>without context-switching.</em></h3>
+      <div class="job-statement">
+        <span class="label">JTBD</span>
+        When someone books with me, I want to know immediately — but I do not want to confirm, accept, or respond — so I can stay focused on the patient in front of me.
+      </div>
+    </div>
+
+    <p>The default behavior of the system is to confirm bookings instantly without any doctor action required. This is a deliberate inversion of the WhatsApp status quo, where every booking is a negotiation that requires the doctor's active attention.</p>
+
+    <div class="flow">
+      <div class="flow-label"><span>Flow F·03 — New booking received</span><span class="meta">Passive · zero-action</span></div>
+      <div class="flow-title">Booking happens; doctor is informed.</div>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <span class="step-title">Patient confirms — system commits</span>
+            <span class="step-body">The slot is reserved atomically on the database side. Race conditions handled by a uniqueness constraint, not the UI.</span>
+            <span class="annot"><span class="tag">System</span>Postgres unique constraint on (doctor_id, start_time). Conflicting requests fail gracefully — patient sees "Ese horario acaba de tomarse, elige otro."</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">WhatsApp message to doctor</span>
+            <span class="step-body">Within seconds: a structured WhatsApp message with patient name, service, day &amp; time, and a link to view in the app.</span>
+            <span class="annot copy"><span class="tag">Template</span>Nueva cita: Laura García · Consulta inicial · jueves 11 de mayo, 16:00. Ver detalles ›</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Push notification (if app installed)</span>
+            <span class="step-body">Same content, secondary channel. WhatsApp is canonical because it is where the doctor lives; push is a backup.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">No action required</span>
+            <span class="step-body">The booking is real. The patient has already received her own confirmation. The doctor's involvement is optional — read the message, do nothing, the appointment exists.</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <h4>Optional — approval mode</h4>
+    <p>A setting (off by default) lets the doctor require manual approval for first-time patients. In approval mode, new patients book a "solicitud" rather than a confirmed slot; the slot is held for two hours pending the doctor's approval, then released. This exists for the doctor with a specific clinical reason to vet patients — most do not need it.</p>
+  </section>
+
+  <!-- JOB 04 -->
+  <section class="job" id="j04">
+    <div class="job-header">
+      <div class="job-num">Job № 04</div>
+      <h3 class="job-title">Protect my time <em>when I am unavailable.</em></h3>
+      <div class="job-statement">
+        <span class="label">JTBD</span>
+        When I take vacation, attend a conference, or simply want a Friday off, I want to stop accepting bookings during that window without rebuilding my whole availability schedule.
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-label"><span>Flow F·04 — Block time</span><span class="meta">Quick, reversible</span></div>
+      <div class="flow-title">Mark a range as unavailable.</div>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <span class="step-title">From calendar, tap-and-hold or long-press a date</span>
+            <span class="step-body">A bottom sheet appears: "Bloquear este día" / "Bloquear varios días" / "Bloquear horario específico".</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Select range &amp; optional reason</span>
+            <span class="step-body">Range is visual — tap end date. Reason is internal-only, used for the doctor's reference (e.g., "Congreso CDMX"). Patients see nothing.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Existing bookings — handled separately</span>
+            <span class="step-body">If the blocked range contains bookings, the system surfaces them with a clear action: "Tienes 3 citas en este rango. Notifica a tus pacientes para reagendar." A pre-written WhatsApp message is offered.</span>
+            <span class="annot copy"><span class="tag">Copy</span>Hola Laura, lamento avisarte que tendré que cerrar el consultorio el jueves 12. ¿Podemos mover tu cita? Aquí tienes mis siguientes huecos disponibles: [enlace]</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Public page reflects change immediately</span>
+            <span class="step-body">Slots in the blocked range disappear from the booking surface. Patients trying to book see only valid options.</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="sidenote">
+      <span class="label">V1.5 — Google Calendar Sync</span>
+      Two-way sync with Google Calendar so external events automatically block availability. High-leverage feature, but adds OAuth complexity to v1. Deferred.
+    </div>
+  </section>
+
+  <!-- JOB 05 -->
+  <section class="job" id="j05">
+    <div class="job-header">
+      <div class="job-num">Job № 05</div>
+      <h3 class="job-title">Hand off changes to the patient, <em>not the calendar.</em></h3>
+      <div class="job-statement">
+        <span class="label">JTBD</span>
+        When a patient needs to reschedule, I do not want a five-message back-and-forth. I want the patient to handle it through the system, and I want to be informed only of the outcome.
+      </div>
+    </div>
+
+    <p>This is mirrored on the patient side as Job 09. From the doctor's perspective, the flow is purely receptive.</p>
+
+    <div class="flow">
+      <div class="flow-label"><span>Flow F·05 — Reschedule (doctor view)</span><span class="meta">Passive</span></div>
+      <div class="flow-title">Patient reschedules; doctor is informed.</div>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <span class="step-title">Patient uses tokenized reschedule link</span>
+            <span class="step-body">From her original confirmation message. No login required — the token authenticates the booking.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">System updates booking atomically</span>
+            <span class="step-body">Old slot released, new slot taken. Calendar reflects change in real time.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Doctor receives WhatsApp summary</span>
+            <span class="step-body">A single line: "Laura García movió su cita: jueves 16:00 → viernes 11:00."</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">No required action</span>
+            <span class="step-body">The doctor does not approve. She does not respond. The system has handled the entire transaction. This is the product's most important promise to the doctor.</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- JOB 06 -->
+  <section class="job" id="j06">
+    <div class="job-header">
+      <div class="job-num">Job № 06</div>
+      <h3 class="job-title">Reduce <em>no-shows.</em></h3>
+      <div class="job-statement">
+        <span class="label">JTBD</span>
+        When patients fail to show up, I lose money I cannot recover. I want a system that reduces this without making me feel like I am chasing people.
+      </div>
+    </div>
+
+    <p>The no-show problem is solved in two layers: reminders (V1, universal) and deposits (V1.5, optional). Both are designed to operate without the doctor having to ask.</p>
+
+    <div class="flow">
+      <div class="flow-label"><span>Flow F·06 — No-show prevention</span><span class="meta">Automatic</span></div>
+      <div class="flow-title">Reminders before, deposits behind.</div>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <span class="step-title">T-24h reminder</span>
+            <span class="step-body">WhatsApp message to patient: appointment details, location or video link, reschedule/cancel links. Same template, every patient. The doctor never types it.</span>
+            <span class="annot copy"><span class="tag">Template</span>Hola Laura, recordatorio: mañana jueves a las 16:00 tienes tu Consulta inicial con Dra. Sofía. Ubicación: Av. Álvaro Obregón 145. ¿Necesitas reagendar? Aquí ›</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">T-2h reminder (optional)</span>
+            <span class="step-body">Lighter touch, useful for high-no-show categories (psicología, fisio). Per-doctor toggle.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">After: mark complete or no-show</span>
+            <span class="step-body">From the appointment row in the dashboard, the doctor taps "completada" or "no asistió". The latter is silent — no message to the patient — but informs the system for future analytics and (V1.5) deposit retention.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">V1.5 — optional deposit at booking</span>
+            <span class="step-body">Per-service toggle. If on, patient is asked to leave a deposit (Stripe or Mercado Pago) at booking time. Deposit is refunded automatically on cancellation more than 24h prior; retained otherwise.</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <hr class="ornament" />
+  </section>
+
+  <!-- ====================================== -->
+  <!-- PART TWO -->
+  <!-- ====================================== -->
+  <div class="part-header">
+    <div class="part-label">Part Two</div>
+    <h2 class="part-title">The <em>Patient.</em></h2>
+  </div>
+
+  <!-- JOB 07 -->
+  <section class="job" id="j07">
+    <div class="job-header">
+      <div class="job-num">Job № 07</div>
+      <h3 class="job-title">Decide whether to book — <em>without an awkward DM.</em></h3>
+      <div class="job-statement">
+        <span class="label">JTBD</span>
+        When I land on a doctor's page, I want to know — in under thirty seconds — whether she has availability that works for me, what it costs, and where the consultation takes place, so I can decide whether to book without committing to a conversation first.
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-label"><span>Flow F·07 — Land &amp; evaluate</span><span class="meta">Target: 30 sec</span></div>
+      <div class="flow-title">Land on profile, decide.</div>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <span class="step-title">Above the fold — the decision frame</span>
+            <span class="step-body">Doctor's photo, name, specialty, location (or "Online"), and a single primary CTA: <em>Reservar cita</em>. Below the CTA, a subtle "Próxima disponibilidad: mañana 10:00".</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Services — price, duration, what is included</span>
+            <span class="step-body">Each service as a card: name, duration, price in MXN, one-line description. Tap to book that specific service.</span>
+            <span class="annot copy"><span class="tag">Example</span>Consulta inicial · 60 min · $1,200 · Primera sesión con evaluación completa.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">About — bio &amp; credentials</span>
+            <span class="step-body">A short, doctor-written bio. Cédula profesional (where applicable). Years of practice. Languages.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Location or modality</span>
+            <span class="step-body">If in-person: address, map, parking note. If online: which platform (Zoom, Google Meet) and what to expect.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Trust signals — passive</span>
+            <span class="step-body">Instagram handle link (if the doctor has provided one), specialty certifications, optional testimonials. No competitor ads. No "doctores similares" section. Ever.</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- JOB 08 -->
+  <section class="job" id="j08">
+    <div class="job-header">
+      <div class="job-num">Job № 08</div>
+      <h3 class="job-title">Book <em>quickly,</em> with certainty.</h3>
+      <div class="job-statement">
+        <span class="label">JTBD</span>
+        When I have decided to book, I want the appointment to exist within sixty seconds — without creating an account, downloading an app, or waiting for someone to respond.
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-label"><span>Flow F·08 — Book a slot</span><span class="meta">Target: 60 sec · No account</span></div>
+      <div class="flow-title">From tap to confirmation.</div>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <span class="step-title">Tap service or CTA</span>
+            <span class="step-body">Bottom sheet (mobile) or modal (desktop) opens. The selected service is pre-filled.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Pick a date</span>
+            <span class="step-body">Horizontal calendar strip showing days with available slots. Days with no availability are visibly dimmed but not hidden.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Pick a time</span>
+            <span class="step-body">Vertical list of available time slots for the selected day. Time slots in patient's local timezone, with a one-line confirmation that the doctor is in [X timezone].</span>
+            <span class="annot"><span class="tag">Edge</span>If the doctor's slots span a DST change, the system shows local-to-local mapping. Edge case but real for Mexico–US patients.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Three fields, one optional</span>
+            <span class="step-body">Nombre · Teléfono (WhatsApp) · Email. Optionally: "¿Algo que la doctora deba saber antes?" Three fields and a button. That is the entire form.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Confirm</span>
+            <span class="step-body">Immediate confirmation screen with appointment details, doctor's address or online link, and "Agregar a calendario" (Apple/Google).</span>
+            <span class="annot copy"><span class="tag">Copy</span>Tu cita está confirmada. Te enviamos los detalles a tu WhatsApp.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">WhatsApp message arrives</span>
+            <span class="step-body">Within seconds: same details, plus tokenized reschedule and cancel links. The message is now the patient's record. No need to remember anything.</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="sidenote">
+      <span class="label">Why no account</span>
+      Account creation is the single largest drop-off in booking flows. The product avoids it by anchoring identity to the booking itself (via phone + email) and authenticating subsequent actions via tokenized links. A returning patient is recognized by phone number on next booking, with pre-filled fields.
+    </div>
+  </section>
+
+  <!-- JOB 09 -->
+  <section class="job" id="j09">
+    <div class="job-header">
+      <div class="job-num">Job № 09</div>
+      <h3 class="job-title">Change my plans <em>without social cost.</em></h3>
+      <div class="job-statement">
+        <span class="label">JTBD</span>
+        When something comes up, I want to reschedule or cancel without having to compose a polite message to the doctor — because that small social friction is exactly what makes me ghost instead.
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-label"><span>Flow F·09 — Patient reschedule/cancel</span><span class="meta">Tokenized, no auth</span></div>
+      <div class="flow-title">From the confirmation message.</div>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <span class="step-title">Tap "Reagendar" or "Cancelar" in WhatsApp message</span>
+            <span class="step-body">Opens browser to a tokenized URL specific to this booking. No login. No "verify your identity" step.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Reschedule — same booking flow, pre-filled</span>
+            <span class="step-body">Patient sees available slots and picks a new one. Old slot is released; new one is taken. Confirmation updates.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Cancel — one confirmation step</span>
+            <span class="step-body">"¿Confirmas la cancelación de tu cita del jueves 11 a las 16:00?" Single-tap confirm. Done.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Doctor is informed; patient is free</span>
+            <span class="step-body">Both sides receive a brief WhatsApp summary of the change. No additional communication required.</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- JOB 10 -->
+  <section class="job" id="j10">
+    <div class="job-header">
+      <div class="job-num">Job № 10</div>
+      <h3 class="job-title">Show up to the <em>right place</em> at the right time.</h3>
+      <div class="job-statement">
+        <span class="label">JTBD</span>
+        When my appointment is approaching, I want to be reminded — once, clearly, with everything I need — so I do not have to dig through old messages to find the address or the video link.
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-label"><span>Flow F·10 — Reminder &amp; arrival</span><span class="meta">Automatic</span></div>
+      <div class="flow-title">The reminder is the product.</div>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <span class="step-title">T-24h reminder via WhatsApp</span>
+            <span class="step-body">Full context: doctor name, date, time, address or video link, and reschedule/cancel links one tap away.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Optional T-2h reminder</span>
+            <span class="step-body">Per-doctor setting. For higher no-show categories.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Calendar entry already present</span>
+            <span class="step-body">From the booking confirmation. The reminder is redundant by design — the patient has at least two surfaces telling her the appointment exists.</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- JOB 11 -->
+  <section class="job" id="j11">
+    <div class="job-header">
+      <div class="job-num">Job № 11</div>
+      <h3 class="job-title">Trust this professional <em>before I commit.</em></h3>
+      <div class="job-statement">
+        <span class="label">JTBD</span>
+        When I am considering a new doctor — especially in a sensitive specialty — I want to feel confident before I share my information, so I do not waste my session on someone who is not a fit.
+      </div>
+    </div>
+
+    <p>Trust is a horizontal concern, not a discrete flow. It is the product of every other flow combined with the visual quality of the profile. Where flows touch the trust surface directly, the design must defer to the doctor's brand.</p>
+
+    <div class="flow">
+      <div class="flow-label"><span>Flow F·11 — Trust signals</span><span class="meta">Passive · embedded</span></div>
+      <div class="flow-title">Where trust enters the product.</div>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <span class="step-title">Visual quality of the profile page</span>
+            <span class="step-body">The single largest trust signal. The profile must look like a personal site, not a directory entry. Typography, photography, generous space.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Cédula profesional, displayed cleanly</span>
+            <span class="step-body">Where applicable — psicología, medicina, nutrición. A small badge near the doctor's name, with the cédula number on tap.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Optional verified Instagram link</span>
+            <span class="step-body">Many patients arrive via IG. Confirming the doctor's IG handle on the page closes the trust loop — same person, same brand.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Doctor-written bio, in her voice</span>
+            <span class="step-body">Not a template. The bio is the closest thing to meeting her before meeting her. The product must make writing it feel like writing a Substack post, not filling a form.</span>
+          </div>
+        </li>
+        <li>
+          <div>
+            <span class="step-title">Testimonials — post-PMF, with care</span>
+            <span class="step-body">Reviews introduce moderation surface, incentive to game, and emotional weight in a healthcare context. Out of scope for V1. When eventually added: opt-in per patient, doctor-curated display, no scoring system.</span>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <hr class="ornament" />
+  </section>
+
+  <!-- ====================================== -->
+  <!-- PART THREE -->
+  <!-- ====================================== -->
+  <div class="part-header">
+    <div class="part-label">Part Three</div>
+    <h2 class="part-title">The <em>System.</em></h2>
+  </div>
+
+  <!-- SYSTEM -->
+  <section class="job" id="system">
+    <div class="job-header">
+      <div class="job-num">Flow F·12</div>
+      <h3 class="job-title">The <em>notification layer.</em></h3>
+    </div>
+
+    <p>WhatsApp is not an integration. It is the operating channel of the product. Every state change in a booking has a corresponding WhatsApp event, with email as fallback and push as secondary.</p>
+
+    <h4>Event catalog</h4>
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Event</th>
+          <th>Doctor</th>
+          <th>Patient</th>
+          <th>Channel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Booking created</td><td>Notified</td><td>Confirmed</td><td>WhatsApp + email</td></tr>
+        <tr><td>T-24h reminder</td><td>—</td><td>Reminded</td><td>WhatsApp</td></tr>
+        <tr><td>T-2h reminder</td><td>—</td><td>Reminded (opt)</td><td>WhatsApp</td></tr>
+        <tr><td>Patient rescheduled</td><td>Informed</td><td>Confirmed (new)</td><td>WhatsApp + email</td></tr>
+        <tr><td>Patient cancelled</td><td>Informed</td><td>Confirmed (cancel)</td><td>WhatsApp + email</td></tr>
+        <tr><td>Doctor blocked time</td><td>—</td><td>Pre-written message offered</td><td>Doctor-sent WhatsApp</td></tr>
+        <tr><td>Slot conflict</td><td>—</td><td>"Ese horario acaba de tomarse"</td><td>In-app</td></tr>
+        <tr><td>Marked no-show</td><td>—</td><td>Silent (V1)</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Template philosophy</h4>
+    <p>Every template is short, in Mexican Spanish by default, and written to sound like a thoughtful assistant — not a marketing email and not a clinical notification. The voice is closer to a competent secretary than to a brand. No emojis in transactional messages; one emoji maximum in reminders if it serves clarity (a calendar emoji before the date, for example).</p>
+
+    <p>Doctor-customizable copy is V2 — for V1, the templates are fixed and excellent.</p>
+
+    <div class="sidenote">
+      <span class="label">WhatsApp Business API — operational reality</span>
+      Mexico-specific friction: Meta verification, template approvals (utility templates approve in 24–48h, marketing ones can take longer or be rejected). Twilio is the fastest path to v1 (higher per-message cost). 360dialog or Gupshup is the path to scale (cheaper, slower onboarding). Plan two weeks of buffer for first-time template approval.
+    </div>
+  </section>
+
+  <!-- EDGES -->
+  <section class="job" id="edges">
+    <div class="job-header">
+      <div class="job-num">Flow F·13</div>
+      <h3 class="job-title">Edge cases &amp; <em>failure modes.</em></h3>
+    </div>
+
+    <p>The flows above describe the happy paths. These are the unhappy ones — each with a designed-for response, not a thrown error.</p>
+
+    <h4>Slot taken between page load and submit</h4>
+    <p>Patient picks a slot, takes thirty seconds with the form, submits. In the meantime another patient has booked the same slot. The system fails the second request gracefully and surfaces the next two adjacent slots with a one-tap selector. The patient does not start over.</p>
+
+    <h4>Patient without WhatsApp</h4>
+    <p>Rare in Mexico but real. The booking form's phone field accepts any number; if WhatsApp delivery fails, the system falls back to SMS via Twilio (V1) or email-only (V1 minimum). The doctor is not informed of the channel difference — the booking exists either way.</p>
+
+    <h4>Doctor's WhatsApp Business API not yet provisioned</h4>
+    <p>During onboarding, while Meta verification is pending, the doctor receives booking notifications by email and push. WhatsApp activates once approval clears. The doctor's profile is fully functional throughout — verification is invisible to the patient.</p>
+
+    <h4>Reschedule into a now-blocked time</h4>
+    <p>Patient holds an old reschedule link; doctor has since blocked that range. The link still works but shows only currently available slots. If no slots are available within a reasonable window, the link offers a "Contact the doctor directly" fallback with a pre-written WhatsApp draft to the doctor's number.</p>
+
+    <h4>Double-booking race condition</h4>
+    <p>Handled at the database layer via a Postgres unique constraint on (doctor_id, start_time). The application logic catches the constraint violation and surfaces the standard "slot taken" UI. Never trusts the frontend's slot list to be current.</p>
+
+    <h4>Doctor deletes account</h4>
+    <p>V1: account deletion suspends the profile (returns 410 Gone) and notifies all future-dated patients via WhatsApp with the doctor's chosen message. Bookings within the next 48 hours trigger a special-case template. Deferred for V1.5: full data export.</p>
+
+    <hr class="ornament" />
+  </section>
+
+  <!-- CLOSING -->
+  <section>
+    <h4>What this document is not</h4>
+    <p>This is not a screen-by-screen specification. It is a description of the progress users are trying to make and the paths the product offers them to make it. The screens themselves will be designed against these flows — directly in code, following the design principles in Document № 001.</p>
+
+    <p>Each flow above should be revisited after the first five doctor interviews. Where a flow assumes a behavior that does not show up in the field, it changes. Where the field reveals a job not described here, a new flow is added.</p>
+
+    <div class="pull">
+      The job is not to build the product correctly. The job is to know what the product is for. Everything else compiles.
+    </div>
+  </section>
+
+  <!-- COLOPHON -->
+  <div class="colophon">
+    <strong>Colophon</strong>
+    <p style="margin-top: 16px; font-size: 13px;">Set in Fraunces and Newsreader. The second in a series. Rio de Janeiro, May 2026.</p>
+  </div>
+
+</article>
+
+</body>
+</html>

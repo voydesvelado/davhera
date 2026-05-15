@@ -1,0 +1,65 @@
+/* Vera · Editorial mode defaults
+   Applied alongside tokens.css. These are the visual-contract defaults
+   for the editorial surface: no shadows, minimal radii, generous rhythm.
+   Component-level styles override where needed. */
+
+.proj-vera.mode-editorial,
+.proj-vera .mode-editorial {
+  --vera-page-bg: var(--bg);
+  --vera-grain-opacity: 0.35;
+}
+
+.proj-vera.mode-editorial,
+.proj-vera .mode-editorial {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(139, 46, 31, 0.025), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(110, 102, 90, 0.04), transparent 50%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+/* Editorial display type — Fraunces, opsz tuned for display */
+.proj-vera.mode-editorial,
+.proj-vera .mode-editorial {
+  font-family: var(--font-newsreader), Georgia, serif;
+}
+
+/* Editorial mode emphasizes typographic hierarchy. No shadows. */
+.proj-vera.mode-editorial *,
+.proj-vera .mode-editorial * {
+  box-shadow: none;
+}
+
+/* Container helpers — editorial reading column */
+.proj-vera .container-prose {
+  max-width: var(--max-prose);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--page-px-mobile);
+  padding-right: var(--page-px-mobile);
+}
+
+@media (min-width: 640px) {
+  .proj-vera .container-prose {
+    padding-left: var(--page-px-tablet);
+    padding-right: var(--page-px-tablet);
+  }
+}
+
+@media (min-width: 1024px) {
+  .proj-vera .container-prose {
+    padding-left: var(--page-px-desktop);
+    padding-right: var(--page-px-desktop);
+  }
+}
+
+/* Smooth scroll for in-page anchors (TOC navigation) */
+.proj-vera {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proj-vera {
+    scroll-behavior: auto;
+  }
+}
