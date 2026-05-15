@@ -3,129 +3,166 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 
-interface EaseRow {
+interface Ease {
   token: string;
-  cubicBezier: [number, number, number, number];
+  curve: [number, number, number, number];
   durationMs: number;
+  description: string;
 }
 
-const EASES: EaseRow[] = [
-  { token: "--ease-out",      cubicBezier: [0.2, 0, 0, 1],    durationMs: 400 },
-  { token: "--ease-in-out",   cubicBezier: [0.4, 0, 0.2, 1],  durationMs: 400 },
-  { token: "--ease-emphasis", cubicBezier: [0.16, 1, 0.3, 1], durationMs: 700 },
+const EASES: Ease[] = [
+  { token: "--ease-out",      curve: [0.2, 0.0, 0.0, 1.0],    durationMs: 240, description: "Out · default snappy out" },
+  { token: "--ease-snap",     curve: [0.32, 0.72, 0.0, 1.0],  durationMs: 240, description: "Snap · default for most interactions" },
+  { token: "--ease-glide",    curve: [0.4, 0.0, 0.2, 1.0],    durationMs: 400, description: "Glide · hero moments only" },
+  { token: "--ease-emphasis", curve: [0.16, 1.0, 0.3, 1.0],   durationMs: 400, description: "Emphasis · dramatic curve, used sparingly" },
 ];
 
-/**
- * Interactive motion sampler. Click "Reproducir" to replay all three
- * curves in parallel. Honors prefers-reduced-motion (shorter, opacity only).
- */
+const DURATIONS = [
+  { token: "--dur-instant", ms: 60 },
+  { token: "--dur-quick",   ms: 100 },
+  { token: "--dur-base",    ms: 180 },
+  { token: "--dur-snap",    ms: 240 },
+  { token: "--dur-smooth",  ms: 400 },
+  { token: "--dur-ambient", ms: 800 },
+];
+
 export function MotionSampler() {
-  const [playCount, setPlayCount] = useState(0);
+  const [keys, setKeys] = useState<Record<string, number>>({});
   const reduce = useReducedMotion();
 
-  return (
-    <div style={{ margin: "var(--space-6) 0" }}>
-      <button
-        type="button"
-        onClick={() => setPlayCount((c) => c + 1)}
-        style={{
-          fontFamily: "var(--font-fraunces), serif",
-          fontVariationSettings: '"opsz" 9, "SOFT" 0',
-          fontWeight: 600,
-          fontSize: "11px",
-          letterSpacing: "0.22em",
-          textTransform: "uppercase",
-          color: "var(--accent)",
-          background: "transparent",
-          border: "1px solid var(--accent)",
-          padding: "var(--space-3) var(--space-5)",
-          cursor: "pointer",
-          marginBottom: "var(--space-6)",
-        }}
-      >
-        Reproducir
-      </button>
+  const replay = (token: string) => {
+    setKeys((k) => ({ ...k, [token]: (k[token] ?? 0) + 1 }));
+  };
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "var(--space-4)",
-        }}
-      >
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
         {EASES.map((e) => (
           <div
             key={e.token}
             style={{
               display: "grid",
-              gridTemplateColumns: "180px 1fr",
-              gap: "var(--space-5)",
+              gridTemplateColumns: "minmax(180px, 220px) 1fr auto",
+              gap: "var(--space-4)",
+              padding: "var(--space-4)",
+              background: "var(--bg-raised)",
+              border: "1px solid var(--rule)",
+              borderRadius: "var(--radius-md)",
               alignItems: "center",
-              padding: "var(--space-3) 0",
-              borderBottom: "1px solid var(--rule-soft)",
             }}
           >
-            <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
               <span
                 style={{
-                  fontFamily: "var(--font-mono-vera), monospace",
-                  fontSize: "12px",
+                  fontFamily: "var(--font-geist-mono), monospace",
+                  fontSize: "var(--text-sm)",
                   color: "var(--ink)",
                 }}
               >
                 {e.token}
               </span>
-              <span
-                style={{
-                  fontFamily: "var(--font-mono-vera), monospace",
-                  fontSize: "11px",
-                  color: "var(--muted)",
-                }}
-              >
-                {e.durationMs}ms · cubic-bezier({e.cubicBezier.join(", ")})
-              </span>
+              <span style={{ fontSize: "var(--text-xs)", color: "var(--muted)" }}>{e.description}</span>
             </div>
             <div
               style={{
                 position: "relative",
                 height: "32px",
-                background: "var(--bg-2)",
+                background: "var(--bg-sunken)",
+                borderRadius: "var(--radius-sm)",
                 overflow: "hidden",
               }}
             >
               <motion.div
-                key={`${e.token}-${playCount}`}
+                key={`${e.token}-${keys[e.token] ?? 0}`}
                 initial={{ x: 0 }}
                 animate={{ x: "calc(100% - 24px)" }}
                 transition={{
-                  duration: reduce ? 0.15 : e.durationMs / 1000,
-                  ease: reduce ? "linear" : e.cubicBezier,
+                  duration: reduce ? 0.1 : e.durationMs / 1000,
+                  ease: reduce ? "linear" : e.curve,
                 }}
                 style={{
-                  width: "24px",
-                  height: "24px",
+                  width: 24,
+                  height: 24,
                   background: "var(--accent)",
-                  borderRadius: "var(--radius-sm)",
+                  borderRadius: "var(--radius-xs)",
                   margin: "4px 0",
                 }}
               />
             </div>
+            <button
+              type="button"
+              onClick={() => replay(e.token)}
+              style={{
+                fontFamily: "var(--font-geist), sans-serif",
+                fontSize: "var(--text-xs)",
+                fontWeight: 500,
+                letterSpacing: "var(--tracking-wider)",
+                textTransform: "uppercase",
+                color: "var(--accent)",
+                background: "transparent",
+                border: "1px solid var(--accent)",
+                padding: "6px 12px",
+                borderRadius: "var(--radius-sm)",
+                cursor: "pointer",
+              }}
+            >
+              Reproducir
+            </button>
           </div>
         ))}
       </div>
 
-      <div
+      <table
         style={{
-          marginTop: "var(--space-6)",
-          fontFamily: "var(--font-newsreader), serif",
-          fontStyle: "italic",
-          fontSize: "14px",
-          color: "var(--muted)",
+          width: "100%",
+          borderCollapse: "collapse",
+          fontFamily: "var(--font-geist-mono), monospace",
+          fontSize: "var(--text-sm)",
         }}
       >
-        Duraciones disponibles: --dur-instant (100ms) · --dur-fast (150ms) · --dur-base (250ms) ·
-        --dur-slow (400ms) · --dur-ambient (700ms).
-      </div>
+        <thead>
+          <tr style={{ borderBottom: "1px solid var(--rule)" }}>
+            <th
+              style={{
+                textAlign: "left",
+                padding: "var(--space-3)",
+                fontSize: "var(--text-xs)",
+                fontFamily: "var(--font-geist), sans-serif",
+                fontWeight: 500,
+                letterSpacing: "var(--tracking-wider)",
+                textTransform: "uppercase",
+                color: "var(--muted)",
+              }}
+            >
+              Duración
+            </th>
+            <th
+              style={{
+                textAlign: "right",
+                padding: "var(--space-3)",
+                fontSize: "var(--text-xs)",
+                fontFamily: "var(--font-geist), sans-serif",
+                fontWeight: 500,
+                letterSpacing: "var(--tracking-wider)",
+                textTransform: "uppercase",
+                color: "var(--muted)",
+              }}
+            >
+              Valor
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {DURATIONS.map((d) => (
+            <tr key={d.token} style={{ borderBottom: "1px solid var(--rule-faint)" }}>
+              <td style={{ padding: "var(--space-3)", color: "var(--ink)" }}>{d.token}</td>
+              <td style={{ padding: "var(--space-3)", textAlign: "right", color: "var(--ink-soft)" }}>
+                {d.ms}ms
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

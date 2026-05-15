@@ -9,12 +9,12 @@ interface BadgeProps {
   dot?: boolean;
 }
 
-const TONES: Record<Tone, { fg: string; border: string }> = {
-  neutral: { fg: "var(--muted)", border: "var(--rule)" },
-  accent: { fg: "var(--accent)", border: "var(--accent)" },
-  success: { fg: "var(--success)", border: "var(--success)" },
-  warning: { fg: "var(--warning)", border: "var(--warning)" },
-  danger: { fg: "var(--danger)", border: "var(--danger)" },
+const TONES: Record<Tone, { fg: string; border: string; bg: string }> = {
+  neutral: { fg: "var(--muted)", border: "var(--rule)", bg: "transparent" },
+  accent:  { fg: "var(--accent)", border: "transparent", bg: "var(--accent-pale)" },
+  success: { fg: "var(--success)", border: "var(--success)", bg: "transparent" },
+  warning: { fg: "var(--warning)", border: "var(--warning)", bg: "transparent" },
+  danger:  { fg: "var(--danger)", border: "var(--danger)", bg: "transparent" },
 };
 
 export function Badge({ children, tone = "neutral", dot = false }: BadgeProps) {
@@ -24,17 +24,18 @@ export function Badge({ children, tone = "neutral", dot = false }: BadgeProps) {
       style={{
         display: "inline-flex",
         alignItems: "center",
-        gap: "var(--space-2)",
-        fontFamily: "var(--font-fraunces), serif",
-        fontVariationSettings: '"opsz" 9, "SOFT" 0',
-        fontWeight: 600,
-        fontSize: "10px",
-        letterSpacing: "0.22em",
+        gap: "var(--space-1_5)",
+        fontFamily: "var(--font-geist), system-ui, sans-serif",
+        fontSize: "var(--text-xs)",
+        fontWeight: 500,
+        letterSpacing: "var(--tracking-wider)",
         textTransform: "uppercase",
         color: t.fg,
+        background: t.bg,
         border: `1px solid ${t.border}`,
         padding: "3px 10px",
         borderRadius: "var(--radius-pill)",
+        whiteSpace: "nowrap",
       }}
     >
       {dot ? (

@@ -1,27 +1,28 @@
 interface ColorSwatchProps {
   token: string;
+  oklch: string;
   hex: string;
-  /** Whether the value lives in product or editorial mode. */
-  mode?: "editorial" | "product";
 }
 
-export function ColorSwatch({ token, hex, mode = "editorial" }: ColorSwatchProps) {
+export function ColorSwatch({ token, oklch, hex }: ColorSwatchProps) {
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        border: "1px solid var(--rule-soft)",
-        background: "var(--bg)",
+        background: "var(--bg-raised)",
+        border: "1px solid var(--rule)",
+        borderRadius: "var(--radius-md)",
+        overflow: "hidden",
       }}
     >
       <div
         style={{
-          background: hex,
-          height: "120px",
-          borderBottom: "1px solid var(--rule-soft)",
+          background: `var(${token})`,
+          height: "140px",
+          borderBottom: "1px solid var(--rule)",
         }}
-        aria-label={`Swatch for ${token}`}
+        aria-label={`Color swatch for ${token}`}
       />
       <div
         style={{
@@ -29,39 +30,12 @@ export function ColorSwatch({ token, hex, mode = "editorial" }: ColorSwatchProps
           display: "flex",
           flexDirection: "column",
           gap: "2px",
+          fontFamily: "var(--font-geist-mono), monospace",
         }}
       >
-        <span
-          style={{
-            fontFamily: "var(--font-mono-vera), monospace",
-            fontSize: "12px",
-            color: "var(--ink)",
-          }}
-        >
-          {token}
-        </span>
-        <span
-          style={{
-            fontFamily: "var(--font-mono-vera), monospace",
-            fontSize: "11px",
-            color: "var(--muted)",
-          }}
-        >
-          {hex}
-        </span>
-        <span
-          style={{
-            fontFamily: "var(--font-fraunces), serif",
-            fontVariationSettings: '"opsz" 9, "SOFT" 0',
-            fontSize: "9.5px",
-            letterSpacing: "0.22em",
-            textTransform: "uppercase",
-            color: "var(--muted)",
-            marginTop: "2px",
-          }}
-        >
-          {mode}
-        </span>
+        <span style={{ fontSize: "var(--text-sm)", color: "var(--ink)" }}>{token}</span>
+        <span style={{ fontSize: "var(--text-xs)", color: "var(--muted)" }}>{oklch}</span>
+        <span style={{ fontSize: "var(--text-xs)", color: "var(--ink-faint)" }}>{hex}</span>
       </div>
     </div>
   );
