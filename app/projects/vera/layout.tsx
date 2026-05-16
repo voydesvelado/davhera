@@ -7,6 +7,7 @@ import "./_styles/dark.css";
 import "./_styles/microinteractions.css";
 
 import { ThemeProvider, themeInitScript } from "./_lib/theme";
+import { ToastProvider } from "./_components/ui/Toast";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -34,7 +35,9 @@ export default function VeraLayout({
   return (
     <div className={`proj-vera ${geist.variable} ${geistMono.variable}`}>
       <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      <ThemeProvider>{children}</ThemeProvider>
+      <ThemeProvider>
+        <ToastProvider>{children}</ToastProvider>
+      </ThemeProvider>
     </div>
   );
 }
