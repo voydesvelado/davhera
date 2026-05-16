@@ -1,11 +1,15 @@
-import type { InputHTMLAttributes } from "react";
+import { forwardRef, type InputHTMLAttributes } from "react";
 
 type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
-export function Input({ style, className, ...rest }: InputProps) {
+export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
+  { style, className, ...rest },
+  ref,
+) {
   return (
     <input
       {...rest}
+      ref={ref}
       className={`vera-input ${className ?? ""}`}
       style={{
         height: "var(--field-height-base)",
@@ -24,4 +28,4 @@ export function Input({ style, className, ...rest }: InputProps) {
       }}
     />
   );
-}
+});

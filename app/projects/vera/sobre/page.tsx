@@ -166,6 +166,27 @@ export default function VeraSobre() {
           </Para>
         </section>
 
+        {/* Decisiones técnicas */}
+        <section
+          style={{
+            paddingTop: "var(--space-12)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--space-5)",
+          }}
+        >
+          <SectionHeading>Decisiones técnicas.</SectionHeading>
+          <Para>
+            <strong style={{ color: "var(--ink)", fontWeight: 600 }}>Sin backend.</strong> La persistencia para el demo vive en el localStorage del navegador del visitante. Cada visitante tiene su propia experiencia, sus propias reservas. Funciona offline. Cuesta cero al mes.
+          </Para>
+          <Para>
+            <strong style={{ color: "var(--ink)", fontWeight: 600 }}>La Dra. Sofía Ramírez y sus datos son hardcoded</strong> en un archivo TypeScript del repositorio. Es la fuente canónica para el demo — todas las reservas pre-existentes que pueblan su calendario vienen de ahí.
+          </Para>
+          <Para>
+            <strong style={{ color: "var(--ink)", fontWeight: 600 }}>Las ediciones en modo doctora</strong> (cambiar un servicio, modificar disponibilidad, editar el perfil) son intencionalmente efímeras. Reload, y los valores del seed regresan. Es honesto sobre la naturaleza del demo.
+          </Para>
+        </section>
+
         {/* Estado actual */}
         <section
           style={{
