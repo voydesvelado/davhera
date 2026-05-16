@@ -171,7 +171,7 @@ export default function VeraLandingPage() {
               textAlign: "center",
             }}
           >
-            Demo persistente · Supabase free tier · Cero costos en producción
+            Demo persistente en tu navegador · Sin backend · Cero costos en producción
           </p>
           <Link href="#demo" style={{ marginTop: "var(--space-4)" }}>
             <Button size="md">

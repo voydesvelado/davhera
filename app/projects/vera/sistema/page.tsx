@@ -33,6 +33,12 @@ import { Badge } from "../_components/ui/Badge";
 import { IconButton } from "../_components/ui/IconButton";
 import { ThemeToggle } from "../_components/ui/ThemeToggle";
 
+import { ServiceCard } from "../_components/product/ServiceCard";
+import { NextSlotPill } from "../_components/product/NextSlotPill";
+import { WhatsAppPreview } from "../_components/product/booking/WhatsAppPreview";
+import { SEED_DOCTOR, SEED_SERVICES, SOFIA_ID } from "../_lib/seed";
+import type { Booking } from "../_lib/types";
+
 export const metadata: Metadata = {
   title: "Sistema · Vera",
   description:
@@ -486,22 +492,32 @@ export default function VeraSistema() {
                 </ComponentSample>
 
                 <ComponentSample
-                  name="Sheet · Dialog · Drawer"
-                  status="boceto"
-                  description="Bottom-sheet en móvil, modal centrado en desktop. Backdrop con blur."
+                  name="Sheet · Dialog"
+                  status="implementado"
+                  description="Bottom-sheet en móvil, modal centrado en desktop. Backdrop con blur. Usa la primitiva Dialog de @base-ui."
                 >
                   <div style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>
-                    Boceto · spec en design-system-v3.md §14, se implementa cuando lo requiera la superficie de producto.
+                    Vivo en DemoRibbon, BookingSheet (flujo de reserva, paso a paso), BlockTimeSheet (panel · disponibilidad), KebabMenu y la sheet de exit en /registro.
                   </div>
                 </ComponentSample>
 
                 <ComponentSample
-                  name="Toast · Tooltip · Popover · Menu"
-                  status="boceto"
-                  description="Superficies flotantes con --bg-overlay, --shadow-md, microinteractions cuidadas."
+                  name="Toast · Menu"
+                  status="implementado"
+                  description="Superficies flotantes con --bg-overlay, --shadow-md, microinteractions cuidadas. ToastProvider cuelga del layout de Vera."
                 >
                   <div style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>
-                    Boceto · se construyen en los prompts de panel y onboarding.
+                    Toast con cuatro tonos (default · success · warning · danger) y auto-dismiss a 4 s. Menu (KebabMenu) sobre la primitiva Menu de @base-ui en cada ServiceEditor.
+                  </div>
+                </ComponentSample>
+
+                <ComponentSample
+                  name="Switch · SegmentedControl"
+                  status="implementado"
+                  description="Toggle binario y toggle 2–4 opciones. Usados en LocationEditor, BlockTimeSheet, ReminderTypeToggle."
+                >
+                  <div style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>
+                    Vivos en /panel/perfil (modalidad presencial · online), /panel/disponibilidad (¿todo el día?), /panel/proximos-recordatorios (T-24h · T-2h).
                   </div>
                 </ComponentSample>
 
@@ -538,29 +554,34 @@ export default function VeraSistema() {
               <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
                 <ComponentSample
                   name="ServiceCard"
-                  status="boceto"
-                  description="Nombre, duración · precio, descripción, chevron afford."
+                  status="implementado"
+                  description="Nombre, duración · precio, descripción, chevron afford. Hover lifts border to --rule-strong."
                 >
-                  <div style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>
-                    Renderiza en la superficie pública del paciente. Spec viva en design-system-v3.md §14.
-                  </div>
+                  <SistemaServiceCardSample />
                 </ComponentSample>
                 <ComponentSample
                   name="DateStrip · SlotList · BookingForm · ConfirmationCard"
-                  status="boceto"
-                  description="Componentes del flujo de reserva. Selected state invierte color al --accent."
+                  status="implementado"
+                  description="Componentes del flujo de reserva. Selected state invierte color al --accent. Conflict-checks contra el slot tomado en localStorage."
                 >
                   <div style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>
-                    Bocetos · construir junto con la superficie de paciente.
+                    Vivos en /projects/vera/dra-sofia-ramirez/reservar (5 pasos), reusados en /projects/vera/cita/[token]/reagendar.
                   </div>
                 </ComponentSample>
                 <ComponentSample
                   name="WhatsAppPreview"
-                  status="boceto"
-                  description="La pieza central del portafolio. Marco de iPhone, header verde de WhatsApp, burbujas de mensaje."
+                  status="implementado"
+                  description="La pieza central del portafolio. Marco de iPhone con notch, status bar, header verde de WhatsApp, burbuja con tail squareada y double-check azul."
+                >
+                  <SistemaWhatsAppPreviewSample />
+                </ComponentSample>
+                <ComponentSample
+                  name="WhatsAppDraftPreview"
+                  status="implementado"
+                  description="Variante en modo composición — sin burbuja entrante, composer editable abajo, botones para copiar o abrir en wa.me."
                 >
                   <div style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>
-                    Tres variantes: confirmación, recordatorio, reagendamiento. Spec en design-system-v3.md §14.
+                    Vivo en /panel/disponibilidad cuando un bloqueo afecta citas existentes — abre desde AffectedBookingsWarning.
                   </div>
                 </ComponentSample>
               </div>
@@ -568,40 +589,93 @@ export default function VeraSistema() {
               <SubLabel>Producto · superficie de doctora</SubLabel>
               <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
                 <ComponentSample
-                  name="AppointmentRow · WeekCalendar · AvailabilityGrid"
-                  status="boceto"
-                  description="Los componentes del panel. Compact-density por defecto."
+                  name="AppointmentRow"
+                  status="implementado"
+                  description="Fila de cita expandible inline. Tiempo en mono accent, paciente, servicio, badge de duración. Expanded revela teléfono, email, nota, y acciones efímeras."
                 >
                   <div style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>
-                    Bocetos · viven en /panel cuando esa superficie se construya.
+                    Vivo en /projects/vera/panel · vista «Hoy». La próxima cita upcoming recibe un tinte sutil --accent-pale.
+                  </div>
+                </ComponentSample>
+                <ComponentSample
+                  name="WeekCalendar"
+                  status="implementado"
+                  description="Grid de 7 columnas × medias horas. Booking blocks absolute-positioned con barra izquierda --accent. Bloqueados con hatch diagonal. Out-of-hours --bg-sunken."
+                >
+                  <div style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>
+                    Vivo en /projects/vera/panel/semana. Tap a un bloque abre el detalle de la cita en una Sheet.
+                  </div>
+                </ComponentSample>
+                <ComponentSample
+                  name="AvailabilityGrid"
+                  status="implementado"
+                  description="Editor variant del calendario semanal — un botón por celda. Drag-to-paint con pointer-events unificados (mouse + touch). touch-action:none impide scroll de página durante el drag."
+                >
+                  <div style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>
+                    Vivo en /panel/disponibilidad y reusado en /registro paso 4 (variante compact).
                   </div>
                 </ComponentSample>
                 <ComponentSample
                   name="NextSlotPill"
-                  status="boceto"
-                  description="Indicador persistente en el footer: «Próximo hueco libre: jueves 11:00»."
+                  status="implementado"
+                  description="Indicador persistente: «Próxima disponibilidad jueves a las 11:00». Recomputa al hidratar incluyendo las reservas locales del visitante."
                 >
-                  <div
-                    style={{
-                      display: "inline-flex",
-                      gap: "var(--space-2)",
-                      padding: "var(--space-2) var(--space-3)",
-                      background: "var(--bg-sunken)",
-                      borderRadius: "var(--radius-pill)",
-                      fontSize: "var(--text-sm)",
-                      color: "var(--ink-soft)",
-                    }}
-                  >
-                    Próximo hueco libre:
-                    <span
-                      style={{
-                        color: "var(--accent)",
-                        fontFamily: "var(--font-geist-mono), monospace",
-                        fontWeight: 500,
-                      }}
-                    >
-                      jueves 11:00
-                    </span>
+                  <SistemaNextSlotSample />
+                </ComponentSample>
+                <ComponentSample
+                  name="CommandPalette · Kbd"
+                  status="implementado"
+                  description="⌘K en cualquier ruta /panel/*. Filtro instantáneo, navegación con ↑↓, Enter ejecuta. Acciones: ir a hoy/semana/horarios, ver página pública, cambiar tema, limpiar datos."
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                    <span style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>Trigger:</span>
+                    {["⌘", "K"].map((k) => (
+                      <span
+                        key={k}
+                        style={{
+                          fontFamily: "var(--font-geist-mono), monospace",
+                          fontSize: "var(--text-2xs)",
+                          padding: "2px 6px",
+                          background: "var(--bg-sunken)",
+                          border: "1px solid var(--rule)",
+                          borderRadius: "var(--radius-xs)",
+                          color: "var(--ink)",
+                        }}
+                      >
+                        {k}
+                      </span>
+                    ))}
+                  </div>
+                </ComponentSample>
+              </div>
+
+              <SubLabel>Producto · onboarding</SubLabel>
+              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+                <ComponentSample
+                  name="OnboardingShell · OnboardingProgress"
+                  status="implementado"
+                  description="Wrapper de seis pasos. Wordmark + barra de progreso + bottom action bar fixed en móvil, static en desktop. Sheet de confirmación al intentar salir."
+                >
+                  <div style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>
+                    Vivo en /projects/vera/registro. Diseñado para completarse en menos de dos minutos.
+                  </div>
+                </ComponentSample>
+                <ComponentSample
+                  name="FloatingLabelInput · SpecialtyAutocombobox · SlugPreview"
+                  status="implementado"
+                  description="Inputs estilo Stripe / Material 3 — la label flota arriba al focus o cuando hay valor. Slug se autogenera del nombre con un check de disponible debounced 400 ms."
+                >
+                  <div style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>
+                    Vivos en /registro pasos 2–3.
+                  </div>
+                </ComponentSample>
+                <ComponentSample
+                  name="EmbeddedProfilePreview"
+                  status="implementado"
+                  description="iframe con el perfil público real, dentro de un marco con fade gradient abajo. Cierra el círculo del onboarding mostrando lo que la doctora acaba de configurar."
+                >
+                  <div style={{ fontSize: "var(--text-sm)", color: "var(--ink-soft)" }}>
+                    Vivo en /registro paso 6 — celebración.
                   </div>
                 </ComponentSample>
               </div>
@@ -846,5 +920,52 @@ comfortable:    --row-height-base: 48px · --field-height-base: 44px`}
         `}</style>
       </PageShell>
     </>
+  );
+}
+
+/* ─── Live samples that consume real product components ──────────────── */
+
+function SistemaServiceCardSample() {
+  const service = SEED_SERVICES[0];
+  return (
+    <div style={{ maxWidth: 520 }}>
+      <ServiceCard
+        service={service}
+        href="/projects/vera/dra-sofia-ramirez/reservar?service=consulta-inicial"
+      />
+    </div>
+  );
+}
+
+function SistemaNextSlotSample() {
+  return <NextSlotPill doctorId={SOFIA_ID} />;
+}
+
+function SistemaWhatsAppPreviewSample() {
+  // Build a synthetic, deterministic booking — sample data only, never persisted.
+  const sampleBooking: Booking = {
+    token: "DEMO-WHATSAPP",
+    doctorId: SOFIA_ID,
+    serviceId: SEED_SERVICES[0].id,
+    startsAt: "2026-05-21T17:00:00.000Z", // 11:00 AM Mexico City
+    endsAt: "2026-05-21T18:00:00.000Z",
+    status: "confirmed",
+    patientName: "Laura García",
+    patientPhone: "+525500000000",
+    patientEmail: "laura@example.com",
+    createdAt: "2026-05-15T20:00:00.000Z",
+    isSeed: true,
+  };
+  return (
+    <div style={{ display: "flex", justifyContent: "center", padding: "var(--space-2) 0" }}>
+      <WhatsAppPreview
+        variant="confirmation"
+        recipient="patient"
+        booking={sampleBooking}
+        doctor={SEED_DOCTOR}
+        service={SEED_SERVICES[0]}
+        statusBarTime={new Date("2026-05-21T16:00:00.000Z")}
+      />
+    </div>
   );
 }
