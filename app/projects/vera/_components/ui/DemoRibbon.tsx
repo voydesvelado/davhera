@@ -87,6 +87,11 @@ export function DemoRibbon() {
             están pre-cargadas para que el calendario se sienta vivo. No se pueden reagendar ni
             cancelar.
           </li>
+          <li>
+            <strong style={{ color: "var(--ink)", fontWeight: 600 }}>En modo doctora,</strong> las
+            ediciones (servicios, disponibilidad, perfil) no se guardan. Solo las reservas que
+            hagas como paciente persisten entre sesiones.
+          </li>
         </ul>
       </Sheet>
     </>
