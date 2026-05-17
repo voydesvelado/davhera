@@ -30,6 +30,15 @@ const PROJECTS = [
     image: "/videos/menura-design-system/thumbnail.png",
   },
   {
+    title: "Plata Business",
+    description: "Self-initiated case study for Plata's B2B banking platform in Mexico. Market research, product strategy, and end-to-end design.",
+    tags: ["UX Research", "Product Strategy", "Product Design", "Design System"],
+    color: "#7C3AED",
+    year: "2026",
+    href: "/projects/plata",
+    image: "/case-studies/plata/thumbnail.png",
+  },
+  {
     title: "Dior · Repository",
     description: "Redesigning Dior Latin America's file repository to help teams access, manage, and reuse files faster.",
     tags: ["UX Research", "UX/UI Design", "Intranet"],
