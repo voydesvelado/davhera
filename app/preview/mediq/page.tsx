@@ -163,39 +163,36 @@ function Tag({ children }: { children: ReactNode }) {
 }
 
 function PhoneFrame({ children }: { children: ReactNode }) {
-  // Phone shell. `container-type: inline-size` lets every child use `cqw`
-  // units so the entire UI scales with the phone's actual rendered width.
+  // Phone shell — matches the minimal style used at /preview: white outer
+  // body, subtle shadow, no dark bezel or Dynamic Island. The outer wrapper
+  // establishes the container query context; descendants use `cqw` units so
+  // the UI scales with the phone's actual rendered width.
   return (
     <div
-      className="relative shrink-0 max-w-full bg-[#0E1116]"
+      className="relative shrink-0 max-w-full"
       style={{
         aspectRatio: "390 / 844",
         height: "min(1040px, calc(100dvh * 0.86))",
-        borderRadius: "12.5%",
         containerType: "inline-size",
-        boxShadow:
-          "0 0 0 1px rgba(28,25,23,0.08), 0 30px 80px -20px rgba(15,23,42,0.35)",
       } as CSSProperties}
     >
       <div
-        className="absolute overflow-hidden bg-[#EDF2FA]"
+        className="absolute inset-0 bg-white"
         style={{
-          inset: "1.6cqw",
-          borderRadius: "11%",
+          borderRadius: "11.3cqw",
+          boxShadow:
+            "0 0 0 1px rgba(28,25,23,0.06), 0 20px 60px -15px rgba(28,25,23,0.18)",
         }}
       >
-        {children}
-        {/* Dynamic Island */}
         <div
-          className="absolute bg-black rounded-full"
+          className="absolute overflow-hidden bg-[#EDF2FA]"
           style={{
-            top: "2.4cqw",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "31cqw",
-            height: "8cqw",
+            inset: "2.5cqw",
+            borderRadius: "9.2cqw",
           }}
-        />
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
