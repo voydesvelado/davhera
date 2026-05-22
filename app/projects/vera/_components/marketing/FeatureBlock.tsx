@@ -9,6 +9,8 @@ interface FeatureBlockProps {
   title: ReactNode;
   body: ReactNode;
   visual: ReactNode;
+  /** Optional supporting bullets shown beneath the body — kept short, ≤6 words each. */
+  details?: ReactNode[];
   /** "left" puts text on the left (desktop); "right" reverses. */
   imageSide?: "left" | "right";
 }
@@ -18,6 +20,7 @@ export function FeatureBlock({
   title,
   body,
   visual,
+  details,
   imageSide = "right",
 }: FeatureBlockProps) {
   const reduce = useReducedMotion();
@@ -68,6 +71,48 @@ export function FeatureBlock({
         >
           {body}
         </p>
+        {details && details.length > 0 ? (
+          <ul
+            style={{
+              listStyle: "none",
+              padding: 0,
+              margin: "var(--space-2) 0 0 0",
+              display: "flex",
+              flexDirection: "column",
+              gap: "var(--space-2)",
+              borderTop: "1px solid var(--rule-faint)",
+              paddingTop: "var(--space-4)",
+            }}
+          >
+            {details.map((d, i) => (
+              <li
+                key={i}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "auto 1fr",
+                  gap: "var(--space-3)",
+                  alignItems: "baseline",
+                  fontSize: "var(--text-sm)",
+                  lineHeight: "var(--leading-normal)",
+                  color: "var(--ink-soft)",
+                }}
+              >
+                <span
+                  aria-hidden
+                  style={{
+                    fontFamily: "var(--font-geist-mono), monospace",
+                    fontSize: "var(--text-2xs)",
+                    color: "var(--accent)",
+                    fontVariantNumeric: "tabular-nums",
+                  }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span>{d}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
       <div className="vera-feature-visual">{visual}</div>
 
