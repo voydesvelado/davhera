@@ -4,6 +4,7 @@ import { Menu as BaseMenu } from "@base-ui/react/menu";
 import { EllipsisVertical } from "lucide-react";
 import type { ReactNode } from "react";
 import { IconButton } from "./IconButton";
+import { usePortalRootClass } from "../../_lib/portal-class";
 
 export interface KebabItem {
   label: ReactNode;
@@ -19,6 +20,7 @@ interface KebabMenuProps {
 }
 
 export function KebabMenu({ items, ariaLabel = "Más acciones" }: KebabMenuProps) {
+  const rootClass = usePortalRootClass();
   return (
     <BaseMenu.Root>
       <BaseMenu.Trigger
@@ -31,6 +33,7 @@ export function KebabMenu({ items, ariaLabel = "Más acciones" }: KebabMenuProps
       <BaseMenu.Portal>
         <BaseMenu.Positioner sideOffset={4} align="end">
           <BaseMenu.Popup
+            className={rootClass}
             style={{
               minWidth: 180,
               background: "var(--bg-overlay)",

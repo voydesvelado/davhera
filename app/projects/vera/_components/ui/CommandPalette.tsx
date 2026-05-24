@@ -4,6 +4,7 @@ import { Dialog } from "@base-ui/react/dialog";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { SearchInput } from "./SearchInput";
 import { Kbd } from "./Kbd";
+import { usePortalRootClass } from "../../_lib/portal-class";
 
 export interface CommandAction {
   id: string;
@@ -32,6 +33,7 @@ export function CommandPalette({ open, onOpenChange, actions }: CommandPalettePr
   const [activeIdx, setActiveIdx] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+  const rootClass = usePortalRootClass();
 
   const filtered = useMemo(() => {
     if (!query.trim()) return actions;
@@ -75,8 +77,8 @@ export function CommandPalette({ open, onOpenChange, actions }: CommandPalettePr
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Backdrop className="vera-cp-backdrop" />
-        <Dialog.Popup className="vera-cp-popup">
+        <Dialog.Backdrop className={`${rootClass} vera-cp-backdrop`} />
+        <Dialog.Popup className={`${rootClass} vera-cp-popup`}>
           <div onKeyDown={handleKey}>
             <SearchInput
               ref={inputRef}
