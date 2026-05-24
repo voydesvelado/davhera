@@ -39,6 +39,15 @@ const PROJECTS = [
     image: "/case-studies/plata/thumbnail.png",
   },
   {
+    title: "Vera",
+    description: "Booking platform for independent professionals in Mexico — public profile, tokenized appointments, and automatic WhatsApp reminders. No accounts, no directories.",
+    tags: ["Product Design", "Next.js", "Design System", "Booking"],
+    color: "#B85C38",
+    year: "2026",
+    href: "/projects/vera",
+    video: "/videos/vera/thumbnail.mp4",
+  },
+  {
     title: "Dior · Repository",
     description: "Redesigning Dior Latin America's file repository to help teams access, manage, and reuse files faster.",
     tags: ["UX Research", "UX/UI Design", "Intranet"],
