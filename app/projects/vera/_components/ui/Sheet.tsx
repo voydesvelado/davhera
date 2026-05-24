@@ -4,6 +4,7 @@ import { Dialog } from "@base-ui/react/dialog";
 import type { ReactNode } from "react";
 import { X } from "lucide-react";
 import { IconButton } from "./IconButton";
+import { usePortalRootClass } from "../../_lib/portal-class";
 
 type SheetSize = "sm" | "md" | "lg";
 
@@ -27,11 +28,12 @@ export function Sheet({
   children,
   showClose = true,
 }: SheetProps) {
+  const rootClass = usePortalRootClass();
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Backdrop className="vera-sheet-backdrop" />
-        <Dialog.Popup className="vera-sheet-popup" data-size={size}>
+        <Dialog.Backdrop className={`${rootClass} vera-sheet-backdrop`} />
+        <Dialog.Popup className={`${rootClass} vera-sheet-popup`} data-size={size}>
           <div className="vera-sheet-handle" aria-hidden />
           {showClose ? (
             <div
