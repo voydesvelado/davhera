@@ -343,6 +343,19 @@
       "next": "Next",
       "back": "Back",
       "continue": "Continue to payment"
+    },
+    "date": {
+      "title": "When are you going?",
+      "subtitle": "Pick the date of your experience.",
+      "confirm": "Your experience will be {date}."
+    },
+    "people": {
+      "title": "How many people?",
+      "subtitle": "1 to 8 participants per booking.",
+      "person": "person",
+      "people": "people",
+      "decrease": "Decrease",
+      "increase": "Increase"
     }
   }
 }

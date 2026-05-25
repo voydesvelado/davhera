@@ -1540,3 +1540,179 @@
     gap: var(--space-16);
   }
 }
+
+/* ───────────────────────────────  Wizard · steps base (M18) */
+
+.saira-step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.saira-step-title {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  font-variation-settings: "opsz" 72;
+}
+
+.saira-step-subtitle {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-base);
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+/* ───────────────────────────────  Step Date · DayPicker v10 overrides */
+
+.saira-step-date-picker {
+  background: var(--surface-elevated);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.saira-step-date-confirm {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-lg);
+  color: var(--moss);
+  font-variation-settings: "opsz" 36;
+}
+
+.saira .rdp-root {
+  --rdp-accent-color: var(--moss);
+  --rdp-accent-background-color: color-mix(in srgb, var(--moss) 12%, transparent);
+  --rdp-day_button-border-radius: var(--radius-md);
+  --rdp-day-height: 40px;
+  --rdp-day-width: 40px;
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  color: var(--ink);
+}
+
+.saira .rdp-caption_label {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.saira .rdp-weekday {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-2xs);
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+.saira .rdp-day_button {
+  color: var(--ink);
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+}
+
+@media (hover: hover) {
+  .saira .rdp-day_button:hover:not(:disabled) {
+    background-color: var(--surface-deep);
+  }
+}
+
+.saira .rdp-selected .rdp-day_button {
+  background-color: var(--moss);
+  color: var(--surface);
+}
+
+.saira .rdp-today .rdp-day_button {
+  color: var(--moss);
+  font-weight: 600;
+}
+
+.saira .rdp-selected.rdp-today .rdp-day_button {
+  color: var(--surface);
+}
+
+.saira .rdp-disabled {
+  opacity: 0.35;
+}
+
+.saira .rdp-chevron {
+  fill: var(--ink-soft);
+}
+
+@media (hover: hover) {
+  .saira .rdp-button_next:hover,
+  .saira .rdp-button_previous:hover {
+    background-color: var(--surface-deep);
+  }
+}
+
+/* ───────────────────────────────  Step People · stepper */
+
+.saira-step-people-stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  justify-content: center;
+  padding: var(--space-12) 0;
+}
+
+.saira-stepper-btn-lg {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    border-color var(--duration-fast) var(--ease-out-soft),
+    color var(--duration-fast) var(--ease-out-soft),
+    opacity var(--duration-fast) var(--ease-out-soft);
+}
+
+@media (hover: hover) {
+  .saira-stepper-btn-lg:hover:not(:disabled) {
+    border-color: var(--moss);
+    color: var(--moss);
+  }
+}
+
+.saira-stepper-btn-lg:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.saira-step-people-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+}
+
+.saira-step-people-count {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: 80px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.04em;
+  font-variation-settings: "opsz" 120;
+}
+
+.saira-step-people-label {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  margin-top: var(--space-3);
+}

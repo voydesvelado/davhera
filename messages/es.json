@@ -343,6 +343,19 @@
       "next": "Siguiente",
       "back": "Volver",
       "continue": "Continuar al pago"
+    },
+    "date": {
+      "title": "¿Cuándo vas?",
+      "subtitle": "Elige la fecha de tu experiencia.",
+      "confirm": "Tu experiencia será {date}."
+    },
+    "people": {
+      "title": "¿Cuántas personas?",
+      "subtitle": "Entre 1 y 8 participantes por reserva.",
+      "person": "persona",
+      "people": "personas",
+      "decrease": "Disminuir",
+      "increase": "Aumentar"
     }
   }
 }
