@@ -41,6 +41,12 @@
     "subtitle": "Los recorridos más reservados de esta temporada.",
     "viewAll": "Ver todas las experiencias"
   },
+  "catalog": {
+    "eyebrow": "Catálogo",
+    "title": "Todas las experiencias",
+    "subtitle": "Senderos, travesías y vuelos por la Mata Atlántica de Río. Elige la tuya.",
+    "count": "{count} experiencias"
+  },
   "valueProp": {
     "title": "Reserva directo. Sin cargos ocultos.",
     "body": "Las plataformas cobran hasta 30% de comisión — ese valor ya viene incluido en el precio que ves ahí. Aquí lo que pagas es lo que Saira recibe. Sin intermediarios, sin sorpresas.",

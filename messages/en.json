@@ -41,6 +41,12 @@
     "subtitle": "The most booked routes this season.",
     "viewAll": "View all experiences"
   },
+  "catalog": {
+    "eyebrow": "Catalog",
+    "title": "All experiences",
+    "subtitle": "Trails, crossings and flights over Rio's Atlantic Forest. Pick yours.",
+    "count": "{count} experiences"
+  },
   "valueProp": {
     "title": "Book direct. No hidden fees.",
     "body": "Platforms charge up to 30% in commission — that cost is already baked into the price you see there. Here, what you pay is what Saira receives. No middlemen, no surprises.",
