@@ -74,3 +74,17 @@
   text-transform: uppercase;
   font-weight: 600;
 }
+
+/* Last-line defence for prefers-reduced-motion. Framer Motion already
+   honours useReducedMotion() in the components, but any plain CSS
+   transition/animation in this scope is collapsed here. */
+@media (prefers-reduced-motion: reduce) {
+  .viajes-scope *,
+  .viajes-scope *::before,
+  .viajes-scope *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

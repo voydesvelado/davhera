@@ -26,6 +26,7 @@ import { StepTrip } from "./step-trip";
 import { StepContact } from "./step-contact";
 import { StepDetails } from "./step-details";
 import { StepConfirmation } from "./step-confirmation";
+import { ExitIntent } from "./exit-intent";
 import { Button } from "../button";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -140,6 +141,15 @@ export function FormShell({ trip }: { trip: Trip }) {
 
   const ctaLabel = step === 3 ? "Enviar" : "Continuar";
 
+  const stepValid = useMemo(() => {
+    if (step === 4) return true;
+    const result = parseStep(
+      step as 1 | 2 | 3,
+      state as unknown as Record<string, unknown>,
+    );
+    return result.success;
+  }, [step, state]);
+
   return (
     <div className="min-h-screen flex flex-col bg-bg">
       <header className="h-16 lg:h-20 border-b border-border-token flex items-center px-6 lg:px-12">
@@ -240,7 +250,13 @@ export function FormShell({ trip }: { trip: Trip }) {
               ) : (
                 <span />
               )}
-              <Button variant="primary" size="md" onClick={next} type="button">
+              <Button
+                variant="primary"
+                size="md"
+                onClick={next}
+                type="button"
+                disabled={!stepValid}
+              >
                 {ctaLabel}
               </Button>
             </div>
@@ -251,6 +267,8 @@ export function FormShell({ trip }: { trip: Trip }) {
           <TripSummaryBody trip={trip} />
         </aside>
       </div>
+
+      <ExitIntent activeStep={step} />
     </div>
   );
 }

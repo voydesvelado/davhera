@@ -46,7 +46,7 @@ export function TripGrid({ trips }: { trips: Trip[] }) {
               type="button"
               onClick={() => setFilter(f.value)}
               className={cn(
-                "px-5 h-10 rounded-full text-body-sm font-medium transition-colors duration-200 outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+                "px-5 h-11 rounded-full text-body-sm font-medium transition-colors duration-200 cursor-pointer outline-none active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
                 active
                   ? "bg-fg text-bg"
                   : "border border-border-token bg-transparent text-fg hover:bg-fg/5",
