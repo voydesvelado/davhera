@@ -2738,3 +2738,93 @@
   color: #999;
   margin-top: var(--space-2);
 }
+
+/* ───────────────────────────────  Micro-interactions polish (M25) */
+
+/* Quitar el highlight azul de tap en iOS/Android; los hover states
+   gated por (hover: hover) ya proveen feedback en touch via :active. */
+.saira a,
+.saira button,
+.saira [role="button"],
+.saira input,
+.saira textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Active states para botones (responde al press además del hover) */
+.saira-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.saira-btn-primary:active:not(:disabled) {
+  box-shadow: var(--shadow-sm);
+}
+
+/* Focus rings consistentes en TODOS los elementos interactivos.
+   .saira :focus-visible ya existe en base.css con --moss outline;
+   acá lo refinamos para botones específicos donde ese outline pisa
+   visualmente el borde del botón. */
+.saira-btn:focus-visible {
+  outline: 2px solid var(--moss);
+  outline-offset: 3px;
+}
+
+.saira-tour-card:focus-visible {
+  outline: 2px solid var(--moss);
+  outline-offset: 4px;
+}
+
+/* Selección de texto coherente con la paleta */
+.saira ::selection {
+  background: color-mix(in srgb, var(--moss) 22%, transparent);
+  color: var(--ink);
+}
+
+.saira.saira-dark ::selection {
+  background: color-mix(in srgb, var(--jade) 28%, transparent);
+  color: var(--surface);
+}
+
+/* Hover state en inputs (entre default y focus) */
+@media (hover: hover) {
+  .saira-input:hover:not(:focus):not(.has-error),
+  .saira-textarea:hover:not(:focus) {
+    border-color: color-mix(in srgb, var(--ink-soft) 60%, var(--line));
+  }
+}
+
+/* Custom scrollbar muy sutil — solo desktop */
+@media (hover: hover) {
+  .saira ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .saira ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .saira ::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border-radius: var(--radius-full);
+    border: 2px solid var(--surface);
+    background-clip: padding-box;
+  }
+  .saira ::-webkit-scrollbar-thumb:hover {
+    background: var(--ink-muted);
+    background-clip: padding-box;
+  }
+}
+
+/* Scroll margin top para anchor links (no hay ninguno por ahora,
+   pero deja la regla por si crece el sitio con secciones internas) */
+.saira h1,
+.saira h2,
+.saira h3,
+.saira [id] {
+  scroll-margin-top: var(--space-16);
+}
+
+/* Cursor pointer explícito en role=button no nativos */
+.saira [role="button"]:not(:disabled),
+.saira [role="tab"]:not(:disabled) {
+  cursor: pointer;
+}
