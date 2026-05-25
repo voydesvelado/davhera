@@ -1,0 +1,302 @@
+{
+  "common": {
+    "bookNow": "",
+    "viewDetails": "",
+    "viewAll": "",
+    "perPerson": "",
+    "from": "",
+    "duration": "",
+    "difficulty": "",
+    "category": "",
+    "includes": "",
+    "bringWith": "",
+    "meetingPoint": "",
+    "consultPrice": ""
+  },
+  "difficulty": {
+    "facil": "",
+    "facil-moderada": "",
+    "moderada": "",
+    "moderada-dificil": "",
+    "dificil": "",
+    "variable": ""
+  },
+  "category": {
+    "ecotour": "",
+    "aventura": ""
+  },
+  "nav": {
+    "tours": "",
+    "about": "",
+    "contact": ""
+  },
+  "hero": {
+    "eyebrow": "",
+    "headline": "",
+    "lede": "",
+    "cta": ""
+  },
+  "featured": {
+    "title": "",
+    "subtitle": "",
+    "viewAll": ""
+  },
+  "valueProp": {
+    "title": "",
+    "body": "",
+    "savings": "",
+    "comparison": {
+      "direct": "",
+      "platform": "",
+      "savingsLabel": ""
+    }
+  },
+  "footer": {
+    "reservations": "",
+    "followUs": "",
+    "rights": "",
+    "tagline": ""
+  },
+  "tours": {
+    "cerro-dois-irmaos": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "pedra-da-gavea": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "garganta-do-ceu": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "trilha-corcovado": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "cerro-urca-pao-de-acucar": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "pedra-bonita": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "cerro-da-babilonia": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "mirante-dona-marta": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "bico-do-papagaio": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "floresta-tijuca-grutas": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "floresta-tijuca-cascadas": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "pico-da-tijuca": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "parapente": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "rapel": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "escalada": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    },
+    "stand-up-paddle-amanecer": {
+      "shortDescription": "",
+      "longDescription": "",
+      "whatsIncluded": [
+        "",
+        "",
+        ""
+      ],
+      "whatToBring": [
+        "",
+        "",
+        ""
+      ],
+      "meetingPoint": ""
+    }
+  }
+}
