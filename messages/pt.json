@@ -453,5 +453,16 @@
     },
     "calendarDescription": "Reserva {bookingId} · {people} pessoa(s) · {tour}",
     "backToHome": "Voltar ao início"
+  },
+  "notFound": {
+    "title": "Esta trilha não existe.",
+    "body": "A página que você procura mudou de lugar ou foi removida. Volte ao início para ver todas as experiências.",
+    "cta": "Voltar ao início"
+  },
+  "error": {
+    "eyebrow": "Erro",
+    "title": "Algo deu errado.",
+    "body": "Aconteceu um erro inesperado. Tente novamente em alguns instantes.",
+    "retry": "Tentar novamente"
   }
 }

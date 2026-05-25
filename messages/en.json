@@ -453,5 +453,16 @@
     },
     "calendarDescription": "Booking {bookingId} · {people} person(s) · {tour}",
     "backToHome": "Back to home"
+  },
+  "notFound": {
+    "title": "This trail doesn't exist.",
+    "body": "The page you're looking for moved or was removed. Head back to see every experience.",
+    "cta": "Back to home"
+  },
+  "error": {
+    "eyebrow": "Error",
+    "title": "Something went wrong.",
+    "body": "An unexpected error occurred. Try again in a moment.",
+    "retry": "Try again"
   }
 }

@@ -453,5 +453,16 @@
     },
     "calendarDescription": "Reserva {bookingId} · {people} persona(s) · {tour}",
     "backToHome": "Volver al inicio"
+  },
+  "notFound": {
+    "title": "Este sendero no existe.",
+    "body": "La página que buscas cambió de lugar o fue removida. Vuelve al inicio para ver todas las experiencias.",
+    "cta": "Volver al inicio"
+  },
+  "error": {
+    "eyebrow": "Error",
+    "title": "Algo salió mal.",
+    "body": "Ocurrió un error inesperado. Intenta de nuevo en unos instantes.",
+    "retry": "Reintentar"
   }
 }
