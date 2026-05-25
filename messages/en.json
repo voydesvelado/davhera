@@ -400,5 +400,25 @@
         "savings": "You save"
       }
     }
+  },
+  "checkout": {
+    "title": "Payment",
+    "subtitle": "Booking confirmed with 50% upfront. Balance on the day of the experience.",
+    "backToForm": "Back to form",
+    "method": {
+      "pixMeta": "Instant confirmation",
+      "cardTitle": "Card",
+      "cardMeta": "3.5% surcharge"
+    },
+    "pix": {
+      "instruction": "Scan the QR with your bank app or copy the code below.",
+      "copy": "Copy code",
+      "copied": "Copied!",
+      "expiresIn": "Expires in",
+      "expired": "Expired",
+      "confirmManually": "I paid",
+      "processing": "Processing…",
+      "note": "This is a demo. No real payment will be processed."
+    }
   }
 }

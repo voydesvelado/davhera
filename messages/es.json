@@ -400,5 +400,25 @@
         "savings": "Ahorras"
       }
     }
+  },
+  "checkout": {
+    "title": "Pago",
+    "subtitle": "Reserva confirmada con 50% adelantado. Resto el día de la experiencia.",
+    "backToForm": "Volver al formulario",
+    "method": {
+      "pixMeta": "Confirmación inmediata",
+      "cardTitle": "Tarjeta",
+      "cardMeta": "Recargo de 3.5%"
+    },
+    "pix": {
+      "instruction": "Escanea el QR con la app de tu banco o copia el código de abajo.",
+      "copy": "Copiar código",
+      "copied": "¡Copiado!",
+      "expiresIn": "Expira en",
+      "expired": "Expiró",
+      "confirmManually": "Ya pagué",
+      "processing": "Procesando…",
+      "note": "Este es un demo. Ningún pago real será procesado."
+    }
   }
 }

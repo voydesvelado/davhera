@@ -400,5 +400,25 @@
         "savings": "Você economiza"
       }
     }
+  },
+  "checkout": {
+    "title": "Pagamento",
+    "subtitle": "Reserva confirmada com 50% adiantado. Saldo no dia da experiência.",
+    "backToForm": "Voltar ao formulário",
+    "method": {
+      "pixMeta": "Confirmação imediata",
+      "cardTitle": "Cartão",
+      "cardMeta": "Recargo de 3,5%"
+    },
+    "pix": {
+      "instruction": "Escaneie o QR code com o app do seu banco ou copie o código abaixo.",
+      "copy": "Copiar código",
+      "copied": "Copiado!",
+      "expiresIn": "Expira em",
+      "expired": "Expirou",
+      "confirmManually": "Já paguei",
+      "processing": "Processando…",
+      "note": "Este é um demo. Nenhum pagamento real será processado."
+    }
   }
 }

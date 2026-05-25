@@ -3,19 +3,17 @@
 import { useTranslations } from "next-intl";
 import { useBooking, TOTAL_STEPS } from "@/lib/saira/booking/context";
 import { isStepValid } from "@/lib/saira/booking/validation";
-import { useSairaRouter } from "@/app/proyectos/saira/lib/i18n/client-nav";
 
 export function WizardNavigation() {
   const { state, dispatch } = useBooking();
   const t = useTranslations("wizard.nav");
-  const router = useSairaRouter();
   const isValid = isStepValid(state.currentStep, state);
   const isLast = state.currentStep === TOTAL_STEPS;
 
   const handleNext = () => {
     if (!isValid) return;
     if (isLast) {
-      router.push("/checkout");
+      dispatch({ type: "GO_TO_CHECKOUT" });
       return;
     }
     dispatch({ type: "NEXT" });

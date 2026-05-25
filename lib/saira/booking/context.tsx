@@ -10,6 +10,8 @@ import {
 import type { Tour } from "@/lib/saira/types";
 
 export type LanguagePreference = "pt" | "en" | "es" | "it" | "any";
+export type BookingPhase = "form" | "checkout" | "processing";
+export type PaymentMethod = "pix" | "card";
 
 export type BookingState = {
   tour: Tour;
@@ -23,6 +25,8 @@ export type BookingState = {
   };
   languagePreference: LanguagePreference;
   comments: string;
+  phase: BookingPhase;
+  paymentMethod: PaymentMethod | null;
 };
 
 export type BookingAction =
@@ -37,7 +41,11 @@ export type BookingAction =
       value: string;
     }
   | { type: "SET_LANGUAGE"; language: LanguagePreference }
-  | { type: "SET_COMMENTS"; comments: string };
+  | { type: "SET_COMMENTS"; comments: string }
+  | { type: "GO_TO_CHECKOUT" }
+  | { type: "BACK_TO_FORM" }
+  | { type: "SET_PAYMENT_METHOD"; method: PaymentMethod }
+  | { type: "START_PROCESSING" };
 
 export const TOTAL_STEPS = 5;
 
@@ -68,6 +76,20 @@ function reducer(state: BookingState, action: BookingAction): BookingState {
       return { ...state, languagePreference: action.language };
     case "SET_COMMENTS":
       return { ...state, comments: action.comments };
+    case "GO_TO_CHECKOUT":
+      // Defaulteamos a Pix porque es el método más usado en Brasil.
+      return {
+        ...state,
+        phase: "checkout",
+        paymentMethod: state.paymentMethod ?? "pix",
+      };
+    case "BACK_TO_FORM":
+      // El state del wizard se preserva intacto al volver.
+      return { ...state, phase: "form" };
+    case "SET_PAYMENT_METHOD":
+      return { ...state, paymentMethod: action.method };
+    case "START_PROCESSING":
+      return { ...state, phase: "processing" };
     default:
       return state;
   }
@@ -95,6 +117,8 @@ export function BookingProvider({
     contact: { name: "", whatsapp: "", email: "" },
     languagePreference: "any",
     comments: "",
+    phase: "form",
+    paymentMethod: null,
   });
 
   return (
@@ -108,4 +132,34 @@ export function useBooking() {
   const ctx = useContext(BookingContext);
   if (!ctx) throw new Error("useBooking must be used inside BookingProvider");
   return ctx;
+}
+
+/** Helper compartido por checkout para snapshot la reserva confirmada. */
+export type ConfirmedBookingSnapshot = {
+  tour: Tour;
+  date: string | null;
+  people: number;
+  contact: BookingState["contact"];
+  languagePreference: LanguagePreference;
+  paymentMethod: PaymentMethod;
+  comments: string;
+  confirmedAt: string;
+};
+
+export const CONFIRMED_BOOKING_KEY = "saira_booking_confirmed";
+
+export function snapshotBooking(
+  state: BookingState,
+  paymentMethod: PaymentMethod,
+): ConfirmedBookingSnapshot {
+  return {
+    tour: state.tour,
+    date: state.date ? state.date.toISOString() : null,
+    people: state.people,
+    contact: state.contact,
+    languagePreference: state.languagePreference,
+    paymentMethod,
+    comments: state.comments,
+    confirmedAt: new Date().toISOString(),
+  };
 }
