@@ -330,5 +330,19 @@
       ],
       "meetingPoint": "A combinar na véspera conforme a previsão do vento"
     }
+  },
+  "wizard": {
+    "steps": {
+      "date": "Quando você vai?",
+      "people": "Quantas pessoas?",
+      "contact": "Como te contactamos?",
+      "language": "Idioma do guia",
+      "comments": "Algo a acrescentar?"
+    },
+    "nav": {
+      "next": "Próximo",
+      "back": "Voltar",
+      "continue": "Continuar para pagamento"
+    }
   }
 }

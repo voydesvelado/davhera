@@ -330,5 +330,19 @@
       ],
       "meetingPoint": "Confirmed the evening before based on the wind forecast"
     }
+  },
+  "wizard": {
+    "steps": {
+      "date": "When are you going?",
+      "people": "How many people?",
+      "contact": "How do we reach you?",
+      "language": "Guide language",
+      "comments": "Anything to add?"
+    },
+    "nav": {
+      "next": "Next",
+      "back": "Back",
+      "continue": "Continue to payment"
+    }
   }
 }

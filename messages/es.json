@@ -330,5 +330,19 @@
       ],
       "meetingPoint": "A coordinar la víspera según el pronóstico del viento"
     }
+  },
+  "wizard": {
+    "steps": {
+      "date": "¿Cuándo vas?",
+      "people": "¿Cuántas personas?",
+      "contact": "¿Cómo te contactamos?",
+      "language": "Idioma del guía",
+      "comments": "¿Algo más?"
+    },
+    "nav": {
+      "next": "Siguiente",
+      "back": "Volver",
+      "continue": "Continuar al pago"
+    }
   }
 }
