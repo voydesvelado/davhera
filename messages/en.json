@@ -385,6 +385,20 @@
       "title": "Anything to add?",
       "subtitle": "Optional. Dietary restrictions, experience level, anything we should know.",
       "placeholder": "E.g.: never hiked anything harder than Pão de Açúcar, two of us are beginners..."
+    },
+    "summary": {
+      "eyebrow": "Your booking",
+      "date": "Date",
+      "people": "People",
+      "personSingular": "person",
+      "personPlural": "people",
+      "subtotal": "Total",
+      "comparison": {
+        "header": "Direct booking",
+        "direct": "Booking direct",
+        "platform": "Via platform",
+        "savings": "You save"
+      }
     }
   }
 }

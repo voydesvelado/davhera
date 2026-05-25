@@ -4,6 +4,7 @@ import { BookingProvider } from "@/lib/saira/booking/context";
 import { WizardProgress } from "./WizardProgress";
 import { WizardSteps } from "./WizardSteps";
 import { WizardNavigation } from "./WizardNavigation";
+import { BookingSummary } from "./BookingSummary";
 import type { Tour } from "@/lib/saira/types";
 
 export function BookingWizard({ tour }: { tour: Tour }) {
@@ -16,7 +17,7 @@ export function BookingWizard({ tour }: { tour: Tour }) {
           <WizardNavigation />
         </div>
         <aside className="saira-wizard-aside">
-          {/* BookingSummary mounts at M20 */}
+          <BookingSummary />
         </aside>
       </main>
     </BookingProvider>

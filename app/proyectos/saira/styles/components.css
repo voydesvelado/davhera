@@ -1878,3 +1878,181 @@
   max-width: 580px;
   letter-spacing: 0.06em;
 }
+
+/* ───────────────────────────────  BookingSummary (M20) */
+
+.saira-summary {
+  background: var(--surface-elevated);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.saira-summary-eyebrow {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.saira-summary-tour-name {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--ink);
+  font-variation-settings: "opsz" 36;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.saira-summary-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line-soft);
+}
+
+.saira-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.saira-summary-row-label {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+
+.saira-summary-row-value {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-sm);
+  color: var(--ink);
+  font-weight: 500;
+  display: inline-block;
+}
+
+.saira-summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line-soft);
+  gap: var(--space-3);
+}
+
+.saira-summary-total-label {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.saira-summary-total-amount {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-2xl);
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  font-variation-settings: "opsz" 48;
+  display: inline-block;
+}
+
+.saira-summary-comparison {
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+
+.saira-summary-comparison-header {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  margin-bottom: var(--space-3);
+}
+
+.saira-summary-comparison-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-sm);
+  padding: 4px 0;
+  gap: var(--space-3);
+}
+
+.saira-summary-comparison-direct {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.saira-summary-comparison-platform {
+  color: var(--ink-muted);
+}
+
+.saira-summary-strikethrough {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--ink-muted) 50%, transparent);
+  display: inline-block;
+}
+
+.saira-summary-savings {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.saira-summary-savings-label {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--ink);
+  font-variation-settings: "opsz" 24;
+}
+
+.saira-summary-savings-amount {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--terracotta);
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 36;
+  display: inline-block;
+}
+
+/* Mobile: summary primero (arriba del form), sin sticky. */
+@media (max-width: 1023px) {
+  .saira-wizard {
+    grid-template-columns: 1fr;
+  }
+  .saira-wizard-aside {
+    order: -1;
+  }
+}
+
+/* Desktop: summary como aside sticky en la 2da columna. */
+@media (min-width: 1024px) {
+  .saira-wizard-aside {
+    position: sticky;
+    top: var(--space-12);
+    align-self: start;
+  }
+}

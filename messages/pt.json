@@ -385,6 +385,20 @@
       "title": "Algo a acrescentar?",
       "subtitle": "Opcional. Restrições alimentares, nível de experiência, qualquer coisa que devamos saber.",
       "placeholder": "Ex.: nunca fiz trilha mais difícil que Pão de Açúcar, dois dos participantes são iniciantes..."
+    },
+    "summary": {
+      "eyebrow": "Sua reserva",
+      "date": "Data",
+      "people": "Pessoas",
+      "personSingular": "pessoa",
+      "personPlural": "pessoas",
+      "subtotal": "Total",
+      "comparison": {
+        "header": "Reserva direta",
+        "direct": "Reservando direto",
+        "platform": "Via plataforma",
+        "savings": "Você economiza"
+      }
     }
   }
 }
