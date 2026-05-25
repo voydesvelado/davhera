@@ -94,9 +94,16 @@ con un script inline antes del paint.
 
 ## Scope de Wave 1
 
-6 pantallas: landing · catálogo · detalle de tour · reserva (wizard) ·
-checkout mock · confirmación. Mobile-first. Estos 10 prompts (M1–M10)
-cubren la **landing** completa + fundamentos + i18n.
+**Wave 1 está completa (M1–M30).** 6 pantallas mobile-first:
+
+1. **Landing** (M1–M10): Hero video · FeaturedTours · ValueProp · Footer
+2. **Catálogo** (M11–M13): grid 16 tours · filtros URL state · empty state animado
+3. **Tour detail** (M14–M16): gallery · header · descripción · includes/bring · map · sticky CTA
+4. **Wizard de reserva** (M17–M20): 5 pasos (date · people · contact · language · comments) con summary live (money moment)
+5. **Checkout** (M21–M22): Pix (QR mock + countdown 15min + copy code) y Tarjeta (preview visual con flip 3D)
+6. **Confirmación** (M23): checkmark animado · resumen · WhatsApp preview · Add to Google Calendar
+
+Plus: page transitions globales (M24) · micro-interactions polish (M25) · not-found/error/loading + edge cases (M26).
 
 ## Fuente de verdad visual
 
@@ -135,6 +142,65 @@ y patrones están todos ahí.
   específico, swap a un Client Component con `useEffect` +
   `matchMedia` que renderice un `<source>` por viewport.
 
+## Decisiones técnicas (M11–M20)
+
+- **Catalog filters en URL state** (M12): `?category=…&difficulty=…` vía
+  `useSearchParams` + `router.replace({scroll:false})` envuelto en
+  `useTransition` para `opacity: 0.6` mientras pendiente. El `searchParams`
+  prop del page es Promise en Next 16 — siempre await.
+- **DIFFICULTY_BUCKETS** agrupa las 6 variantes del catálogo en 3 (easy/
+  moderate/hard) sólo para la UI; el dato fuente conserva la granularidad.
+- **CatalogGrid + EmptyState** son Client Components separados (M13). La
+  page sigue siendo Server. Animaciones `layout` + `popLayout` son OK con
+  16 tours; si crece a 50+, revisar performance.
+- **react-day-picker v10** (M18): API y class names cambiaron vs v8/v9.
+  Override CSS via `--rdp-accent-color` + selectors `.rdp-day_button`,
+  `.rdp-selected`, etc. Scoped a `.saira` para no afectar otros usos.
+- **Wizard state via Context+useReducer** (M17): sin persistencia a
+  sessionStorage. Si el usuario refresca durante el wizard, pierde el
+  state. Aceptable para Wave 1 (demo). Wave 2 puede agregar persist si
+  Saraí lo pide.
+- **`useSairaRouter().push('/checkout')` en lugar de `window.location`**:
+  spec original usaba `navigator.language` para construir la URL — SSR
+  unsafe + no respeta el locale activo de la URL. Sustituido por router
+  scopeado.
+- **BookingSummary terracotta-only en savings amount**: regla del design
+  system. Label en `--ink`, número grande en `--terracotta`. Hide del
+  bloque comparison entero cuando `priceOnRequest`.
+
+## Decisiones técnicas (M21–M30)
+
+- **Phase-based wizard** (M21): el booking permanece en `/reservar/[slug]`
+  durante checkout — la vista cambia por `state.phase` (`form` →
+  `checkout` → `processing`), no por ruta. Preserva todo el state del
+  Context sin tener que persistir o pasar por URL. Sólo la pantalla de
+  confirmación final navega a `/reserva/confirmada`.
+- **`/checkout` page (M17)** queda como placeholder redundante / no
+  alcanzable desde el flow normal. Útil sólo si alguien entra a la URL
+  directo (404-equivalente con CTA back).
+- **QR code Pix es decorativo**: SVG generado client-side con pattern
+  determinista + 3 markers en esquinas. NO escaneable. El "código Pix"
+  que se copia es un string realista pero no procesa nada. Note
+  explícito de demo en cada pantalla.
+- **Card visual con flip 3D**: `transform-style: preserve-3d` +
+  `backface-visibility: hidden` + motion `rotateY` al focusear CVC.
+  500ms ease-in-out-soft. Respeta prefers-reduced-motion.
+- **Confirmation page lee de sessionStorage**: si falta (refresh
+  directo), muestra "no booking found" y redirige a `/` después de
+  2.4s. bookingId generado client-side, formato `SAR-XXXXXX` (useMemo
+  stable). Google Calendar URL bien formada con ISO Z dates.
+- **WhatsApp preview es el ÚNICO lugar con emojis** en todo el sitio
+  (📅 👥 🆔 👋). Razón: simula un mensaje real de WhatsApp donde son
+  norma. La regla "sin emojis" sigue aplicando en todo el resto del UI.
+  Usa fuente `system-ui` (no Fraunces/Geist) para autenticidad.
+- **Page transitions via template.tsx** (M24): re-mounta en cada
+  navegación, dispara fade + 8px translate-y en 300ms. Override en
+  `/reserva/confirmada/template.tsx` porque ese page tiene su propio
+  stagger interno de 6 elementos. Respeta prefers-reduced-motion.
+- **Spinner dos variantes**: `.saira-spinner` (sobre fondo --moss, en
+  botones de processing) y `.saira-spinner-dark` (en loading.tsx
+  sobre fondo claro). Ambos gateados por prefers-reduced-motion.
+
 ## TODOs y pendientes
 
 - [ ] Validar con Saraí los 3 tours "featured" (M8: actualmente
@@ -159,23 +225,39 @@ y patrones están todos ahí.
       swap del placeholder de `.saira-tour-card-media` a `<Image fill>`.
 - [ ] Toggle manual de dark mode en header (Wave 2 — por ahora solo
       `prefers-color-scheme`).
-- [ ] Rutas downstream que el M5/M8 ya enlazan pero que aún no existen:
-      `/tours`, `/tours/{slug}`, `/reservar/{slug}`, `/reserva/confirmada`.
-      Vendrán en próximos prompts (M11+).
+- [ ] **Real-device QA pendiente** (M27/M29): el demo está verificado
+      end-to-end programáticamente en producción local pero NO en
+      celular físico. Antes del demo con Saraí: probar el flow completo
+      en iOS Safari y Android Chrome. Foco especial: autoplay del hero
+      video, copy-to-clipboard en Safari, sticky CTA con safe-area,
+      flip 3D de la tarjeta en mobile, calendar de date-picker con touch.
+- [ ] **Deploy a Vercel** (M28) requiere acceso al dashboard de Vercel —
+      no se puede hacer desde este entorno containerizado. Pasos cuando
+      el equipo lo ejecute: PR a main → Vercel auto-deploy → Lighthouse
+      mobile ≥ 85 perf · ≥ 95 a11y · ≥ 90 SEO. Si video del hero baja
+      la Performance, recomprimir con los ffmpeg arriba.
+- [ ] Persistencia del wizard state (Wave 2 si Saraí lo pide).
 
-## Verificación final M10
+## Verificación final M30
 
 | Check | Estado |
 |---|---|
-| `npm run build` clean | ✓ 33 páginas (3 locales prerender estáticos) |
+| `npm run build` clean (Next 16 Turbopack) | ✓ 132 páginas |
+| Saira prerendera 99 rutas estáticas | ✓ 3 locales × (1 home + 1 checkout + 1 confirmada + 16 tours/[slug] + 16 reservar/[slug]) + 3 dinámicos /tours |
 | `npm run lint` en archivos Saira | ✓ 0 issues |
-| `/`, `/projects/menura`, `/case-studies/trilha-rio` intactos | ✓ 200 |
-| `/proyectos/saira` → redirect por Accept-Language | ✓ pt/es/en |
-| `/proyectos/saira/{pt,es,en}` renderiza | ✓ |
-| Cookie `NEXT_LOCALE` persiste y overridea | ✓ |
-| Hero · FeaturedTours · ValueProp · Footer mounted | ✓ |
-| WhatsApp / email / Instagram links | ✓ con `noopener noreferrer` |
-| `--terracotta` aparece solo en savings de la comparison card | ✓ |
-| Heading hierarchy (h1 en Hero, h2 en secciones) | ✓ |
-| Focus rings visibles vía `--moss` | ✓ |
-| `prefers-reduced-motion` respetado en reveals | ✓ Hero CSS |
+| Davhera intacta (`/`, `/projects/*`, `/case-studies/*`, `/quiniela/*`) | ✓ 200 |
+| Accept-Language detection (pt-BR/es-MX/en-US → redirect) | ✓ 307 |
+| 6 surfaces × 3 locales = 18 routes | ✓ 200 todos |
+| Filter combos del catálogo (incluyendo empty) | ✓ 200 todos |
+| i18n parity (pt = es = en) | ✓ 215 keys idénticas, 0 vacíos |
+| Mobile-first CSS audit | ✓ 10/10 checks (hover gates, reduced-motion, safe-area, tap-highlight, tabular-nums, line-clamp) |
+| A11y básica (aria-*, role, focus-visible, h1/h2 jerarquía) | ✓ |
+| `--terracotta` discipline (sólo en savings + errors) | ✓ |
+| End-to-end navegable: landing → /tours → filter → empty → detail → /reservar → 5 steps → checkout Pix → /reserva/confirmada → calendar URL bien formada | ✓ verificado |
+
+## Branch + deploy status
+
+- **Branch**: `claude/gifted-meitner-MD2QR` (todos los M1–M30 pushed)
+- **Commits**: 30, formato `saira(M{N}): <summary>`
+- **Estado**: demo-ready local. Falta deploy a Vercel y real-device QA
+  (ver TODOs arriba).
