@@ -8,8 +8,7 @@ import { Button } from "./button";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 // TODO: replace with real agency hero shot once available.
-const HERO_SRC =
-  "https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=2400&q=80&auto=format&fit=crop";
+const HERO_SRC = "https://picsum.photos/seed/viajes-hero/2400/1600";
 
 const WA_HREF =
   "https://wa.me/525500000000?text=" +

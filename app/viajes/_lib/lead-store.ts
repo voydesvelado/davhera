@@ -25,6 +25,12 @@ export type LeadState = {
 const STORAGE_KEY = "viajes_lead_state";
 const SESSION_KEY = "viajes_lead_session_id";
 
+const SSR_FALLBACK: LeadState = Object.freeze({
+  session_id: "",
+  step: 1,
+  status: "partial",
+}) as LeadState;
+
 function isBrowser(): boolean {
   return typeof window !== "undefined";
 }
@@ -45,25 +51,46 @@ export function getSessionId(): string {
   return id;
 }
 
-function defaultState(): LeadState {
-  return {
-    session_id: isBrowser() ? getSessionId() : "",
-    step: 1,
-    status: "partial",
-  };
-}
-
-export function loadLeadState(): LeadState {
-  if (!isBrowser()) return { session_id: "", step: 1, status: "partial" };
+function readFromStorage(): LeadState {
+  if (!isBrowser()) return SSR_FALLBACK;
   const raw = window.localStorage.getItem(STORAGE_KEY);
-  if (!raw) return defaultState();
+  if (!raw) {
+    return {
+      session_id: getSessionId(),
+      step: 1,
+      status: "partial",
+    };
+  }
   try {
     const parsed = JSON.parse(raw) as LeadState;
     if (!parsed.session_id) parsed.session_id = getSessionId();
     return parsed;
   } catch {
-    return defaultState();
+    return {
+      session_id: getSessionId(),
+      step: 1,
+      status: "partial",
+    };
   }
+}
+
+// `useSyncExternalStore` requires `getSnapshot` to return a referentially
+// stable value when the underlying data hasn't changed — otherwise React
+// throws "The result of getSnapshot should be cached to avoid an infinite
+// loop". We memoize the parsed state and only invalidate when saveLeadStep,
+// resetLeadState, or a cross-tab storage event fires.
+let cachedSnapshot: LeadState | null = null;
+
+export function loadLeadState(): LeadState {
+  if (!isBrowser()) return SSR_FALLBACK;
+  if (cachedSnapshot) return cachedSnapshot;
+  cachedSnapshot = readFromStorage();
+  return cachedSnapshot;
+}
+
+function invalidateAndNotify(next?: LeadState) {
+  cachedSnapshot = next ?? null;
+  for (const l of listeners) l();
 }
 
 export function saveLeadStep(
@@ -71,7 +98,7 @@ export function saveLeadStep(
   partial: Partial<LeadState>,
 ): LeadState {
   if (!isBrowser()) {
-    return { ...defaultState(), ...partial, step };
+    return { ...SSR_FALLBACK, ...partial, step };
   }
   const current = loadLeadState();
   const next: LeadState = {
@@ -83,6 +110,7 @@ export function saveLeadStep(
     updated_at: new Date().toISOString(),
   };
   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  invalidateAndNotify(next);
   void sendLeadStep(next);
   return next;
 }
@@ -91,29 +119,27 @@ export function resetLeadState(): void {
   if (!isBrowser()) return;
   window.localStorage.removeItem(STORAGE_KEY);
   window.localStorage.removeItem(SESSION_KEY);
+  invalidateAndNotify();
 }
 
-// Subscribe API for useSyncExternalStore so React components can read the
-// lead state without calling setState in a useEffect (which React 19's new
-// rules now flag).
 type Listener = () => void;
 const listeners = new Set<Listener>();
 
 export function subscribeLeadState(listener: Listener): () => void {
   listeners.add(listener);
+  const onStorage = () => {
+    cachedSnapshot = null;
+    listener();
+  };
   if (isBrowser()) {
-    window.addEventListener("storage", listener);
+    window.addEventListener("storage", onStorage);
   }
   return () => {
     listeners.delete(listener);
     if (isBrowser()) {
-      window.removeEventListener("storage", listener);
+      window.removeEventListener("storage", onStorage);
     }
   };
-}
-
-function notify() {
-  for (const l of listeners) l();
 }
 
 // Stubbed for now. When the Apps Script endpoint is ready, replace with:
@@ -126,6 +152,5 @@ async function sendLeadStep(state: LeadState): Promise<void> {
   if (process.env.NODE_ENV === "development") {
     console.log("[lead]", state);
   }
-  notify();
   return Promise.resolve();
 }

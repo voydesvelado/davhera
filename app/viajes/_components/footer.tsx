@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const COL_LINKS = [
   { label: "Catálogo", href: "/viajes#catalogo" },
@@ -8,6 +11,9 @@ const COL_LINKS = [
 ];
 
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname?.startsWith("/viajes/cotizar/")) return null;
+
   return (
     <footer className="border-t border-border-token bg-bg">
       <div className="mx-auto max-w-7xl px-6 lg:px-12 py-16 lg:py-24">

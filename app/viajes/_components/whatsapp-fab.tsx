@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 
@@ -14,8 +15,11 @@ const HREF = `https://wa.me/${WA_NUMBER}?text=${WA_TEXT}`;
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function WhatsAppFab() {
+  const pathname = usePathname();
   const [hover, setHover] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+
+  if (pathname?.startsWith("/viajes/cotizar/")) return null;
 
   return (
     <a

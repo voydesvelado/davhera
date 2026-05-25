@@ -22,8 +22,11 @@ export type Trip = {
   category: TripCategory;
 };
 
-const UNSPLASH = (id: string, w = 1600) =>
-  `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`;
+// TODO: replace placeholders with the agency's own photography before launch.
+// picsum.photos returns a stable, real photo for each seed and works without
+// authentication — useful while the agency's image library is being shot.
+const COVER = (seed: string) => `https://picsum.photos/seed/${seed}/2000/1400`;
+const GALLERY = (seed: string) => `https://picsum.photos/seed/${seed}/1600/1200`;
 
 export const trips: Trip[] = [
   {
@@ -37,12 +40,12 @@ export const trips: Trip[] = [
       "Una ruta pausada por los Valles Centrales y la sierra norte, donde cada comida es un ritual y cada artesano cuenta una historia. Diseñado para quienes viajan a entender, no solo a fotografiar.",
     duration: "7 días / 6 noches",
     priceFrom: 42000,
-    coverImage: UNSPLASH("1518105779142-d975f22f1b0a"),
+    coverImage: COVER("oaxaca-market"),
     gallery: [
-      UNSPLASH("1518105779142-d975f22f1b0a"),
-      UNSPLASH("1568571708120-9b252ec1e3f4"),
-      UNSPLASH("1547558840-8e9d4e3c6e6f"),
-      UNSPLASH("1565073439555-1d3f06afd4ed"),
+      GALLERY("oaxaca-market"),
+      GALLERY("oaxaca-mezcal"),
+      GALLERY("oaxaca-textiles"),
+      GALLERY("oaxaca-ruins"),
     ],
     highlights: [
       "Mercado de Tlacolula con un cocinero local",
@@ -107,12 +110,12 @@ export const trips: Trip[] = [
       "Cenotes privados, una hacienda henequenera y playas a las que solo se llega caminando. Una semana para reaprender a no hacer nada.",
     duration: "6 días / 5 noches",
     priceFrom: 58000,
-    coverImage: UNSPLASH("1510097467424-192d713fd8b2"),
+    coverImage: COVER("tulum-beach"),
     gallery: [
-      UNSPLASH("1510097467424-192d713fd8b2"),
-      UNSPLASH("1552074284-5e88ef1aef18"),
-      UNSPLASH("1559827260-dc66d52bef19"),
-      UNSPLASH("1519046904884-53103b34b206"),
+      GALLERY("tulum-beach"),
+      GALLERY("tulum-cenote"),
+      GALLERY("tulum-jungle"),
+      GALLERY("tulum-sunset"),
     ],
     highlights: [
       "Cenote privado al amanecer",
@@ -171,12 +174,12 @@ export const trips: Trip[] = [
       "Galerías, calles empedradas y viñedos de altura. Pensado para quienes disfrutan caminar sin prisa, comer despacio y volver al hotel con un cuaderno lleno.",
     duration: "5 días / 4 noches",
     priceFrom: 36000,
-    coverImage: UNSPLASH("1518638150340-f706e86654de"),
+    coverImage: COVER("sma-parroquia"),
     gallery: [
-      UNSPLASH("1518638150340-f706e86654de"),
-      UNSPLASH("1568322445389-f64ac2515099"),
-      UNSPLASH("1539720329894-1cf4dbb74b0c"),
-      UNSPLASH("1551042863-c3a3b3b08e3a"),
+      GALLERY("sma-parroquia"),
+      GALLERY("sma-callejon"),
+      GALLERY("sma-vino"),
+      GALLERY("sma-galeria"),
     ],
     highlights: [
       "Tour de galerías con curador local",
@@ -229,12 +232,12 @@ export const trips: Trip[] = [
       "Una expedición curada por Torres del Paine y el canal Beagle, con guías de montaña certificados y lodges en lugares imposibles. Para quienes ya viajaron mucho y quieren más que un paisaje.",
     duration: "10 días / 9 noches",
     priceFrom: 185000,
-    coverImage: UNSPLASH("1531176175280-33e81d70b1cd"),
+    coverImage: COVER("patagonia-torres"),
     gallery: [
-      UNSPLASH("1531176175280-33e81d70b1cd"),
-      UNSPLASH("1483683804023-6ccdb62f86ef"),
-      UNSPLASH("1486084814457-39ccd87b6b75"),
-      UNSPLASH("1500382017468-9049fed747ef"),
+      GALLERY("patagonia-torres"),
+      GALLERY("patagonia-glaciar"),
+      GALLERY("patagonia-puma"),
+      GALLERY("patagonia-estancia"),
     ],
     highlights: [
       "Trekking guiado al pie de las Torres",
@@ -317,12 +320,12 @@ export const trips: Trip[] = [
       "Templos a primera hora, un ryokan en las montañas y una cena kaiseki con un chef que aún cocina con leña. La vieja Japón, en su versión menos turística.",
     duration: "8 días / 7 noches",
     priceFrom: 165000,
-    coverImage: UNSPLASH("1493976040374-85c8e12f0c0e"),
+    coverImage: COVER("kioto-fushimi"),
     gallery: [
-      UNSPLASH("1493976040374-85c8e12f0c0e"),
-      UNSPLASH("1528360983277-13d401cdc186"),
-      UNSPLASH("1540959733332-eab4deabeeaf"),
-      UNSPLASH("1545569341-9eb8b30979d9"),
+      GALLERY("kioto-fushimi"),
+      GALLERY("kioto-bambu"),
+      GALLERY("kioto-machiya"),
+      GALLERY("kioto-ryokan"),
     ],
     highlights: [
       "Templo Fushimi Inari antes del amanecer",
@@ -393,12 +396,12 @@ export const trips: Trip[] = [
       "Hoteles familiares en pueblos colgados del mar, una clase de cocina con una nonna que sigue amasando a mano y barcos privados para llegar a las calas que ya nadie recuerda.",
     duration: "9 días / 8 noches",
     priceFrom: 142000,
-    coverImage: UNSPLASH("1533104816931-20fa691ff6ca"),
+    coverImage: COVER("amalfi-positano"),
     gallery: [
-      UNSPLASH("1533104816931-20fa691ff6ca"),
-      UNSPLASH("1531783397570-cd62f6f8de15"),
-      UNSPLASH("1523906834658-6e24ef2386f9"),
-      UNSPLASH("1559827260-dc66d52bef19"),
+      GALLERY("amalfi-positano"),
+      GALLERY("amalfi-cala"),
+      GALLERY("amalfi-capri"),
+      GALLERY("amalfi-limoncello"),
     ],
     highlights: [
       "Clase de pasta con una nonna en Ravello",

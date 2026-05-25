@@ -65,6 +65,64 @@
   --color-stadium-text-inverse: #0B1120;
 }
 
+/* Viajes — scoped utility palette + type scale for /viajes.
+   Names are unique to /viajes; runtime overrides for font-display / accent
+   live under .viajes-scope (in app/viajes/viajes.css) so they don't bleed
+   into other routes. */
+@theme {
+  --color-bg: #FAF8F4;
+  --color-bg-elevated: #FFFFFF;
+  --color-fg: #1A1815;
+  --color-fg-muted: #6B665C;
+  --color-fg-subtle: #A39E92;
+  --color-border-token: #E8E3D8;
+  --color-accent-hover: #9A3A19;
+  --color-accent-fg: #FAF8F4;
+
+  --text-display-2xl: 72px;
+  --text-display-2xl--line-height: 76px;
+  --text-display-2xl--letter-spacing: -0.02em;
+
+  --text-display-xl: 56px;
+  --text-display-xl--line-height: 60px;
+  --text-display-xl--letter-spacing: -0.02em;
+
+  --text-display-lg: 40px;
+  --text-display-lg--line-height: 44px;
+  --text-display-lg--letter-spacing: -0.015em;
+
+  --text-display-md: 28px;
+  --text-display-md--line-height: 34px;
+
+  --text-heading-lg: 22px;
+  --text-heading-lg--line-height: 28px;
+
+  --text-heading-md: 18px;
+  --text-heading-md--line-height: 24px;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+
+  --text-body: 15px;
+  --text-body--line-height: 24px;
+
+  --text-body-sm: 13px;
+  --text-body-sm--line-height: 20px;
+
+  --text-eyebrow: 11px;
+  --text-eyebrow--line-height: 16px;
+  --text-eyebrow--letter-spacing: 0.12em;
+}
+
+/* `.font-display` is not in Tailwind v4 defaults. Registering it as a
+   custom utility lets /viajes use `font-display` without polluting the
+   global @theme — the value resolves through whatever sets --font-display
+   on the closest ancestor (next/font className on <html> on most pages,
+   .viajes-scope rebind on /viajes). */
+@utility font-display {
+  font-family: var(--font-display);
+}
+
 :root {
   /* Core palette — stone (warm gray) + orange brand */
   --black:   #0C0A09;   /* stone-950 */

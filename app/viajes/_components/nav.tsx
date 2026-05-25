@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -15,6 +16,8 @@ const LINKS = [
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function Nav() {
+  const pathname = usePathname();
+  const hideOnForm = pathname?.startsWith("/viajes/cotizar/");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -33,6 +36,8 @@ export function Nav() {
       document.body.style.overflow = original;
     };
   }, [open]);
+
+  if (hideOnForm) return null;
 
   return (
     <>
