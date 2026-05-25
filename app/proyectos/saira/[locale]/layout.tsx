@@ -3,8 +3,10 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import "../styles/tokens.css";
 import "../styles/base.css";
+import "../styles/components.css";
 import { fraunces, geist, geistMono } from "../lib/fonts";
 import { locales, isLocale } from "../lib/i18n/config";
+import { Header } from "@/components/saira/header/Header";
 
 // Genera rutas estáticas para los 3 locales.
 export function generateStaticParams() {
@@ -45,6 +47,7 @@ export default async function SairaLocaleLayout({
     >
       <script dangerouslySetInnerHTML={{ __html: darkModeInitScript }} />
       <NextIntlClientProvider messages={messages} locale={locale}>
+        <Header />
         {children}
       </NextIntlClientProvider>
     </div>
