@@ -47,6 +47,21 @@
     "subtitle": "Trails, crossings and flights over Rio's Atlantic Forest. Pick yours.",
     "count": "{count} experiences"
   },
+  "filters": {
+    "category": "Category",
+    "difficulty": "Difficulty",
+    "categories": {
+      "all": "All",
+      "ecotour": "Ecotour",
+      "aventura": "Adventure"
+    },
+    "difficulties": {
+      "all": "All",
+      "easy": "Easy",
+      "moderate": "Moderate",
+      "hard": "Hard"
+    }
+  },
   "valueProp": {
     "title": "Book direct. No hidden fees.",
     "body": "Platforms charge up to 30% in commission — that cost is already baked into the price you see there. Here, what you pay is what Saira receives. No middlemen, no surprises.",

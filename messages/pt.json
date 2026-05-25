@@ -47,6 +47,21 @@
     "subtitle": "Trilhas, travessias e voos pela Mata Atlântica do Rio. Escolha a sua.",
     "count": "{count} experiências"
   },
+  "filters": {
+    "category": "Categoria",
+    "difficulty": "Dificuldade",
+    "categories": {
+      "all": "Todas",
+      "ecotour": "Ecotour",
+      "aventura": "Aventura"
+    },
+    "difficulties": {
+      "all": "Todas",
+      "easy": "Fácil",
+      "moderate": "Moderada",
+      "hard": "Difícil"
+    }
+  },
   "valueProp": {
     "title": "Reserva direto. Sem taxas escondidas.",
     "body": "Plataformas cobram até 30% de comissão — esse valor está embutido no preço que você vê lá. Aqui, o que você paga é o que a Saira recebe. Sem intermediários, sem surpresas.",

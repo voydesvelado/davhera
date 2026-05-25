@@ -47,6 +47,21 @@
     "subtitle": "Senderos, travesías y vuelos por la Mata Atlántica de Río. Elige la tuya.",
     "count": "{count} experiencias"
   },
+  "filters": {
+    "category": "Categoría",
+    "difficulty": "Dificultad",
+    "categories": {
+      "all": "Todas",
+      "ecotour": "Ecotour",
+      "aventura": "Aventura"
+    },
+    "difficulties": {
+      "all": "Todas",
+      "easy": "Fácil",
+      "moderate": "Moderada",
+      "hard": "Difícil"
+    }
+  },
   "valueProp": {
     "title": "Reserva directo. Sin cargos ocultos.",
     "body": "Las plataformas cobran hasta 30% de comisión — ese valor ya viene incluido en el precio que ves ahí. Aquí lo que pagas es lo que Saira recibe. Sin intermediarios, sin sorpresas.",
