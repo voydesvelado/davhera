@@ -428,5 +428,30 @@
       "processing": "Processing…",
       "note": "This is a demo. No real payment will be processed."
     }
+  },
+  "confirmation": {
+    "loading": "Loading…",
+    "noBookingFound": "No booking found. Redirecting to home…",
+    "title": "Your experience is booked.",
+    "lede": "All set, {name}. You'll get the details via WhatsApp in a moment.",
+    "bookingId": "Booking code",
+    "date": "Date",
+    "people": "People",
+    "person": "person",
+    "peoplePlural": "people",
+    "total": "Total paid",
+    "priceOnRequest": "On request",
+    "addToCalendar": "Add to Google Calendar",
+    "whatsappTitle": "WhatsApp message",
+    "whatsappSub": "Sent to {phone}",
+    "whatsappMessage": {
+      "greeting": "Hi {name}! 👋",
+      "confirmed": "Your booking for {tour} is confirmed.",
+      "details": "I'll send the meeting-point details and what to bring tomorrow. Anything you need, I'm here.",
+      "personSingular": "person",
+      "personPlural": "people"
+    },
+    "calendarDescription": "Booking {bookingId} · {people} person(s) · {tour}",
+    "backToHome": "Back to home"
   }
 }

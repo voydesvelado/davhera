@@ -2474,3 +2474,267 @@
     gap: var(--space-12);
   }
 }
+
+/* ───────────────────────────────  Confirmation page (M23) */
+
+.saira-confirmation {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-16) var(--space-6) var(--space-24);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.saira-confirmation-empty {
+  min-height: 50vh;
+  justify-content: center;
+}
+
+.saira-confirmation-icon {
+  margin-bottom: var(--space-8);
+}
+
+.saira-confirmation-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--moss);
+  color: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(45, 95, 79, 0.25);
+}
+
+.saira-confirmation-title {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: clamp(36px, 6vw, 56px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: var(--space-4);
+  font-variation-settings: "opsz" 96;
+  max-width: 16ch;
+}
+
+.saira-confirmation-lede {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-lg);
+  color: var(--ink-soft);
+  font-variation-settings: "opsz" 36;
+  margin-bottom: var(--space-12);
+  max-width: 480px;
+  line-height: 1.5;
+}
+
+.saira-confirmation-card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--surface-elevated);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-align: left;
+  margin-bottom: var(--space-12);
+}
+
+.saira-confirmation-id {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: var(--space-4);
+}
+
+.saira-confirmation-id-label {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+
+.saira-confirmation-id-value {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-sm);
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.saira-confirmation-divider {
+  height: 1px;
+  background: var(--line-soft);
+  margin-bottom: var(--space-6);
+}
+
+.saira-confirmation-tour {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: var(--space-4);
+  font-variation-settings: "opsz" 36;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+.saira-confirmation-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.saira-confirmation-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--space-2) 0;
+  gap: var(--space-3);
+}
+
+.saira-confirmation-row.is-highlight {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line-soft);
+}
+
+.saira-confirmation-row-label {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+
+.saira-confirmation-row-value {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-sm);
+  color: var(--ink);
+  font-weight: 500;
+  text-align: right;
+}
+
+.saira-confirmation-row.is-highlight .saira-confirmation-row-value {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-lg);
+  font-variation-settings: "opsz" 24;
+}
+
+.saira-confirmation-calendar {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.saira-confirmation-whatsapp {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: var(--space-8);
+  text-align: left;
+}
+
+.saira-confirmation-whatsapp-title {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: var(--space-2);
+  font-variation-settings: "opsz" 24;
+  letter-spacing: -0.01em;
+}
+
+.saira-confirmation-whatsapp-sub {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+  margin-bottom: var(--space-4);
+}
+
+.saira-confirmation-actions {
+  display: flex;
+  justify-content: center;
+}
+
+/* ───────────────────────────────  WhatsApp mock (M23) */
+/* Colores propios de WhatsApp (no Saira tokens) para autenticidad visual */
+
+.saira-whatsapp {
+  background: #075e54;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.saira-whatsapp-header {
+  background: #128c7e;
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: #fff;
+}
+
+.saira-whatsapp-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--moss);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.saira-whatsapp-name {
+  font-size: 14px;
+  font-weight: 600;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.saira-whatsapp-status {
+  font-size: 12px;
+  opacity: 0.8;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.saira-whatsapp-body {
+  background: #ece5dd;
+  padding: var(--space-4);
+  min-height: 220px;
+}
+
+.saira-whatsapp-bubble {
+  background: #fff;
+  border-radius: 8px;
+  padding: var(--space-3) var(--space-4);
+  max-width: 88%;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  color: #303030;
+  line-height: 1.5;
+  position: relative;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06);
+}
+
+.saira-whatsapp-bubble p + p {
+  margin-top: var(--space-2);
+}
+
+.saira-whatsapp-bubble strong {
+  font-weight: 600;
+}
+
+.saira-whatsapp-time {
+  display: block;
+  text-align: right;
+  font-size: 11px;
+  color: #999;
+  margin-top: var(--space-2);
+}

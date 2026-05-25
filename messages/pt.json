@@ -428,5 +428,30 @@
       "processing": "Processando…",
       "note": "Este é um demo. Nenhum pagamento real será processado."
     }
+  },
+  "confirmation": {
+    "loading": "Carregando…",
+    "noBookingFound": "Nenhuma reserva encontrada. Redirecionando ao início…",
+    "title": "Sua experiência está reservada.",
+    "lede": "Tudo certo, {name}. Você vai receber os detalhes pelo WhatsApp em instantes.",
+    "bookingId": "Código de reserva",
+    "date": "Data",
+    "people": "Pessoas",
+    "person": "pessoa",
+    "peoplePlural": "pessoas",
+    "total": "Total pago",
+    "priceOnRequest": "A consultar",
+    "addToCalendar": "Adicionar ao Google Calendar",
+    "whatsappTitle": "Mensagem no WhatsApp",
+    "whatsappSub": "Enviada para {phone}",
+    "whatsappMessage": {
+      "greeting": "Oi {name}! 👋",
+      "confirmed": "Sua reserva para {tour} está confirmada.",
+      "details": "Vou te mandar os detalhes do ponto de encontro e o que levar até amanhã. Qualquer dúvida, estou por aqui.",
+      "personSingular": "pessoa",
+      "personPlural": "pessoas"
+    },
+    "calendarDescription": "Reserva {bookingId} · {people} pessoa(s) · {tour}",
+    "backToHome": "Voltar ao início"
   }
 }
