@@ -272,3 +272,259 @@
     opacity: 1;
   }
 }
+
+/* ───────────────────────────────  Section headers (compartidos) */
+
+.saira-section-eyebrow {
+  display: block;
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-3);
+}
+
+.saira-section-title {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: var(--space-3);
+  font-variation-settings: "opsz" 72;
+}
+
+.saira-section-subtitle {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-lg);
+  color: var(--ink-soft);
+  max-width: 480px;
+}
+
+/* ───────────────────────────────  Difficulty pill */
+
+.saira-pill {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-2xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+}
+
+.saira-pill-easy {
+  background: color-mix(in srgb, var(--jade) 22%, transparent);
+  color: var(--moss);
+  border-color: color-mix(in srgb, var(--jade) 36%, transparent);
+}
+
+.saira-pill-moderate {
+  background: color-mix(in srgb, var(--moss) 14%, transparent);
+  color: var(--moss);
+  border-color: color-mix(in srgb, var(--moss) 28%, transparent);
+}
+
+.saira-pill-hard {
+  background: color-mix(in srgb, var(--terracotta) 12%, transparent);
+  color: var(--terracotta);
+  border-color: color-mix(in srgb, var(--terracotta) 28%, transparent);
+}
+
+.saira-pill-overlay {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  background: rgba(244, 239, 230, 0.94);
+  color: var(--ink);
+  border-color: rgba(31, 42, 36, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 2;
+}
+
+.saira.saira-dark .saira-pill-overlay {
+  background: rgba(15, 24, 20, 0.78);
+  color: var(--surface);
+}
+
+/* ───────────────────────────────  Featured section */
+
+.saira-featured {
+  padding: var(--space-24) var(--space-6) var(--space-16);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.saira-featured-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--space-12);
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+.saira-featured-header-lead {
+  flex: 1 1 320px;
+}
+
+.saira-featured-viewall {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--moss);
+  border-bottom: 1px solid var(--moss);
+  padding-bottom: 2px;
+  transition: color var(--duration-fast) var(--ease-out-soft);
+}
+
+@media (hover: hover) {
+  .saira-featured-viewall:hover {
+    color: var(--moss-hover);
+    border-color: var(--moss-hover);
+  }
+}
+
+.saira-featured-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .saira-featured {
+    padding: var(--space-32) var(--space-8) var(--space-24);
+  }
+  .saira-featured-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-8);
+  }
+  /* Asimetría sutil: la card central baja un escalón */
+  .saira-featured-grid > :nth-child(2) {
+    margin-top: var(--space-12);
+  }
+}
+
+/* ───────────────────────────────  Tour card */
+
+.saira-tour-card {
+  display: block;
+  background: var(--surface-elevated);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  color: var(--ink);
+  transition:
+    transform var(--duration-base) var(--ease-out-soft),
+    box-shadow var(--duration-base) var(--ease-out-soft),
+    border-color var(--duration-base) var(--ease-out-soft);
+}
+
+@media (hover: hover) {
+  .saira-tour-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--line);
+  }
+}
+
+.saira-tour-card-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      color-mix(in srgb, var(--jade) 55%, var(--moss)) 0%,
+      var(--moss) 60%,
+      var(--moss-hover) 100%
+    );
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.saira-tour-card-media-mark {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: clamp(48px, 10vw, 72px);
+  font-weight: 400;
+  font-variation-settings: "opsz" 144;
+  color: rgba(244, 239, 230, 0.18);
+  letter-spacing: -0.04em;
+  user-select: none;
+}
+
+.saira-tour-card-body {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.saira-tour-card-name {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-xl);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--ink);
+  font-variation-settings: "opsz" 36;
+}
+
+.saira-tour-card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+
+.saira-tour-card-meta > span:not(:last-child)::after {
+  content: " · ";
+  margin-left: var(--space-3);
+  color: var(--line);
+}
+
+.saira-tour-card-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: var(--space-2);
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  color: var(--ink);
+}
+
+.saira-tour-card-price-amount {
+  font-size: var(--text-lg);
+  font-weight: 500;
+}
+
+.saira-tour-card-price-suffix {
+  font-size: var(--text-sm);
+  color: var(--ink-muted);
+}
+
+.saira-tour-card-arrow {
+  margin-left: auto;
+  font-family: var(--saira-font-body), sans-serif;
+  font-size: var(--text-lg);
+  color: var(--ink-muted);
+  transition: transform var(--duration-fast) var(--ease-out-soft);
+}
+
+@media (hover: hover) {
+  .saira-tour-card:hover .saira-tour-card-arrow {
+    transform: translateX(4px);
+    color: var(--moss);
+  }
+}
