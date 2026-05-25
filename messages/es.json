@@ -1,302 +1,306 @@
 {
   "common": {
-    "bookNow": "",
-    "viewDetails": "",
-    "viewAll": "",
-    "perPerson": "",
-    "from": "",
-    "duration": "",
-    "difficulty": "",
-    "category": "",
-    "includes": "",
-    "bringWith": "",
-    "meetingPoint": "",
-    "consultPrice": ""
+    "bookNow": "Reservar",
+    "viewDetails": "Ver detalles",
+    "viewAll": "Ver todas",
+    "perPerson": "por persona",
+    "from": "desde",
+    "duration": "Duración",
+    "difficulty": "Dificultad",
+    "category": "Categoría",
+    "includes": "Incluye",
+    "bringWith": "Qué llevar",
+    "meetingPoint": "Punto de encuentro",
+    "consultPrice": "Consultar"
   },
   "difficulty": {
-    "facil": "",
-    "facil-moderada": "",
-    "moderada": "",
-    "moderada-dificil": "",
-    "dificil": "",
-    "variable": ""
+    "facil": "Fácil",
+    "facil-moderada": "Fácil a moderada",
+    "moderada": "Moderada",
+    "moderada-dificil": "Moderada a difícil",
+    "dificil": "Difícil",
+    "variable": "Variable"
   },
   "category": {
-    "ecotour": "",
-    "aventura": ""
+    "ecotour": "Ecotour",
+    "aventura": "Aventura"
   },
   "nav": {
-    "tours": "",
-    "about": "",
-    "contact": ""
+    "tours": "Experiencias",
+    "about": "Nosotros",
+    "contact": "Contacto"
   },
   "hero": {
-    "eyebrow": "",
-    "headline": "",
-    "lede": "",
-    "cta": ""
+    "eyebrow": "Saira Ecotour · Río de Janeiro",
+    "headline": "Aventuras auténticas en Río",
+    "lede": "Senderos, cascadas y travesías guiadas por quien conoce de cerca la Mata Atlântica. Reserva directo, sin intermediarios.",
+    "cta": "Ver experiencias"
   },
   "featured": {
-    "title": "",
-    "subtitle": "",
-    "viewAll": ""
+    "title": "Destacadas",
+    "subtitle": "Los recorridos más reservados de esta temporada.",
+    "viewAll": "Ver todas las experiencias"
   },
   "valueProp": {
-    "title": "",
-    "body": "",
-    "savings": "",
+    "title": "Reserva directo. Sin cargos ocultos.",
+    "body": "Las plataformas cobran hasta 30% de comisión — ese valor ya viene incluido en el precio que ves ahí. Aquí lo que pagas es lo que Saira recibe. Sin intermediarios, sin sorpresas.",
+    "savings": "Ahorras, en promedio, R$ 80 por reserva.",
     "comparison": {
-      "direct": "",
-      "platform": "",
-      "savingsLabel": ""
+      "direct": "Reservando directo",
+      "platform": "Vía plataforma",
+      "savingsLabel": "Ahorras"
     }
   },
   "footer": {
-    "reservations": "",
-    "followUs": "",
-    "rights": "",
-    "tagline": ""
+    "reservations": "Reservas",
+    "followUs": "Síguenos",
+    "rights": "Todos los derechos reservados",
+    "tagline": "Ecotour · Río de Janeiro"
   },
   "tours": {
     "cerro-dois-irmaos": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "La vista más celebrada de Río en un sendero corto y generoso.",
+      "longDescription": "Cuarenta y cinco minutos de subida por la Mata Atlântica del Vidigal hasta la cima de los Dois Irmãos. Allá arriba: Ipanema, Leblon, Lagoa y la cordillera de la Tijuca en un solo encuadre. Ideal para quienes buscan recompensa rápida con poco esfuerzo técnico. Opción al amanecer con salida antes del alba.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía bilingüe acreditado",
+        "Traslado dentro del Vidigal",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis con buena adherencia",
+        "1 litro de agua",
+        "Protector solar y gorra",
+        "Snack ligero"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "Entrada del sendero, Vidigal — encuentro junto al mototaxi local"
     },
     "pedra-da-gavea": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "El sendero más exigente de Río, con vista al océano y al bosque.",
+      "longDescription": "Cerca de tres horas de subida intensa por la Mata Atlântica hasta la cima de Pedra da Gávea, a 842 metros. La recompensa: vista panorámica de Ipanema, Lagoa, el Cristo y la costa entera de la ciudad. Incluye un tramo con cuerdas donde guiamos paso a paso. Pie firme y disposición son esenciales.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía bilingüe acreditado",
+        "Equipo de seguridad para el tramo técnico",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis de trekking con buena adherencia",
+        "2 litros de agua",
+        "Protector solar y gorra",
+        "Snack reforzado"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "Estrada do Sorimã, entrada del sendero — São Conrado"
     },
     "garganta-do-ceu": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "Travesía entre paredones con vista vertical sobre el bosque.",
+      "longDescription": "Uno de los senderos más memorables del Parque da Tijuca: poco más de una hora de subida hasta la grieta entre dos murallones. El nombre viene de la garganta estrecha que se abre como una ventana vertical hacia el mar. Sendero corto en distancia, exigente en desnivel.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía bilingüe acreditado",
+        "Apoyo en tramos empinados",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis con adherencia",
+        "1.5 litros de agua",
+        "Protector solar"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "Praça Afonso Viseu, entrada del Parque Nacional da Tijuca"
     },
     "trilha-corcovado": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "Subida por la selva cerrada hasta el Cristo, sin tren ni van.",
+      "longDescription": "Camino histórico desde el Parque Lage hasta el monumento del Cristo Redentor. Dos a tres horas atravesando tramos de bosque denso, pequeñas cascadas y miradores intermedios. Llegada a la cima por la puerta de atrás, evitando el flujo turístico del tren.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía bilingüe acreditado",
+        "Entrada al mirador del Cristo",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis de trekking",
+        "2 litros de agua",
+        "Protector solar y gorra",
+        "Snack ligero"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "Parque Lage — Rua Jardim Botânico, 414"
     },
     "cerro-urca-pao-de-acucar": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "Sendero corto hasta el primer cerro del conjunto Pão de Açúcar.",
+      "longDescription": "Veinte a treinta minutos de caminata por la Pista Cláudio Coutinho hasta la subida del Morro da Urca. Vista de la Bahía de Guanabara, la Praia Vermelha y el Cristo al fondo. Posibilidad de bajar por el teleférico o por el sendero. Precio bajo consulta según el paquete (con o sin teleférico).",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía bilingüe acreditado",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis cómodos",
+        "1 litro de agua",
+        "Protector solar"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "Pista Cláudio Coutinho, inicio — Praia Vermelha"
     },
     "pedra-bonita": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "Mirador rápido con vista a São Conrado y Pedra da Gávea.",
+      "longDescription": "Veinte a cuarenta minutos de subida suave hasta Pedra Bonita, junto a Pedra da Gávea. Vista directa de la rampa de vuelo libre, la playa de São Conrado y el océano abierto. Ideal como primer sendero en Río o para fin de tarde.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía bilingüe acreditado",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis con adherencia",
+        "1 litro de agua",
+        "Protector solar"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "Estrada das Canoas, estacionamiento de la rampa de vuelo libre"
     },
     "cerro-da-babilonia": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "Sendero urbano sobre la Praia Vermelha y el Pão de Açúcar.",
+      "longDescription": "Una a dos horas por el bosque urbano del Morro da Babilônia, con miradores hacia Copacabana, Botafogo y Niterói. Sendero de bajo impacto, perfecto para combinar caminata con barrio y gastronomía de la Urca al terminar.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía bilingüe acreditado",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis con adherencia",
+        "1.5 litros de agua",
+        "Protector solar"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "Pista Cláudio Coutinho — entrada Praia Vermelha"
     },
     "mirante-dona-marta": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "Mirador clásico del Cristo y la Bahía por sendero.",
+      "longDescription": "Acceso por el sendero del Parque da Tijuca al Mirante Dona Marta, con vista frontal del Cristo Redentor y la Zona Sul. Duración y dificultad variables según el ritmo del grupo. Posibilidad de bajar por otro sendero o regresar por el mismo camino.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía bilingüe acreditado",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis de trekking",
+        "1.5 litros de agua",
+        "Protector solar"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "A coordinar según el grupo (Cosme Velho o Botafogo)"
     },
     "bico-do-papagaio": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "Pico con forma de pico en el corazón del Parque da Tijuca.",
+      "longDescription": "Cerca de dos horas por bosque cerrado hasta la cima del Bico do Papagaio, a 989 metros. Sendero técnico en los tramos finales, con paredón expuesto y vista 360° de los picos de la Tijuca, la Zona Norte y el océano. Recomendado para quienes ya tienen experiencia en senderos.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía bilingüe acreditado",
+        "Apoyo en tramos técnicos",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis de trekking con buena adherencia",
+        "2 litros de agua",
+        "Protector solar y gorra",
+        "Snack reforzado"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "Praça Afonso Viseu, entrada del Parque Nacional da Tijuca"
     },
     "floresta-tijuca-grutas": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "Circuito por las grutas del bosque urbano más grande del mundo.",
+      "longDescription": "Caminata por senderos suaves dentro del Parque Nacional da Tijuca, pasando por las grutas Paulo y Virgínia, Luís Fernandes y do Acaiá. Trayecto pensado para apreciar la flora regenerada del bosque plantado en el siglo XIX. Bueno para grupos y familias.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía bilingüe acreditado",
+        "Transporte interno en el parque (cuando es necesario)",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis cómodos",
+        "1.5 litros de agua",
+        "Protector solar y repelente"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "Praça Afonso Viseu, entrada principal del Parque"
     },
     "floresta-tijuca-cascadas": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "Circuito de cascadas dentro del Parque da Tijuca.",
+      "longDescription": "Variación del circuito de las grutas, enfocado en las cascadas: Cascatinha Taunay, Cascata Gabriela y pozos naturales para un baño rápido en días calurosos. Sendero suave con paradas frecuentes para fotos.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía bilingüe acreditado",
+        "Transporte interno en el parque (cuando es necesario)",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis con adherencia",
+        "Traje de baño",
+        "Toalla ligera",
+        "Protector solar y repelente"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "Praça Afonso Viseu, entrada principal del Parque"
     },
     "pico-da-tijuca": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "El punto más alto del Parque da Tijuca, a 1,022 metros.",
+      "longDescription": "Aproximadamente dos horas de subida con tramo final en escalera de piedra esculpida en la roca. Desde la cima se ve el Cristo, la Zona Sul, la Baixada de Jacarepaguá y la Bahía de Sepetiba en día despejado. Esfuerzo moderado a difícil compensado por una de las vistas más completas de Río.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía bilingüe acreditado",
+        "Apoyo en tramo de escalera",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis de trekking",
+        "2 litros de agua",
+        "Protector solar y gorra",
+        "Snack reforzado"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "Bom Retiro — entrada del sendero en el Parque da Tijuca"
     },
     "parapente": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "Vuelo libre sobre São Conrado, de Pedra Bonita al mar.",
+      "longDescription": "Vuelo doble con instructor acreditado, despegando desde la rampa de Pedra Bonita y aterrizando en la playa de São Conrado. Duración promedio del vuelo: diez a veinte minutos, según el viento. La operación depende de las condiciones meteorológicas — reprogramamos sin costo si el viento no permite volar.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Instructor acreditado",
+        "Equipo completo",
+        "Video y fotos del vuelo",
+        "Seguro obligatorio"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Tenis cerrados",
+        "Ropa deportiva cómoda",
+        "Lentes de sol"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "Playa de São Conrado — traslado a la rampa incluido"
     },
     "rapel": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "Descensos en paredones y cascadas con guías técnicos.",
+      "longDescription": "Operaciones en distintos lugares de Río según la experiencia del grupo: cascadas en la Floresta da Tijuca, paredones de Pedra Bonita o descensos urbanos controlados. Incluye briefing técnico y equipo certificado. El precio varía según el tipo de descenso.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Guía técnico acreditado",
+        "Equipo completo (cuerda, arnés, casco)",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Ropa deportiva",
+        "Tenis cerrados con adherencia",
+        "Agua"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "A coordinar según el paquete elegido"
     },
     "escalada": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "Vías clásicas en roca con instructor acreditado.",
+      "longDescription": "Salidas de escalada deportiva y tradicional en los cerros de Río: Pão de Açúcar, Urca, Pedra da Gávea. Clases para principiantes o guiado en vías específicas según el nivel del grupo. Se entrega equipo técnico.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Instructor acreditado",
+        "Equipo técnico completo",
+        "Seguro de aventura"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Ropa deportiva flexible",
+        "Tenis cerrados",
+        "Snack ligero"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "A coordinar según la vía elegida"
     },
     "stand-up-paddle-amanecer": {
-      "shortDescription": "",
-      "longDescription": "",
+      "shortDescription": "SUP al amanecer en la Lagoa o frente a la costa de Ipanema.",
+      "longDescription": "Salida antes del alba para remar con la ciudad todavía despertando. Los lugares cambian según el viento: Lagoa Rodrigo de Freitas, Praia de Ipanema o caleta protegida. Para principiantes o intermedios — no se necesita experiencia previa.",
       "whatsIncluded": [
-        "",
-        "",
-        ""
+        "Tabla y remo",
+        "Chaleco salvavidas",
+        "Instructor",
+        "Foto del amanecer"
       ],
       "whatToBring": [
-        "",
-        "",
-        ""
+        "Traje de baño",
+        "Toalla",
+        "Protector solar"
       ],
-      "meetingPoint": ""
+      "meetingPoint": "A coordinar la víspera según el pronóstico del viento"
     }
   }
 }
