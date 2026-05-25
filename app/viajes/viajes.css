@@ -1,0 +1,90 @@
+/* /viajes design tokens — scoped to .viajes-scope so they don't bleed into the
+   rest of the site. Tailwind v4 utilities (bg-bg, text-fg, font-display, etc.)
+   are generated from @theme; runtime values are rebound inside .viajes-scope. */
+
+@theme {
+  /* Color utilities specific to /viajes (won't clash with existing tokens) */
+  --color-bg: #FAF8F4;
+  --color-bg-elevated: #FFFFFF;
+  --color-fg: #1A1815;
+  --color-fg-muted: #6B665C;
+  --color-fg-subtle: #A39E92;
+  --color-border-token: #E8E3D8;
+  --color-accent-hover: #9A3A19;
+  --color-accent-fg: #FAF8F4;
+
+  /* Typography scale — Tailwind v4 reads --text-* tokens and emits utilities
+     text-display-2xl ... text-eyebrow */
+  --text-display-2xl: 72px;
+  --text-display-2xl--line-height: 76px;
+  --text-display-2xl--letter-spacing: -0.02em;
+
+  --text-display-xl: 56px;
+  --text-display-xl--line-height: 60px;
+  --text-display-xl--letter-spacing: -0.02em;
+
+  --text-display-lg: 40px;
+  --text-display-lg--line-height: 44px;
+  --text-display-lg--letter-spacing: -0.015em;
+
+  --text-display-md: 28px;
+  --text-display-md--line-height: 34px;
+
+  --text-heading-lg: 22px;
+  --text-heading-lg--line-height: 28px;
+
+  --text-heading-md: 18px;
+  --text-heading-md--line-height: 24px;
+
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+
+  --text-body: 15px;
+  --text-body--line-height: 24px;
+
+  --text-body-sm: 13px;
+  --text-body-sm--line-height: 20px;
+
+  --text-eyebrow: 11px;
+  --text-eyebrow--line-height: 16px;
+  --text-eyebrow--letter-spacing: 0.12em;
+}
+
+/* Scoped overrides — only within `/viajes` does --font-display point at
+   Fraunces, --font-sans at Inter, and --color-accent at the terracotta.
+   Existing pages keep their orange brand + Plus Jakarta. */
+.viajes-scope {
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --color-accent: #B4451F;
+  --color-accent-foreground: #FAF8F4;
+}
+
+/* Default weight for Fraunces display type — variable axis, 400 reads as
+   regular display weight; consumers can override via Tailwind font-* utilities. */
+.viajes-scope .font-display {
+  font-weight: 400;
+  font-optical-sizing: auto;
+}
+
+/* The eyebrow utility carries a fixed letter-spacing + uppercase from the
+   token; this rule applies the uppercasing because Tailwind v4 doesn't
+   emit text-transform from --text-* tokens automatically. */
+.viajes-scope .text-eyebrow {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Last-line defence for prefers-reduced-motion. Framer Motion already
+   honours useReducedMotion() in the components, but any plain CSS
+   transition/animation in this scope is collapsed here. */
+@media (prefers-reduced-motion: reduce) {
+  .viajes-scope *,
+  .viajes-scope *::before,
+  .viajes-scope *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
