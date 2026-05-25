@@ -419,6 +419,14 @@
       "confirmManually": "Ya pagué",
       "processing": "Procesando…",
       "note": "Este es un demo. Ningún pago real será procesado."
+    },
+    "card": {
+      "number": "Número de la tarjeta",
+      "name": "Nombre en la tarjeta",
+      "expiry": "Vencimiento",
+      "pay": "Pagar ahora",
+      "processing": "Procesando…",
+      "note": "Este es un demo. Ningún pago real será procesado."
     }
   }
 }

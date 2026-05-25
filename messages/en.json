@@ -419,6 +419,14 @@
       "confirmManually": "I paid",
       "processing": "Processing…",
       "note": "This is a demo. No real payment will be processed."
+    },
+    "card": {
+      "number": "Card number",
+      "name": "Name on card",
+      "expiry": "Expiry",
+      "pay": "Pay now",
+      "processing": "Processing…",
+      "note": "This is a demo. No real payment will be processed."
     }
   }
 }
