@@ -1,0 +1,100 @@
+/* =========================================================
+   Saira · Design tokens
+   Scopeados a .saira para no contaminar el resto de Davhera.
+   Fuente de verdad: saira-design-system.html
+   ========================================================= */
+
+.saira {
+  /* Surfaces */
+  --surface: #f4efe6;
+  --surface-elevated: #faf6ee;
+  --surface-deep: #ece6d9;
+
+  /* Ink (text) */
+  --ink: #1f2a24;
+  --ink-soft: #4a544d;
+  --ink-muted: #8a8278;
+
+  /* Lines */
+  --line: #d9d2c3;
+  --line-soft: #e8e2d3;
+
+  /* Brand */
+  --moss: #2d5f4f;
+  --moss-hover: #224a3e;
+  --jade: #7fa89a;
+  --terracotta: #b8654a;
+  --terracotta-hover: #a55539;
+
+  /* Type scale */
+  --text-2xs: 11px;
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 24px;
+  --text-2xl: 32px;
+  --text-3xl: 48px;
+  --text-4xl: 64px;
+  --text-5xl: 80px;
+  --text-6xl: 112px;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* Elevation */
+  --shadow-sm:
+    0 1px 2px rgba(31, 42, 36, 0.04), 0 1px 1px rgba(31, 42, 36, 0.03);
+  --shadow-md:
+    0 4px 12px rgba(31, 42, 36, 0.06), 0 2px 4px rgba(31, 42, 36, 0.04);
+  --shadow-lg:
+    0 12px 32px rgba(31, 42, 36, 0.08), 0 4px 12px rgba(31, 42, 36, 0.05);
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+}
+
+/* Dark mode scopeado: misma clase wrapper + .saira-dark.
+   Nunca tocamos <html> ni <body>. */
+.saira.saira-dark {
+  --surface: #0f1814;
+  --surface-elevated: #1a2520;
+  --surface-deep: #0a120e;
+
+  --ink: #f4efe6;
+  --ink-soft: #c9c3b6;
+  --ink-muted: #8a8278;
+
+  --line: #2a3530;
+  --line-soft: #1f2a24;
+
+  --moss: #5f9f89;
+  --moss-hover: #7ab39f;
+  --jade: #a8c5b9;
+  --terracotta: #d08066;
+  --terracotta-hover: #dc9078;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
