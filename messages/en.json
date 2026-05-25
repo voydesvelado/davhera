@@ -11,7 +11,8 @@
     "includes": "Includes",
     "bringWith": "What to bring",
     "meetingPoint": "Meeting point",
-    "consultPrice": "On request"
+    "consultPrice": "On request",
+    "price": "Price"
   },
   "difficulty": {
     "facil": "Easy",

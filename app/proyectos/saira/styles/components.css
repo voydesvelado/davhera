@@ -1018,3 +1018,190 @@
   line-height: 1.55;
   margin-bottom: var(--space-8);
 }
+
+/* ───────────────────────────────  Tour detail · gallery (M14) */
+
+.saira-tour-detail {
+  background: var(--surface);
+}
+
+.saira-gallery {
+  width: 100%;
+}
+
+.saira-gallery-main {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+.saira-gallery-slide {
+  position: absolute;
+  inset: 0;
+}
+
+.saira-gallery-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder mientras no hay imágenes reales — mismo gradient que TourCard
+   pero a escala completa de hero. Cuando David entregue imágenes,
+   TourGallery cambia hasRealImage() y este placeholder deja de renderizarse. */
+.saira-gallery-placeholder {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      color-mix(in srgb, var(--jade) 55%, var(--moss)) 0%,
+      var(--moss) 60%,
+      var(--moss-hover) 100%
+    );
+  display: grid;
+  place-items: center;
+}
+
+.saira-gallery-placeholder-mark {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: clamp(80px, 16vw, 160px);
+  font-weight: 400;
+  font-variation-settings: "opsz" 144;
+  color: rgba(244, 239, 230, 0.16);
+  letter-spacing: -0.04em;
+  user-select: none;
+}
+
+.saira-gallery-thumbs {
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.saira-gallery-thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.saira-gallery-thumb {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--surface-deep);
+  transition: border-color var(--duration-fast) var(--ease-out-soft);
+}
+
+.saira-gallery-thumb.is-active {
+  border-color: var(--moss);
+}
+
+.saira-gallery-thumb-fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, var(--moss) 0%, var(--jade) 100%);
+}
+
+/* ───────────────────────────────  Tour detail · content + header (M14) */
+
+.saira-tour-detail-content {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-6) var(--space-32);
+}
+
+.saira-tour-header {
+  margin-bottom: var(--space-12);
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--line);
+}
+
+.saira-tour-header-name {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: clamp(40px, 7vw, 64px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: var(--space-3) 0 var(--space-8);
+  font-variation-settings: "opsz" 120;
+}
+
+.saira-tour-header-stats {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.saira-tour-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.saira-tour-stat-label {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+
+.saira-tour-stat-value {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.saira-tour-stat-price .saira-tour-stat-value {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  font-variation-settings: "opsz" 36;
+}
+
+/* ───────────────────────────────  Tour detail · description (M14) */
+
+.saira-tour-description-short {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-xl);
+  line-height: 1.4;
+  color: var(--ink);
+  font-variation-settings: "opsz" 48;
+  margin-bottom: var(--space-8);
+  max-width: 580px;
+}
+
+.saira-tour-description-long {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-lg);
+  line-height: 1.65;
+  color: var(--ink-soft);
+  max-width: 620px;
+}
+
+.saira-tour-description-long p + p {
+  margin-top: var(--space-4);
+}
+
+@media (min-width: 1024px) {
+  .saira-gallery-main {
+    aspect-ratio: 16 / 9;
+    max-height: 70vh;
+  }
+  .saira-tour-detail-content {
+    padding: var(--space-16) var(--space-8) var(--space-32);
+  }
+}

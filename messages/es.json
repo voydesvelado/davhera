@@ -11,7 +11,8 @@
     "includes": "Incluye",
     "bringWith": "Qué llevar",
     "meetingPoint": "Punto de encuentro",
-    "consultPrice": "Consultar"
+    "consultPrice": "Consultar",
+    "price": "Precio"
   },
   "difficulty": {
     "facil": "Fácil",
