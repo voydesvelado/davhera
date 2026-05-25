@@ -89,3 +89,186 @@
   color: var(--surface);
   cursor: default;
 }
+
+/* ───────────────────────────────  Buttons */
+
+.saira-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast) var(--ease-out-soft),
+    background var(--duration-fast) var(--ease-out-soft),
+    color var(--duration-fast) var(--ease-out-soft),
+    box-shadow var(--duration-fast) var(--ease-out-soft);
+}
+
+.saira-btn-primary {
+  background: var(--moss);
+  color: var(--surface);
+  border: 1px solid var(--moss);
+}
+
+@media (hover: hover) {
+  .saira-btn-primary:hover {
+    background: var(--moss-hover);
+    border-color: var(--moss-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.saira-btn-primary:active {
+  transform: translateY(0);
+}
+
+.saira-btn-lg {
+  padding: 14px 28px;
+  font-size: var(--text-base);
+}
+
+/* ───────────────────────────────  Hero */
+
+.saira-hero {
+  position: relative;
+  width: 100%;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+.saira-hero-media {
+  position: relative;
+  width: 100%;
+  /* Mobile: vertical 9:16 sin llegar a 100vh (deja ver que hay más abajo) */
+  aspect-ratio: 9 / 16;
+  max-height: 85vh;
+  min-height: 480px;
+}
+
+.saira-hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.saira-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 24, 20, 0.1) 0%,
+    rgba(15, 24, 20, 0.25) 40%,
+    rgba(15, 24, 20, 0.78) 100%
+  );
+  pointer-events: none;
+}
+
+.saira-hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--space-8) var(--space-6) var(--space-12);
+  color: var(--surface);
+  z-index: 2;
+}
+
+.saira-hero-eyebrow {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(244, 239, 230, 0.85);
+  margin-bottom: var(--space-4);
+}
+
+.saira-hero-headline {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: clamp(40px, 9vw, 80px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--surface);
+  font-variation-settings: "opsz" 144;
+  margin-bottom: var(--space-6);
+  max-width: 14ch;
+}
+
+.saira-hero-lede {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-lg);
+  line-height: 1.4;
+  color: rgba(244, 239, 230, 0.92);
+  max-width: 520px;
+  margin-bottom: var(--space-8);
+  font-variation-settings: "opsz" 48;
+}
+
+@media (min-width: 768px) {
+  .saira-hero-media {
+    aspect-ratio: 16 / 9;
+    max-height: 80vh;
+    min-height: 540px;
+  }
+
+  .saira-hero-content {
+    padding: var(--space-16) var(--space-16) var(--space-24);
+    max-width: 1200px;
+    margin: 0 auto;
+    inset: 0;
+  }
+
+  .saira-hero-headline {
+    font-size: clamp(64px, 7vw, 112px);
+    max-width: 16ch;
+  }
+
+  .saira-hero-lede {
+    font-size: var(--text-xl);
+  }
+}
+
+/* Stagger reveal sin Framer Motion (Hero queda como Server Component) */
+@keyframes saira-hero-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.saira-hero-reveal {
+  opacity: 0;
+  animation: saira-hero-up var(--duration-slow) var(--ease-out-soft) forwards;
+}
+
+.saira-hero-reveal-1 {
+  animation-delay: 200ms;
+}
+.saira-hero-reveal-2 {
+  animation-delay: 320ms;
+}
+.saira-hero-reveal-3 {
+  animation-delay: 460ms;
+}
+.saira-hero-reveal-4 {
+  animation-delay: 620ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .saira-hero-reveal {
+    animation: none;
+    opacity: 1;
+  }
+}
