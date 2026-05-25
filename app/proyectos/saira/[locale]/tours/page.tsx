@@ -10,9 +10,8 @@ import {
   type CategoryFilter,
   type DifficultyBucket,
 } from "@/lib/saira/filters";
-import { TourCard } from "@/components/saira/tour/TourCard";
-import { RevealOnView } from "@/components/saira/catalog/RevealOnView";
 import { FilterBar } from "@/components/saira/catalog/FilterBar";
+import { CatalogGrid } from "@/components/saira/catalog/CatalogGrid";
 import type { Tour } from "@/lib/saira/types";
 
 export default async function ToursPage({
@@ -54,13 +53,7 @@ function Inner({ filtered }: { filtered: Tour[] }) {
 
       <FilterBar />
 
-      <div className="saira-catalog-grid">
-        {filtered.map((tour, i) => (
-          <RevealOnView key={tour.slug} index={i}>
-            <TourCard tour={tour} />
-          </RevealOnView>
-        ))}
-      </div>
+      <CatalogGrid tours={filtered} />
     </main>
   );
 }

@@ -45,7 +45,12 @@
     "eyebrow": "Catalog",
     "title": "All experiences",
     "subtitle": "Trails, crossings and flights over Rio's Atlantic Forest. Pick yours.",
-    "count": "{count} experiences"
+    "count": "{count} experiences",
+    "empty": {
+      "title": "Nothing here — yet.",
+      "body": "This combination didn't return any experiences. Adjust the filters or see all.",
+      "clearFilters": "Clear filters"
+    }
   },
   "filters": {
     "category": "Category",

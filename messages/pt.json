@@ -45,7 +45,12 @@
     "eyebrow": "Catálogo",
     "title": "Todas as experiências",
     "subtitle": "Trilhas, travessias e voos pela Mata Atlântica do Rio. Escolha a sua.",
-    "count": "{count} experiências"
+    "count": "{count} experiências",
+    "empty": {
+      "title": "Nada por aqui — ainda.",
+      "body": "Esta combinação não retornou experiências. Ajuste os filtros ou veja todas.",
+      "clearFilters": "Limpar filtros"
+    }
   },
   "filters": {
     "category": "Categoria",

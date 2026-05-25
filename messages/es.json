@@ -45,7 +45,12 @@
     "eyebrow": "Catálogo",
     "title": "Todas las experiencias",
     "subtitle": "Senderos, travesías y vuelos por la Mata Atlántica de Río. Elige la tuya.",
-    "count": "{count} experiencias"
+    "count": "{count} experiencias",
+    "empty": {
+      "title": "Nada por aquí — todavía.",
+      "body": "Esta combinación no devolvió experiencias. Ajusta los filtros o ve todas.",
+      "clearFilters": "Limpiar filtros"
+    }
   },
   "filters": {
     "category": "Categoría",

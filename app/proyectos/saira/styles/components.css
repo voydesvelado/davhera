@@ -957,3 +957,64 @@
     display: none;
   }
 }
+
+/* ───────────────────────────────  Buttons · secondary + medium (M13) */
+
+.saira-btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+@media (hover: hover) {
+  .saira-btn-secondary:hover {
+    border-color: var(--ink-soft);
+    background: var(--surface-deep);
+  }
+}
+
+.saira-btn-md {
+  padding: 10px 20px;
+  font-size: var(--text-sm);
+}
+
+/* ───────────────────────────────  Empty state (M13) */
+
+.saira-empty {
+  padding: var(--space-24) var(--space-6);
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.saira-empty-glyph {
+  color: var(--jade);
+  margin-bottom: var(--space-8);
+  display: inline-block;
+}
+
+.saira-empty-glyph svg {
+  width: 120px;
+  height: 60px;
+}
+
+.saira-empty-title {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: var(--space-4);
+  font-variation-settings: "opsz" 48;
+  letter-spacing: -0.015em;
+}
+
+.saira-empty-body {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-base);
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: var(--space-8);
+}
