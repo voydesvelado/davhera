@@ -8,6 +8,7 @@ import { TourHeader } from "@/components/saira/tour/TourHeader";
 import { TourDescription } from "@/components/saira/tour/TourDescription";
 import { TourIncludes } from "@/components/saira/tour/TourIncludes";
 import { TourMeetingPoint } from "@/components/saira/tour/TourMeetingPoint";
+import { TourStickyCTA } from "@/components/saira/tour/TourStickyCTA";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
@@ -34,11 +35,15 @@ function Inner({ tour }: { tour: Tour }) {
     <main className="saira-tour-detail">
       <TourGallery tour={tour} />
       <div className="saira-tour-detail-content">
-        <TourHeader tour={tour} />
-        <TourDescription tour={tour} />
-        <TourIncludes slug={tour.slug} />
-        <TourMeetingPoint tour={tour} />
-        {/* Sticky CTA · M16 */}
+        <div className="saira-tour-detail-main">
+          <TourHeader tour={tour} />
+          <TourDescription tour={tour} />
+          <TourIncludes slug={tour.slug} />
+          <TourMeetingPoint tour={tour} />
+        </div>
+        <aside className="saira-tour-detail-aside" aria-label="Reservar">
+          <TourStickyCTA tour={tour} />
+        </aside>
       </div>
     </main>
   );

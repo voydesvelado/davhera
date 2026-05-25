@@ -1312,3 +1312,101 @@
     gap: var(--space-16);
   }
 }
+
+/* ───────────────────────────────  Tour detail · sticky CTA (M16) */
+
+.saira-tour-cta {
+  position: fixed;
+  left: var(--space-4);
+  right: var(--space-4);
+  bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+}
+
+.saira-tour-cta-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.saira-tour-cta-price {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1;
+  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 36;
+}
+
+.saira-tour-cta-suffix {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .saira-tour-cta {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Desktop: el CTA vive en el aside como card sticky */
+@media (min-width: 1024px) {
+  .saira-tour-detail-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: var(--space-16);
+    align-items: start;
+    max-width: 1120px;
+  }
+
+  .saira-tour-detail-main {
+    min-width: 0;
+  }
+
+  .saira-tour-detail-aside {
+    position: relative;
+  }
+
+  .saira-tour-cta {
+    position: sticky;
+    top: var(--space-24);
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-6);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--surface-elevated);
+    box-shadow: var(--shadow-md);
+  }
+
+  .saira-tour-cta-info {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+
+  .saira-tour-cta .saira-btn {
+    width: 100%;
+  }
+}
