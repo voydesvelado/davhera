@@ -1,0 +1,468 @@
+{
+  "common": {
+    "bookNow": "Book",
+    "viewDetails": "Details",
+    "viewAll": "View all",
+    "perPerson": "per person",
+    "from": "from",
+    "duration": "Duration",
+    "difficulty": "Difficulty",
+    "category": "Category",
+    "includes": "Includes",
+    "bringWith": "What to bring",
+    "meetingPoint": "Meeting point",
+    "consultPrice": "On request",
+    "price": "Price",
+    "openInMaps": "Open in Google Maps"
+  },
+  "difficulty": {
+    "facil": "Easy",
+    "facil-moderada": "Easy to moderate",
+    "moderada": "Moderate",
+    "moderada-dificil": "Moderate to hard",
+    "dificil": "Hard",
+    "variable": "Variable"
+  },
+  "category": {
+    "ecotour": "Ecotour",
+    "aventura": "Adventure"
+  },
+  "nav": {
+    "tours": "Experiences",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "Saira Ecotour · Rio de Janeiro",
+    "headline": "Authentic adventures in Rio",
+    "lede": "Trails, waterfalls and crossings guided by people who know the Atlantic Forest up close. Book direct — no middlemen.",
+    "cta": "View experiences"
+  },
+  "featured": {
+    "title": "Featured",
+    "subtitle": "The most booked routes this season.",
+    "viewAll": "View all experiences"
+  },
+  "catalog": {
+    "eyebrow": "Catalog",
+    "title": "All experiences",
+    "subtitle": "Trails, crossings and flights over Rio's Atlantic Forest. Pick yours.",
+    "count": "{count} experiences",
+    "empty": {
+      "title": "Nothing here — yet.",
+      "body": "This combination didn't return any experiences. Adjust the filters or see all.",
+      "clearFilters": "Clear filters"
+    }
+  },
+  "filters": {
+    "category": "Category",
+    "difficulty": "Difficulty",
+    "categories": {
+      "all": "All",
+      "ecotour": "Ecotour",
+      "aventura": "Adventure"
+    },
+    "difficulties": {
+      "all": "All",
+      "easy": "Easy",
+      "moderate": "Moderate",
+      "hard": "Hard"
+    }
+  },
+  "valueProp": {
+    "title": "Book direct. No hidden fees.",
+    "body": "Platforms charge up to 30% in commission — that cost is already baked into the price you see there. Here, what you pay is what Saira receives. No middlemen, no surprises.",
+    "savings": "You save, on average, R$ 80 per booking.",
+    "comparison": {
+      "direct": "Booking direct",
+      "platform": "Via platform",
+      "savingsLabel": "You save"
+    }
+  },
+  "footer": {
+    "reservations": "Bookings",
+    "followUs": "Follow",
+    "rights": "All rights reserved",
+    "tagline": "Ecotour · Rio de Janeiro"
+  },
+  "tours": {
+    "cerro-dois-irmaos": {
+      "shortDescription": "Rio's most celebrated view via a short, generous trail.",
+      "longDescription": "Forty-five minutes up through the Atlantic Forest of Vidigal to the summit of Dois Irmãos. From the top: Ipanema, Leblon, the Lagoa and the Tijuca range in a single frame. Ideal for a quick reward with little technical effort. Sunrise option available with a pre-dawn start.",
+      "whatsIncluded": [
+        "Bilingual licensed guide",
+        "Transfer inside Vidigal",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Trail shoes with grip",
+        "1 liter of water",
+        "Sunscreen and cap",
+        "Light snack"
+      ],
+      "meetingPoint": "Trailhead, Vidigal — meet by the local moto-taxi stand"
+    },
+    "pedra-da-gavea": {
+      "shortDescription": "Rio's most demanding trail, with ocean and forest views.",
+      "longDescription": "About three hours of steady climbing through the Atlantic Forest to the top of Pedra da Gávea, 842 meters up. The reward: panoramic views of Ipanema, the Lagoa, the Christ statue and the city's entire coastline. Includes a roped section we guide step by step. Firm footing and stamina are essential.",
+      "whatsIncluded": [
+        "Bilingual licensed guide",
+        "Safety gear for the technical section",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Trail shoes with strong grip",
+        "2 liters of water",
+        "Sunscreen and cap",
+        "Substantial snack"
+      ],
+      "meetingPoint": "Estrada do Sorimã, trailhead — São Conrado"
+    },
+    "garganta-do-ceu": {
+      "shortDescription": "A passage between cliffs with vertical views over the forest.",
+      "longDescription": "One of Tijuca Park's most striking trails: just over an hour to the gap between two rock walls. The name comes from the narrow throat that opens like a vertical window to the sea. Short in distance, demanding in elevation.",
+      "whatsIncluded": [
+        "Bilingual licensed guide",
+        "Support on steep sections",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Shoes with grip",
+        "1.5 liters of water",
+        "Sunscreen"
+      ],
+      "meetingPoint": "Praça Afonso Viseu, Tijuca National Park entrance"
+    },
+    "trilha-corcovado": {
+      "shortDescription": "Up through dense forest to Christ — no train, no van.",
+      "longDescription": "The historic path from Parque Lage to the Christ the Redeemer monument. Two to three hours through dense forest, small waterfalls and intermediate viewpoints. You reach the summit by the back door, skipping the train crowds.",
+      "whatsIncluded": [
+        "Bilingual licensed guide",
+        "Entry to the Christ viewpoint",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Trail shoes",
+        "2 liters of water",
+        "Sunscreen and cap",
+        "Light snack"
+      ],
+      "meetingPoint": "Parque Lage — Rua Jardim Botânico, 414"
+    },
+    "cerro-urca-pao-de-acucar": {
+      "shortDescription": "Short hike up the first peak of the Pão de Açúcar group.",
+      "longDescription": "Twenty to thirty minutes along the Pista Cláudio Coutinho up to Morro da Urca. Views of Guanabara Bay, Praia Vermelha and the Christ statue in the distance. You can come down by cable car or by trail. Price on request depending on the package (with or without cable car).",
+      "whatsIncluded": [
+        "Bilingual licensed guide",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Comfortable shoes",
+        "1 liter of water",
+        "Sunscreen"
+      ],
+      "meetingPoint": "Pista Cláudio Coutinho, start — Praia Vermelha"
+    },
+    "pedra-bonita": {
+      "shortDescription": "Quick viewpoint over São Conrado and Pedra da Gávea.",
+      "longDescription": "Twenty to forty minutes of gentle climbing up Pedra Bonita, next to Pedra da Gávea. Direct view of the hang-gliding ramp, São Conrado beach and the open ocean. A great first Rio trail or sunset spot.",
+      "whatsIncluded": [
+        "Bilingual licensed guide",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Shoes with grip",
+        "1 liter of water",
+        "Sunscreen"
+      ],
+      "meetingPoint": "Estrada das Canoas, hang-gliding ramp parking lot"
+    },
+    "cerro-da-babilonia": {
+      "shortDescription": "Urban trail above Praia Vermelha and Pão de Açúcar.",
+      "longDescription": "One to two hours through the urban forest of Morro da Babilônia, with viewpoints over Copacabana, Botafogo and Niterói. Low-impact trail — perfect for pairing with the Urca neighborhood and a meal afterwards.",
+      "whatsIncluded": [
+        "Bilingual licensed guide",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Shoes with grip",
+        "1.5 liters of water",
+        "Sunscreen"
+      ],
+      "meetingPoint": "Pista Cláudio Coutinho — Praia Vermelha entrance"
+    },
+    "mirante-dona-marta": {
+      "shortDescription": "Classic Christ and Bay viewpoint via trail.",
+      "longDescription": "Access via the Tijuca Park trail to Mirante Dona Marta, with a head-on view of Christ the Redeemer and the South Zone. Duration and difficulty vary with the group's pace. You can descend by a different trail or return the way you came.",
+      "whatsIncluded": [
+        "Bilingual licensed guide",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Trail shoes",
+        "1.5 liters of water",
+        "Sunscreen"
+      ],
+      "meetingPoint": "Confirmed with the group (Cosme Velho or Botafogo)"
+    },
+    "bico-do-papagaio": {
+      "shortDescription": "Beak-shaped peak at the heart of Tijuca Park.",
+      "longDescription": "About two hours through dense forest to the summit of Bico do Papagaio, at 989 meters. Technical in the final stretches, with exposed rock and a 360° view of the Tijuca peaks, the North Zone and the ocean. Recommended for hikers with some trail experience.",
+      "whatsIncluded": [
+        "Bilingual licensed guide",
+        "Support on technical sections",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Trail shoes with strong grip",
+        "2 liters of water",
+        "Sunscreen and cap",
+        "Substantial snack"
+      ],
+      "meetingPoint": "Praça Afonso Viseu, Tijuca National Park entrance"
+    },
+    "floresta-tijuca-grutas": {
+      "shortDescription": "A grottoes circuit through the world's largest urban forest.",
+      "longDescription": "A walk along easy trails inside Tijuca National Park, passing through the Paulo e Virgínia, Luís Fernandes and Acaiá grottoes. Designed to take in the regrown flora of a forest replanted in the 19th century. Good for groups and families.",
+      "whatsIncluded": [
+        "Bilingual licensed guide",
+        "Internal park transport (when needed)",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Comfortable shoes",
+        "1.5 liters of water",
+        "Sunscreen and bug repellent"
+      ],
+      "meetingPoint": "Praça Afonso Viseu, main park entrance"
+    },
+    "floresta-tijuca-cascadas": {
+      "shortDescription": "A waterfalls circuit inside Tijuca Park.",
+      "longDescription": "A variation on the grottoes circuit, focused on the waterfalls: Cascatinha Taunay, Cascata Gabriela and natural pools for a quick dip on hot days. Easy trail with frequent stops for photos.",
+      "whatsIncluded": [
+        "Bilingual licensed guide",
+        "Internal park transport (when needed)",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Shoes with grip",
+        "Swimsuit",
+        "Light towel",
+        "Sunscreen and bug repellent"
+      ],
+      "meetingPoint": "Praça Afonso Viseu, main park entrance"
+    },
+    "pico-da-tijuca": {
+      "shortDescription": "The highest point in Tijuca Park, at 1,022 meters.",
+      "longDescription": "About two hours up, with a final stretch on stone stairs carved into the rock. From the summit you see Christ, the South Zone, the Jacarepaguá lowlands and Sepetiba Bay on a clear day. Moderate-to-hard effort, repaid with one of Rio's most complete views.",
+      "whatsIncluded": [
+        "Bilingual licensed guide",
+        "Support on the stairs section",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Trail shoes",
+        "2 liters of water",
+        "Sunscreen and cap",
+        "Substantial snack"
+      ],
+      "meetingPoint": "Bom Retiro — trailhead in Tijuca Park"
+    },
+    "parapente": {
+      "shortDescription": "Free flight over São Conrado, from Pedra Bonita to the sea.",
+      "longDescription": "Tandem flight with a licensed instructor, taking off from the Pedra Bonita ramp and landing on São Conrado beach. Average flight time: ten to twenty minutes, depending on the wind. Operations depend on weather — we reschedule at no cost if the wind doesn't cooperate.",
+      "whatsIncluded": [
+        "Licensed instructor",
+        "Full gear",
+        "Flight video and photos",
+        "Mandatory insurance"
+      ],
+      "whatToBring": [
+        "Closed shoes",
+        "Comfortable sportswear",
+        "Sunglasses"
+      ],
+      "meetingPoint": "São Conrado beach — transfer to the ramp included"
+    },
+    "rapel": {
+      "shortDescription": "Cliff and waterfall descents with technical guides.",
+      "longDescription": "We run rappels at different spots in Rio depending on the group's experience: waterfalls in the Tijuca Forest, the cliffs of Pedra Bonita or controlled urban descents. Includes a technical briefing and certified gear. Price varies by descent type.",
+      "whatsIncluded": [
+        "Licensed technical guide",
+        "Full gear (rope, harness, helmet)",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Sportswear",
+        "Closed shoes with grip",
+        "Water"
+      ],
+      "meetingPoint": "Confirmed with your chosen package"
+    },
+    "escalada": {
+      "shortDescription": "Classic rock routes with a licensed instructor.",
+      "longDescription": "Sport and traditional climbing outings on Rio's peaks: Pão de Açúcar, Urca, Pedra da Gávea. Beginner classes or guided ascents of specific routes, depending on the group's level. Technical gear provided.",
+      "whatsIncluded": [
+        "Licensed instructor",
+        "Full technical gear",
+        "Adventure insurance"
+      ],
+      "whatToBring": [
+        "Flexible sportswear",
+        "Closed shoes",
+        "Light snack"
+      ],
+      "meetingPoint": "Confirmed with your chosen route"
+    },
+    "stand-up-paddle-amanecer": {
+      "shortDescription": "Sunrise SUP on the Lagoa or off the Ipanema coast.",
+      "longDescription": "Pre-dawn start to paddle while the city is still waking up. Locations rotate with the wind: Lagoa Rodrigo de Freitas, Praia de Ipanema or a sheltered cove. For beginners and intermediates — no prior experience needed.",
+      "whatsIncluded": [
+        "Board and paddle",
+        "Life vest",
+        "Instructor",
+        "Sunrise photo"
+      ],
+      "whatToBring": [
+        "Swimsuit",
+        "Towel",
+        "Sunscreen"
+      ],
+      "meetingPoint": "Confirmed the evening before based on the wind forecast"
+    }
+  },
+  "wizard": {
+    "steps": {
+      "date": "When are you going?",
+      "people": "How many people?",
+      "contact": "How do we reach you?",
+      "language": "Guide language",
+      "comments": "Anything to add?"
+    },
+    "nav": {
+      "next": "Next",
+      "back": "Back",
+      "continue": "Continue to payment"
+    },
+    "date": {
+      "title": "When are you going?",
+      "subtitle": "Pick the date of your experience.",
+      "confirm": "Your experience will be {date}."
+    },
+    "people": {
+      "title": "How many people?",
+      "subtitle": "1 to 8 participants per booking.",
+      "person": "person",
+      "people": "people",
+      "decrease": "Decrease",
+      "increase": "Increase"
+    },
+    "contact": {
+      "title": "How do we reach you?",
+      "subtitle": "To confirm the booking and send the details.",
+      "name": "Full name",
+      "namePlaceholder": "Maria Silva",
+      "whatsapp": "WhatsApp",
+      "email": "Email",
+      "errors": {
+        "name": "Name too short",
+        "whatsapp": "Invalid number",
+        "email": "Invalid email"
+      }
+    },
+    "language": {
+      "title": "Guide language",
+      "subtitle": "Which language would you prefer your guide to use?",
+      "options": {
+        "pt": "Portuguese",
+        "es": "Spanish",
+        "en": "English",
+        "it": "Italian",
+        "any": "Any"
+      }
+    },
+    "comments": {
+      "title": "Anything to add?",
+      "subtitle": "Optional. Dietary restrictions, experience level, anything we should know.",
+      "placeholder": "E.g.: never hiked anything harder than Pão de Açúcar, two of us are beginners..."
+    },
+    "summary": {
+      "eyebrow": "Your booking",
+      "date": "Date",
+      "people": "People",
+      "personSingular": "person",
+      "personPlural": "people",
+      "subtotal": "Total",
+      "comparison": {
+        "header": "Direct booking",
+        "direct": "Booking direct",
+        "platform": "Via platform",
+        "savings": "You save"
+      }
+    }
+  },
+  "checkout": {
+    "title": "Payment",
+    "subtitle": "Booking confirmed with 50% upfront. Balance on the day of the experience.",
+    "backToForm": "Back to form",
+    "method": {
+      "pixMeta": "Instant confirmation",
+      "cardTitle": "Card",
+      "cardMeta": "3.5% surcharge"
+    },
+    "pix": {
+      "instruction": "Scan the QR with your bank app or copy the code below.",
+      "copy": "Copy code",
+      "copied": "Copied!",
+      "expiresIn": "Expires in",
+      "expired": "Expired",
+      "confirmManually": "I paid",
+      "processing": "Processing…",
+      "note": "This is a demo. No real payment will be processed."
+    },
+    "card": {
+      "number": "Card number",
+      "name": "Name on card",
+      "expiry": "Expiry",
+      "pay": "Pay now",
+      "processing": "Processing…",
+      "note": "This is a demo. No real payment will be processed."
+    }
+  },
+  "confirmation": {
+    "loading": "Loading…",
+    "noBookingFound": "No booking found. Redirecting to home…",
+    "title": "Your experience is booked.",
+    "lede": "All set, {name}. You'll get the details via WhatsApp in a moment.",
+    "bookingId": "Booking code",
+    "date": "Date",
+    "people": "People",
+    "person": "person",
+    "peoplePlural": "people",
+    "total": "Total paid",
+    "priceOnRequest": "On request",
+    "addToCalendar": "Add to Google Calendar",
+    "whatsappTitle": "WhatsApp message",
+    "whatsappSub": "Sent to {phone}",
+    "whatsappMessage": {
+      "greeting": "Hi {name}! 👋",
+      "confirmed": "Your booking for {tour} is confirmed.",
+      "details": "I'll send the meeting-point details and what to bring tomorrow. Anything you need, I'm here.",
+      "personSingular": "person",
+      "personPlural": "people"
+    },
+    "calendarDescription": "Booking {bookingId} · {people} person(s) · {tour}",
+    "backToHome": "Back to home"
+  },
+  "notFound": {
+    "title": "This trail doesn't exist.",
+    "body": "The page you're looking for moved or was removed. Head back to see every experience.",
+    "cta": "Back to home"
+  },
+  "error": {
+    "eyebrow": "Error",
+    "title": "Something went wrong.",
+    "body": "An unexpected error occurred. Try again in a moment.",
+    "retry": "Try again"
+  }
+}

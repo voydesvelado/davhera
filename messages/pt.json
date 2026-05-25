@@ -1,0 +1,468 @@
+{
+  "common": {
+    "bookNow": "Reservar",
+    "viewDetails": "Ver detalhes",
+    "viewAll": "Ver todas",
+    "perPerson": "por pessoa",
+    "from": "a partir de",
+    "duration": "Duração",
+    "difficulty": "Dificuldade",
+    "category": "Categoria",
+    "includes": "Inclui",
+    "bringWith": "O que levar",
+    "meetingPoint": "Ponto de encontro",
+    "consultPrice": "Consultar",
+    "price": "Preço",
+    "openInMaps": "Abrir no Google Maps"
+  },
+  "difficulty": {
+    "facil": "Fácil",
+    "facil-moderada": "Fácil a moderada",
+    "moderada": "Moderada",
+    "moderada-dificil": "Moderada a difícil",
+    "dificil": "Difícil",
+    "variable": "Variável"
+  },
+  "category": {
+    "ecotour": "Ecotour",
+    "aventura": "Aventura"
+  },
+  "nav": {
+    "tours": "Experiências",
+    "about": "Sobre",
+    "contact": "Contato"
+  },
+  "hero": {
+    "eyebrow": "Saira Ecotour · Rio de Janeiro",
+    "headline": "Aventuras autênticas no Rio",
+    "lede": "Trilhas, cascatas e travessias guiadas por quem conhece a Mata Atlântica de perto. Reserva direto, sem intermediários.",
+    "cta": "Ver experiências"
+  },
+  "featured": {
+    "title": "Em destaque",
+    "subtitle": "Os percursos mais reservados desta temporada.",
+    "viewAll": "Ver todas as experiências"
+  },
+  "catalog": {
+    "eyebrow": "Catálogo",
+    "title": "Todas as experiências",
+    "subtitle": "Trilhas, travessias e voos pela Mata Atlântica do Rio. Escolha a sua.",
+    "count": "{count} experiências",
+    "empty": {
+      "title": "Nada por aqui — ainda.",
+      "body": "Esta combinação não retornou experiências. Ajuste os filtros ou veja todas.",
+      "clearFilters": "Limpar filtros"
+    }
+  },
+  "filters": {
+    "category": "Categoria",
+    "difficulty": "Dificuldade",
+    "categories": {
+      "all": "Todas",
+      "ecotour": "Ecotour",
+      "aventura": "Aventura"
+    },
+    "difficulties": {
+      "all": "Todas",
+      "easy": "Fácil",
+      "moderate": "Moderada",
+      "hard": "Difícil"
+    }
+  },
+  "valueProp": {
+    "title": "Reserva direto. Sem taxas escondidas.",
+    "body": "Plataformas cobram até 30% de comissão — esse valor está embutido no preço que você vê lá. Aqui, o que você paga é o que a Saira recebe. Sem intermediários, sem surpresas.",
+    "savings": "Você economiza, em média, R$ 80 por reserva.",
+    "comparison": {
+      "direct": "Reservando direto",
+      "platform": "Via plataforma",
+      "savingsLabel": "Você economiza"
+    }
+  },
+  "footer": {
+    "reservations": "Reservas",
+    "followUs": "Acompanhe",
+    "rights": "Todos os direitos reservados",
+    "tagline": "Ecotour · Rio de Janeiro"
+  },
+  "tours": {
+    "cerro-dois-irmaos": {
+      "shortDescription": "A vista mais celebrada do Rio em uma trilha curta e generosa.",
+      "longDescription": "Quarenta e cinco minutos de subida pela Mata Atlântica do Vidigal até o cume dos Dois Irmãos. Lá em cima: Ipanema, Leblon, Lagoa e a cordilheira da Tijuca em um só enquadramento. Ideal para quem busca recompensa rápida com pouco esforço técnico. Opção ao amanhecer com saída antes do nascer do sol.",
+      "whatsIncluded": [
+        "Guia bilíngue credenciado",
+        "Transfer dentro do Vidigal",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Tênis com boa aderência",
+        "1 litro de água",
+        "Protetor solar e boné",
+        "Lanche leve"
+      ],
+      "meetingPoint": "Entrada da trilha, Vidigal — encontro junto ao mototáxi local"
+    },
+    "pedra-da-gavea": {
+      "shortDescription": "A trilha mais desafiadora do Rio, com vista do oceano e da floresta.",
+      "longDescription": "Cerca de três horas de subida intensa pela Mata Atlântica até o topo da Pedra da Gávea, a 842 metros. A recompensa: vista panorâmica de Ipanema, Lagoa, Cristo e a costa inteira da cidade. Inclui um trecho com cordas onde guiamos passo a passo. Pé firme e disposição são essenciais.",
+      "whatsIncluded": [
+        "Guia bilíngue credenciado",
+        "Equipamento de segurança para o trecho técnico",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Tênis de trilha com boa aderência",
+        "2 litros de água",
+        "Protetor solar e boné",
+        "Lanche reforçado"
+      ],
+      "meetingPoint": "Estrada do Sorimã, entrada da trilha — São Conrado"
+    },
+    "garganta-do-ceu": {
+      "shortDescription": "Travessia entre paredões com vista vertical sobre a floresta.",
+      "longDescription": "Uma das trilhas mais marcantes do Parque da Tijuca: pouco mais de uma hora de subida até a fenda entre dois costões. O nome vem da estreita garganta que se abre como uma janela vertical para o mar. Trilha curta em distância, exigente em desnível.",
+      "whatsIncluded": [
+        "Guia bilíngue credenciado",
+        "Apoio em trechos íngremes",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Tênis com aderência",
+        "1,5 litro de água",
+        "Protetor solar"
+      ],
+      "meetingPoint": "Praça Afonso Viseu, entrada do Parque Nacional da Tijuca"
+    },
+    "trilha-corcovado": {
+      "shortDescription": "Subida pela mata fechada até o Cristo, sem trem nem van.",
+      "longDescription": "Caminho histórico do Parque Lage até o monumento do Cristo Redentor. Duas a três horas atravessando trechos de floresta densa, cachoeiras pequenas e mirantes intermediários. Chegada ao topo pela porta dos fundos, evitando o fluxo turístico do trem.",
+      "whatsIncluded": [
+        "Guia bilíngue credenciado",
+        "Ingresso ao mirante do Cristo",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Tênis de trilha",
+        "2 litros de água",
+        "Protetor solar e boné",
+        "Lanche leve"
+      ],
+      "meetingPoint": "Parque Lage — Rua Jardim Botânico, 414"
+    },
+    "cerro-urca-pao-de-acucar": {
+      "shortDescription": "Trilha curta até o primeiro morro do conjunto Pão de Açúcar.",
+      "longDescription": "Vinte a trinta minutos de caminhada pela Pista Cláudio Coutinho até a subida do Morro da Urca. Vista da Baía de Guanabara, da Praia Vermelha e do Cristo ao fundo. Possibilidade de descer pelo bondinho ou pela trilha. Preço sob consulta conforme o pacote (com ou sem bondinho).",
+      "whatsIncluded": [
+        "Guia bilíngue credenciado",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Tênis confortável",
+        "1 litro de água",
+        "Protetor solar"
+      ],
+      "meetingPoint": "Pista Cláudio Coutinho, início — Praia Vermelha"
+    },
+    "pedra-bonita": {
+      "shortDescription": "Mirante rápido com vista para São Conrado e Pedra da Gávea.",
+      "longDescription": "Vinte a quarenta minutos de subida leve até a Pedra Bonita, ao lado da Pedra da Gávea. Vista direta da rampa de voo livre, da praia de São Conrado e do oceano aberto. Ideal como primeira trilha do Rio ou para fim de tarde.",
+      "whatsIncluded": [
+        "Guia bilíngue credenciado",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Tênis com aderência",
+        "1 litro de água",
+        "Protetor solar"
+      ],
+      "meetingPoint": "Estrada das Canoas, estacionamento da rampa de voo livre"
+    },
+    "cerro-da-babilonia": {
+      "shortDescription": "Trilha urbana sobre a Praia Vermelha e o Pão de Açúcar.",
+      "longDescription": "Uma a duas horas pela floresta urbana do Morro da Babilônia, com mirantes para Copacabana, Botafogo e Niterói. Trilha de baixo impacto, ótima para quem quer combinar caminhada com bairro e gastronomia da Urca depois.",
+      "whatsIncluded": [
+        "Guia bilíngue credenciado",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Tênis com aderência",
+        "1,5 litro de água",
+        "Protetor solar"
+      ],
+      "meetingPoint": "Pista Cláudio Coutinho — entrada Praia Vermelha"
+    },
+    "mirante-dona-marta": {
+      "shortDescription": "Mirante clássico do Cristo e da Baía pela trilha.",
+      "longDescription": "Acesso pela trilha do Parque da Tijuca ao Mirante Dona Marta, com vista frontal do Cristo Redentor e da Zona Sul. Duração e dificuldade variáveis conforme o ritmo do grupo. Possibilidade de descida por outra trilha ou retorno pelo mesmo caminho.",
+      "whatsIncluded": [
+        "Guia bilíngue credenciado",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Tênis de trilha",
+        "1,5 litro de água",
+        "Protetor solar"
+      ],
+      "meetingPoint": "Combinado conforme o grupo (Cosme Velho ou Botafogo)"
+    },
+    "bico-do-papagaio": {
+      "shortDescription": "Pico em formato de bico no coração do Parque da Tijuca.",
+      "longDescription": "Cerca de duas horas pela mata fechada até o cume do Bico do Papagaio, a 989 metros. Trilha técnica em trechos finais, com paredão exposto e vista 360° dos picos da Tijuca, da Zona Norte e do oceano. Recomendada para quem já tem alguma experiência em trilhas.",
+      "whatsIncluded": [
+        "Guia bilíngue credenciado",
+        "Apoio em trechos técnicos",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Tênis de trilha com boa aderência",
+        "2 litros de água",
+        "Protetor solar e boné",
+        "Lanche reforçado"
+      ],
+      "meetingPoint": "Praça Afonso Viseu, entrada do Parque Nacional da Tijuca"
+    },
+    "floresta-tijuca-grutas": {
+      "shortDescription": "Circuito pelas grutas da maior floresta urbana do mundo.",
+      "longDescription": "Caminhada por trilhas leves dentro do Parque Nacional da Tijuca, passando pelas grutas Paulo e Virgínia, Luís Fernandes e do Acaiá. Trajeto pensado para apreciar a flora regenerada da floresta plantada no século XIX. Bom para grupos e famílias.",
+      "whatsIncluded": [
+        "Guia bilíngue credenciado",
+        "Transporte interno no parque (quando necessário)",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Tênis confortável",
+        "1,5 litro de água",
+        "Protetor solar e repelente"
+      ],
+      "meetingPoint": "Praça Afonso Viseu, entrada principal do Parque"
+    },
+    "floresta-tijuca-cascadas": {
+      "shortDescription": "Circuito de cachoeiras dentro do Parque da Tijuca.",
+      "longDescription": "Variação do circuito das grutas, focado nas cachoeiras: Cascatinha Taunay, Cascata Gabriela e poços naturais para um mergulho rápido em dias quentes. Trilha leve com paradas frequentes para fotos.",
+      "whatsIncluded": [
+        "Guia bilíngue credenciado",
+        "Transporte interno no parque (quando necessário)",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Tênis com aderência",
+        "Roupa de banho",
+        "Toalha leve",
+        "Protetor solar e repelente"
+      ],
+      "meetingPoint": "Praça Afonso Viseu, entrada principal do Parque"
+    },
+    "pico-da-tijuca": {
+      "shortDescription": "O ponto mais alto do Parque da Tijuca, a 1.022 metros.",
+      "longDescription": "Aproximadamente duas horas de subida com trecho final em escada de pedra esculpida na rocha. Do cume se vê o Cristo, a Zona Sul, a Baixada de Jacarepaguá e a Baía de Sepetiba em dia limpo. Esforço moderado a difícil compensado por uma das vistas mais completas do Rio.",
+      "whatsIncluded": [
+        "Guia bilíngue credenciado",
+        "Apoio em trecho de escada",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Tênis de trilha",
+        "2 litros de água",
+        "Protetor solar e boné",
+        "Lanche reforçado"
+      ],
+      "meetingPoint": "Bom Retiro — entrada da trilha no Parque da Tijuca"
+    },
+    "parapente": {
+      "shortDescription": "Voo livre sobre São Conrado, da Pedra Bonita ao mar.",
+      "longDescription": "Voo duplo com instrutor credenciado, decolando da rampa da Pedra Bonita e pousando na praia de São Conrado. Duração média do voo: dez a vinte minutos, dependendo do vento. Operação sujeita a condições meteorológicas — reagendamos sem custo se o vento não permitir.",
+      "whatsIncluded": [
+        "Instrutor credenciado",
+        "Equipamento completo",
+        "Vídeo e fotos do voo",
+        "Seguro obrigatório"
+      ],
+      "whatToBring": [
+        "Tênis fechado",
+        "Roupa esportiva confortável",
+        "Óculos de sol"
+      ],
+      "meetingPoint": "Praia de São Conrado — transfer para a rampa incluído"
+    },
+    "rapel": {
+      "shortDescription": "Descidas em paredões e cachoeiras com guias técnicos.",
+      "longDescription": "Operações em diferentes locais do Rio conforme a experiência do grupo: cachoeiras na Floresta da Tijuca, paredões da Pedra Bonita ou descidas urbanas controladas. Inclui briefing técnico e equipamento certificado. Preço varia conforme o tipo de descida.",
+      "whatsIncluded": [
+        "Guia técnico credenciado",
+        "Equipamento completo (corda, cadeirinha, capacete)",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Roupa esportiva",
+        "Tênis fechado com aderência",
+        "Água"
+      ],
+      "meetingPoint": "A combinar conforme o pacote escolhido"
+    },
+    "escalada": {
+      "shortDescription": "Vias clássicas em rocha com instrutor credenciado.",
+      "longDescription": "Saídas de escalada esportiva e tradicional nos morros do Rio: Pão de Açúcar, Urca, Pedra da Gávea. Aulas para iniciantes ou guiagem para vias específicas conforme o nível do grupo. Equipamento técnico fornecido.",
+      "whatsIncluded": [
+        "Instrutor credenciado",
+        "Equipamento técnico completo",
+        "Seguro de aventura"
+      ],
+      "whatToBring": [
+        "Roupa esportiva flexível",
+        "Tênis fechado",
+        "Lanche leve"
+      ],
+      "meetingPoint": "A combinar conforme a via escolhida"
+    },
+    "stand-up-paddle-amanecer": {
+      "shortDescription": "SUP no amanhecer pela Lagoa ou pela costa de Ipanema.",
+      "longDescription": "Saída antes do nascer do sol para remar com a cidade ainda parando. Locais variam conforme o vento: Lagoa Rodrigo de Freitas, Praia de Ipanema ou enseada protegida. Para iniciantes ou intermediários — sem experiência prévia necessária.",
+      "whatsIncluded": [
+        "Prancha e remo",
+        "Colete salva-vidas",
+        "Instrutor",
+        "Foto do amanhecer"
+      ],
+      "whatToBring": [
+        "Roupa de banho",
+        "Toalha",
+        "Protetor solar"
+      ],
+      "meetingPoint": "A combinar na véspera conforme a previsão do vento"
+    }
+  },
+  "wizard": {
+    "steps": {
+      "date": "Quando você vai?",
+      "people": "Quantas pessoas?",
+      "contact": "Como te contactamos?",
+      "language": "Idioma do guia",
+      "comments": "Algo a acrescentar?"
+    },
+    "nav": {
+      "next": "Próximo",
+      "back": "Voltar",
+      "continue": "Continuar para pagamento"
+    },
+    "date": {
+      "title": "Quando você vai?",
+      "subtitle": "Escolha a data da sua experiência.",
+      "confirm": "Sua experiência será {date}."
+    },
+    "people": {
+      "title": "Quantas pessoas?",
+      "subtitle": "Entre 1 e 8 participantes por reserva.",
+      "person": "pessoa",
+      "people": "pessoas",
+      "decrease": "Diminuir",
+      "increase": "Aumentar"
+    },
+    "contact": {
+      "title": "Como te contactamos?",
+      "subtitle": "Para confirmar a reserva e enviar os detalhes.",
+      "name": "Nome completo",
+      "namePlaceholder": "Maria Silva",
+      "whatsapp": "WhatsApp",
+      "email": "E-mail",
+      "errors": {
+        "name": "Nome muito curto",
+        "whatsapp": "Número inválido",
+        "email": "E-mail inválido"
+      }
+    },
+    "language": {
+      "title": "Idioma do guia",
+      "subtitle": "Em qual idioma você prefere ser guiado?",
+      "options": {
+        "pt": "Português",
+        "es": "Espanhol",
+        "en": "Inglês",
+        "it": "Italiano",
+        "any": "Tanto faz"
+      }
+    },
+    "comments": {
+      "title": "Algo a acrescentar?",
+      "subtitle": "Opcional. Restrições alimentares, nível de experiência, qualquer coisa que devamos saber.",
+      "placeholder": "Ex.: nunca fiz trilha mais difícil que Pão de Açúcar, dois dos participantes são iniciantes..."
+    },
+    "summary": {
+      "eyebrow": "Sua reserva",
+      "date": "Data",
+      "people": "Pessoas",
+      "personSingular": "pessoa",
+      "personPlural": "pessoas",
+      "subtotal": "Total",
+      "comparison": {
+        "header": "Reserva direta",
+        "direct": "Reservando direto",
+        "platform": "Via plataforma",
+        "savings": "Você economiza"
+      }
+    }
+  },
+  "checkout": {
+    "title": "Pagamento",
+    "subtitle": "Reserva confirmada com 50% adiantado. Saldo no dia da experiência.",
+    "backToForm": "Voltar ao formulário",
+    "method": {
+      "pixMeta": "Confirmação imediata",
+      "cardTitle": "Cartão",
+      "cardMeta": "Recargo de 3,5%"
+    },
+    "pix": {
+      "instruction": "Escaneie o QR code com o app do seu banco ou copie o código abaixo.",
+      "copy": "Copiar código",
+      "copied": "Copiado!",
+      "expiresIn": "Expira em",
+      "expired": "Expirou",
+      "confirmManually": "Já paguei",
+      "processing": "Processando…",
+      "note": "Este é um demo. Nenhum pagamento real será processado."
+    },
+    "card": {
+      "number": "Número do cartão",
+      "name": "Nome no cartão",
+      "expiry": "Validade",
+      "pay": "Pagar agora",
+      "processing": "Processando…",
+      "note": "Este é um demo. Nenhum pagamento real será processado."
+    }
+  },
+  "confirmation": {
+    "loading": "Carregando…",
+    "noBookingFound": "Nenhuma reserva encontrada. Redirecionando ao início…",
+    "title": "Sua experiência está reservada.",
+    "lede": "Tudo certo, {name}. Você vai receber os detalhes pelo WhatsApp em instantes.",
+    "bookingId": "Código de reserva",
+    "date": "Data",
+    "people": "Pessoas",
+    "person": "pessoa",
+    "peoplePlural": "pessoas",
+    "total": "Total pago",
+    "priceOnRequest": "A consultar",
+    "addToCalendar": "Adicionar ao Google Calendar",
+    "whatsappTitle": "Mensagem no WhatsApp",
+    "whatsappSub": "Enviada para {phone}",
+    "whatsappMessage": {
+      "greeting": "Oi {name}! 👋",
+      "confirmed": "Sua reserva para {tour} está confirmada.",
+      "details": "Vou te mandar os detalhes do ponto de encontro e o que levar até amanhã. Qualquer dúvida, estou por aqui.",
+      "personSingular": "pessoa",
+      "personPlural": "pessoas"
+    },
+    "calendarDescription": "Reserva {bookingId} · {people} pessoa(s) · {tour}",
+    "backToHome": "Voltar ao início"
+  },
+  "notFound": {
+    "title": "Esta trilha não existe.",
+    "body": "A página que você procura mudou de lugar ou foi removida. Volte ao início para ver todas as experiências.",
+    "cta": "Voltar ao início"
+  },
+  "error": {
+    "eyebrow": "Erro",
+    "title": "Algo deu errado.",
+    "body": "Aconteceu um erro inesperado. Tente novamente em alguns instantes.",
+    "retry": "Tentar novamente"
+  }
+}
