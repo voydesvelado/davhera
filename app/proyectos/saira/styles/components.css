@@ -1205,3 +1205,110 @@
     padding: var(--space-16) var(--space-8) var(--space-32);
   }
 }
+
+/* ───────────────────────────────  Tour detail · sections (M15) */
+
+.saira-tour-section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: var(--space-6);
+  font-variation-settings: "opsz" 36;
+  letter-spacing: -0.015em;
+}
+
+.saira-tour-section-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--moss);
+  stroke-width: 1.6;
+}
+
+.saira-tour-includes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+  margin-top: var(--space-16);
+  padding-top: var(--space-12);
+  border-top: 1px solid var(--line-soft);
+}
+
+.saira-tour-includes-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.saira-tour-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.saira-tour-list li {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-base);
+  color: var(--ink-soft);
+  padding-left: var(--space-6);
+  position: relative;
+  line-height: 1.55;
+}
+
+.saira-tour-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 8px;
+  height: 1px;
+  background: var(--jade);
+}
+
+.saira-tour-meeting {
+  margin-top: var(--space-16);
+  padding-top: var(--space-12);
+  border-top: 1px solid var(--line-soft);
+}
+
+.saira-tour-meeting-text {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-base);
+  color: var(--ink-soft);
+  margin-bottom: var(--space-6);
+  line-height: 1.55;
+}
+
+.saira-tour-meeting-map {
+  width: 100%;
+  min-height: 320px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+  background: var(--surface-deep);
+}
+
+.saira-tour-meeting-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--moss);
+  border-bottom: 1px solid var(--moss);
+  padding-bottom: 2px;
+}
+
+@media (min-width: 768px) {
+  .saira-tour-includes {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-16);
+  }
+}

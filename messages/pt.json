@@ -12,7 +12,8 @@
     "bringWith": "O que levar",
     "meetingPoint": "Ponto de encontro",
     "consultPrice": "Consultar",
-    "price": "Preço"
+    "price": "Preço",
+    "openInMaps": "Abrir no Google Maps"
   },
   "difficulty": {
     "facil": "Fácil",
