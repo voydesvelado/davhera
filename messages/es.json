@@ -356,6 +356,35 @@
       "people": "personas",
       "decrease": "Disminuir",
       "increase": "Aumentar"
+    },
+    "contact": {
+      "title": "¿Cómo te contactamos?",
+      "subtitle": "Para confirmar la reserva y enviarte los detalles.",
+      "name": "Nombre completo",
+      "namePlaceholder": "María Silva",
+      "whatsapp": "WhatsApp",
+      "email": "E-mail",
+      "errors": {
+        "name": "Nombre muy corto",
+        "whatsapp": "Número inválido",
+        "email": "E-mail inválido"
+      }
+    },
+    "language": {
+      "title": "Idioma del guía",
+      "subtitle": "¿En qué idioma prefieres que te guíen?",
+      "options": {
+        "pt": "Portugués",
+        "es": "Español",
+        "en": "Inglés",
+        "it": "Italiano",
+        "any": "Indiferente"
+      }
+    },
+    "comments": {
+      "title": "¿Algo más?",
+      "subtitle": "Opcional. Restricciones alimentarias, nivel de experiencia, cualquier cosa que debamos saber.",
+      "placeholder": "Ej.: nunca hice un sendero más difícil que el Pão de Açúcar, dos participantes son principiantes..."
     }
   }
 }

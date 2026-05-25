@@ -356,6 +356,35 @@
       "people": "pessoas",
       "decrease": "Diminuir",
       "increase": "Aumentar"
+    },
+    "contact": {
+      "title": "Como te contactamos?",
+      "subtitle": "Para confirmar a reserva e enviar os detalhes.",
+      "name": "Nome completo",
+      "namePlaceholder": "Maria Silva",
+      "whatsapp": "WhatsApp",
+      "email": "E-mail",
+      "errors": {
+        "name": "Nome muito curto",
+        "whatsapp": "Número inválido",
+        "email": "E-mail inválido"
+      }
+    },
+    "language": {
+      "title": "Idioma do guia",
+      "subtitle": "Em qual idioma você prefere ser guiado?",
+      "options": {
+        "pt": "Português",
+        "es": "Espanhol",
+        "en": "Inglês",
+        "it": "Italiano",
+        "any": "Tanto faz"
+      }
+    },
+    "comments": {
+      "title": "Algo a acrescentar?",
+      "subtitle": "Opcional. Restrições alimentares, nível de experiência, qualquer coisa que devamos saber.",
+      "placeholder": "Ex.: nunca fiz trilha mais difícil que Pão de Açúcar, dois dos participantes são iniciantes..."
     }
   }
 }

@@ -356,6 +356,35 @@
       "people": "people",
       "decrease": "Decrease",
       "increase": "Increase"
+    },
+    "contact": {
+      "title": "How do we reach you?",
+      "subtitle": "To confirm the booking and send the details.",
+      "name": "Full name",
+      "namePlaceholder": "Maria Silva",
+      "whatsapp": "WhatsApp",
+      "email": "Email",
+      "errors": {
+        "name": "Name too short",
+        "whatsapp": "Invalid number",
+        "email": "Invalid email"
+      }
+    },
+    "language": {
+      "title": "Guide language",
+      "subtitle": "Which language would you prefer your guide to use?",
+      "options": {
+        "pt": "Portuguese",
+        "es": "Spanish",
+        "en": "English",
+        "it": "Italian",
+        "any": "Any"
+      }
+    },
+    "comments": {
+      "title": "Anything to add?",
+      "subtitle": "Optional. Dietary restrictions, experience level, anything we should know.",
+      "placeholder": "E.g.: never hiked anything harder than Pão de Açúcar, two of us are beginners..."
     }
   }
 }
