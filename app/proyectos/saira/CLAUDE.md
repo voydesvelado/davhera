@@ -104,13 +104,78 @@ cubren la **landing** completa + fundamentos + i18n.
 decisiones de UI. Tokens, paleta, escala tipográfica, componentes, motion
 y patrones están todos ahí.
 
+## Decisiones técnicas (M1–M10)
+
+- **`proxy.ts` en lugar de `middleware.ts`**: Next 16 deprecó la
+  convención `middleware`. La función se llama `proxy()` y vive en
+  `proxy.ts` en la raíz. Scopeada a `/proyectos/saira/:path*` para
+  no afectar nada más.
+- **No usamos `createMiddleware`/`createNavigation` de next-intl** porque
+  asumen que el locale viene en la raíz (`/{locale}/...`). El nuestro
+  vive bajo `/proyectos/saira/{locale}/...`. En su lugar:
+  - `proxy.ts` hace detección manual de locale (cookie →
+    Accept-Language → `pt`).
+  - `app/proyectos/saira/lib/i18n/navigation.tsx` (`<Link>`) y
+    `client-nav.ts` (`useSairaPathname`, `useSairaRouter`) son
+    helpers propios que añaden el basePath y el locale al construir
+    URLs.
+- **Comparison-card en M9**: hardcodea Pedra da Gávea como ejemplo.
+  Si Saraí quiere otro tour como referencia, basta con cambiar las
+  3 constantes en `components/saira/landing/ComparisonCard.tsx`.
+- **Stagger reveal del Hero sin Framer Motion**: keyframes CSS con
+  `animation-delay` escalado. Mantiene el Hero como Server Component
+  y respeta `prefers-reduced-motion`.
+- **Tour cards usan gradient moss→jade como placeholder visual**
+  hasta que David entregue las imágenes de cada slug. Para hacer el
+  swap: agregar `<Image fill src={tour.heroImage}>` dentro de
+  `.saira-tour-card-media` (mantener el gradient como background
+  para fallback de carga).
+- **`<source media>` en el video del Hero**: confirmado funcional en
+  Chrome/Safari modernos. Si QA encuentra problemas en algún device
+  específico, swap a un Client Component con `useEffect` +
+  `matchMedia` que renderice un `<source>` por viewport.
+
 ## TODOs y pendientes
 
 - [ ] Validar con Saraí los 3 tours "featured" (M8: actualmente
       `pedra-da-gavea`, `cerro-dois-irmaos`, `parapente`).
 - [ ] Validar con Saraí los `comparablePlatformPriceBRL` (estimados como
       ~1.42× del precio directo; pueden cambiar con datos reales).
-- [ ] David: entregar video drone definitivo para el hero (`reel-mobile.mp4`,
-      `reel-desktop.mp4`, `poster.jpg`). Mientras tanto se usan placeholders.
-- [ ] David: imágenes definitivas para cada tour (`public/saira/tours/{slug}/`).
-- [ ] Toggle manual de dark mode en header (Wave 2).
+- [ ] **David**: entregar video drone definitivo para el hero
+      (`reel-mobile.mp4`, `reel-desktop.mp4`, `poster.jpg`). Por ahora
+      hay archivos `.placeholder` que documentan los assets esperados.
+      Compresión sugerida cuando llegue el RAW:
+      ```
+      ffmpeg -i raw.mov -vf "scale=-2:1080,fps=24" \
+        -c:v libx264 -preset slow -crf 26 -an -movflags +faststart \
+        public/saira/hero/reel-desktop.mp4
+      ffmpeg -i raw.mov -vf "scale=720:-2,fps=24" \
+        -c:v libx264 -preset slow -crf 26 -an -movflags +faststart \
+        public/saira/hero/reel-mobile.mp4
+      ```
+      (target ≤ 8MB desktop, ≤ 6MB mobile).
+- [ ] **David**: imágenes definitivas para cada tour
+      (`public/saira/tours/{slug}/hero.jpg` + 3–5 más). Cuando lleguen,
+      swap del placeholder de `.saira-tour-card-media` a `<Image fill>`.
+- [ ] Toggle manual de dark mode en header (Wave 2 — por ahora solo
+      `prefers-color-scheme`).
+- [ ] Rutas downstream que el M5/M8 ya enlazan pero que aún no existen:
+      `/tours`, `/tours/{slug}`, `/reservar/{slug}`, `/reserva/confirmada`.
+      Vendrán en próximos prompts (M11+).
+
+## Verificación final M10
+
+| Check | Estado |
+|---|---|
+| `npm run build` clean | ✓ 33 páginas (3 locales prerender estáticos) |
+| `npm run lint` en archivos Saira | ✓ 0 issues |
+| `/`, `/projects/menura`, `/case-studies/trilha-rio` intactos | ✓ 200 |
+| `/proyectos/saira` → redirect por Accept-Language | ✓ pt/es/en |
+| `/proyectos/saira/{pt,es,en}` renderiza | ✓ |
+| Cookie `NEXT_LOCALE` persiste y overridea | ✓ |
+| Hero · FeaturedTours · ValueProp · Footer mounted | ✓ |
+| WhatsApp / email / Instagram links | ✓ con `noopener noreferrer` |
+| `--terracotta` aparece solo en savings de la comparison card | ✓ |
+| Heading hierarchy (h1 en Hero, h2 en secciones) | ✓ |
+| Focus rings visibles vía `--moss` | ✓ |
+| `prefers-reduced-motion` respetado en reveals | ✓ Hero CSS |

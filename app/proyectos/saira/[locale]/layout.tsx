@@ -7,6 +7,7 @@ import "../styles/components.css";
 import { fraunces, geist, geistMono } from "../lib/fonts";
 import { locales, isLocale } from "../lib/i18n/config";
 import { Header } from "@/components/saira/header/Header";
+import { Footer } from "@/components/saira/footer/Footer";
 
 // Genera rutas estáticas para los 3 locales.
 export function generateStaticParams() {
@@ -49,6 +50,7 @@ export default async function SairaLocaleLayout({
       <NextIntlClientProvider messages={messages} locale={locale}>
         <Header />
         {children}
+        <Footer />
       </NextIntlClientProvider>
     </div>
   );

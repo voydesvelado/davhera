@@ -674,3 +674,131 @@
   font-variation-settings: "opsz" 36;
   letter-spacing: -0.02em;
 }
+
+/* ───────────────────────────────  Footer */
+
+.saira-footer {
+  background: var(--ink);
+  color: var(--surface);
+  padding: var(--space-24) var(--space-6) var(--space-8);
+  margin-top: var(--space-16);
+  position: relative;
+}
+
+.saira-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+}
+
+.saira-footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--surface);
+}
+
+.saira-footer-logo {
+  color: var(--jade);
+}
+
+.saira-footer-wordmark {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  font-variation-settings: "opsz" 36;
+  letter-spacing: -0.01em;
+}
+
+.saira-footer-tagline {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  color: rgba(244, 239, 230, 0.55);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: var(--space-3);
+}
+
+.saira-footer-col-title {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: rgba(244, 239, 230, 0.55);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+}
+
+.saira-footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.saira-footer-link {
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-sm);
+  color: var(--surface);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out-soft);
+}
+
+@media (hover: hover) {
+  .saira-footer-link:hover {
+    color: var(--jade);
+  }
+}
+
+/* En el footer (sobre --ink), el language switcher se invierte */
+.saira-footer-lang .saira-lang-switcher {
+  background: rgba(244, 239, 230, 0.06);
+  border-color: rgba(244, 239, 230, 0.1);
+}
+
+.saira-footer-lang .saira-lang-option {
+  color: rgba(244, 239, 230, 0.62);
+}
+
+.saira-footer-lang .saira-lang-option.is-active {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+@media (hover: hover) {
+  .saira-footer-lang .saira-lang-option:hover:not(.is-active) {
+    color: var(--surface);
+  }
+}
+
+.saira-footer-bottom {
+  max-width: 1200px;
+  margin: var(--space-16) auto 0;
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(244, 239, 230, 0.08);
+}
+
+.saira-footer-rights {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-xs);
+  color: rgba(244, 239, 230, 0.45);
+  letter-spacing: 0.06em;
+}
+
+@media (min-width: 768px) {
+  .saira-footer {
+    padding: var(--space-32) var(--space-8) var(--space-8);
+  }
+  .saira-footer-inner {
+    grid-template-columns: 1.4fr 1fr 1fr auto;
+    gap: var(--space-16);
+    align-items: start;
+  }
+  .saira-footer-lang {
+    justify-self: end;
+  }
+}
