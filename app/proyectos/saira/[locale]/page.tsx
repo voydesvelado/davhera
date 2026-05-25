@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { isLocale } from "../lib/i18n/config";
 import { Hero } from "@/components/saira/landing/Hero";
 import { FeaturedTours } from "@/components/saira/landing/FeaturedTours";
+import { ValueProp } from "@/components/saira/landing/ValueProp";
 
 export default async function SairaHome({
   params,
@@ -17,7 +18,8 @@ export default async function SairaHome({
     <main>
       <Hero />
       <FeaturedTours />
-      {/* ValueProp · M9 · Footer · M10 */}
+      <ValueProp />
+      {/* Footer · M10 */}
     </main>
   );
 }

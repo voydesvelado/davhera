@@ -528,3 +528,149 @@
     color: var(--moss);
   }
 }
+
+/* ───────────────────────────────  Value prop */
+
+.saira-valueprop {
+  max-width: 1200px;
+  margin: var(--space-16) auto;
+  padding: var(--space-24) var(--space-6);
+  background: var(--surface-deep);
+  border-radius: var(--radius-xl);
+  position: relative;
+}
+
+.saira-valueprop-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.saira-valueprop-body {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-lg);
+  line-height: 1.45;
+  color: var(--ink-soft);
+  font-variation-settings: "opsz" 36;
+  margin-top: var(--space-6);
+  max-width: 540px;
+}
+
+.saira-valueprop-card-wrap {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.saira-valueprop-savings-line {
+  margin-top: var(--space-16);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-lg);
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  font-variation-settings: "opsz" 36;
+}
+
+.saira-valueprop-savings-mark {
+  color: var(--terracotta);
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .saira-valueprop {
+    margin: var(--space-24) auto;
+    padding: var(--space-32) var(--space-16);
+  }
+  .saira-valueprop-inner {
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-16);
+  }
+  .saira-valueprop-body {
+    font-size: var(--text-xl);
+  }
+  .saira-valueprop-card-wrap {
+    justify-content: flex-end;
+  }
+}
+
+/* ───────────────────────────────  Comparison card */
+
+.saira-comparison {
+  width: 100%;
+  max-width: 420px;
+  padding: var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.saira-comparison-header {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.saira-comparison-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--space-3) 0;
+  font-family: var(--saira-font-body), system-ui, sans-serif;
+  font-size: var(--text-sm);
+  color: var(--ink-soft);
+}
+
+.saira-comparison-price {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--ink);
+  font-variation-settings: "opsz" 36;
+}
+
+.saira-comparison-price-platform {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: color-mix(in srgb, var(--ink-muted) 60%, transparent);
+}
+
+.saira-comparison-savings {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-top: var(--space-3);
+  padding: var(--space-4) var(--space-4);
+  background: color-mix(in srgb, var(--terracotta) 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--terracotta) 24%, transparent);
+  border-radius: var(--radius-md);
+}
+
+.saira-comparison-savings-label {
+  font-family: var(--saira-font-mono), monospace;
+  font-size: var(--text-2xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--terracotta);
+}
+
+.saira-comparison-savings-amount {
+  font-family: var(--saira-font-display), Georgia, serif;
+  font-size: var(--text-2xl);
+  font-weight: 500;
+  color: var(--terracotta);
+  font-variation-settings: "opsz" 36;
+  letter-spacing: -0.02em;
+}
