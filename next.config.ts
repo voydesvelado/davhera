@@ -8,6 +8,12 @@ const withNextIntl = createNextIntlPlugin(
 );
 
 const nextConfig: NextConfig = {
+  // /handlhealth sirve el deck estático de public/. Va como archivo suelto y no
+  // como ruta de React porque el deck controla <body> (overflow, data-mode) y
+  // eso choca con el root layout.
+  async rewrites() {
+    return [{ source: "/handlhealth", destination: "/handlhealth.html" }];
+  },
   images: {
     remotePatterns: [
       {
