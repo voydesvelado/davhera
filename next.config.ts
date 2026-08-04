@@ -39,6 +39,10 @@ const nextConfig: NextConfig = {
         // Va como archivo suelto de public/, no como ruta de React, porque el
         // root layout le rompería el <body>.
         { source: "/clearpath-flow", destination: "/clearpath-flow.html" },
+        // /handlhealth sirve el deck estático de public/. Va como archivo suelto
+        // y no como ruta de React porque el deck controla <body> (overflow,
+        // data-mode) y eso choca con el root layout.
+        { source: "/handlhealth", destination: "/handlhealth.html" },
       ],
       fallback: [],
     };
