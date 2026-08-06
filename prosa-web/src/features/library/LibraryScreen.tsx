@@ -13,6 +13,7 @@ import {
 } from "../../core/db/queries";
 import type { BatchResult } from "../../core/import/importer";
 import { requestPersistence } from "../../app/store";
+import { useSyncState } from "../../app/syncRuntime";
 import { navigate } from "../../app/router";
 import type { Theme } from "../../app/useTheme";
 import { Cover, GhostButton, Pill, ProgressThread } from "../../design/components";
@@ -50,6 +51,10 @@ export function LibraryScreen({ theme }: { theme: Theme }) {
   const entries = live ?? lastKnown;
   const loading = live === undefined && lastKnown.length === 0;
   const { dragging, runImport } = useDropImport(setSummary);
+  const sync = useSyncState();
+  // Entrar con el @ en un navegador nuevo baja la biblioteca sola. Mientras llega,
+  // decir que está en camino: mostrar "tu biblioteca está vacía" sería mentir.
+  const restoring = sync.status === "syncing" && entries.length === 0;
 
   const reading = useMemo(() => continueReading(entries), [entries]);
   const hits = useMemo(() => search(entries, query), [entries, query]);
@@ -101,7 +106,9 @@ export function LibraryScreen({ theme }: { theme: Theme }) {
 
       <StorageBanner hasDocuments={entries.length > 0} />
 
-      {loading ? null : query !== "" ? (
+      {loading ? null : restoring ? (
+        <p className="py-24 text-center text-secondary text-ink-3">{strings.restoringLibrary}</p>
+      ) : query !== "" ? (
         <SearchResults titleHits={titleHits} textHits={textHits} theme={theme} />
       ) : entries.length === 0 ? (
         <EmptyState onPaste={() => setSheetOpen(true)} onFiles={() => fileInput.current?.click()} />

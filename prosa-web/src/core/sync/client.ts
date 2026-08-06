@@ -56,10 +56,16 @@ export class ApiError extends Error {
 }
 
 export class ProsaClient {
+  private readonly base: string;
+
   constructor(
     private readonly key: string,
-    private readonly base: string = API_BASE,
-  ) {}
+    base?: string,
+  ) {
+    // `?? API_BASE` y no un default de parámetro: pasar `undefined` explícito
+    // (como hace el runtime cuando no hay override) tiene que caer en el default.
+    this.base = base ?? API_BASE;
+  }
 
   private headers(extra: Record<string, string> = {}): Record<string, string> {
     return { Authorization: `Bearer ${this.key}`, ...extra };

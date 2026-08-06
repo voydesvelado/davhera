@@ -154,18 +154,25 @@ export function SettingsScreen() {
           <p className="text-secondary text-ink-2">{strings.accountSoon}</p>
         ) : account ? (
           <div className="flex flex-col gap-4">
-            {/* La ÚNICA UI del sync: una fila. Sin spinners, sin badges, sin toasts. */}
+            {/* La ÚNICA UI del sync: una fila. Sin spinners, sin badges, sin toasts.
+                El respaldo es automático, así que acá se informa — no se pide nada. */}
             <p className="text-secondary text-ink-2">
               @{account.handle} ·{" "}
-              {state.status === "error"
-                ? state.error === "quota_exceeded"
-                  ? strings.quotaExceeded
-                  : state.error
-                : (relativeTime(state.lastSyncedAt, locale) ?? strings.neverSynced)}
+              {state.status === "syncing"
+                ? strings.syncing
+                : state.status === "error"
+                  ? state.error === "quota_exceeded"
+                    ? strings.quotaExceeded
+                    : strings.syncErrorGeneric
+                  : (relativeTime(state.lastSyncedAt, locale) ?? strings.neverSynced)}
             </p>
+            <p className="text-caption text-ink-3">{strings.backupAutomatic}</p>
 
             <div className="flex flex-wrap gap-3">
-              <GhostButton onClick={() => void syncNow()}>{strings.syncNow}</GhostButton>
+              {/* Solo aparece si algo falló: en el camino normal no hay nada que tocar. */}
+              {state.status === "error" && (
+                <GhostButton onClick={() => syncNow()}>{strings.syncNow}</GhostButton>
+              )}
               <GhostButton onClick={() => setShowingKey(true)}>{strings.showKey}</GhostButton>
               <GhostButton onClick={() => void signOut()}>{strings.signOut}</GhostButton>
               <GhostButton onClick={() => setDeleteConfirm("")}>

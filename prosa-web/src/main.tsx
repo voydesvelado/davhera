@@ -5,6 +5,7 @@ import "./design/tokens.css";
 import { App } from "./App";
 import { loadMotionFeatures } from "./design/springs";
 import { registerServiceWorker, seedSampleDocument } from "./app/bootstrap";
+import { startSyncRuntime } from "./app/syncRuntime";
 
 // M0: el tema sigue al sistema. En M4 esto pasa al sheet Aa (claro/sepia/gris/negro),
 // que solo cambia CSS variables — por eso el crossfade sale gratis.
@@ -16,6 +17,9 @@ dark.addEventListener("change", applyTheme);
 
 void seedSampleDocument();
 registerServiceWorker();
+// El sync arranca con la app, no con la pantalla de Ajustes: tener cuenta tiene
+// que significar que el respaldo ocurre solo, se esté donde se esté.
+startSyncRuntime();
 
 const root = document.getElementById("root");
 if (!root) throw new Error("#root no existe en index.html");
