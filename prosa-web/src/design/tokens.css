@@ -109,6 +109,22 @@
   }
 }
 
+/* Foco visible. Sin esto, la navegación por teclado que exige la DoD existe pero
+   no se ve: se tabula a ciegas. `:focus-visible` y no `:focus` para que no aparezca
+   al hacer click con el mouse.
+   La especificidad (elemento + pseudo-clase) le gana a las utilidades de Tailwind,
+   incluido el `outline-none` de los inputs, que si no lo anularía. */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--ink-2);
+  outline-offset: 2px;
+  border-radius: var(--r-s);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

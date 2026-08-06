@@ -220,7 +220,7 @@ export function SettingsScreen() {
           <button
             className="absolute inset-0 bg-black/20"
             onMouseDown={() => setShowingKey(false)}
-            aria-label={strings.cancel}
+            aria-label={strings.close}
           />
           <div className="relative z-10 w-full max-w-md rounded-m border border-line bg-bg p-6">
             {/* Se re-muestra con las MISMAS advertencias: sirve para sumar un

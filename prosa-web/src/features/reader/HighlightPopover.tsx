@@ -56,7 +56,7 @@ export function HighlightPopover({
 
   return (
     <>
-      <button className="fixed inset-0 z-40" onMouseDown={onClose} aria-label={strings.cancel} />
+      <button className="fixed inset-0 z-40" onMouseDown={onClose} aria-label={strings.close} />
       <div
         className="fixed z-50 w-72 -translate-x-1/2 rounded-m border border-line bg-bg p-3 shadow-lg"
         style={{ left: anchorRect.x, top: anchorRect.y + 8 }}

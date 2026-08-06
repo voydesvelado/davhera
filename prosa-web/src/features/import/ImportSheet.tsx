@@ -13,7 +13,15 @@ import { t } from "../../i18n";
  * invasivo, y el costo UX no lo vale. El campo es un textarea y el usuario pega con
  * ⌘V como en cualquier otro lado — el evento `paste` nativo no pide permiso alguno.
  */
-export function ImportSheet({ onClose, onImported }: { onClose: () => void; onImported: () => void }) {
+export function ImportSheet({
+  onClose,
+  onImported,
+  onPickFiles,
+}: {
+  onClose: () => void;
+  onImported: () => void;
+  onPickFiles?: () => void;
+}) {
   const [markdown, setMarkdown] = useState("");
   const [title, setTitle] = useState("");
   const [titleTouched, setTitleTouched] = useState(false);
@@ -66,7 +74,7 @@ export function ImportSheet({ onClose, onImported }: { onClose: () => void; onIm
       <button
         className="absolute inset-0 bg-black/20"
         onMouseDown={onClose}
-        aria-label={strings.cancel}
+        aria-label={strings.close}
       />
       <div className="relative z-10 flex max-h-[85vh] w-full max-w-xl flex-col gap-4 rounded-t-m border border-line bg-bg p-6 sm:rounded-m">
         <h2 className="text-display font-medium">{strings.importPaste}</h2>
@@ -106,7 +114,13 @@ export function ImportSheet({ onClose, onImported }: { onClose: () => void; onIm
           <p className="text-secondary text-ink-2">{strings.looksLikeNewVersion}</p>
         )}
 
-        <div className="flex items-center justify-end gap-3">
+        <div className="flex flex-wrap items-center justify-end gap-3">
+          {/* Las dos formas de importar, juntas donde alguien ya decidió importar. */}
+          {onPickFiles && !candidate && (
+            <GhostButton onClick={onPickFiles} className="mr-auto">
+              {strings.importFiles}
+            </GhostButton>
+          )}
           <GhostButton onClick={onClose}>{strings.cancel}</GhostButton>
           {(verdict?.kind === "sameTitle" || verdict?.kind === "contains") && (
             <GhostButton disabled={busy} onClick={() => void add("replace")}>

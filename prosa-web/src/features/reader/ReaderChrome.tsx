@@ -68,6 +68,7 @@ export function ProgressScrubber({
   onSeek: (ratio: number) => void;
 }) {
   const [active, setActive] = useState(false);
+  const [scrubbing, setScrubbing] = useState(false);
   const [preview, setPreview] = useState<number | null>(null);
   const track = useRef<HTMLDivElement>(null);
 
@@ -81,25 +82,59 @@ export function ProgressScrubber({
   const heading = [...headings].reverse().find((h) => h.ratio <= shown);
 
   return (
+    // Eventos de puntero y no de mouse: así el scrubber funciona con el dedo. Antes
+    // era `onMouseMove`, o sea que en un celular el hilo de 2px no se podía usar de
+    // ninguna forma. La zona sensible mide 24px siempre (el track del spec) aunque
+    // solo se vean 2: un objetivo táctil de 2px no existe.
     <div
       ref={track}
-      onMouseEnter={() => setActive(true)}
-      onMouseLeave={() => {
+      onPointerDown={(event) => {
+        event.currentTarget.setPointerCapture(event.pointerId);
+        setScrubbing(true);
+        setActive(true);
+        setPreview(ratioAt(event.clientX));
+      }}
+      onPointerMove={(event) => {
+        if (scrubbing) setPreview(ratioAt(event.clientX));
+        else if (event.pointerType === "mouse") setActive(true);
+      }}
+      onPointerUp={(event) => {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+        onSeek(ratioAt(event.clientX));
+        setScrubbing(false);
+        setPreview(null);
+        // Con el dedo no hay "salir del área": se repliega al soltar.
+        if (event.pointerType !== "mouse") setActive(false);
+      }}
+      onPointerLeave={() => {
+        if (scrubbing) return;
         setActive(false);
         setPreview(null);
       }}
-      onMouseMove={(event) => active && setPreview(ratioAt(event.clientX))}
-      onClick={(event) => onSeek(ratioAt(event.clientX))}
-      className={`fixed inset-x-0 bottom-0 z-30 flex cursor-pointer items-end transition-[height] duration-200 ${
-        active ? "h-6" : "h-[2px]"
-      }`}
+      // `touch-none`: sin esto, arrastrar sobre el hilo scrollea la página en vez
+      // de mover el scrubber.
+      className="fixed inset-x-0 bottom-0 z-30 flex h-6 cursor-pointer touch-none items-end"
+      role="slider"
+      aria-label={t().progress}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(shown * 100)}
+      tabIndex={0}
+      onKeyDown={(event) => {
+        // El progreso también se maneja con el teclado: sin esto, alguien que
+        // navega tabulando puede enfocar el hilo y no puede hacer nada con él.
+        if (event.key === "ArrowRight") onSeek(Math.min(1, progress + 0.05));
+        else if (event.key === "ArrowLeft") onSeek(Math.max(0, progress - 0.05));
+        else if (event.key === "Home") onSeek(0);
+        else if (event.key === "End") onSeek(1);
+      }}
     >
       {active && heading && (
-        <span className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 truncate px-3 text-caption text-ink-3">
+        <span className="pointer-events-none absolute bottom-4 left-1/2 max-w-[80vw] -translate-x-1/2 truncate rounded-pill border border-line bg-[var(--glass-bg)] px-3 py-1 text-caption text-ink-2 backdrop-blur-[20px]">
           {heading.text}
         </span>
       )}
-      <div className="h-[2px] w-full bg-line">
+      <div className={`w-full bg-line transition-[height] duration-200 ${active ? "h-1" : "h-[2px]"}`}>
         <div className="h-full bg-ink-2" style={{ width: `${Math.round(shown * 100)}%` }} />
       </div>
     </div>

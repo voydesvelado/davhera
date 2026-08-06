@@ -26,7 +26,7 @@ export function TocPanel({
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
-      <button className="absolute inset-0 bg-black/20" onMouseDown={onClose} aria-label="cerrar" />
+      <button className="absolute inset-0 bg-black/20" onMouseDown={onClose} aria-label={strings.close} />
       <aside className="relative z-10 flex h-full w-full max-w-sm flex-col border-l border-line bg-bg">
         <div className="flex gap-2 border-b border-line p-4">
           <Chip selected={tab === "contents"} onClick={() => onTab("contents")}>
@@ -119,7 +119,7 @@ export function TypographySheet({
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
-      <button className="absolute inset-0 bg-black/20" onMouseDown={onClose} aria-label="cerrar" />
+      <button className="absolute inset-0 bg-black/20" onMouseDown={onClose} aria-label={strings.close} />
       <div className="relative z-10 flex w-full max-w-md flex-col gap-6 rounded-t-m border border-line bg-bg p-6 sm:rounded-m">
         <div className="flex gap-2">
           <Chip selected={settings.family === "serif"} onClick={() => onChange({ family: "serif" })}>

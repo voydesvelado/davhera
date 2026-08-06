@@ -16,7 +16,7 @@ import { requestPersistence } from "../../app/store";
 import { useSyncState } from "../../app/syncRuntime";
 import { navigate } from "../../app/router";
 import type { Theme } from "../../app/useTheme";
-import { Cover, GhostButton, Pill, ProgressThread } from "../../design/components";
+import { Cover, Pill, ProgressThread } from "../../design/components";
 import { motionSafe, gentle, snappy } from "../../design/springs";
 import { t } from "../../i18n";
 import { ImportSheet } from "../import/ImportSheet";
@@ -119,11 +119,11 @@ export function LibraryScreen({ theme }: { theme: Theme }) {
         </>
       )}
 
-      {/* CTA único de la pantalla, flotante. */}
+      {/* UN solo CTA por pantalla, como manda el spec. Abrir archivos vive dentro
+          del sheet: eran dos botones compitiendo por el mismo momento. */}
       {entries.length > 0 && (
-        <div className="fixed inset-x-0 bottom-6 flex justify-center gap-3">
+        <div className="fixed inset-x-0 bottom-6 flex justify-center">
           <Pill onClick={() => setSheetOpen(true)}>{strings.import}</Pill>
-          <GhostButton onClick={() => fileInput.current?.click()}>{strings.importFiles}</GhostButton>
         </div>
       )}
 
@@ -158,6 +158,10 @@ export function LibraryScreen({ theme }: { theme: Theme }) {
         <ImportSheet
           onClose={() => setSheetOpen(false)}
           onImported={() => void afterImport()}
+          onPickFiles={() => {
+            setSheetOpen(false);
+            fileInput.current?.click();
+          }}
         />
       )}
 

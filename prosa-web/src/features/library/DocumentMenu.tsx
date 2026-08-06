@@ -1,7 +1,10 @@
+import { useState } from "react";
+
 import { db } from "../../core/db/schema";
 import type { LibraryEntry } from "../../core/db/queries";
 import { getStore } from "../../app/store";
 import { navigate } from "../../app/router";
+import { GhostButton, Pill } from "../../design/components";
 import { t } from "../../i18n";
 
 /**
@@ -11,6 +14,9 @@ import { t } from "../../i18n";
 export function DocumentMenu({ entry, onClose }: { entry: LibraryEntry; onClose: () => void }) {
   const strings = t();
   const { document: doc } = entry;
+  // Confirmación dentro de la app, no un window.confirm: el diálogo del navegador
+  // rompe el tono de todo lo demás y no se puede leer con la tipografía de Prosa.
+  const [confirming, setConfirming] = useState(false);
 
   async function setStatus(status: "unread" | "finished") {
     (await getStore()).setStatus(doc.id, status);
@@ -31,7 +37,6 @@ export function DocumentMenu({ entry, onClose }: { entry: LibraryEntry; onClose:
   }
 
   async function remove() {
-    if (!window.confirm(strings.deleteConfirm(doc.title))) return;
     (await getStore()).deleteDocument(doc.id);
     onClose();
   }
@@ -42,7 +47,7 @@ export function DocumentMenu({ entry, onClose }: { entry: LibraryEntry; onClose:
       <button
         className="absolute inset-0 bg-black/20"
         onMouseDown={onClose}
-        aria-label={strings.cancel}
+        aria-label={strings.close}
       />
       <div className="relative z-10 w-full max-w-xs overflow-hidden rounded-m border border-line bg-bg">
         <p className="truncate border-b border-line px-4 py-3 text-caption text-ink-3">{doc.title}</p>
@@ -58,7 +63,17 @@ export function DocumentMenu({ entry, onClose }: { entry: LibraryEntry; onClose:
           onClick={() => void setStatus(doc.status === "finished" ? "unread" : "finished")}
         />
         <MenuItem label={strings.exportMd} onClick={() => void exportMarkdown()} />
-        <MenuItem label={strings.delete} onClick={() => void remove()} destructive />
+        {confirming ? (
+          <div className="border-t border-line p-4">
+            <p className="mb-3 text-secondary text-ink-2">{strings.deleteConfirm(doc.title)}</p>
+            <div className="flex justify-end gap-3">
+              <GhostButton onClick={() => setConfirming(false)}>{strings.cancel}</GhostButton>
+              <Pill onClick={() => void remove()}>{strings.confirmDelete}</Pill>
+            </div>
+          </div>
+        ) : (
+          <MenuItem label={strings.delete} onClick={() => setConfirming(true)} destructive />
+        )}
       </div>
     </div>
   );

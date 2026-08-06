@@ -80,7 +80,7 @@ export function AccountFlow({ onDone, onClose }: { onDone: () => void; onClose: 
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
-      <button className="absolute inset-0 bg-black/20" onMouseDown={onClose} aria-label={strings.cancel} />
+      <button className="absolute inset-0 bg-black/20" onMouseDown={onClose} aria-label={strings.close} />
       <div className="relative z-10 w-full max-w-md rounded-t-m border border-line bg-bg p-6 sm:rounded-m">
         {step === "handle" && (
           <>
