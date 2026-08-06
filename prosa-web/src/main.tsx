@@ -1,7 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { LazyMotion } from "framer-motion";
 import "./design/tokens.css";
 import { App } from "./App";
+import { loadMotionFeatures } from "./design/springs";
 
 // M0: el tema sigue al sistema. En M4 esto pasa al sheet Aa (claro/sepia/gris/negro),
 // que solo cambia CSS variables — por eso el crossfade sale gratis.
@@ -16,6 +18,10 @@ if (!root) throw new Error("#root no existe en index.html");
 
 createRoot(root).render(
   <StrictMode>
-    <App />
+    {/* strict: usar `motion.div` en vez de `m.div` tira error en desarrollo, que es
+        lo único que evita que la optimización del bundle se deshaga sola. */}
+    <LazyMotion strict features={loadMotionFeatures}>
+      <App />
+    </LazyMotion>
   </StrictMode>,
 );

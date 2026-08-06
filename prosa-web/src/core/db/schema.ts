@@ -48,4 +48,17 @@ export class ProsaDB extends Dexie {
   }
 }
 
-export const db = new ProsaDB();
+/**
+ * La base de la app. Es un singleton de módulo porque en un navegador hay una sola
+ * biblioteca por origen.
+ *
+ * Bajo test el nombre lleva un sufijo único por archivo: `fake-indexeddb` es una
+ * base en memoria compartida por todo el proceso, y Vitest aísla módulos por archivo
+ * pero no el proceso, así que dos archivos con el mismo nombre de base se pisan las
+ * live queries y fallan de forma intermitente. Vitest fija MODE="test"; en el bundle
+ * de producción la condición se elimina como código muerto.
+ */
+const DB_NAME =
+  import.meta.env.MODE === "test" ? `prosa-test-${Math.random().toString(36).slice(2)}` : "prosa";
+
+export const db = new ProsaDB(DB_NAME);

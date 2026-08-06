@@ -1,8 +1,34 @@
+@import "tailwindcss";
+
 /* tokens.css — single source of truth del design system (PROSA_SPEC §8).
  *
  * Auditoría: 4 tamaños, 3 inks, 2 radios, 1 acento. (Los 2 springs viven en springs.ts.)
  * Si un cambio introduce un sexto gris o un tercer radio, el cambio está mal.
  */
+
+/* Los mismos tokens, expuestos a Tailwind como utilidades (text-ink-2, bg-bg, …).
+ * Apuntan a las CSS variables de abajo, así que cambiar de tema sigue siendo
+ * cambiar variables: las clases de Tailwind no se recalculan. */
+@theme inline {
+  --color-ink-1: var(--ink-1);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-bg: var(--bg);
+  --color-accent: var(--accent);
+
+  --text-caption: var(--t-caption);
+  --text-secondary: var(--t-secondary);
+  --text-body: var(--t-body);
+  --text-display: var(--t-display);
+
+  --radius-s: var(--r-s);
+  --radius-m: var(--r-m);
+  --radius-pill: var(--r-pill);
+
+  --font-ui: var(--font-ui);
+  --font-serif: var(--font-serif);
+}
 
 :root {
   /* Grises — la jerarquía es por color, NUNCA por peso tipográfico. */

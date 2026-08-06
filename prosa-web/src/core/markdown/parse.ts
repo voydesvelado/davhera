@@ -8,6 +8,11 @@ import { sha256 } from "../hash";
 import { normalizePlainText, snippetOf } from "../text";
 import type { Block, BlockKind, ParsedDocument } from "./blocks";
 
+/**
+ * Este módulo es el pesado del bundle (unified + remark + micromark). Se carga por
+ * `import()` dinámico desde donde se necesita — importar y abrir un documento — para
+ * que el shell inicial siga por debajo del presupuesto de 150KB gzip.
+ */
 const processor = unified().use(remarkParse).use(remarkGfm).use(remarkFrontmatter, ["yaml"]);
 
 /**

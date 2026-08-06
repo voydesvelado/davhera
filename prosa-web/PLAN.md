@@ -279,6 +279,23 @@ ChangeLog se aplica correcto contra `app/sync.py` corriendo en local (test de co
 
 **Acepta cuando**: pego un ensayo y aparece en la biblioteca sin aterrizar en el lector; recargo y sigue ahí.
 
+**Estado (2026-08-06): hecho, 29 tests en verde.** El criterio de aceptación está verificado por
+tests de UI reales (jsdom + fake-indexeddb, persistencia de verdad). Tres cosas encontradas:
+
+1. **Framer Motion costaba 42KB gzip** —medidos con un build stub: 144.7KB con él, 102.7KB sin él—
+   o sea el 28% del presupuesto por dos springs y una transición héroe. Con `LazyMotion` + los
+   componentes `m` y `domMax` cargado aparte, el shell quedó en **119KB gzip** y las features de
+   animación llegan después del primer render. El provider va en modo `strict`, así que usar
+   `motion.div` en vez de `m.div` tira error y la optimización no se deshace sola.
+2. **La biblioteca parpadeaba al empty state.** `useLiveQuery` devuelve `undefined` mientras
+   recalcula, y pasarle `[]` por defecto hacía que en cada recálculo —incluido el primer render de
+   CADA carga de página— se viera "tu biblioteca está vacía" un instante antes de aparecer los
+   ensayos. Se conserva el último resultado conocido y se distingue "cargando" de "vacía".
+3. **Los sheets se cerraban solos al abrirse.** El backdrop se monta debajo del puntero dentro del
+   mismo gesto que abrió el sheet y, con `onClick`, se comía ese click. Cierran por `mousedown`.
+
+Los tres salieron de tests que fallaron, no de revisar el código a ojo.
+
 ### M3 — Lector, anclas, highlights (5–6 días)
 - Chrome invisible, cápsula glass, **inset superior de 64px** (la lección aprendida, no negociable),
   hilo 2pt + scrubber con ticker de headings, TOC sheet/panel, tiempo restante 220 wpm.

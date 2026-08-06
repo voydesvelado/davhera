@@ -8,7 +8,6 @@ import type {
   ReadingStatus,
 } from "./types";
 import { sha256 } from "../hash";
-import { parseDocument } from "../markdown/parse";
 import type { Anchor } from "../anchor/types";
 import {
   documentToWire,
@@ -64,6 +63,9 @@ export class DocumentStore {
    * cuota de IndexedDB se agota a mitad, no queda un registro a medias.
    */
   async importDocument(markdown: string, titleOverride?: string): Promise<DocumentRecord> {
+    // El parser va por import() dinámico: pesa más que todo el resto del shell junto
+    // y no hace falta hasta que alguien importa o abre un documento.
+    const { parseDocument } = await import("../markdown/parse");
     const parsed = await parseDocument(markdown);
     const contentHash = await sha256(markdown);
     const now = this.now();

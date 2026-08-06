@@ -1,12 +1,13 @@
-import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+// `?raw` en vez de readFileSync: los tests de UI corren en jsdom, donde
+// `import.meta.url` es una URL http y `fileURLToPath` falla.
+import ensayo from "./ensayo.md?raw";
 
 /**
  * El ensayo base (~60 bloques) y sus variantes. Vive como archivo .md y no como
  * string en el test a propósito: el MISMO archivo tiene que poder pasarse al parser
  * Swift para verificar la paridad de plainText (PLAN.md §8.2).
  */
-export const BASE = readFileSync(fileURLToPath(new URL("./ensayo.md", import.meta.url)), "utf8");
+export const BASE: string = ensayo;
 
 /**
  * El párrafo que usan los tests como bloque ancla. Elegido por ser distintivo: no se
