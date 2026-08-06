@@ -309,6 +309,24 @@ Los tres salieron de tests que fallaron, no de revisar el código a ojo.
 **Acepta cuando**: cierro la pestaña a media lectura, cambio el tamaño de fuente al volver, y sigo
 exactamente donde estaba.
 
+**Estado (2026-08-06): hecho, 45 tests en verde.** El criterio está verificado al nivel donde se
+puede verificar sin navegador: la geometría del ancla es pura (`core/anchor/viewport.ts`, sin DOM) y
+un test recorre el ciclo completo con el layout del documento agrandado un 30%, comprobando que el
+lector queda en el MISMO bloque y la misma fracción aunque el scrollTop en píxeles sea otro.
+
+Dos hallazgos, otra vez de tests que fallaron:
+
+1. **El espacio que sigue a un subrayado se pintaba de ámbar.** El whitespace no tiene índice propio
+   en el texto normalizado, así que heredaba la cobertura del carácter anterior — incluido el espacio
+   *posterior* al highlight.
+2. **Y al arreglar eso apareció el inverso**: un subrayado que cruzaba una negrita o una cursiva
+   perdía el espacio en la costura, porque la cobertura del whitespace dependía del estado del bucle
+   y ese estado se reinicia en cada nodo de texto. Ahora se resuelve por la posición implícita del
+   espacio en el texto normalizado, sin estado.
+
+Queda pendiente para M7: el popover de nota sobre un highlight existente (hoy el click lo elimina),
+el doble-tap de párrafo, y el pulso de "terminado" (el texto ya aparece, la animación no).
+
 ### M4 — v1 completo y shipeable (3–4 días)
 - `tokens.css` + `springs.ts` (2 springs, 3 inks, 4 tamaños, 2 radios, 1 acento — auditables leyendo
   dos archivos). `prefers-reduced-motion` → solo fades en todo lo animado.
@@ -478,7 +496,6 @@ CREATE INDEX IF NOT EXISTS idx_accounts_key ON accounts(key_hash);
 |---|---|
 | El rewrite de Next hacia un `.html` de `public/` no se comporta como espero | Spike de M0 en preview real; fallback documentado (Route Handler) |
 | El puerto manda `camelCase` en el payload y el servidor lo ignora campo por campo → documentos vacíos, progress 0, **sin ningún error** | Frontera única en `wire.ts` + test de contrato contra `app/sync.py` real en M1 (§0.2.11). Es el fallo más caro del plan porque es silencioso |
-| El parser web produce un `plainText` distinto al de Swift → hashes distintos → todas las anclas fallan al cruzar plataformas | Fixtures compartidos; pedir el dump de `Block[]` del parser nativo (§8.2). Hasta tenerlo, la paridad no está verificada y hay que decirlo |
 | Tocar `main.py` degrada la instancia **personal** en producción | Tests de regresión primero; `PROSA_MODE=personal` como camino por defecto e intacto |
 | CORS/preflight descubierto tarde | Se prueba en M5 con curl, mucho antes de que exista UI de cuenta |
 | Presupuesto de 150KB reventado por remark + framer-motion | Code-splitting desde el día uno (parser, JSZip y turndown lazy); medir en cada milestone, no al final |
@@ -510,23 +527,29 @@ CREATE INDEX IF NOT EXISTS idx_accounts_key ON accounts(key_hash);
 
 ## 8. Input pendiente
 
+> **Decisión (2026-08-06): el producto es la web y nada más.** Se deja de perseguir paridad con las
+> apps nativas. Consecuencias, todas asumidas a propósito:
+>
+> - El dump de `Block[]` del parser Swift ya no hace falta. El parser web es la definición de qué es
+>   un bloque; los tests que lo comparan consigo mismo son suficientes porque no hay otro con quien
+>   coincidir.
+> - Los 5 grises de portada dejan de ser "provisionales": los interpolados en `design/covers.ts`
+>   pasan a ser los definitivos.
+> - Lo que **sigue vigente** es el wire format (§0.2.11): el servidor es real y compartido, así que
+>   `snake_case` y el test de contrato no se tocan. Que no haya paridad de UI no significa que se
+>   pueda hablar mal con el servidor.
+> - El AnchorEngine tampoco pierde nada: sus reglas eran buenas por sí mismas, no por ser un puerto.
+
 **Resuelto** (2026-08-06): la *Referencia Core* cubre §2, §4 + los 11 tests, §8 tokens exactos y §6
 DuplicateReconciler + sus 6 tests. **M1 y M6 están desbloqueados**; se puede empezar.
 
 Queda pendiente, ninguno bloqueante para arrancar M0/M1:
 
-1. **Los 5 grises exactos de portada** y el mapeo `coverSeed → índice`. El spec da el rango
-   (`#E8E8E8`→`#4A4A4A`) pero no los cinco valores ni la función, y la DoD exige que un documento
-   "se vea igual aquí que en Mac/iOS". *(Necesario en M2; mientras tanto, 5 pasos interpolados y una
-   constante fácil de reemplazar.)* Los "equivalentes invertidos en dark" también sin definir.
-2. **Dump de `Block[]` del parser Swift** para el ensayo fixture, en JSON. Es la única forma de
-   verificar de verdad la paridad de `plainText` — sin él, los tests comparan el parser web consigo
-   mismo. *(Necesario en M1 para cerrar el criterio de paridad; el resto de M1 avanza sin él.)*
-3. **El ensayo de muestra** ("Carta a Meneceo") en en/es, el mismo resource de las apps nativas.
-4. **Acceso al DNS de davhera.com** para el A de `api.prosa`. Bloquea M5 (no M1–M4).
-5. Confirmar que el deploy de davhera.com es Vercel-desde-git en `main` (no vi `vercel.json`;
-   la rama actual es `test/footer-deploy-check`).
-6. Origin canónico para CORS: ¿`davhera.com` solo, o también `www.davhera.com`?
+1. **El ensayo de muestra** para el primer arranque, en es/en. Si no llega uno propio, se escribe
+   uno para el producto y listo.
+2. **Acceso al DNS de davhera.com** para el A de `api.prosa`. Bloquea M5 (no M1–M4).
+3. Confirmar que el deploy de davhera.com es Vercel-desde-git en `main` (no vi `vercel.json`).
+4. Origin canónico para CORS: ¿`davhera.com` solo, o también `www.davhera.com`?
 
 ## Backlog
 Web Share Target · lector web del inbox de Telegram · "quedan N lugares" en la landing ·

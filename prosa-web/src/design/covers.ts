@@ -1,16 +1,14 @@
 /**
  * Portadas: fondo gris determinístico por `coverSeed` + título en serif. Sin
- * gradientes, sin color, sin imágenes. Un documento se ve igual en web, Mac y iOS.
+ * gradientes, sin color, sin imágenes.
  *
- * PROVISIONAL — pendiente de input (PLAN.md §8.1): el spec da el RANGO
- * (#E8E8E8 → #4A4A4A) pero no los cinco valores ni la función de mapeo. Estos son
- * cinco pasos interpolados en ese rango. Cuando lleguen los valores exactos de las
- * apps nativas, se reemplazan acá y en ningún otro lado.
+ * Cinco pasos interpolados en el rango del spec (#E8E8E8 → #4A4A4A). Son los
+ * definitivos: el producto es la web, no hay otra plataforma con la que coincidir.
  */
 
 export const COVER_GREYS_LIGHT = ["#E8E8E8", "#C1C1C1", "#999999", "#727272", "#4A4A4A"] as const;
 
-/** Equivalentes invertidos para tema oscuro. También provisionales. */
+/** Equivalentes para tema oscuro: mismo salto de luminancia, invertido. */
 export const COVER_GREYS_DARK = ["#1C1C1C", "#2A2A2A", "#383838", "#484848", "#5A5A5A"] as const;
 
 export function coverGrey(seed: number, theme: "light" | "dark"): string {

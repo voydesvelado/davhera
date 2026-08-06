@@ -71,6 +71,29 @@
   --glass-bg: rgba(14, 14, 14, 0.72);
 }
 
+/* Temas de LECTURA. Son independientes de la UI y solo cambian variables, por eso
+   el crossfade al cambiarlos sale gratis: no se recalcula ni un layout. */
+[data-theme="sepia"] {
+  --ink-1: #3a3226;
+  --ink-2: #6b5f4e;
+  --ink-3: #9a8c76;
+  --line: #e6dcc6;
+  --bg: #f7f1e3;
+  --accent: rgba(245, 200, 76, 0.4);
+  --glass-bg: rgba(247, 241, 227, 0.72);
+}
+
+/* Negro OLED: negro puro de verdad, para que los píxeles se apaguen. */
+[data-theme="black"] {
+  --ink-1: #e6e6e6;
+  --ink-2: #9a9a9a;
+  --ink-3: #5e5e5e;
+  --line: #1a1a1a;
+  --bg: #000000;
+  --accent: rgba(245, 200, 76, 0.25);
+  --glass-bg: rgba(0, 0, 0, 0.72);
+}
+
 /* Fallback donde no hay backdrop-filter: opaco al 96%, se ve bien, no se rompe. */
 @supports not (backdrop-filter: blur(20px)) {
   :root {

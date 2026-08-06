@@ -71,6 +71,7 @@ export async function parseDocument(markdown: string): Promise<ParsedDocument> {
 
   return {
     blocks,
+    nodes,
     plainTextIndex,
     wordCount: countWords(plainTextIndex),
     title: detectTitle(tree, blocks, plainTextIndex),

@@ -33,6 +33,12 @@ export interface Block {
 
 export interface ParsedDocument {
   blocks: Block[];
+  /**
+   * Los nodos mdast de cada bloque, mismos índices que `blocks`. El lector los
+   * necesita para renderizar el formato inline (negritas, links, código) que el
+   * `plainText` deliberadamente descarta.
+   */
+  nodes: unknown[];
   /** Todo el texto plano concatenado, para búsqueda full-text en la biblioteca. */
   plainTextIndex: string;
   wordCount: number;
