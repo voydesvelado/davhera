@@ -125,12 +125,38 @@ select:focus-visible,
   border-radius: var(--r-s);
 }
 
+/* Entrada del diálogo. Va en CSS y no con springs a propósito: el presupuesto de
+   movimiento del spec son DOS springs (uno de UI, uno de contenido) y ya están
+   usados. Un fade con un desplazamiento corto alcanza y no agrega un tercero. */
+dialog.prosa-dialog[open] {
+  animation: prosa-dialog-in 0.18s ease-out;
+}
+dialog.prosa-dialog[open]::backdrop {
+  animation: prosa-backdrop-in 0.18s ease-out;
+}
+@keyframes prosa-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@keyframes prosa-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+  /* El desplazamiento se elimina del todo: para algunas personas el movimiento
+     produce náusea, y acelerarlo no lo arregla. Queda el fade. */
+  dialog.prosa-dialog[open] {
+    animation: prosa-backdrop-in 0.01ms;
   }
 }
 

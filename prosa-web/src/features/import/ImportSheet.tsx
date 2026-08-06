@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { db } from "../../core/db/schema";
 import { inspect, type ImportCandidate } from "../../core/import/importer";
 import { getStore } from "../../app/store";
-import { GhostButton, Pill } from "../../design/components";
+import { Button } from "../../design/Button";
+import { Dialog, DialogActions, DialogTitle } from "../../design/Dialog";
 import { t } from "../../i18n";
 
 /**
@@ -67,19 +68,10 @@ export function ImportSheet({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
-      {/* Cierra por mousedown, no por click: el backdrop se monta debajo del puntero
-          en el mismo gesto que abrió el sheet, y con onClick se comería ese click
-          y el sheet se cerraría solo apenas se abre. */}
-      <button
-        className="absolute inset-0 bg-black/20"
-        onMouseDown={onClose}
-        aria-label={strings.close}
-      />
-      <div className="relative z-10 flex max-h-[85vh] w-full max-w-xl flex-col gap-4 rounded-t-m border border-line bg-bg p-6 sm:rounded-m">
-        <h2 className="text-display font-medium">{strings.importPaste}</h2>
+    <Dialog open onClose={onClose} labelledBy="import-title">
+      <DialogTitle id="import-title">{strings.importPaste}</DialogTitle>
 
-        <textarea
+      <textarea
           autoFocus
           value={markdown}
           onChange={(event) => setMarkdown(event.target.value)}
@@ -114,26 +106,30 @@ export function ImportSheet({
           <p className="text-secondary text-ink-2">{strings.looksLikeNewVersion}</p>
         )}
 
-        <div className="flex flex-wrap items-center justify-end gap-3">
+        <DialogActions>
           {/* Las dos formas de importar, juntas donde alguien ya decidió importar. */}
           {onPickFiles && !candidate && (
-            <GhostButton onClick={onPickFiles} className="mr-auto">
+            <Button onClick={onPickFiles} className="mr-auto">
               {strings.importFiles}
-            </GhostButton>
+            </Button>
           )}
-          <GhostButton onClick={onClose}>{strings.cancel}</GhostButton>
+          <Button onClick={onClose}>{strings.cancel}</Button>
           {(verdict?.kind === "sameTitle" || verdict?.kind === "contains") && (
-            <GhostButton disabled={busy} onClick={() => void add("replace")}>
+            <Button disabled={busy} onClick={() => void add("replace")}>
               {strings.replace}
-            </GhostButton>
+            </Button>
           )}
-          <Pill disabled={!candidate || verdict?.kind === "identical" || busy} onClick={() => void add("new")}>
+          <Button
+            variant="pill"
+            size="md"
+            disabled={!candidate || verdict?.kind === "identical" || busy}
+            onClick={() => void add("new")}
+          >
             {verdict?.kind === "sameTitle" || verdict?.kind === "contains"
               ? strings.keepBoth
               : strings.add}
-          </Pill>
-        </div>
-      </div>
-    </div>
+          </Button>
+        </DialogActions>
+    </Dialog>
   );
 }

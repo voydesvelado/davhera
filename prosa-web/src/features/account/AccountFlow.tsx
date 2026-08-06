@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
 import { db } from "../../core/db/schema";
 import { ApiError, ProsaClient } from "../../core/sync/client";
-import { GhostButton, Pill } from "../../design/components";
+import { Button } from "../../design/Button";
+import { Dialog, DialogActions, DialogTitle } from "../../design/Dialog";
 import { t } from "../../i18n";
 
 /**
@@ -79,12 +80,10 @@ export function AccountFlow({ onDone, onClose }: { onDone: () => void; onClose: 
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
-      <button className="absolute inset-0 bg-black/20" onMouseDown={onClose} aria-label={strings.close} />
-      <div className="relative z-10 w-full max-w-md rounded-t-m border border-line bg-bg p-6 sm:rounded-m">
+    <Dialog open onClose={onClose} labelledBy="account-title" size="md">
         {step === "handle" && (
           <>
-            <h2 className="mb-2 text-display font-medium">{strings.backupMyLibrary}</h2>
+            <DialogTitle id="account-title">{strings.backupMyLibrary}</DialogTitle>
             <p className="mb-6 text-secondary text-ink-2">{strings.handleExplainer}</p>
 
             <div className="mb-2 flex items-center gap-2 rounded-s border border-line px-3 py-2">
@@ -108,17 +107,19 @@ export function AccountFlow({ onDone, onClose }: { onDone: () => void; onClose: 
 
             {error && <p className="mb-4 text-secondary text-ink-1">{error}</p>}
 
-            <div className="flex items-center justify-between">
-              <button
-                onClick={() => setStep("login")}
-                className="text-secondary text-ink-3 hover:text-ink-1"
-              >
+            <DialogActions className="justify-between">
+              <Button variant="faint" onClick={() => setStep("login")}>
                 {strings.haveAccount}
-              </button>
-              <Pill disabled={!availability?.available || busy} onClick={() => void create()}>
+              </Button>
+              <Button
+                variant="pill"
+                size="md"
+                disabled={!availability?.available || busy}
+                onClick={() => void create()}
+              >
                 {strings.create}
-              </Pill>
-            </div>
+              </Button>
+            </DialogActions>
           </>
         )}
 
@@ -126,7 +127,7 @@ export function AccountFlow({ onDone, onClose }: { onDone: () => void; onClose: 
 
         {step === "login" && (
           <>
-            <h2 className="mb-2 text-display font-medium">{strings.haveAccount}</h2>
+            <DialogTitle id="account-title">{strings.haveAccount}</DialogTitle>
             <p className="mb-6 text-secondary text-ink-2">{strings.loginExplainer}</p>
             <input
               autoFocus
@@ -136,16 +137,20 @@ export function AccountFlow({ onDone, onClose }: { onDone: () => void; onClose: 
               className="mb-4 w-full rounded-s border border-line bg-transparent px-3 py-2 font-mono text-secondary outline-none focus:border-ink-3"
             />
             {error && <p className="mb-4 text-secondary text-ink-1">{error}</p>}
-            <div className="flex items-center justify-between">
-              <GhostButton onClick={() => setStep("handle")}>{strings.cancel}</GhostButton>
-              <Pill disabled={key.length < 10 || busy} onClick={() => void login()}>
+            <DialogActions className="justify-between">
+              <Button onClick={() => setStep("handle")}>{strings.cancel}</Button>
+              <Button
+                variant="pill"
+                size="md"
+                disabled={key.length < 10 || busy}
+                onClick={() => void login()}
+              >
                 {strings.enter}
-              </Pill>
-            </div>
+              </Button>
+            </DialogActions>
           </>
         )}
-      </div>
-    </div>
+    </Dialog>
   );
 }
 
@@ -196,22 +201,22 @@ export function KeyScreen({
 
   return (
     <>
-      <h2 className="mb-4 text-display font-medium">{strings.yourKey}</h2>
+      <DialogTitle id="account-title" className="mb-4">{strings.yourKey}</DialogTitle>
 
       <p className="mb-4 rounded-s border border-line px-4 py-3 text-center font-mono text-body break-all">
         {accessKey}
       </p>
 
       <div className="mb-6 flex gap-3">
-        <GhostButton
+        <Button
           onClick={() => {
             void navigator.clipboard?.writeText(accessKey);
             setCopied(true);
           }}
         >
           {copied ? strings.copied : strings.copy}
-        </GhostButton>
-        <GhostButton onClick={download}>{strings.downloadKey}</GhostButton>
+        </Button>
+        <Button onClick={download}>{strings.downloadKey}</Button>
       </div>
 
       {/* Sin eufemismos. Si esto no se entiende, alguien va a perder su biblioteca
@@ -228,9 +233,15 @@ export function KeyScreen({
         <span>{strings.keySaved}</span>
       </label>
 
-      <Pill disabled={!confirmed || secondsLeft > 0} onClick={onDone} className="w-full">
+      <Button
+        variant="pill"
+        size="md"
+        disabled={!confirmed || secondsLeft > 0}
+        onClick={onDone}
+        className="w-full"
+      >
         {secondsLeft > 0 ? `${strings.understood} (${secondsLeft})` : strings.understood}
-      </Pill>
+      </Button>
     </>
   );
 }

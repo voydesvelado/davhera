@@ -5,7 +5,8 @@ import { db } from "../../core/db/schema";
 import { exportLibrary, importLibrary } from "../../core/export/zip";
 import { getStore, storageEstimate } from "../../app/store";
 import { navigate } from "../../app/router";
-import { Chip, GhostButton, Pill } from "../../design/components";
+import { Button, Chip } from "../../design/Button";
+import { Dialog } from "../../design/Dialog";
 import { detectLocale, setLocale, t, type Locale } from "../../i18n";
 import { syncAvailable } from "../../core/sync/client";
 import { AccountFlow, KeyScreen } from "../account/AccountFlow";
@@ -79,18 +80,18 @@ export function SettingsScreen() {
     <main className="mx-auto min-h-dvh w-full max-w-[68ch] px-6 py-10">
       <header className="mb-10 flex items-baseline justify-between">
         <h1 className="text-display font-medium">{strings.settings}</h1>
-        <GhostButton onClick={() => navigate({ name: "library" })}>{strings.library}</GhostButton>
+        <Button variant="quiet" onClick={() => navigate({ name: "library" })}>{strings.library}</Button>
       </header>
 
       <Section title={strings.backupTitle}>
         <p className="mb-4 text-secondary text-ink-2">{strings.backupBody}</p>
         <div className="flex flex-wrap items-center gap-3">
-          <Pill disabled={busy !== null || count === 0} onClick={() => void doExport()}>
+          <Button variant="pill" size="md" disabled={busy !== null || count === 0} onClick={() => void doExport()}>
             {busy === "export" ? "…" : strings.exportZip}
-          </Pill>
-          <GhostButton disabled={busy !== null} onClick={() => fileInput.current?.click()}>
+          </Button>
+          <Button disabled={busy !== null} onClick={() => fileInput.current?.click()}>
             {busy === "import" ? "…" : strings.importZip}
-          </GhostButton>
+          </Button>
         </div>
         {message && <p className="mt-3 text-caption text-ink-3">{message}</p>}
         <input
@@ -171,13 +172,13 @@ export function SettingsScreen() {
             <div className="flex flex-wrap gap-3">
               {/* Solo aparece si algo falló: en el camino normal no hay nada que tocar. */}
               {state.status === "error" && (
-                <GhostButton onClick={() => syncNow()}>{strings.syncNow}</GhostButton>
+                <Button onClick={() => syncNow()}>{strings.syncNow}</Button>
               )}
-              <GhostButton onClick={() => setShowingKey(true)}>{strings.showKey}</GhostButton>
-              <GhostButton onClick={() => void signOut()}>{strings.signOut}</GhostButton>
-              <GhostButton onClick={() => setDeleteConfirm("")}>
+              <Button onClick={() => setShowingKey(true)}>{strings.showKey}</Button>
+              <Button onClick={() => void signOut()}>{strings.signOut}</Button>
+              <Button variant="destructive" onClick={() => setDeleteConfirm("")}>
                 {strings.deleteAccount}
-              </GhostButton>
+              </Button>
             </div>
             <p className="text-caption text-ink-3">{strings.signOutExplainer}</p>
 
@@ -192,8 +193,10 @@ export function SettingsScreen() {
                   className="rounded-s border border-line bg-transparent px-3 py-2 text-secondary outline-none"
                 />
                 <div className="flex justify-end gap-3">
-                  <GhostButton onClick={() => setDeleteConfirm(null)}>{strings.cancel}</GhostButton>
-                  <Pill
+                  <Button onClick={() => setDeleteConfirm(null)}>{strings.cancel}</Button>
+                  <Button
+                    variant="pill"
+                    size="md"
                     disabled={deleteConfirm !== `@${account.handle}`}
                     onClick={() => {
                       void deleteAccount();
@@ -201,13 +204,13 @@ export function SettingsScreen() {
                     }}
                   >
                     {strings.delete}
-                  </Pill>
+                  </Button>
                 </div>
               </div>
             )}
           </div>
         ) : (
-          <Pill onClick={() => setAccountFlow(true)}>{strings.backupMyLibrary}</Pill>
+          <Button variant="pill" size="md" onClick={() => setAccountFlow(true)}>{strings.backupMyLibrary}</Button>
         )}
       </Section>
 
@@ -216,13 +219,12 @@ export function SettingsScreen() {
       )}
 
       {showingKey && account && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <button
-            className="absolute inset-0 bg-black/20"
-            onMouseDown={() => setShowingKey(false)}
-            aria-label={strings.close}
-          />
-          <div className="relative z-10 w-full max-w-md rounded-m border border-line bg-bg p-6">
+        <Dialog
+          open
+          onClose={() => setShowingKey(false)}
+          labelledBy="account-title"
+          size="md"
+        >
             {/* Se re-muestra con las MISMAS advertencias: sirve para sumar un
                 dispositivo, y el trato no cambia porque sea la segunda vez. */}
             <KeyScreen
@@ -230,8 +232,7 @@ export function SettingsScreen() {
               accessKey={account.key}
               onDone={() => setShowingKey(false)}
             />
-          </div>
-        </div>
+        </Dialog>
       )}
     </main>
   );

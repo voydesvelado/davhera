@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, m } from "framer-motion";
 
 import { motionSafe, snappy } from "../../design/springs";
+import { Button } from "../../design/Button";
 import { t } from "../../i18n";
 import type { Block } from "../../core/markdown/blocks";
 
@@ -37,16 +38,16 @@ export function ReaderCapsule({
           className="fixed inset-x-0 top-0 z-30 flex justify-center px-4 pt-3"
         >
           <div className="flex w-full max-w-2xl items-center gap-3 rounded-pill border border-line bg-[var(--glass-bg)] px-4 py-2 backdrop-blur-[20px] backdrop-saturate-150">
-            <button onClick={onBack} className="text-secondary text-ink-2 hover:text-ink-1">
+            <Button variant="quiet" onClick={onBack} aria-label={strings.library}>
               ←
-            </button>
+            </Button>
             <span className="flex-1 truncate text-center text-secondary text-ink-2">{title}</span>
-            <button onClick={onToc} className="text-secondary text-ink-2 hover:text-ink-1">
+            <Button variant="quiet" onClick={onToc}>
               {strings.toc}
-            </button>
-            <button onClick={onSettings} className="text-secondary text-ink-2 hover:text-ink-1">
+            </Button>
+            <Button variant="quiet" onClick={onSettings} aria-label={strings.typography}>
               Aa
-            </button>
+            </Button>
           </div>
         </m.div>
       )}

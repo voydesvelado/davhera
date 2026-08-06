@@ -4,7 +4,8 @@ import { db } from "../../core/db/schema";
 import type { LibraryEntry } from "../../core/db/queries";
 import { getStore } from "../../app/store";
 import { navigate } from "../../app/router";
-import { GhostButton, Pill } from "../../design/components";
+import { Button } from "../../design/Button";
+import { Dialog, DialogActions } from "../../design/Dialog";
 import { t } from "../../i18n";
 
 /**
@@ -42,15 +43,10 @@ export function DocumentMenu({ entry, onClose }: { entry: LibraryEntry; onClose:
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* mousedown y no click: ver la nota del backdrop en ImportSheet. */}
-      <button
-        className="absolute inset-0 bg-black/20"
-        onMouseDown={onClose}
-        aria-label={strings.close}
-      />
-      <div className="relative z-10 w-full max-w-xs overflow-hidden rounded-m border border-line bg-bg">
-        <p className="truncate border-b border-line px-4 py-3 text-caption text-ink-3">{doc.title}</p>
+    <Dialog open onClose={onClose} labelledBy="menu-title" bare size="xs">
+        <p id="menu-title" className="truncate border-b border-line px-4 py-3 text-caption text-ink-3">
+          {doc.title}
+        </p>
         <MenuItem
           label={strings.open}
           onClick={() => {
@@ -66,16 +62,17 @@ export function DocumentMenu({ entry, onClose }: { entry: LibraryEntry; onClose:
         {confirming ? (
           <div className="border-t border-line p-4">
             <p className="mb-3 text-secondary text-ink-2">{strings.deleteConfirm(doc.title)}</p>
-            <div className="flex justify-end gap-3">
-              <GhostButton onClick={() => setConfirming(false)}>{strings.cancel}</GhostButton>
-              <Pill onClick={() => void remove()}>{strings.confirmDelete}</Pill>
-            </div>
+            <DialogActions className="mt-0">
+              <Button onClick={() => setConfirming(false)}>{strings.cancel}</Button>
+              <Button variant="pill" size="md" onClick={() => void remove()}>
+                {strings.confirmDelete}
+              </Button>
+            </DialogActions>
           </div>
         ) : (
           <MenuItem label={strings.delete} onClick={() => setConfirming(true)} destructive />
         )}
-      </div>
-    </div>
+    </Dialog>
   );
 }
 
@@ -89,13 +86,8 @@ function MenuItem({
   destructive?: boolean;
 }) {
   return (
-    <button
-      onClick={onClick}
-      className={`block w-full border-b border-line px-4 py-3 text-left text-body last:border-b-0 hover:bg-line/40 ${
-        destructive ? "text-ink-2" : "text-ink-1"
-      }`}
-    >
+    <Button variant={destructive ? "menuFaint" : "menu"} size="sm" onClick={onClick}>
       {label}
-    </button>
+    </Button>
   );
 }

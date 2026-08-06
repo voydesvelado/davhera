@@ -1,5 +1,6 @@
 import type { HighlightRecord } from "../../core/db/types";
-import { Chip } from "../../design/components";
+import { Chip } from "../../design/Button";
+import { Dialog, DialogTitle } from "../../design/Dialog";
 import { t } from "../../i18n";
 import type { ReadingSettings } from "./useReadingSettings";
 
@@ -25,9 +26,10 @@ export function TocPanel({
   const anchored = live.filter((h) => !h.isOrphaned);
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end">
-      <button className="absolute inset-0 bg-black/20" onMouseDown={onClose} aria-label={strings.close} />
-      <aside className="relative z-10 flex h-full w-full max-w-sm flex-col border-l border-line bg-bg">
+    <Dialog open onClose={onClose} presentation="panel" labelledBy="toc-title" bare>
+      <DialogTitle id="toc-title" className="sr-only">
+        {strings.toc}
+      </DialogTitle>
         <div className="flex gap-2 border-b border-line p-4">
           <Chip selected={tab === "contents"} onClick={() => onTab("contents")}>
             {strings.contents}
@@ -93,8 +95,7 @@ export function TocPanel({
             </div>
           )}
         </div>
-      </aside>
-    </div>
+    </Dialog>
   );
 }
 
@@ -118,9 +119,11 @@ export function TypographySheet({
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
-      <button className="absolute inset-0 bg-black/20" onMouseDown={onClose} aria-label={strings.close} />
-      <div className="relative z-10 flex w-full max-w-md flex-col gap-6 rounded-t-m border border-line bg-bg p-6 sm:rounded-m">
+    <Dialog open onClose={onClose} labelledBy="aa-title" size="md">
+      <DialogTitle id="aa-title" className="sr-only">
+        {strings.typography}
+      </DialogTitle>
+      <div className="flex flex-col gap-6">
         <div className="flex gap-2">
           <Chip selected={settings.family === "serif"} onClick={() => onChange({ family: "serif" })}>
             {strings.serif}
@@ -171,6 +174,6 @@ export function TypographySheet({
           </div>
         </div>
       </div>
-    </div>
+    </Dialog>
   );
 }

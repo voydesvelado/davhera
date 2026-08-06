@@ -24,6 +24,9 @@ export default defineConfig({
     modulePreload: { polyfill: false },
   },
   test: {
+    // jsdom no implementa <dialog>; el shim le da lo mínimo para abrir y cerrar.
+    // Ver el comentario del archivo: NO cubre trampa de foco ni fondo inerte.
+    setupFiles: ["./tests/setup/dialog-shim.ts"],
     // Sin paralelismo entre archivos: los tests de UI corren sobre fake-indexeddb,
     // que es una base en memoria del proceso, y `db` es un singleton de módulo con
     // nombre fijo. Dos archivos a la vez se pisan la biblioteca y el que pierde

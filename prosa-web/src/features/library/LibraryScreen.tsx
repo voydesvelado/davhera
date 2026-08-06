@@ -16,7 +16,8 @@ import { requestPersistence } from "../../app/store";
 import { useSyncState } from "../../app/syncRuntime";
 import { navigate } from "../../app/router";
 import type { Theme } from "../../app/useTheme";
-import { Cover, Pill, ProgressThread } from "../../design/components";
+import { Button } from "../../design/Button";
+import { Cover, ProgressThread } from "../../design/components";
 import { motionSafe, gentle, snappy } from "../../design/springs";
 import { t } from "../../i18n";
 import { ImportSheet } from "../import/ImportSheet";
@@ -95,12 +96,9 @@ export function LibraryScreen({ theme }: { theme: Theme }) {
           aria-label={strings.search}
           className="w-32 rounded-s border border-line bg-transparent px-3 py-1.5 text-secondary outline-none transition-[width] focus:w-48 focus:border-ink-3"
         />
-        <button
-          onClick={() => navigate({ name: "settings" })}
-          className="text-secondary text-ink-3 hover:text-ink-1"
-        >
+        <Button variant="faint" onClick={() => navigate({ name: "settings" })}>
           {strings.settings}
-        </button>
+        </Button>
         </div>
       </header>
 
@@ -123,7 +121,7 @@ export function LibraryScreen({ theme }: { theme: Theme }) {
           del sheet: eran dos botones compitiendo por el mismo momento. */}
       {entries.length > 0 && (
         <div className="fixed inset-x-0 bottom-6 flex justify-center">
-          <Pill onClick={() => setSheetOpen(true)}>{strings.import}</Pill>
+          <Button variant="pill" size="md" onClick={() => setSheetOpen(true)}>{strings.import}</Button>
         </div>
       )}
 
@@ -320,11 +318,11 @@ function EmptyState({ onPaste, onFiles }: { onPaste: () => void; onFiles: () => 
         animate={{ scale: [1, 1.03, 1] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       >
-        <Pill onClick={onPaste}>{strings.importPaste}</Pill>
+        <Button variant="pill" size="md" onClick={onPaste}>{strings.importPaste}</Button>
       </m.div>
-      <button onClick={onFiles} className="text-secondary text-ink-3 underline-offset-4 hover:underline">
+      <Button variant="faint" onClick={onFiles} className="underline-offset-4 hover:underline">
         {strings.emptyHint}
-      </button>
+      </Button>
     </div>
   );
 }

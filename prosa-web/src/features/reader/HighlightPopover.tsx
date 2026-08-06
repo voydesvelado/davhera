@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import type { HighlightRecord } from "../../core/db/types";
+import { Button } from "../../design/Button";
 import { t } from "../../i18n";
 
 /**
@@ -72,18 +73,19 @@ export function HighlightPopover({
           className="mb-2 min-h-16 w-full resize-none rounded-s border border-line bg-transparent p-2 text-secondary outline-none focus:border-ink-3"
         />
         <div className="flex justify-end gap-3 text-secondary">
-          <button
+          <Button
+            variant="quiet"
+            size="none"
             onClick={() => {
               void navigator.clipboard?.writeText(highlight.snapshotText);
               onClose();
             }}
-            className="text-ink-2 hover:text-ink-1"
           >
             {strings.copy}
-          </button>
-          <button onClick={onRemove} className="text-ink-3 hover:text-ink-1">
+          </Button>
+          <Button variant="faint" size="none" onClick={onRemove}>
             {strings.removeHighlight}
-          </button>
+          </Button>
         </div>
       </div>
     </>
