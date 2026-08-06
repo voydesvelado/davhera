@@ -37,11 +37,18 @@ export function LibraryScreen({ theme }: { theme: Theme }) {
   // "tu biblioteca está vacía" un instante antes de aparecer los ensayos.
   // Se conserva el último resultado conocido y se distingue "cargando" (undefined)
   // de "vacía" (length 0), que no son lo mismo.
+  //
+  // El último resultado se guarda en estado y no en un ref escrito durante el
+  // render: mutar un ref mientras se renderiza es una violación de las reglas de
+  // React que hoy funciona por casualidad y con render concurrente se rompe.
   const live = useLiveQuery(() => listLibrary(db), []);
-  const lastKnown = useRef<LibraryEntry[]>([]);
-  if (live) lastKnown.current = live;
-  const entries = live ?? lastKnown.current;
-  const loading = live === undefined && lastKnown.current.length === 0;
+  const [lastKnown, setLastKnown] = useState<LibraryEntry[]>([]);
+  // Ajuste de estado durante el render, con guarda: el patrón que React documenta
+  // para derivar estado de un valor cambiante. No hace falta un efecto (que
+  // provocaría un render de más) ni mutar un ref (que rompe con render concurrente).
+  if (live !== undefined && live !== lastKnown) setLastKnown(live);
+  const entries = live ?? lastKnown;
+  const loading = live === undefined && lastKnown.length === 0;
   const { dragging, runImport } = useDropImport(setSummary);
 
   const reading = useMemo(() => continueReading(entries), [entries]);

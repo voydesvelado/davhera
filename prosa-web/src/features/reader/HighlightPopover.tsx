@@ -24,18 +24,27 @@ export function HighlightPopover({
 }) {
   const strings = t();
   const [note, setNote] = useState(highlight.note ?? "");
-  const noteRef = useRef(note);
-  noteRef.current = note;
+
+  // El efecto de guardado corre UNA vez y limpia al desmontar, así que necesita
+  // leer el valor más reciente sin volver a suscribirse. Los refs se actualizan en
+  // un efecto, no durante el render: mutarlos mientras se renderiza viola las
+  // reglas de React y con render concurrente deja de funcionar.
+  const latest = useRef({ note, previous: highlight.note ?? "", onNote });
+  useEffect(() => {
+    latest.current = { note, previous: highlight.note ?? "", onNote };
+  }, [note, highlight.note, onNote]);
 
   // Se guarda al desmontar, pase lo que pase: cerrar con Escape, tocar afuera o
-  // navegar. Una nota escrita y perdida es peor que no tener notas.
+  // navegar. Una nota escrita y perdida es peor que no tener notas. Las deps van
+  // vacías a propósito: si dependiera de `onNote`, cualquier re-render del padre
+  // dispararía el guardado a mitad de que alguien escribe.
   useEffect(() => {
     return () => {
-      const trimmed = noteRef.current.trim();
-      const previous = highlight.note ?? "";
-      if (trimmed !== previous) onNote(trimmed === "" ? null : trimmed);
+      const { note: current, previous, onNote: save } = latest.current;
+      const trimmed = current.trim();
+      if (trimmed !== previous) save(trimmed === "" ? null : trimmed);
     };
-  }, [highlight.note, onNote]);
+  }, []);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
