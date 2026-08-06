@@ -606,15 +606,21 @@ Esto no está probado, y decirlo importa más que la lista de arriba:
   reales, `aria-label` en los backdrops), no probados con un lector de pantalla.
 - **El copy de la pantalla de la clave, validado con alguien que no sea el autor**: es una tarea
   humana y sigue pendiente. Es el punto donde alguien puede perder su biblioteca.
-- **El servidor NO está desplegado.** El código está completo y probado, con los artefactos en
-  `prosa-cloud/deploy/`, pero nada se instaló: falta el registro DNS de `api.prosa.davhera.com` y
-  una decisión explícita para tocar un servidor que hoy sirve la biblioteca personal.
+- ~~El servidor no está desplegado.~~ **DESPLEGADO el 2026-08-06.** `prosa-public.service` en
+  `127.0.0.1:8703`, base en `/var/lib/prosa/public.db` (separada de la personal), documentos en
+  `/var/lib/prosa/public-documents/`, y Caddy sirviéndolo en
+  `https://public.46.225.147.90.sslip.io`.
 
-  Como consecuencia, **el respaldo con @ va apagado en producción**: `VITE_PROSA_API` no está
-  definida, así que `syncAvailable()` es false y Ajustes dice que el respaldo todavía no existe, en
-  vez de ofrecer un botón que fallaría siempre. Para encenderlo, una vez que el servidor esté
-  arriba: definir `VITE_PROSA_API=https://api.prosa.davhera.com` en las variables del proyecto en
-  Vercel y redeployar. No hay que tocar código.
+  **Por qué sslip.io y no `api.prosa.davhera.com`**: ese registro DNS no existe y su zona vive en
+  Vercel, sin acceso desde el VPS. sslip.io resuelve cualquier `*.46.225.147.90.sslip.io` a esa IP
+  sin configurar nada, así que el respaldo funciona hoy. Para mudarlo al nombre lindo: crear el
+  registro A, agregar el nombre al bloque de Caddy, y cambiar dos constantes
+  (`client.ts` y el `connect-src` de `next.config.ts`). El servicio no se toca.
+
+  Verificado en producción: TLS, CORS solo desde `davhera.com`, smoke test end-to-end por curl, y
+  un test del cliente real creando cuenta, respaldando y recuperando la biblioteca en otro
+  "navegador". La instancia personal se reinició con el código nuevo y quedó igual: 2 documentos,
+  `integrity_check` ok, su token funcionando y 401 sin él.
 
 ### Lo que queda para después
 

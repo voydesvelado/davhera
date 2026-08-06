@@ -17,7 +17,7 @@ const PROSA_CSP = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self'",
-  "connect-src 'self' https://api.prosa.davhera.com",
+  "connect-src 'self' https://public.46.225.147.90.sslip.io https://api.prosa.davhera.com",
   "worker-src 'self'",
   "frame-ancestors 'none'",
   "base-uri 'self'",

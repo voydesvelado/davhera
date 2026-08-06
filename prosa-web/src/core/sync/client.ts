@@ -6,15 +6,19 @@
  */
 
 /**
- * La URL de la API. Vacía = no hay servidor todavía.
+ * La URL de la API pública.
  *
- * El respaldo con @ se activa poniendo `VITE_PROSA_API` en el entorno de build
- * (en Vercel, una variable de proyecto). Mientras no esté, `syncAvailable()`
- * devuelve false y Ajustes muestra que el respaldo aún no existe, en vez de un
- * botón que falla siempre. v1 es un producto completo sin servidor; esto es lo
- * que mantiene esa promesa en el deploy real.
+ * Es un host sslip.io y no `api.prosa.davhera.com` por una razón concreta: sslip.io
+ * resuelve cualquier `*.46.225.147.90.sslip.io` a esa IP sin tocar el DNS de
+ * davhera.com, que vive en Vercel. Así el respaldo funciona HOY. Cuando exista el
+ * registro A de api.prosa.davhera.com se cambia esta constante y el `connect-src`
+ * de la CSP en next.config.ts; el servidor no cambia (Caddy sirve los dos nombres).
+ *
+ * Vacía = no hay servidor: `syncAvailable()` devuelve false y Ajustes dice que el
+ * respaldo no está disponible, en vez de ofrecer un botón que falla siempre.
  */
-export const API_BASE: string = import.meta.env["VITE_PROSA_API"] ?? "";
+export const API_BASE: string =
+  import.meta.env["VITE_PROSA_API"] ?? "https://public.46.225.147.90.sslip.io";
 
 export function syncAvailable(): boolean {
   return API_BASE !== "";
