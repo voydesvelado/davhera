@@ -60,14 +60,20 @@ const nextConfig: NextConfig = {
       // Los headers se evalúan contra la ruta PEDIDA, no contra el destino del
       // rewrite — por eso el match es sobre /prosa/* excluyendo assets/, y no
       // sobre /prosa/index.html (que nunca se pide directo).
-      {
-        source: "/prosa",
-        headers: [{ key: "Cache-Control", value: "no-cache" }],
-      },
-      {
-        source: "/prosa/:path((?!assets/).*)",
-        headers: [{ key: "Cache-Control", value: "no-cache" }],
-      },
+      //
+      // `Cache-Control: no-cache` a secas NO alcanza: le habla al navegador, pero
+      // el edge de Vercel igual cachea y devuelve HIT. Medido en producción, el
+      // shell se sirvió 5 horas después de un deploy, así que los cambios no
+      // llegaban a nadie que ya hubiera entrado. `CDN-Cache-Control` es lo que
+      // mira el edge; el `Vercel-` es el que gana en Vercel específicamente.
+      ...[{ path: "/prosa" }, { path: "/prosa/:path((?!assets/).*)" }].map(({ path }) => ({
+        source: path,
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=0, must-revalidate" },
+          { key: "CDN-Cache-Control", value: "no-store" },
+          { key: "Vercel-CDN-Cache-Control", value: "no-store" },
+        ],
+      })),
     ];
   },
   images: {
