@@ -622,6 +622,29 @@ Esto no está probado, y decirlo importa más que la lista de arriba:
   "navegador". La instancia personal se reinició con el código nuevo y quedó igual: 2 documentos,
   `integrity_check` ok, su token funcionando y 401 sin él.
 
+### Operación de la instancia pública (2026-08-06)
+
+Todo verificado corriéndolo, no configurándolo:
+
+- **Litestream** replica `public.db` en `/var/backups/prosa/litestream-public`, prefijo separado del
+  personal. Probado restaurando: `integrity_check` ok y captura escrituras nuevas.
+- **restic** incluye `public-documents`. El **drill de restauración cubre las dos instancias** y
+  verifica hashes contra la base restaurada; se ejercitó con una cuenta y un documento reales.
+- **health-check** vigila las dos por separado: que se caiga la beta no puede silenciar una caída de
+  la biblioteca personal.
+- **Pulso semanal** a Telegram con cuentas activas, ensayos respaldados y disco. Es la única
+  métrica que existe: no hay analytics en ningún lado.
+- **Purga por inactividad** mensual, con `PROSA_DB_PATH` explícito.
+
+Dos errores encontrados al ejercitar esto, no al escribirlo:
+
+1. El cron de purga apuntaba por default a la base **personal** (el default de `app/db.py`). Hoy no
+   habría hecho nada porque ahí no hay cuentas, pero apuntar una purga a la base equivocada es
+   exactamente el error que no se nota hasta que borra algo.
+2. `rsync` copió los scripts sin el bit de ejecución, así que **el canal de alertas estaba roto**:
+   `tg-alert.sh` fallaba con "Permission denied" y en silencio. Se descubrió mandando un mensaje de
+   verdad. `deploy.sh` ahora hace `chmod +x` siempre.
+
 ### Lo que queda para después
 
 Virtualización de bloques para documentos de 100K palabras (hoy se renderiza todo; el presupuesto
