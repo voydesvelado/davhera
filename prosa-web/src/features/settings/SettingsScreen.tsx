@@ -7,6 +7,7 @@ import { getStore, storageEstimate } from "../../app/store";
 import { navigate } from "../../app/router";
 import { Chip, GhostButton, Pill } from "../../design/components";
 import { detectLocale, setLocale, t, type Locale } from "../../i18n";
+import { syncAvailable } from "../../core/sync/client";
 import { AccountFlow, KeyScreen } from "../account/AccountFlow";
 import { relativeTime, useAccount } from "../account/useAccount";
 
@@ -147,7 +148,11 @@ export function SettingsScreen() {
       </Section>
 
       <Section title={strings.account}>
-        {account ? (
+        {/* Sin API configurada no se ofrece el respaldo: un botón que siempre
+            falla es peor que decir que todavía no está. */}
+        {!syncAvailable() ? (
+          <p className="text-secondary text-ink-2">{strings.accountSoon}</p>
+        ) : account ? (
           <div className="flex flex-col gap-4">
             {/* La ÚNICA UI del sync: una fila. Sin spinners, sin badges, sin toasts. */}
             <p className="text-secondary text-ink-2">

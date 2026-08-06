@@ -610,6 +610,12 @@ Esto no está probado, y decirlo importa más que la lista de arriba:
   `prosa-cloud/deploy/`, pero nada se instaló: falta el registro DNS de `api.prosa.davhera.com` y
   una decisión explícita para tocar un servidor que hoy sirve la biblioteca personal.
 
+  Como consecuencia, **el respaldo con @ va apagado en producción**: `VITE_PROSA_API` no está
+  definida, así que `syncAvailable()` es false y Ajustes dice que el respaldo todavía no existe, en
+  vez de ofrecer un botón que fallaría siempre. Para encenderlo, una vez que el servidor esté
+  arriba: definir `VITE_PROSA_API=https://api.prosa.davhera.com` en las variables del proyecto en
+  Vercel y redeployar. No hay que tocar código.
+
 ### Lo que queda para después
 
 Virtualización de bloques para documentos de 100K palabras (hoy se renderiza todo; el presupuesto

@@ -5,8 +5,20 @@
  * una URL, en un log ni en el estado de React fuera del flujo de creación.
  */
 
-export const API_BASE =
-  import.meta.env["VITE_PROSA_API"] ?? "https://api.prosa.davhera.com";
+/**
+ * La URL de la API. Vacía = no hay servidor todavía.
+ *
+ * El respaldo con @ se activa poniendo `VITE_PROSA_API` en el entorno de build
+ * (en Vercel, una variable de proyecto). Mientras no esté, `syncAvailable()`
+ * devuelve false y Ajustes muestra que el respaldo aún no existe, en vez de un
+ * botón que falla siempre. v1 es un producto completo sin servidor; esto es lo
+ * que mantiene esa promesa en el deploy real.
+ */
+export const API_BASE: string = import.meta.env["VITE_PROSA_API"] ?? "";
+
+export function syncAvailable(): boolean {
+  return API_BASE !== "";
+}
 
 export interface Change {
   change_id: string;
