@@ -84,6 +84,8 @@ const es = {
   storageAlmostFull: "Estás cerca del límite de este navegador. Exportá una copia.",
   notPersisted:
     "Este navegador no garantizó guardar tu biblioteca: puede borrarla si necesita espacio. Exportá copias.",
+  notPersistedWithAccount:
+    "Este navegador puede borrar la copia local si necesita espacio. Tu respaldo con @ la recupera.",
   language: "Idioma",
   account: "Cuenta",
   accountSoon: "El respaldo con @ todavía no está disponible. Por ahora, el zip.",
@@ -204,6 +206,8 @@ const en: Strings = {
   storageAlmostFull: "You're close to this browser's limit. Export a copy.",
   notPersisted:
     "This browser didn't guarantee it will keep your library: it may delete it if it needs space. Export copies.",
+  notPersistedWithAccount:
+    "This browser may delete the local copy if it needs space. Your @ backup brings it back.",
   language: "Language",
   account: "Account",
   accountSoon: "Backup with an @ isn't available yet. For now, the zip.",

@@ -118,8 +118,12 @@ export function SettingsScreen() {
             </p>
             {/* Si el navegador no concedió persistencia, el aviso sube de tono: en
                 Safari la biblioteca se puede evaporar a los ~7 días sin visita. */}
+            {/* Con cuenta, "exportá copias" sobra: el respaldo ya recupera la
+                biblioteca. El riesgo real que queda es otro y se dice distinto. */}
             {!storage.persisted && (
-              <p className="mt-2 text-secondary text-ink-2">{strings.notPersisted}</p>
+              <p className="mt-2 text-secondary text-ink-2">
+                {account ? strings.notPersistedWithAccount : strings.notPersisted}
+              </p>
             )}
             {usedPercent > 80 && (
               <p className="mt-2 text-secondary text-ink-2">{strings.storageAlmostFull}</p>
