@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+# los workspaces (prosa-web) tienen su propio node_modules anidado
+node_modules/
 /.pnp
 .pnp.*
 .yarn/*

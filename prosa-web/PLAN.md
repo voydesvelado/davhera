@@ -250,6 +250,25 @@ Cada milestone termina en algo verificable. **M1–M4 = v1 shipeable sin tocar e
 **Acepta cuando**: los 11 tests pasan sin adaptar sus expectativas, y un payload generado por el
 ChangeLog se aplica correcto contra `app/sync.py` corriendo en local (test de contrato, no mock).
 
+**Estado (2026-08-06): hecho, 20 tests en verde.** Dos hallazgos que cambiaron el diseño:
+
+1. **La escalera de re-anclaje de highlights del spec no puede cumplir su propio test 9.** El paso 1
+   (reajuste de offsets por substring) exige que el `blockHash` coincida, pero agregar un prefijo al
+   párrafo cambia el hash; y el paso 3 (fuzzy) compara los trigramas de la *frase subrayada* contra
+   el *bloque entero*, que para un highlight de 19 chars en un párrafo de 160 da Jaccard ~0.1, nunca
+   ≥ 0.6. La escalera literal deja huérfano todo subrayado de un párrafo editado al principio.
+   **Se agregó un paso 3**: búsqueda literal de `snapshotText` en la ventana ±10, ganando el bloque
+   más cercano al índice guardado (empate → índice menor). Solo puede rescatar highlights que la
+   escalera original perdía; nunca cambia un resultado que ya era correcto.
+2. **El daño de mandar camelCase, medido contra el servidor real** (no estimado): un *documento* en
+   camelCase se **rechaza** (la guardia de contenido respaldado lo frena, es ruidoso). Una *posición*
+   se **acepta**, y ahí está el veneno: `progress` sobrevive por casualidad —se escribe igual en las
+   dos convenciones— así que la biblioteca muestra "42% leído" con toda normalidad, mientras
+   `block_index` queda en 0, `block_hash` en `""` y `anchor_snippet` en `null`. El ancla se destruye
+   y el lector abre arriba de todo. Se leería como "el AnchorEngine falla a veces" durante meses.
+   Un *highlight* se acepta con `snapshot_text` vacío, que es el campo sagrado. Está capturado como
+   test de regresión en `tests/wire.contract.test.ts`.
+
 ### M2 — Shell, biblioteca, import (4–5 días)
 - Layout responsive: <768 pantallas + sheets (vaul); ≥768 sidebar + grid.
 - Biblioteca: Continuar leyendo, portadas determinísticas por `coverSeed` (mismos 5 grises),
