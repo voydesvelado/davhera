@@ -193,6 +193,44 @@ export class DocumentStore {
     });
   }
 
+  /**
+   * Reconstruye el ChangeLog de una biblioteca restaurada desde un zip.
+   *
+   * Va aparte de las escrituras porque los cambios tienen que llevar el
+   * `clientTimestamp` ORIGINAL de cada entidad, no la hora de la restauración: si
+   * el usuario crea su @ tres meses después, su historia sube con las fechas
+   * verdaderas y el merge del servidor decide bien.
+   */
+  async logRestored(
+    documents: DocumentRecord[],
+    positions: PositionRecord[],
+    highlights: HighlightRecord[],
+  ): Promise<void> {
+    await this.db.transaction("rw", [this.db.changeLog], async () => {
+      for (const doc of documents) {
+        await this.log("document", doc.id, "upsert", documentToWire(doc), doc.updatedAt);
+      }
+      for (const position of positions) {
+        await this.log(
+          "position",
+          position.documentId,
+          "upsert",
+          positionToWire(position),
+          position.updatedAt,
+        );
+      }
+      for (const highlight of highlights) {
+        await this.log(
+          "highlight",
+          highlight.id,
+          highlight.deletedAt ? "delete" : "upsert",
+          highlightToWire(highlight),
+          highlight.updatedAt,
+        );
+      }
+    });
+  }
+
   private async log(
     entityType: EntityType,
     entityId: string,

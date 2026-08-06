@@ -30,7 +30,7 @@ export function BlockView({
   block: Block;
   node: RootContent;
   highlights: HighlightRange[];
-  onHighlightClick?: (id: string) => void;
+  onHighlightClick?: (id: string, rect: { x: number; y: number }) => void;
 }) {
   const map = buildOffsetMap(rawTextOf(node));
   const ctx: RenderContext = { map, highlights, rawOffset: 0, onHighlightClick };
@@ -102,7 +102,7 @@ interface RenderContext {
   highlights: HighlightRange[];
   /** Avanza en paralelo al texto crudo del bloque, separadores incluidos. */
   rawOffset: number;
-  onHighlightClick?: ((id: string) => void) | undefined;
+  onHighlightClick?: ((id: string, rect: { x: number; y: number }) => void) | undefined;
 }
 
 function renderChildren(node: RootContent, ctx: RenderContext): ReactNode {
@@ -131,7 +131,13 @@ function renderInline(node: RootContent, ctx: RenderContext): ReactNode {
             key={index}
             data-off={piece.rawStart}
             data-highlight={piece.highlight.id}
-            onClick={() => ctx.onHighlightClick?.(piece.highlight!.id)}
+            onClick={(event) => {
+              const rect = (event.target as HTMLElement).getBoundingClientRect();
+              ctx.onHighlightClick?.(piece.highlight!.id, {
+                x: rect.left + rect.width / 2,
+                y: rect.bottom,
+              });
+            }}
             // El único color de la app. `box-decoration-clone` mantiene el ámbar
             // parejo cuando el subrayado cruza un salto de línea.
             className="box-decoration-clone cursor-pointer bg-accent text-inherit"

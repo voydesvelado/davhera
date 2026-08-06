@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { RootContent } from "mdast";
 
 import type { Block } from "../../core/markdown/blocks";
-import { sliceByCodePoints } from "../../core/text";
+import { codePointLength, sliceByCodePoints } from "../../core/text";
 import { getStore } from "../../app/store";
 import { db } from "../../core/db/schema";
 import { blockIndexOfDom, buildOffsetMap, rawOffsetFromDom, rawTextOf } from "./inline";
@@ -116,6 +116,45 @@ export function useSelectionHighlights({
     navigator.vibrate?.(10);
   }, [blocks, nodes, documentId]);
 
+  /** Doble click / doble tap: el párrafo entero, de una. */
+  const highlightParagraph = useCallback(
+    async (blockIndex: number) => {
+      const block = blocks[blockIndex];
+      if (!block || block.plainText.trim() === "") return;
+
+      // Si el párrafo ya está subrayado entero, no se duplica.
+      const existing = await db.highlights
+        .where("documentId")
+        .equals(documentId)
+        .filter(
+          (h) =>
+            h.deletedAt === null &&
+            h.blockIndex === blockIndex &&
+            h.startOffset === 0 &&
+            h.endOffset === codePointLength(block.plainText),
+        )
+        .count();
+      if (existing > 0) return;
+
+      const store = await getStore();
+      await store.addHighlight({
+        id: crypto.randomUUID(),
+        documentId,
+        groupId: null,
+        blockIndex,
+        blockHash: block.hash,
+        startOffset: 0,
+        endOffset: codePointLength(block.plainText),
+        snapshotText: block.plainText,
+        note: null,
+        isOrphaned: false,
+      });
+      window.getSelection()?.removeAllRanges();
+      navigator.vibrate?.(10);
+    },
+    [blocks, documentId],
+  );
+
   const removeHighlight = useCallback(async (highlightId: string) => {
     const store = await getStore();
     await store.deleteHighlight(highlightId);
@@ -131,7 +170,7 @@ export function useSelectionHighlights({
     [],
   );
 
-  return { toolbar, createHighlight, removeHighlight, setNote, highlightById };
+  return { toolbar, createHighlight, highlightParagraph, removeHighlight, setNote, highlightById };
 }
 
 /**

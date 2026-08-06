@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { db } from "../../core/db/schema";
+import { navigate } from "../../app/router";
 import { t } from "../../i18n";
 
 const DISMISSED_KEY = "storageBannerDismissed";
@@ -29,6 +30,12 @@ export function StorageBanner({ hasDocuments }: { hasDocuments: boolean }) {
   return (
     <div className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-s border border-line px-4 py-3">
       <p className="flex-1 text-secondary text-ink-2">{strings.storageBanner}</p>
+      <button
+        onClick={() => navigate({ name: "settings" })}
+        className="text-secondary text-ink-1 underline underline-offset-4"
+      >
+        {strings.storageExport}
+      </button>
       <button
         onClick={() => {
           void db.meta.put({ key: DISMISSED_KEY, value: true });

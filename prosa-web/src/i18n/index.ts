@@ -70,6 +70,20 @@ const es = {
   addNote: "Nota",
   removeHighlight: "Quitar",
   finishedAt: (n: number) => `Terminado · ${n} min de lectura`,
+  settings: "Ajustes",
+  backupTitle: "Respaldo",
+  backupBody:
+    "Exportá un zip con todos tus ensayos, tus posiciones y tus subrayados. Es también la forma de mudarte de navegador.",
+  exportZip: "Exportar biblioteca",
+  importZip: "Importar zip",
+  storage: "Almacenamiento",
+  storageUnknown: "Este navegador no informa cuánto espacio usa.",
+  storageAlmostFull: "Estás cerca del límite de este navegador. Exportá una copia.",
+  notPersisted:
+    "Este navegador no garantizó guardar tu biblioteca: puede borrarla si necesita espacio. Exportá copias.",
+  language: "Idioma",
+  account: "Cuenta",
+  accountSoon: "El respaldo con @ todavía no está disponible. Por ahora, el zip.",
 };
 
 type Strings = typeof es;
@@ -135,6 +149,20 @@ const en: Strings = {
   addNote: "Note",
   removeHighlight: "Remove",
   finishedAt: (n) => `Finished · ${n} min read`,
+  settings: "Settings",
+  backupTitle: "Backup",
+  backupBody:
+    "Export a zip with all your essays, positions and highlights. It's also how you move to another browser.",
+  exportZip: "Export library",
+  importZip: "Import zip",
+  storage: "Storage",
+  storageUnknown: "This browser doesn't report how much space it uses.",
+  storageAlmostFull: "You're close to this browser's limit. Export a copy.",
+  notPersisted:
+    "This browser didn't guarantee it will keep your library: it may delete it if it needs space. Export copies.",
+  language: "Language",
+  account: "Account",
+  accountSoon: "Backup with an @ isn't available yet. For now, the zip.",
 };
 
 const dictionaries = { es, en };

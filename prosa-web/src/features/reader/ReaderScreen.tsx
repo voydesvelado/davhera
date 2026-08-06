@@ -17,6 +17,7 @@ import { TocPanel, TypographySheet } from "./ReaderPanels";
 import { resolveTheme, useReadingSettings } from "./useReadingSettings";
 import { useAnchoring } from "./useAnchoring";
 import { useSelectionHighlights } from "./useSelectionHighlights";
+import { HighlightPopover } from "./HighlightPopover";
 import type { HighlightRange } from "./inline";
 
 /**
@@ -122,11 +123,15 @@ export function ReaderScreen({ documentId }: { documentId: string }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, [parsed]);
 
-  const { toolbar, createHighlight, removeHighlight } = useSelectionHighlights({
-    documentId,
-    blocks,
-    nodes: parsed?.nodes ?? [],
-  });
+  const { toolbar, createHighlight, highlightParagraph, removeHighlight, setNote } =
+    useSelectionHighlights({ documentId, blocks, nodes: parsed?.nodes ?? [] });
+
+  // Click en un subrayado: popover con nota, copiar y quitar. NO lo elimina de una,
+  // que sería destruir la nota de alguien con un click accidental.
+  const [openHighlight, setOpenHighlight] = useState<{ id: string; x: number; y: number } | null>(
+    null,
+  );
+  const openHighlightRecord = highlights.find((h) => h.id === openHighlight?.id);
 
   const ranges: Map<number, HighlightRange[]> = useMemo(() => {
     const map = new Map<number, HighlightRange[]>();
@@ -159,10 +164,23 @@ export function ReaderScreen({ documentId }: { documentId: string }) {
     setToc(null);
   }, []);
 
+  // Doble click (o doble tap) en un párrafo lo subraya entero. `touch-manipulation`
+  // evita que en móvil el doble tap se confunda con un zoom.
+  const onDoubleClick = (event: React.MouseEvent) => {
+    const block = (event.target as HTMLElement).closest<HTMLElement>("[data-block]");
+    if (!block) return;
+    const index = Number(block.dataset["block"]);
+    if (!Number.isNaN(index)) void highlightParagraph(index);
+  };
+
   if (!doc) return <div className="min-h-dvh bg-bg" />;
 
   return (
-    <div className="min-h-dvh bg-bg" onClick={showChrome}>
+    <div
+      className="min-h-dvh touch-manipulation bg-bg"
+      onClick={showChrome}
+      onDoubleClick={onDoubleClick}
+    >
       <ReaderCapsule
         title={doc.title}
         visible={chromeVisible}
@@ -189,7 +207,7 @@ export function ReaderScreen({ documentId }: { documentId: string }) {
               block={block}
               node={parsed.nodes[index] as RootContent}
               highlights={ranges.get(block.index) ?? []}
-              onHighlightClick={removeHighlight}
+              onHighlightClick={(id, rect) => setOpenHighlight({ id, x: rect.x, y: rect.y })}
             />
           ))
         ) : (
@@ -243,6 +261,19 @@ export function ReaderScreen({ documentId }: { documentId: string }) {
             {strings.copy}
           </button>
         </div>
+      )}
+
+      {openHighlight && openHighlightRecord && (
+        <HighlightPopover
+          highlight={openHighlightRecord}
+          anchorRect={{ x: openHighlight.x, y: openHighlight.y }}
+          onNote={(note) => void setNote(openHighlight.id, note)}
+          onRemove={() => {
+            void removeHighlight(openHighlight.id);
+            setOpenHighlight(null);
+          }}
+          onClose={() => setOpenHighlight(null)}
+        />
       )}
 
       {toc && !short && (

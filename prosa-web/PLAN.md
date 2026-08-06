@@ -182,12 +182,15 @@ Verificado contra `next build && next start` reales (Next 16.2.1), no en teoría
 
 **No hace falta el fallback del Route Handler.** La arquitectura de §1 es viable.
 
-**Un pendiente, no bloqueante**: el handler de estáticos de Next pisa `Cache-Control` en archivos de
-`public/` (todo sale `public, max-age=0`), así que la regla de `immutable` para
-`/prosa/assets/*` no tiene efecto bajo `next start`. El comportamiento sigue siendo **correcto**
-(ETag + revalidación en cada request), solo subóptimo. Falta confirmar en el preview si el edge de
-Vercel sí respeta `headers()` para estáticos; si tampoco, la salida documentada es un bloque
-`headers` en `vercel.json`, que sí actúa a nivel plataforma. Se cierra en M7 con los presupuestos.
+**Corrección (2026-08-06)**: en M2 reporté que Next pisaba `Cache-Control` en los archivos de
+`public/`. Era falso — estaba midiendo contra un servidor `next start` viejo que había quedado vivo
+en el puerto y que el `next start` nuevo, al no poder tomarlo, nunca reemplazó. Medido contra un
+servidor correcto, las reglas se aplican tal cual: `/prosa/assets/*` sale
+`public, max-age=31536000, immutable` y el shell sale `no-cache`. No hace falta `vercel.json`.
+
+Verificado también que bajo `/prosa/` cada cosa sale con su tipo: `manifest.webmanifest` como
+`application/manifest+json`, `sw.js` como `application/javascript` (con `Service-Worker-Allowed`),
+los `.md` de muestra como `text/markdown`, y los deep links del router siguen cayendo al shell.
 
 ---
 
@@ -336,6 +339,17 @@ el doble-tap de párrafo, y el pulso de "terminado" (el texto ya aparece, la ani
 - Ensayo de muestra precargado y borrable.
 
 **→ Aquí se puede anunciar. Todo lo que sigue es el respaldo.**
+
+**Estado (2026-08-06): hecho.** Export/import zip con round-trip verificado (documentos, posiciones,
+subrayados y notas), PWA instalable con service worker propio de 40 líneas (Workbox habría metido su
+runtime en un bundle que ya pelea por 150KB), i18n es/en con override en Ajustes, y un ensayo de
+bienvenida precargado que explica la app siendo la app y que se puede borrar sin que vuelva.
+
+Un detalle que costó una hora y vale anotar: durante M2 reporté que Next pisaba el `Cache-Control` de
+los archivos de `public/`. Era falso. Estaba midiendo contra un `next start` viejo que había quedado
+vivo en el puerto; el nuevo no podía tomarlo y moría en silencio, así que todas las mediciones eran
+del build de M0. Contra un servidor correcto las reglas se aplican bien. La lección es de método:
+verificar que el proceso que responde es el que uno acaba de levantar.
 
 ### M5 — Servidor público (2–3 días) — detalle en §5
 Instancia separada, tabla `accounts`, auth por clave, cuotas, límites, backups, DNS + Caddy.

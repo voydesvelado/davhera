@@ -60,13 +60,21 @@ export function LibraryScreen({ theme }: { theme: Theme }) {
     <div className="mx-auto min-h-dvh w-full max-w-5xl px-6 pb-32 pt-10">
       <header className="mb-8 flex items-baseline justify-between gap-4">
         <h1 className="text-display font-medium">{strings.library}</h1>
+        <div className="flex items-center gap-3">
         <input
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder={strings.search}
           aria-label={strings.search}
-          className="w-40 rounded-s border border-line bg-transparent px-3 py-1.5 text-secondary outline-none transition-[width] focus:w-56 focus:border-ink-3"
+          className="w-32 rounded-s border border-line bg-transparent px-3 py-1.5 text-secondary outline-none transition-[width] focus:w-48 focus:border-ink-3"
         />
+        <button
+          onClick={() => navigate({ name: "settings" })}
+          className="text-secondary text-ink-3 hover:text-ink-1"
+        >
+          {strings.settings}
+        </button>
+        </div>
       </header>
 
       <StorageBanner hasDocuments={entries.length > 0} />

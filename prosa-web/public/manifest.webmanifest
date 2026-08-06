@@ -1,0 +1,26 @@
+{
+  "id": "/prosa/",
+  "name": "Prosa",
+  "short_name": "Prosa",
+  "description": "Un lector de ensayos que vive en tu navegador.",
+  "start_url": "/prosa/",
+  "scope": "/prosa/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FAFAFA",
+  "theme_color": "#FAFAFA",
+  "icons": [
+    {
+      "src": "/prosa/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/prosa/icon-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
