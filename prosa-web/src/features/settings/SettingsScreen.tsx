@@ -7,6 +7,8 @@ import { getStore, storageEstimate } from "../../app/store";
 import { navigate } from "../../app/router";
 import { Chip, GhostButton, Pill } from "../../design/components";
 import { detectLocale, setLocale, t, type Locale } from "../../i18n";
+import { AccountFlow, KeyScreen } from "../account/AccountFlow";
+import { relativeTime, useAccount } from "../account/useAccount";
 
 export function SettingsScreen() {
   const strings = t();
@@ -19,6 +21,10 @@ export function SettingsScreen() {
 
   const count = useLiveQuery(() => db.documents.filter((d) => d.deletedAt === null).count(), [], 0);
   const [locale, setLocaleState] = useState<Locale>(detectLocale());
+  const { account, state, syncNow, signOut, deleteAccount } = useAccount();
+  const [accountFlow, setAccountFlow] = useState(false);
+  const [showingKey, setShowingKey] = useState(false);
+  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
   useEffect(() => {
     void db.meta.get("locale").then((record) => {
@@ -141,9 +147,80 @@ export function SettingsScreen() {
       </Section>
 
       <Section title={strings.account}>
-        {/* v1.1: el flujo del @ y el sync. Se dice lo que hay, no se promete. */}
-        <p className="text-secondary text-ink-2">{strings.accountSoon}</p>
+        {account ? (
+          <div className="flex flex-col gap-4">
+            {/* La ÚNICA UI del sync: una fila. Sin spinners, sin badges, sin toasts. */}
+            <p className="text-secondary text-ink-2">
+              @{account.handle} ·{" "}
+              {state.status === "error"
+                ? state.error === "quota_exceeded"
+                  ? strings.quotaExceeded
+                  : state.error
+                : (relativeTime(state.lastSyncedAt, locale) ?? strings.neverSynced)}
+            </p>
+
+            <div className="flex flex-wrap gap-3">
+              <GhostButton onClick={() => void syncNow()}>{strings.syncNow}</GhostButton>
+              <GhostButton onClick={() => setShowingKey(true)}>{strings.showKey}</GhostButton>
+              <GhostButton onClick={() => void signOut()}>{strings.signOut}</GhostButton>
+              <GhostButton onClick={() => setDeleteConfirm("")}>
+                {strings.deleteAccount}
+              </GhostButton>
+            </div>
+            <p className="text-caption text-ink-3">{strings.signOutExplainer}</p>
+
+            {deleteConfirm !== null && (
+              <div className="flex flex-col gap-2 rounded-s border border-line p-3">
+                <p className="text-secondary text-ink-2">
+                  {strings.deleteAccountConfirm(`@${account.handle}`)}
+                </p>
+                <input
+                  value={deleteConfirm}
+                  onChange={(event) => setDeleteConfirm(event.target.value)}
+                  className="rounded-s border border-line bg-transparent px-3 py-2 text-secondary outline-none"
+                />
+                <div className="flex justify-end gap-3">
+                  <GhostButton onClick={() => setDeleteConfirm(null)}>{strings.cancel}</GhostButton>
+                  <Pill
+                    disabled={deleteConfirm !== `@${account.handle}`}
+                    onClick={() => {
+                      void deleteAccount();
+                      setDeleteConfirm(null);
+                    }}
+                  >
+                    {strings.delete}
+                  </Pill>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <Pill onClick={() => setAccountFlow(true)}>{strings.backupMyLibrary}</Pill>
+        )}
       </Section>
+
+      {accountFlow && (
+        <AccountFlow onDone={() => setAccountFlow(false)} onClose={() => setAccountFlow(false)} />
+      )}
+
+      {showingKey && account && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <button
+            className="absolute inset-0 bg-black/20"
+            onMouseDown={() => setShowingKey(false)}
+            aria-label={strings.cancel}
+          />
+          <div className="relative z-10 w-full max-w-md rounded-m border border-line bg-bg p-6">
+            {/* Se re-muestra con las MISMAS advertencias: sirve para sumar un
+                dispositivo, y el trato no cambia porque sea la segunda vez. */}
+            <KeyScreen
+              handle={account.handle}
+              accessKey={account.key}
+              onDone={() => setShowingKey(false)}
+            />
+          </div>
+        </div>
+      )}
     </main>
   );
 }

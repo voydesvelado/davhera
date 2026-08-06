@@ -84,6 +84,40 @@ const es = {
   language: "Idioma",
   account: "Cuenta",
   accountSoon: "El respaldo con @ todavía no está disponible. Por ahora, el zip.",
+  backupMyLibrary: "Respaldar mi biblioteca",
+  handleExplainer:
+    "Elegí un @. No hace falta email ni contraseña: el servidor te va a dar una clave de acceso.",
+  handleRules: "3 a 20 caracteres: letras, números y guion bajo.",
+  handleFree: "disponible",
+  handleTaken: "ocupado",
+  spotsLeft: (n: number) => `quedan ${n} lugares`,
+  betaFull:
+    "La beta está llena. Tu biblioteca sigue funcionando entera en este navegador, y podés exportarla cuando quieras.",
+  accountError: "No se pudo crear la cuenta. Probá de nuevo en un rato.",
+  create: "Crear",
+  haveAccount: "Ya tengo cuenta",
+  loginExplainer: "Pegá la clave que te dimos al crear tu @.",
+  enter: "Entrar",
+  badKey: "Esa clave no es válida.",
+  yourKey: "Tu clave de acceso",
+  keyWarning:
+    "Esta clave es tu única forma de entrar desde otro dispositivo. No podemos recuperarla: no tenemos tu email. Guardala en tu gestor de contraseñas.",
+  keyFileWarning:
+    "Esta clave es la única forma de entrar a tu biblioteca desde otro dispositivo. No se puede recuperar.",
+  keySaved: "La guardé en un lugar seguro",
+  understood: "Entendido, la guardé",
+  copied: "Copiada",
+  downloadKey: "Descargar .txt",
+  syncedAgo: (s: string) => `Respaldado ${s}`,
+  neverSynced: "Sin respaldar todavía",
+  syncNow: "Respaldar ahora",
+  showKey: "Ver mi clave",
+  signOut: "Cerrar sesión en este navegador",
+  signOutExplainer:
+    "Se borra la clave de este navegador. Tu biblioteca local queda intacta; el respaldo también.",
+  deleteAccount: "Eliminar mi cuenta y respaldo",
+  deleteAccountConfirm: (h: string) => `Escribí ${h} para confirmar. Esto borra el respaldo del servidor.`,
+  quotaExceeded: "Llegaste al límite de tu respaldo. Podés eliminar ensayos o exportar una copia.",
 };
 
 type Strings = typeof es;
@@ -163,6 +197,40 @@ const en: Strings = {
   language: "Language",
   account: "Account",
   accountSoon: "Backup with an @ isn't available yet. For now, the zip.",
+  backupMyLibrary: "Back up my library",
+  handleExplainer:
+    "Pick an @. No email, no password: the server will give you an access key.",
+  handleRules: "3 to 20 characters: letters, numbers and underscore.",
+  handleFree: "available",
+  handleTaken: "taken",
+  spotsLeft: (n) => `${n} spots left`,
+  betaFull:
+    "The beta is full. Your library keeps working entirely in this browser, and you can export it any time.",
+  accountError: "Couldn't create the account. Try again in a bit.",
+  create: "Create",
+  haveAccount: "I already have an account",
+  loginExplainer: "Paste the key you got when you created your @.",
+  enter: "Enter",
+  badKey: "That key isn't valid.",
+  yourKey: "Your access key",
+  keyWarning:
+    "This key is your only way in from another device. We can't recover it: we don't have your email. Save it in your password manager.",
+  keyFileWarning:
+    "This key is the only way into your library from another device. It cannot be recovered.",
+  keySaved: "I saved it somewhere safe",
+  understood: "Got it, I saved it",
+  copied: "Copied",
+  downloadKey: "Download .txt",
+  syncedAgo: (s) => `Backed up ${s}`,
+  neverSynced: "Not backed up yet",
+  syncNow: "Back up now",
+  showKey: "Show my key",
+  signOut: "Sign out of this browser",
+  signOutExplainer:
+    "The key is removed from this browser. Your local library stays intact; so does the backup.",
+  deleteAccount: "Delete my account and backup",
+  deleteAccountConfirm: (h) => `Type ${h} to confirm. This deletes the backup from the server.`,
+  quotaExceeded: "You've hit your backup limit. You can delete essays or export a copy.",
 };
 
 const dictionaries = { es, en };

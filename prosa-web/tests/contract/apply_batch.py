@@ -40,6 +40,15 @@ for doc_id, markdown in payload.get("contents", {}).items():
         fh.write(markdown.encode("utf-8"))
 
 conn = connect()
+# La fila de `users` ya no la siembra la migración 001 (esa migración corre también
+# sobre la base pública, donde un usuario personal fantasma no tiene sentido): la
+# crea la app al arrancar. Acá se replica ese paso.
+with conn:
+    conn.execute(
+        "INSERT OR IGNORE INTO users (id, created_at) VALUES (?, '2026-01-01T00:00:00.000Z')",
+        (user_id,),
+    )
+
 result = process_batch(conn, user_id, payload.get("device_id", "web-contract"), None,
                        payload["changes"])
 
