@@ -1,0 +1,85 @@
+/* tokens.css — single source of truth del design system (PROSA_SPEC §8).
+ *
+ * Auditoría: 4 tamaños, 3 inks, 2 radios, 1 acento. (Los 2 springs viven en springs.ts.)
+ * Si un cambio introduce un sexto gris o un tercer radio, el cambio está mal.
+ */
+
+:root {
+  /* Grises — la jerarquía es por color, NUNCA por peso tipográfico. */
+  --ink-1: #292929;
+  --ink-2: #5d5d5d;
+  --ink-3: #9e9e9e;
+  --line: #eeeeee;
+  --bg: #fafafa; /* nunca blanco puro */
+
+  /* El único color de la app: ámbar de highlight. */
+  --accent: rgba(245, 200, 76, 0.35);
+
+  /* Radios: 8 chips y navegación · 16 cards, sheets, popovers · pill el CTA único. */
+  --r-s: 8px;
+  --r-m: 16px;
+  --r-pill: 999px;
+
+  /* Escala tipográfica cerrada. Solo pesos 400 y 500; 600+ prohibido en UI. */
+  --t-caption: 12px;
+  --t-secondary: 13px;
+  --t-body: 14px;
+  --t-display: 24px;
+  --tracking: -0.15px;
+
+  --font-ui: -apple-system, "SF Pro Text", Inter, system-ui, sans-serif;
+  --font-serif: "New York", "Iowan Old Style", Charter, Georgia, serif;
+
+  /* Glass: fondo translúcido + borde 1px. Sombra solo en superficies flotantes. */
+  --glass-bg: rgba(250, 250, 250, 0.72);
+  --glass-blur: blur(20px) saturate(1.6);
+}
+
+[data-theme="dark"] {
+  --ink-1: #ededed;
+  --ink-2: #a8a8a8;
+  --ink-3: #6b6b6b;
+  --line: #242424;
+  --bg: #0e0e0e;
+  --accent: rgba(245, 200, 76, 0.25);
+  --glass-bg: rgba(14, 14, 14, 0.72);
+}
+
+/* Fallback donde no hay backdrop-filter: opaco al 96%, se ve bien, no se rompe. */
+@supports not (backdrop-filter: blur(20px)) {
+  :root {
+    --glass-bg: rgba(250, 250, 250, 0.96);
+  }
+  [data-theme="dark"] {
+    --glass-bg: rgba(14, 14, 14, 0.96);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink-1);
+  font-family: var(--font-ui);
+  font-size: var(--t-body);
+  font-weight: 400;
+  letter-spacing: var(--tracking);
+  -webkit-font-smoothing: antialiased;
+}

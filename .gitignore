@@ -20,6 +20,9 @@
 # production
 /build
 
+# prosa-web: output del build de Vite, se regenera en cada deploy
+/public/prosa
+
 # misc
 .DS_Store
 *.pem

@@ -2,9 +2,13 @@
   "name": "davhera",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "prosa-web"
+  ],
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "dev:prosa": "npm run dev -w prosa-web",
+    "build": "npm run build -w prosa-web && next build",
     "start": "next start",
     "lint": "eslint"
   },
