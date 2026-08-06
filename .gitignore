@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+# los workspaces (prosa-web) tienen su propio node_modules anidado
+node_modules/
 /.pnp
 .pnp.*
 .yarn/*
@@ -19,6 +21,9 @@
 
 # production
 /build
+
+# prosa-web: output del build de Vite, se regenera en cada deploy
+/public/prosa
 
 # misc
 .DS_Store

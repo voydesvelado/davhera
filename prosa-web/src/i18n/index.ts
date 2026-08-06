@@ -1,0 +1,252 @@
+/**
+ * i18n mínima: en base / es, elegido por `navigator.language`, con override en
+ * Settings (M4). Sin librería — son dos diccionarios planos y una función.
+ *
+ * El tono es el de las apps nativas: directo, sin signos de exclamación, sin
+ * "¡Ups!". Cuando algo sale mal se dice qué pasó, no se pide perdón.
+ */
+
+// Sin `as const`: el diccionario base define la FORMA (qué claves existen y con qué
+// firma), no los valores exactos. Con `as const`, "Open" no sería asignable a
+// "Abrir" y cada traducción rompería el typecheck.
+const es = {
+  library: "Biblioteca",
+  continueReading: "Continuar leyendo",
+  minutesLeft: (n: number) => `~${n} min restantes`,
+  minutesTotal: (n: number) => `${n} min de lectura`,
+  finished: "Terminado",
+  emptyTitle: "Tu biblioteca está vacía",
+  emptyHint: "o arrastrá archivos acá",
+  import: "Importar",
+  importPaste: "Pegar un ensayo",
+  importFiles: "Abrir archivos",
+  pasteHere: "Pegá el markdown acá",
+  titleLabel: "Título",
+  add: "Agregar a la biblioteca",
+  cancel: "Cancelar",
+  dropHere: "Soltá tus ensayos",
+  search: "Buscar",
+  searchTitles: "Títulos",
+  searchText: "En el texto",
+  noResults: "Sin resultados",
+  open: "Abrir",
+  markFinished: "Marcar terminado",
+  markUnread: "Marcar sin leer",
+  exportMd: "Exportar .md",
+  delete: "Eliminar",
+  deleteConfirm: (title: string) => `¿Eliminar "${title}"? No se puede deshacer.`,
+  alreadyInLibrary: "Ya está en tu biblioteca",
+  sameTitle: "Ya tenés un ensayo con este título",
+  looksLikeNewVersion: "Se parece a un ensayo que ya tenés",
+  replace: "Reemplazar",
+  keepBoth: "Guardar como copia",
+  imported: (n: number) => `${n} importados`,
+  skipped: (n: number) => `${n} omitidos`,
+  storageBanner:
+    "Tu biblioteca vive en este navegador. Activale respaldo con un @ o exportá copias.",
+  storageBackup: "Respaldar",
+  storageExport: "Exportar",
+  dismiss: "Entendido",
+  words: (n: number) => `${n.toLocaleString("es")} palabras`,
+  toc: "Índice",
+  contents: "Contenido",
+  notes: "Notas",
+  noNotes: "Todavía no subrayaste nada",
+  orphans: "Huérfanos",
+  approximatePosition: "El documento cambió — posición aproximada",
+  typography: "Tipografía",
+  serif: "Serif",
+  sans: "Sans",
+  size: "Tamaño",
+  spacing: "Interlineado",
+  theme: "Tema",
+  themeSystem: "Sistema",
+  themeLight: "Claro",
+  themeSepia: "Sepia",
+  themeDark: "Gris oscuro",
+  themeBlack: "Negro",
+  highlight: "Subrayar",
+  copy: "Copiar",
+  addNote: "Nota",
+  removeHighlight: "Quitar",
+  finishedAt: (n: number) => `Terminado · ${n} min de lectura`,
+  settings: "Ajustes",
+  backupTitle: "Respaldo",
+  backupBody:
+    "Exportá un zip con todos tus ensayos, tus posiciones y tus subrayados. Es también la forma de mudarte de navegador.",
+  exportZip: "Exportar biblioteca",
+  importZip: "Importar zip",
+  storage: "Almacenamiento",
+  storageUnknown: "Este navegador no informa cuánto espacio usa.",
+  storageAlmostFull: "Estás cerca del límite de este navegador. Exportá una copia.",
+  notPersisted:
+    "Este navegador no garantizó guardar tu biblioteca: puede borrarla si necesita espacio. Exportá copias.",
+  language: "Idioma",
+  account: "Cuenta",
+  accountSoon: "El respaldo con @ todavía no está disponible. Por ahora, el zip.",
+  backupMyLibrary: "Respaldar mi biblioteca",
+  handleExplainer:
+    "Elegí un @. No hace falta email ni contraseña: el servidor te va a dar una clave de acceso.",
+  handleRules: "3 a 20 caracteres: letras, números y guion bajo.",
+  handleFree: "disponible",
+  handleTaken: "ocupado",
+  spotsLeft: (n: number) => `quedan ${n} lugares`,
+  betaFull:
+    "La beta está llena. Tu biblioteca sigue funcionando entera en este navegador, y podés exportarla cuando quieras.",
+  accountError: "No se pudo crear la cuenta. Probá de nuevo en un rato.",
+  create: "Crear",
+  haveAccount: "Ya tengo cuenta",
+  loginExplainer: "Pegá la clave que te dimos al crear tu @.",
+  enter: "Entrar",
+  badKey: "Esa clave no es válida.",
+  yourKey: "Tu clave de acceso",
+  keyWarning:
+    "Esta clave es tu única forma de entrar desde otro dispositivo. No podemos recuperarla: no tenemos tu email. Guardala en tu gestor de contraseñas.",
+  keyFileWarning:
+    "Esta clave es la única forma de entrar a tu biblioteca desde otro dispositivo. No se puede recuperar.",
+  keySaved: "La guardé en un lugar seguro",
+  understood: "Entendido, la guardé",
+  copied: "Copiada",
+  downloadKey: "Descargar .txt",
+  syncedAgo: (s: string) => `Respaldado ${s}`,
+  neverSynced: "Sin respaldar todavía",
+  syncNow: "Respaldar ahora",
+  showKey: "Ver mi clave",
+  signOut: "Cerrar sesión en este navegador",
+  signOutExplainer:
+    "Se borra la clave de este navegador. Tu biblioteca local queda intacta; el respaldo también.",
+  deleteAccount: "Eliminar mi cuenta y respaldo",
+  deleteAccountConfirm: (h: string) => `Escribí ${h} para confirmar. Esto borra el respaldo del servidor.`,
+  quotaExceeded: "Llegaste al límite de tu respaldo. Podés eliminar ensayos o exportar una copia.",
+};
+
+type Strings = typeof es;
+
+const en: Strings = {
+  library: "Library",
+  continueReading: "Continue reading",
+  minutesLeft: (n) => `~${n} min left`,
+  minutesTotal: (n) => `${n} min read`,
+  finished: "Finished",
+  emptyTitle: "Your library is empty",
+  emptyHint: "or drag files here",
+  import: "Import",
+  importPaste: "Paste an essay",
+  importFiles: "Open files",
+  pasteHere: "Paste markdown here",
+  titleLabel: "Title",
+  add: "Add to library",
+  cancel: "Cancel",
+  dropHere: "Drop your essays",
+  search: "Search",
+  searchTitles: "Titles",
+  searchText: "In the text",
+  noResults: "No results",
+  open: "Open",
+  markFinished: "Mark finished",
+  markUnread: "Mark unread",
+  exportMd: "Export .md",
+  delete: "Delete",
+  deleteConfirm: (title) => `Delete "${title}"? This can't be undone.`,
+  alreadyInLibrary: "Already in your library",
+  sameTitle: "You already have an essay with this title",
+  looksLikeNewVersion: "This looks like an essay you already have",
+  replace: "Replace",
+  keepBoth: "Keep as a copy",
+  imported: (n) => `${n} imported`,
+  skipped: (n) => `${n} skipped`,
+  storageBanner:
+    "Your library lives in this browser. Back it up with an @ or export copies.",
+  storageBackup: "Back up",
+  storageExport: "Export",
+  dismiss: "Got it",
+  words: (n) => `${n.toLocaleString("en")} words`,
+  toc: "Contents",
+  contents: "Contents",
+  notes: "Notes",
+  noNotes: "You haven't highlighted anything yet",
+  orphans: "Orphaned",
+  approximatePosition: "The document changed — approximate position",
+  typography: "Typography",
+  serif: "Serif",
+  sans: "Sans",
+  size: "Size",
+  spacing: "Line height",
+  theme: "Theme",
+  themeSystem: "System",
+  themeLight: "Light",
+  themeSepia: "Sepia",
+  themeDark: "Dark grey",
+  themeBlack: "Black",
+  highlight: "Highlight",
+  copy: "Copy",
+  addNote: "Note",
+  removeHighlight: "Remove",
+  finishedAt: (n) => `Finished · ${n} min read`,
+  settings: "Settings",
+  backupTitle: "Backup",
+  backupBody:
+    "Export a zip with all your essays, positions and highlights. It's also how you move to another browser.",
+  exportZip: "Export library",
+  importZip: "Import zip",
+  storage: "Storage",
+  storageUnknown: "This browser doesn't report how much space it uses.",
+  storageAlmostFull: "You're close to this browser's limit. Export a copy.",
+  notPersisted:
+    "This browser didn't guarantee it will keep your library: it may delete it if it needs space. Export copies.",
+  language: "Language",
+  account: "Account",
+  accountSoon: "Backup with an @ isn't available yet. For now, the zip.",
+  backupMyLibrary: "Back up my library",
+  handleExplainer:
+    "Pick an @. No email, no password: the server will give you an access key.",
+  handleRules: "3 to 20 characters: letters, numbers and underscore.",
+  handleFree: "available",
+  handleTaken: "taken",
+  spotsLeft: (n) => `${n} spots left`,
+  betaFull:
+    "The beta is full. Your library keeps working entirely in this browser, and you can export it any time.",
+  accountError: "Couldn't create the account. Try again in a bit.",
+  create: "Create",
+  haveAccount: "I already have an account",
+  loginExplainer: "Paste the key you got when you created your @.",
+  enter: "Enter",
+  badKey: "That key isn't valid.",
+  yourKey: "Your access key",
+  keyWarning:
+    "This key is your only way in from another device. We can't recover it: we don't have your email. Save it in your password manager.",
+  keyFileWarning:
+    "This key is the only way into your library from another device. It cannot be recovered.",
+  keySaved: "I saved it somewhere safe",
+  understood: "Got it, I saved it",
+  copied: "Copied",
+  downloadKey: "Download .txt",
+  syncedAgo: (s) => `Backed up ${s}`,
+  neverSynced: "Not backed up yet",
+  syncNow: "Back up now",
+  showKey: "Show my key",
+  signOut: "Sign out of this browser",
+  signOutExplainer:
+    "The key is removed from this browser. Your local library stays intact; so does the backup.",
+  deleteAccount: "Delete my account and backup",
+  deleteAccountConfirm: (h) => `Type ${h} to confirm. This deletes the backup from the server.`,
+  quotaExceeded: "You've hit your backup limit. You can delete essays or export a copy.",
+};
+
+const dictionaries = { es, en };
+export type Locale = keyof typeof dictionaries;
+
+export function detectLocale(): Locale {
+  if (typeof navigator === "undefined") return "en";
+  return navigator.language.toLowerCase().startsWith("es") ? "es" : "en";
+}
+
+let current: Locale = detectLocale();
+
+export function setLocale(locale: Locale): void {
+  current = locale;
+}
+
+export function t(): Strings {
+  return dictionaries[current];
+}
