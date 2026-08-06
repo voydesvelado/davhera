@@ -52,7 +52,7 @@ export function HighlightPopover({
         className="fixed z-50 w-72 -translate-x-1/2 rounded-m border border-line bg-bg p-3 shadow-lg"
         style={{ left: anchorRect.x, top: anchorRect.y + 8 }}
       >
-        <p className="mb-2 line-clamp-3 border-l-2 border-[#F5C84C] pl-2 text-caption text-ink-2">
+        <p className="mb-2 line-clamp-3 border-l-2 border-accent-solid pl-2 text-caption text-ink-2">
           {highlight.snapshotText}
         </p>
         <textarea

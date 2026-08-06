@@ -569,3 +569,48 @@ Queda pendiente, ninguno bloqueante para arrancar M0/M1:
 Web Share Target · lector web del inbox de Telegram · "quedan N lugares" en la landing ·
 PK compuesta `(id, user_id)` en el servidor · bibliotecas de solo-lectura por link (contradice un
 non-goal — re-evaluar con usuarios reales)
+
+---
+
+## 9. Estado final (2026-08-06)
+
+**88 tests en verde**: 61 del frontend + 27 del servidor. M0 a M6 implementados; M7 auditado.
+
+### Verificado con tests automáticos
+
+| DoD | Cómo se verificó |
+|---|---|
+| Vuelvo mañana y sigo donde estaba, incluso tras cambiar la tipografía | Test de geometría con el layout 30% más alto: mismo bloque, misma fracción |
+| Exporto el zip, borro todo, importo: intacto | Round-trip real con la base destruida en el medio |
+| @ en el navegador A, entro en B con la clave, subrayo en B y aparece en A | **e2e contra un servidor uvicorn real**, dos IndexedDB como dos navegadores |
+| Duplicados → UNA copia con los subrayados unidos | e2e: los dos lados eligen el MISMO canónico sin coordinarse |
+| Usuario 101 → beta llena, digna, app local intacta | Test del servidor (`beta_full`, 403) |
+| Clave incorrecta → error claro, nada se rompe | e2e: `unauthorized`, biblioteca local intacta, cola sin marcar |
+| Cuota excedida → 413 honesto | Test del servidor: 413 con `used`/`limit`, y nada escrito a medias |
+| Headings semánticos reales | Test de BlockView contra el DOM |
+| Auditoría de tokens | 4 tamaños · 3 inks · 2 radios · 2 springs · 1 acento, leyendo dos archivos |
+| Cero scripts de terceros en /prosa | Servido de verdad: un solo `<script>`, el propio; cero hosts externos |
+| Una cuenta no puede tocar los datos de otra | Test de suplantación: id ajeno → 409, documento de la víctima intacto |
+
+### NO verificado — hace falta un navegador real, un dispositivo o una persona
+
+Esto no está probado, y decirlo importa más que la lista de arriba:
+
+- **"Leyendo en menos de 5 segundos desde el primer link"**: no medido. Necesita un navegador
+  real sobre una red real.
+- **PWA offline**: el service worker se sirve con el tipo y el scope correctos, pero nunca se
+  ejercitó un `install` → `offline` de verdad.
+- **Lighthouse ≥90 / ≥95**: no hay Chrome en esta máquina.
+- **60fps en un Android medio**: no medible acá.
+- **`prefers-reduced-motion`, VoiceOver/TalkBack**: implementados (media query global, headings
+  reales, `aria-label` en los backdrops), no probados con un lector de pantalla.
+- **El copy de la pantalla de la clave, validado con alguien que no sea el autor**: es una tarea
+  humana y sigue pendiente. Es el punto donde alguien puede perder su biblioteca.
+- **El servidor NO está desplegado.** El código está completo y probado, con los artefactos en
+  `prosa-cloud/deploy/`, pero nada se instaló: falta el registro DNS de `api.prosa.davhera.com` y
+  una decisión explícita para tocar un servidor que hoy sirve la biblioteca personal.
+
+### Lo que queda para después
+
+Virtualización de bloques para documentos de 100K palabras (hoy se renderiza todo; el presupuesto
+alcanza para ensayos normales), parseo en Web Worker, quote-cards y Web Share Target.

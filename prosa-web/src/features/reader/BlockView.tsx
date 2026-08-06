@@ -146,7 +146,7 @@ function renderInline(node: RootContent, ctx: RenderContext): ReactNode {
             {piece.highlight.hasNote && (
               <span
                 aria-hidden
-                className="ml-0.5 inline-block h-1 w-1 rounded-full bg-[#F5C84C] align-super"
+                className="ml-0.5 inline-block h-1 w-1 rounded-full bg-accent-solid align-super"
               />
             )}
           </mark>

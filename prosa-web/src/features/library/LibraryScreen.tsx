@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLiveQuery } from "dexie-react-hooks";
 import { AnimatePresence, m } from "framer-motion";
 
@@ -53,6 +53,20 @@ export function LibraryScreen({ theme }: { theme: Theme }) {
     await requestPersistence();
   }
 
+  // ⌘F / Ctrl+F busca en la biblioteca en vez de abrir el buscador del navegador,
+  // que acá no sirve para nada: los ensayos no están en el DOM.
+  const searchInput = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "f") {
+        event.preventDefault();
+        searchInput.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const titleHits = hits.filter((h) => h.where === "title");
   const textHits = hits.filter((h) => h.where === "text");
 
@@ -62,6 +76,7 @@ export function LibraryScreen({ theme }: { theme: Theme }) {
         <h1 className="text-display font-medium">{strings.library}</h1>
         <div className="flex items-center gap-3">
         <input
+          ref={searchInput}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder={strings.search}

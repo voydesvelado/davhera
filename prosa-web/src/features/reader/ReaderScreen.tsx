@@ -149,6 +149,33 @@ export function ReaderScreen({ documentId }: { documentId: string }) {
     return map;
   }, [highlights]);
 
+  // Atajos de desktop. Se dejan afuera a propósito ⌘+/− (son el zoom del
+  // navegador y pelearlos rompe una expectativa más fuerte que la nuestra) y
+  // Espacio/⇧Espacio (el navegador ya los hace bien).
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      const mod = event.metaKey || event.ctrlKey;
+      if (event.key === "Escape") {
+        navigate({ name: "library" });
+        return;
+      }
+      if (!mod) return;
+      const key = event.key.toLowerCase();
+      if (key === "t") {
+        event.preventDefault();
+        setToc((current) => (current ? null : "contents"));
+      } else if (key === "e") {
+        event.preventDefault();
+        updateSettings({ family: settings.family === "serif" ? "sans" : "serif" });
+      } else if (key === "d") {
+        event.preventDefault();
+        void createHighlight();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [settings.family, updateSettings, createHighlight]);
+
   const goToBlock = useCallback((blockIndex: number) => {
     const node = document.querySelector<HTMLElement>(`[data-block="${blockIndex}"]`);
     if (!node) return;

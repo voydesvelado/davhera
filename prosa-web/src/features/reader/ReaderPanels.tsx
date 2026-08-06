@@ -62,7 +62,7 @@ export function TocPanel({
                       onClick={() => onGo(highlight.blockIndex)}
                       className="w-full text-left"
                     >
-                      <p className="border-l-2 border-[#F5C84C] pl-3 text-secondary text-ink-1">
+                      <p className="border-l-2 border-accent-solid pl-3 text-secondary text-ink-1">
                         {highlight.snapshotText}
                       </p>
                       {highlight.note && (

@@ -16,6 +16,7 @@
   --color-line: var(--line);
   --color-bg: var(--bg);
   --color-accent: var(--accent);
+  --color-accent-solid: var(--accent-solid);
 
   --text-caption: var(--t-caption);
   --text-secondary: var(--t-secondary);
@@ -38,8 +39,12 @@
   --line: #eeeeee;
   --bg: #fafafa; /* nunca blanco puro */
 
-  /* El único color de la app: ámbar de highlight. */
+  /* El único color de la app: ámbar de highlight. `--accent` es el subrayado
+     (translúcido, para que el texto se lea encima) y `--accent-solid` el mismo
+     color en pleno, para el punto de nota y el borde de una cita. Un color, dos
+     opacidades: la auditoría de tokens sigue diciendo "1 acento". */
   --accent: rgba(245, 200, 76, 0.35);
+  --accent-solid: #f5c84c;
 
   /* Radios: 8 chips y navegación · 16 cards, sheets, popovers · pill el CTA único. */
   --r-s: 8px;
