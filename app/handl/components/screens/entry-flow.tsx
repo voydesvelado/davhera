@@ -12,11 +12,8 @@ import {
   CameraIcon,
   LibraryIcon,
   ShieldIcon,
-  CheckIcon,
   PathCard,
   MariaRow,
-  DocIcon,
-  ChevronRight,
   staggerContainer,
   fadeUp,
 } from "../primitives";
@@ -43,7 +40,6 @@ export function Entry({ nav }: { nav: Nav }) {
       <motion.div variants={fadeUp}>
         <PathCard
           pre
-          icon={<DocIcon />}
           title="I have a doctor's order"
           support="Photograph it. No typing, no medical words."
           onClick={() => nav.go("capture")}
@@ -51,7 +47,6 @@ export function Entry({ nav }: { nav: Nav }) {
       </motion.div>
       <motion.div variants={fadeUp}>
         <PathCard
-          icon={<CheckIcon />}
           title="I need care, but I'm not sure what"
           support="A few short questions, in plain language"
           onClick={() => nav.go("describe")}
@@ -59,7 +54,6 @@ export function Entry({ nav }: { nav: Nav }) {
       </motion.div>
       <motion.div variants={fadeUp}>
         <PathCard
-          icon={<ChevronRight />}
           title="I know what I need"
           support="Search it directly, skip the questions"
           onClick={() => nav.go("directSearch")}

@@ -11,9 +11,7 @@ import {
   Button,
   Chip,
   SearchIcon,
-  ChevronRight,
   MariaRow,
-  DocIcon,
   PathCard,
   staggerContainer,
   fadeUp,
@@ -195,7 +193,6 @@ export function Recovery({ nav }: { nav: Nav }) {
 
       <motion.div variants={fadeUp}>
         <PathCard
-          icon={<ChipIcon />}
           title="Browse knee procedures"
           support="Start from the body area instead"
           onClick={() => nav.go("question")}
@@ -203,7 +200,6 @@ export function Recovery({ nav }: { nav: Nav }) {
       </motion.div>
       <motion.div variants={fadeUp}>
         <PathCard
-          icon={<ChipIcon />}
           title="Say it differently"
           support="Any words. Nicknames, brand names, Spanish."
           onClick={() => nav.go("describe")}
@@ -211,7 +207,6 @@ export function Recovery({ nav }: { nav: Nav }) {
       </motion.div>
       <motion.div variants={fadeUp}>
         <PathCard
-          icon={<DocIcon />}
           title="Photograph the order"
           support="We'll read the clinical text for you."
           onClick={() => nav.go("capture")}
@@ -227,15 +222,6 @@ export function Recovery({ nav }: { nav: Nav }) {
         />
       </motion.div>
     </motion.div>
-  );
-}
-
-function ChipIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="6" y="6" width="12" height="12" rx="3" />
-      <path d="M12 6v12M6 12h12" />
-    </svg>
   );
 }
 

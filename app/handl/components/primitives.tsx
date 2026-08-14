@@ -293,13 +293,11 @@ export function MoneyCount({
  * Path card (entry + recovery)
  * ========================================================================== */
 export function PathCard({
-  icon,
   title,
   support,
   pre,
   onClick,
 }: {
-  icon: React.ReactNode;
   title: string;
   support: string;
   pre?: boolean;
@@ -307,7 +305,6 @@ export function PathCard({
 }) {
   return (
     <button className={`${s.pathcard} ${pre ? s.pre : ""}`} onClick={onClick}>
-      <div className={s.pathIcon}>{icon}</div>
       <div style={{ flex: 1 }}>
         <div className={s.pathTitle}>{title}</div>
         <div className={s.pathSupport}>{support}</div>
@@ -335,7 +332,6 @@ export function MariaRow({
 }) {
   return (
     <button className={`${s.mariarow} ${warm ? s.warm : ""}`} onClick={onClick}>
-      <Avatar initials="MT" photo="/handl/img/maria.jpg" dark />
       <div style={{ flex: 1 }}>
         <div className={s.mariaTitle}>{title}</div>
         <div className={s.mariaSub}>{sub}</div>
