@@ -34,6 +34,11 @@ const nextConfig: NextConfig = {
       afterFiles: [
         { source: "/prosa", destination: "/prosa/index.html" },
         { source: "/prosa/:path*", destination: "/prosa/index.html" },
+        // El wireflow de ClearPath es un canvas estático que fija
+        // html,body{height:100%;overflow:hidden} y maneja su propio pan/zoom.
+        // Va como archivo suelto de public/, no como ruta de React, porque el
+        // root layout le rompería el <body>.
+        { source: "/clearpath-flow", destination: "/clearpath-flow.html" },
       ],
       fallback: [],
     };

@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClearPath · Care guidance wireflow · canvas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --midnight:#0A102F; --ink:#101A44; --peri:#5867B5; --peri-soft:#8E9AD6;
+    --lav:#E8ECF9; --ice:#F2F4FB; --card:#FFFFFF;
+    --muted:#5A628A; --line:#E3E6F0; --line-soft:#ECEFF7;
+    --ok:#1E7B54; --ok-bg:#E4F3EC; --warn:#9A5B2B; --warn-bg:#F7EEE4;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden}
+  body{
+    font-family:'Poppins',sans-serif; color:var(--ink); background:var(--ice);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ── Canvas ────────────────────────────── */
+  #viewport{
+    position:fixed; inset:0; overflow:hidden; cursor:grab; touch-action:none;
+    background-image:radial-gradient(#DDE2F0 1px, transparent 1px);
+    background-size:22px 22px;
+  }
+  #viewport.dragging{cursor:grabbing}
+  #world{position:absolute; top:0; left:0; width:4400px; height:4000px; transform-origin:0 0;}
+  #wires{position:absolute; inset:0; width:4400px; height:4000px; pointer-events:none;}
+
+  /* ── HUD ───────────────────────────────── */
+  .hud{position:fixed; z-index:10; background:rgba(255,255,255,.85); backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px); border:1px solid var(--line); border-radius:16px;
+    box-shadow:0 2px 14px rgba(16,26,68,.07);}
+  #titlebar{top:20px; left:20px; padding:14px 18px;}
+  #titlebar h1{font-size:14px; font-weight:600; letter-spacing:-.1px}
+  #titlebar p{font-size:12px; color:var(--muted); margin-top:3px}
+  #legend{top:20px; right:20px; padding:12px 16px; display:flex; gap:18px; align-items:center; font-size:12px; color:var(--muted);}
+  .lg{display:flex; align-items:center; gap:7px}
+  .lg i{width:22px; height:0; border-top:2px solid var(--peri); display:block}
+  .lg.alt i{border-top:1.5px dashed #B9C0DB}
+  .lg .dm{width:14px;height:14px;background:#fff;border:1px solid #C9CFE4;transform:rotate(45deg);display:block}
+  #zoombar{bottom:20px; right:20px; padding:6px; display:flex; gap:2px; align-items:center;}
+  #zoombar button{border:none; background:transparent; width:34px; height:34px; border-radius:10px;
+    font-size:16px; color:var(--muted); cursor:pointer; font-family:inherit;}
+  #zoombar button:hover{background:var(--lav); color:var(--ink)}
+  #zoombar #pct{font-size:12px; color:var(--muted); width:44px; text-align:center; font-variant-numeric:tabular-nums;}
+
+  /* ── Frames ────────────────────────────── */
+  .frame{position:absolute; width:300px;}
+  .frame-label{margin-bottom:12px; padding-left:4px;}
+  .frame-label b{font-size:13px; font-weight:600; color:var(--ink); display:block}
+  .frame-label span{font-size:11px; color:var(--muted)}
+  .phone{
+    width:300px; height:640px; background:#0E0E0E; border-radius:46px; padding:5px;
+    border:1px solid #CBD0E2; box-shadow:0 1px 2px rgba(16,26,68,.06), 0 14px 34px rgba(16,26,68,.09);
+    position:relative;
+  }
+  .screen{width:100%; height:100%; background:#fff; border-radius:41px; overflow:hidden;
+    position:relative; display:flex; flex-direction:column;}
+  .island{position:absolute; top:11px; left:50%; transform:translateX(-50%); width:82px; height:23px;
+    background:#0E0E0E; border-radius:999px; z-index:6;}
+  .sb{height:44px; display:flex; align-items:flex-end; justify-content:space-between;
+    padding:0 26px 4px; font-size:12.5px; font-weight:600; flex:none; z-index:5;}
+  .homebar{position:absolute; bottom:7px; left:50%; transform:translateX(-50%);
+    width:110px; height:4px; border-radius:999px; background:rgba(16,26,68,.3); z-index:6;}
+  .body{padding:6px 16px 0; flex:1; display:flex; flex-direction:column; overflow:hidden}
+  .appbar{display:flex; align-items:center; justify-content:space-between; padding:2px 0 8px; flex:none}
+  .appbar .back{width:28px;height:28px;border-radius:10px;background:var(--ice);display:flex;align-items:center;justify-content:center}
+  .appbar .ttl{font-size:11.5px;font-weight:600;color:var(--muted)}
+  .appbar .avatar{width:28px;height:28px;border-radius:50%;background:var(--lav);color:var(--peri);font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+  /* ── screen atoms ── */
+  .k{font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--peri);margin-bottom:4px}
+  .h{font-size:17px;font-weight:700;line-height:1.24;letter-spacing:-.012em}
+  .p{font-size:11px;color:var(--muted);margin-top:5px;line-height:1.5}
+  .btn{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;background:var(--peri);color:#fff;
+    font-size:12px;font-weight:600;border-radius:12px;padding:11px;margin-top:9px}
+  .btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn.soft{background:var(--lav);color:var(--ink)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:11px 12px;margin-top:9px}
+  .card.tint{background:#F8FAFE;border-color:#E6EAF6}
+  .pathcard{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:16px;
+    padding:11px 12px;margin-top:8px;background:#fff}
+  .pathcard .ic{flex:none;width:32px;height:32px;border-radius:11px;background:var(--lav);color:var(--peri);
+    display:flex;align-items:center;justify-content:center}
+  .pathcard b{font-size:11.5px;display:block;font-weight:600}
+  .pathcard small{font-size:9.5px;color:var(--muted);display:block;margin-top:1px}
+  .pathcard .chev{margin-left:auto;color:var(--muted)}
+  .chip{display:inline-flex;align-items:center;gap:4px;font-size:9px;font-weight:600;background:var(--lav);
+    color:var(--ink);padding:3px 9px;border-radius:999px}
+  .chip.ok{background:var(--ok-bg);color:var(--ok)}
+  .chip.solid{background:var(--peri);color:#fff}
+  .trow{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;padding:6px 0;border-bottom:1px solid var(--line-soft)}
+  .trow:last-child{border-bottom:0}
+  .trow .lab{color:var(--muted)}
+  .input{display:flex;gap:8px;border:1.5px solid var(--peri);border-radius:12px;padding:10px 11px;font-size:11px;
+    margin-top:10px;background:#fff;box-shadow:0 0 0 3px rgba(88,103,181,.10)}
+  .areas{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .area{font-size:10px;font-weight:500;border:1.5px solid var(--line);border-radius:999px;padding:5px 12px;background:#fff}
+  .area.on{border-color:var(--peri);background:var(--lav);font-weight:600}
+  .opt{display:flex;gap:9px;border:1.5px solid var(--line);border-radius:14px;padding:10px 11px;margin-top:7px;background:#fff;align-items:flex-start}
+  .opt .radio{flex:none;width:15px;height:15px;border-radius:50%;border:1.5px solid var(--line);margin-top:1px}
+  .opt.on{border-color:var(--peri);background:#F6F8FE}
+  .opt.on .radio{border-color:var(--peri);border-width:4.5px}
+  .opt b{font-size:11px;display:block;font-weight:600}
+  .opt small{font-size:9.5px;color:var(--muted);display:block;margin-top:1px;line-height:1.4}
+  .linklike{display:block;text-align:center;font-size:10.5px;color:var(--muted);margin-top:10px;
+    text-decoration:underline;text-underline-offset:2px}
+  .navrow{display:flex;align-items:center;gap:9px;margin-top:10px;padding:10px 11px;border-radius:14px;background:var(--ice)}
+  .navrow .face{flex:none;width:30px;height:30px;border-radius:50%;background:var(--midnight);color:#fff;
+    font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center}
+  .navrow b{font-size:10.5px;display:block}
+  .navrow small{font-size:9px;color:var(--muted)}
+  .steps .st{display:flex;gap:9px;align-items:center;padding:7px 0}
+  .steps .ic{flex:none;width:21px;height:21px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .steps .done .ic{background:var(--ok-bg);color:var(--ok)}
+  .steps .now .ic{background:var(--lav);color:var(--peri)}
+  .steps .next .ic{background:var(--ice);color:var(--muted)}
+  .steps b{font-size:11px;font-weight:600}
+  .steps small{font-size:9.5px;color:var(--muted);display:block}
+  .pbar{height:6px;background:var(--lav);border-radius:999px;overflow:hidden;margin-top:7px}
+  .pbar i{display:block;height:100%;background:var(--peri);border-radius:999px}
+  .money{font-size:22px;font-weight:700;letter-spacing:-.015em}
+  .money-sub{font-size:10px;color:var(--muted)}
+  .conf{display:flex;align-items:center;gap:6px;margin-top:8px}
+  .conf .dots{display:flex;gap:3px}
+  .conf .d{width:7px;height:7px;border-radius:50%;background:var(--lav)}
+  .conf .d.f{background:var(--peri)}
+  .conf small{font-size:9.5px;color:var(--muted);line-height:1.4}
+  .whisper{font-size:9px;color:var(--muted);margin:-2px 0 3px}
+  .hr{height:1px;background:var(--line-soft);margin:8px 0}
+  .quote{border-left:3px solid var(--peri);background:var(--ice);border-radius:0 12px 12px 0;
+    padding:9px 11px;font-size:10px;margin-top:9px;line-height:1.5}
+  .provcard{border:1.5px solid var(--peri);border-radius:16px;padding:11px 12px;margin-top:8px;background:#fff;
+    box-shadow:0 4px 14px rgba(88,103,181,.14)}
+  .prov-head{display:flex;gap:9px;align-items:center}
+  .prov-head .pfp{flex:none;width:34px;height:34px;border-radius:11px;background:var(--midnight);color:#fff;
+    font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center}
+  .prov-head b{font-size:11.5px;display:block}
+  .prov-head small{font-size:9.5px;color:var(--muted)}
+  .alt{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:14px;
+    padding:9px 11px;margin-top:7px;background:#fff}
+  .alt .pfp{flex:none;width:27px;height:27px;border-radius:9px;background:var(--lav);color:var(--peri);
+    font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .alt b{font-size:10.5px;display:block}
+  .alt small{font-size:9px;color:var(--muted)}
+  .alt .pr{margin-left:auto;font-size:11px;font-weight:700}
+  .cta-dock{margin-top:auto; padding:10px 0 24px; flex:none}
+  .edge-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--warn);color:#fff;
+    font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 12px;border-radius:999px;z-index:7}
+
+  /* ── Diamond & lanes ── */
+  .dmnd{position:absolute; left:1424px; top:420px; width:112px; height:112px;
+    display:flex; align-items:center; justify-content:center; text-align:center}
+  .dmnd i{position:absolute; inset:9px; background:#fff; border:1px solid #C9CFE4; border-radius:12px;
+    transform:rotate(45deg); box-shadow:0 2px 10px rgba(16,26,68,.06)}
+  .dmnd span{position:relative; font-size:12.5px; font-weight:600; color:var(--ink); line-height:1.25}
+  .lane-tag{position:absolute; font-size:11.5px; font-weight:600; letter-spacing:.09em; text-transform:uppercase;
+    color:var(--peri); background:var(--lav); padding:6px 14px; border-radius:999px}
+
+  /* ── Annotations ── */
+  .note{position:absolute; width:270px; background:#fff; border:1px solid var(--line);
+    border-radius:16px; padding:13px 15px; box-shadow:0 2px 10px rgba(16,26,68,.05)}
+  .note b{font-size:12px; font-weight:600; display:block; margin-bottom:3px}
+  .note p{font-size:11.5px; color:var(--muted); line-height:1.5}
+  svg{display:inline-block;vertical-align:middle}
+</style>
+</head>
+<body>
+
+<div id="viewport">
+  <div id="world">
+    <svg id="wires" viewBox="0 0 4400 4000"></svg>
+
+    <div class="dmnd" id="dm"><i></i><span>Confident<br>match?</span></div>
+
+    <div class="lane-tag" style="left:560px; top:56px">Path A · I have a doctor's order</div>
+    <div class="lane-tag" style="left:560px; top:816px">Path B · Not sure what I need</div>
+    <div class="lane-tag" style="left:560px; top:2336px">Path C · I know what I need</div>
+    <div class="lane-tag" style="left:2480px; top:2336px">Detail &amp; edge · the money, inspected</div>
+    <div class="lane-tag" style="left:560px; top:3096px">Path D · Prefer a person, the human lane</div>
+    <div class="lane-tag" style="left:80px; top:1576px">Main spine · every path converges here</div>
+
+    <!-- ════════ TOP ROW · MEMBER PATH ════════ -->
+
+    <!-- 01 Entry -->
+    <div class="frame" id="fr-entry" style="left:80px; top:1640px">
+      <div class="frame-label"><b>01 · Entry</b><span>Embedded in the plan's portal · three doors by certainty</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="ttl">Acme Benefits</span><span class="avatar">JM</span></div>
+          <div class="k">Find care</div>
+          <div class="h">What brings you here today, Jenny?</div>
+          <p class="p">We'll find the care you need, check your plan, and show your cost before you commit to anything.</p>
+          <div class="pathcard" id="e-order" style="border-color:var(--peri)">
+            <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+            <span><b>I have a doctor's order</b><small>Photograph it. No typing, no medical words.</small></span>
+            <span class="chev"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span>
+          </div>
+          <div class="pathcard" id="e-unsure">
+            <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M11 8v3.5M11 14.5v.01"/></svg></span>
+            <span><b>I need care, but I'm not sure what</b><small>A few short questions, in plain language</small></span>
+            <span class="chev"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span>
+          </div>
+          <div class="pathcard" id="e-search">
+            <span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg></span>
+            <span><b>I know what I need</b><small>Search it directly, skip the questions</small></span>
+            <span class="chev"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></span>
+          </div>
+          <div class="navrow" id="e-maria"><span class="face">MT</span><span><b>Prefer a person? Maria can help.</b><small>Care navigator · replies within two minutes</small></span></div>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- 02 Order capture -->
+    <div class="frame" id="fr-capture" style="left:560px; top:120px">
+      <div class="frame-label"><b>02 · Order capture</b><span>The hero interaction · absent from every benchmark product</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">Doctor's order</span><span style="width:28px"></span></div>
+          <div class="h">Photograph your order</div>
+          <p class="p">We read it and find the exact procedure. Handwriting, abbreviations and Spanish are all fine.</p>
+          <div style="margin-top:10px;background:var(--midnight);border-radius:16px;height:138px;position:relative;flex:none">
+            <svg width="100%" height="100%" viewBox="0 0 268 138" fill="none">
+              <path d="M18 30V20a4 4 0 014-4h11M250 30V20a4 4 0 00-4-4h-11M18 108v10a4 4 0 004 4h11M250 108v10a4 4 0 01-4 4h-11" stroke="#5867B5" stroke-width="2.5" stroke-linecap="round"/>
+              <rect x="64" y="30" width="140" height="76" rx="4" fill="#fff" opacity=".14"/>
+              <rect x="76" y="42" width="84" height="5" rx="2.5" fill="#fff" opacity=".38"/>
+              <rect x="76" y="54" width="116" height="5" rx="2.5" fill="#fff" opacity=".26"/>
+              <rect x="76" y="66" width="102" height="5" rx="2.5" fill="#fff" opacity=".26"/>
+              <rect x="76" y="84" width="64" height="5" rx="2.5" fill="#fff" opacity=".38"/>
+            </svg>
+            <span style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:9px;color:#A9B2D9">Align the order inside the frame</span>
+          </div>
+          <a class="btn" id="s-photo"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8a2 2 0 012-2h1.5l1.5-2h6l1.5 2H18a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><circle cx="12" cy="12.5" r="3.2"/></svg>Take photo</a>
+          <a class="btn soft">Choose from library</a>
+          <div class="card tint" style="display:flex;gap:8px;align-items:flex-start">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--peri)" stroke-width="1.8" style="flex:none;margin-top:1px"><path d="M12 3l7 3v5c0 5-3.2 8.4-7 10-3.8-1.6-7-5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+            <span style="font-size:9.5px;color:var(--muted);line-height:1.5">Used only to identify the procedure. Deleted after processing. Never visible to your employer.</span>
+          </div>
+          <a class="linklike">Type it instead</a>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- 03 Processing -->
+    <div class="frame" id="fr-processing" style="left:1040px; top:120px">
+      <div class="frame-label"><b>03 · Reading the order</b><span>Waiting redesigned as reassurance · named steps, no spinner</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">Reading your order</span><span style="width:28px"></span></div>
+          <div class="h">A few seconds…</div>
+          <div class="pbar" style="margin-top:12px"><i style="width:62%"></i></div>
+          <div class="card steps" id="s-scan" style="margin-top:12px">
+            <div class="st done"><span class="ic"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg></span><span><b>Document scanned</b></span></div>
+            <div class="st now"><span class="ic"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8" stroke-dasharray="38" stroke-dashoffset="12"/></svg></span><span><b>Identifying the procedure</b><small>Finding the exact procedure your doctor wrote</small></span></div>
+            <div class="st next"><span class="ic"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/></svg></span><span><b>Checking your network and plan</b></span></div>
+          </div>
+          <div class="card tint">
+            <span style="font-size:10px;color:var(--muted);line-height:1.55">Every number you see comes from <b style="color:var(--ink)">your plan's own prices</b> and where your deductible stands today. Not from averages, and never a guess.</span>
+          </div>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- 04 Confirmation -->
+    <div class="frame" id="fr-confirm" style="left:1520px; top:1640px">
+      <div class="frame-label"><b>04 · Procedure confirmed</b><span>The translation shown out loud · both names, three reassurances</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">Your procedure</span><span style="width:28px"></span></div>
+          <div class="k">Identified</div>
+          <div class="h">Knee arthroscopy</div>
+          <p class="p">On medical bills it appears as <i>arthroscopy, knee, surgical</i>. That is the exact item your plan prices.</p>
+          <div class="card tint" style="margin-top:10px">
+            <div class="trow"><span class="lab">In your network</span><span class="chip ok"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg>16 providers nearby</span></div>
+            <div class="trow"><span class="lab">Covered by your plan</span><span class="chip ok"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 13l4 4L19 7"/></svg>Yes, after deductible</span></div>
+            <div class="trow"><span class="lab">Typical total in your area</span><span style="font-weight:600">$2,900 – $6,400</span></div>
+          </div>
+          <a class="btn" id="s-confirm">See your options</a>
+          <a class="linklike">Not what your doctor said? Go back</a>
+          <div class="hr"></div>
+          <p style="font-size:9px;color:var(--muted);line-height:1.5">We identify the procedure your doctor ordered. We never diagnose. That part stays between you and your doctor.</p>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- 05 Options -->
+    <div class="frame" id="fr-options" style="left:2000px; top:1640px">
+      <div class="frame-label"><b>05 · The decision</b><span>Sixteen options, one opinion · value means quality and cost together</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">Knee arthroscopy</span><span style="width:28px"></span></div>
+          <p class="p" style="margin-top:0">16 in-network options · ranked by quality and cost together</p>
+          <div class="provcard">
+            <span class="chip solid">Best value for you</span>
+            <div class="prov-head" style="margin-top:7px"><span class="pfp">DA</span><span><b>Dr. Adams</b><small>Lakeside Surgical Center · standalone facility</small></span></div>
+            <div class="trow" style="margin-top:5px"><span class="lab">Quality, this procedure</span><span class="chip ok">Excellent outcomes</span></div>
+            <div class="trow"><span class="lab">Total cost</span><span><b>$3,292</b> <span style="font-size:9px;color:var(--muted)">· typical here: $6,200</span></span></div>
+            <div class="trow"><span class="lab">Distance · availability</span><span style="font-size:10px">15 min · this week</span></div>
+            <a class="btn" id="s-options" style="margin-top:8px">See your cost with Dr. Adams</a>
+          </div>
+          <div class="alt"><span class="pfp">SC</span><span><b>Dr. Chen · Northside Ortho</b><small><span class="chip ok" style="font-size:8px;padding:2px 6px">High quality</span> · 9 min</small></span><span class="pr">$4,110</span></div>
+          <div class="alt" id="s-hosp"><span class="pfp">RM</span><span><b>Dr. Moore · St. Vincent</b><small><span class="chip" style="font-size:8px;padding:2px 6px">Hospital-based</span> · 12 min</small></span><span class="pr">$6,312</span></div>
+          <a class="btn soft">View all 16 options</a>
+          <a class="linklike" style="margin-top:6px">How we rank providers</a>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- 06 Estimate -->
+    <div class="frame" id="fr-estimate" style="left:2480px; top:1640px">
+      <div class="frame-label"><b>06 · The money</b><span>An honest range with a spine · the user's own deductible in view</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">Your cost · Dr. Adams</span><span style="width:28px"></span></div>
+          <div class="k">What you'd pay</div>
+          <div class="money">$1,380 – $1,640</div>
+          <div class="money-sub">your part, after your plan pays its part</div>
+          <div class="conf"><span class="dots"><span class="d f"></span><span class="d f"></span><span class="d f"></span></span><small><b>High confidence.</b> Built on this facility's set price and your plan today.</small></div>
+          <div class="card tint">
+            <div class="trow" style="border:0;padding:0 0 4px"><span class="lab" style="font-weight:600;color:var(--ink)">Your deductible</span><span style="font-size:9.5px;color:var(--muted)">$800 of $1,500 used</span></div>
+            <div class="pbar"><i style="width:53%"></i></div>
+            <p style="font-size:9px;color:var(--muted);margin-top:5px">This is what you pay first each year. After it, your plan pays 85%.</p>
+          </div>
+          <a class="btn soft" id="s-howbtn" style="justify-content:space-between"><span>How we got this number</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></a>
+          <a class="btn" id="s-estimate">Choose Dr. Adams</a>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- 07 Booking kit -->
+    <div class="frame" id="fr-booking" style="left:2960px; top:1640px">
+      <div class="frame-label"><b>07 · The booking kit</b><span>The last mile carried, not pointed at</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">Dr. Adams · chosen</span><span style="width:28px"></span></div>
+          <div class="h">You chose well. Here is everything to book it.</div>
+          <a class="btn" id="s-booking"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>Call to schedule · (214) 555-0142</a>
+          <a class="btn ghost"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-5.5-7-11a7 7 0 0114 0c0 5.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>Directions</a>
+          <div class="card">
+            <p style="font-size:10px;font-weight:600;margin-bottom:3px">Saved here, ready for the visit</p>
+            <div class="trow"><span class="lab">Insurance card</span><span class="chip ok">saved</span></div>
+            <div class="trow"><span class="lab">Doctor's order</span><span class="chip ok">saved</span></div>
+            <div class="trow"><span class="lab">This estimate</span><span class="chip ok">saved · shareable</span></div>
+          </div>
+          <div class="quote"><b style="font-size:9.5px;display:block;margin-bottom:2px">When they answer, you can say:</b>"I'd like to schedule a knee arthroscopy with Dr. Adams. My insurance is Acme PPO."</div>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- 08 Intention -->
+    <div class="frame" id="fr-checkin" style="left:3440px; top:1640px">
+      <div class="frame-label"><b>08 · A day later</b><span>Intention capture · closing the six-month measurement blackout</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="ttl" style="margin:0 auto">Quick check-in</span></div>
+          <div class="h">Did the booking work out?</div>
+          <p class="p">One tap, and you are done. We will also remind you what to bring before the day.</p>
+          <div class="opt on" id="s-checkin"><span class="radio"></span><span><b>Booked</b><small>Scheduled for next week</small></span></div>
+          <div class="opt"><span class="radio"></span><span><b>Not yet</b><small>I'll call later</small></span></div>
+          <div class="opt"><span class="radio"></span><span><b>I ran into a problem</b><small>Maria will take it from here. No starting over.</small></span></div>
+          <div class="card tint"><p style="font-size:9.5px;color:var(--muted);line-height:1.55">After your visit, we compare your final bill to this estimate and show you how close we came.</p></div>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- 09 Receipt -->
+    <div class="frame" id="fr-receipt" style="left:3920px; top:1640px">
+      <div class="frame-label"><b>09 · The trust receipt</b><span>Weeks later, after the claim · the screen nobody ships</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="ttl" style="margin:0 auto">After your claim</span></div>
+          <div class="k">Your final cost</div>
+          <div class="money">$1,512</div>
+          <div class="conf"><span class="dots"><span class="d f"></span><span class="d f"></span><span class="d f"></span></span><small>Inside the range we estimated</small></div>
+          <div class="card">
+            <div class="trow"><span class="lab">We estimated</span><span>$1,380 – $1,640</span></div>
+            <div class="trow"><span class="lab">You paid</span><b>$1,512</b></div>
+            <div class="trow"><span class="lab">Your deductible</span><span class="chip ok">met</span></div>
+          </div>
+          <div class="card tint"><p style="font-size:10px;color:var(--muted);line-height:1.55">Your deductible is met, so care costs you far less for the rest of the year. Your next estimates start from here.</p></div>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- ════════ BOTTOM ROW · BRANCHES ════════ -->
+
+    <!-- B1 Describe -->
+    <div class="frame" id="fr-a1" style="left:560px; top:880px">
+      <div class="frame-label"><b>A1 · Describe it</b><span>"Not sure" path · human language in, no jargon required</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">Tell us what's going on</span><span style="width:28px"></span></div>
+          <div class="h">In your own words</div>
+          <p class="p">Plain words are perfect. Whatever your doctor said, however you remember it.</p>
+          <div class="input"><span>my doctor says I need my knee operated<span style="display:inline-block;width:1.5px;height:12px;background:var(--peri);vertical-align:-2px"></span></span></div>
+          <p class="p" style="margin-top:10px">Or start from where it hurts:</p>
+          <div class="areas"><span class="area">Head</span><span class="area">Chest</span><span class="area">Back</span><span class="area on">Knee</span><span class="area">Stomach</span><span class="area">Skin</span></div>
+          <a class="btn" id="s-a1" style="margin-top:12px">Continue</a>
+          <div class="navrow"><span class="face">MT</span><span><b>Rather just talk it through?</b><small>Maria, care navigator · free, no appointment</small></span></div>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- B2 Guided question -->
+    <div class="frame" id="fr-a2" style="left:1040px; top:880px">
+      <div class="frame-label"><b>A2 · Guided question</b><span>Structure over conversation · bounded, teaching, never punishing</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">Question 1 of 2</span><span style="width:28px"></span></div>
+          <div class="pbar"><i style="width:50%"></i></div>
+          <div class="h" style="margin-top:10px">Did your doctor mention any of these?</div>
+          <p class="p">Different knee procedures come with very different costs. This narrows it to yours.</p>
+          <div class="opt on"><span class="radio"></span><span><b>Arthroscopy</b><small>A small camera repairs the joint. Often same-day, usually the least costly.</small></span></div>
+          <div class="opt"><span class="radio"></span><span><b>Meniscus repair</b><small>Common after sports injuries.</small></span></div>
+          <div class="opt"><span class="radio"></span><span><b>Knee replacement</b><small>Partial or total. A larger surgery.</small></span></div>
+          <div class="opt"><span class="radio"></span><span><b>None of these sound familiar</b><small>Totally fine. We will get there another way.</small></span></div>
+          <a class="btn" id="s-a2">Continue</a>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- B3 Recovery -->
+    <div class="frame" id="fr-recovery" style="left:1520px; top:880px">
+      <div class="frame-label"><b>R1 · Recovery</b><span>The empty state is a fork, never a wall</span></div>
+      <div class="phone" style="border-color:#E0C9AE">
+        <span class="edge-tag">Edge case · no match</span>
+        <div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">Let's try another way</span><span style="width:28px"></span></div>
+          <div class="h">We couldn't match that yet</div>
+          <p class="p">That is on us, not you. Your description was fine. Pick whichever feels easiest:</p>
+          <div class="pathcard" id="s-r1"><span class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7" r="3.4"/><path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></span><span><b>Browse knee procedures</b><small>Start from the body area instead</small></span></div>
+          <div class="pathcard"><span class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span><span><b>Say it differently</b><small>Any words. Nicknames, brand names, Spanish.</small></span></div>
+          <div class="pathcard"><span class="ic"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span><span><b>Photograph the order</b><small>We'll read the clinical text for you</small></span></div>
+          <div class="navrow" style="background:var(--warn-bg)"><span class="face" style="background:var(--warn)">MT</span><span><b>Or hand it to Maria</b><small>She can already see what you tried. No repeating yourself.</small></span></div>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- B4 Breakdown -->
+    <div class="frame" id="fr-breakdown" style="left:2480px; top:2400px">
+      <div class="frame-label"><b>D1 · The breakdown</b><span>Detail view · the math narrated in human sentences</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">How we got this number</span><span style="width:28px"></span></div>
+          <div class="card">
+            <div class="trow"><span class="lab">Contracted rate here</span><b>$3,292</b></div>
+            <p class="whisper">the price your insurer already negotiated</p>
+            <div class="hr"></div>
+            <div class="trow"><span class="lab">Remaining deductible</span><b>$700</b></div>
+            <p class="whisper">you pay this part first</p>
+            <div class="trow"><span class="lab">Plan then covers 85% of</span><span>$2,592</span></div>
+            <div class="trow"><span class="lab">Your 15% share</span><b>≈ $389</b></div>
+            <div class="hr"></div>
+            <div class="trow"><span style="font-weight:700">Your total</span><span style="font-size:14px;font-weight:700">$1,380 – $1,640</span></div>
+          </div>
+          <div class="card tint"><p style="font-size:10px;color:var(--muted);line-height:1.55"><b style="color:var(--ink)">What could move it:</b> anesthesia billed separately, or additional findings. Both already inside the range.</p></div>
+          <p style="font-size:9px;color:var(--muted);margin-top:8px;line-height:1.5">These are your plan's own numbers, applied to your situation. Nothing here is an average or a guess.</p>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- B5 Wider range -->
+    <div class="frame" id="fr-wider" style="left:2960px; top:2400px">
+      <div class="frame-label"><b>E1 · Weaker data</b><span>Confidence has a shape · the range widens and says why</span></div>
+      <div class="phone" style="border-color:#E0C9AE">
+        <span class="edge-tag">Edge case · weaker data</span>
+        <div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">Your cost · St. Vincent</span><span style="width:28px"></span></div>
+          <div class="k">What you'd pay</div>
+          <div class="money">$1,100 – $2,900</div>
+          <div class="money-sub">a wider range than usual. Here is why.</div>
+          <div class="conf"><span class="dots"><span class="d f"></span><span class="d f"></span><span class="d"></span></span><small><b>Moderate confidence.</b> This facility's billing varies more than most for this procedure.</small></div>
+          <div class="card tint"><p style="font-size:10px;color:var(--muted);line-height:1.55">We would rather show you the honest spread than a precise-looking number we cannot stand behind. Two ways to firm it up:</p></div>
+          <a class="btn soft">Compare a narrower option</a>
+          <div class="navrow"><span class="face">MT</span><span><b>Ask Maria to verify with the facility</b><small>She'll confirm the rate and call you back</small></span></div>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- ════════ ROW 3 · REMAINING ENTRY FLOWS ════════ -->
+
+    <!-- M1 · Maria conversation -->
+    <div class="frame" id="fr-h1" style="left:560px; top:3160px">
+      <div class="frame-label"><b>H1 · Maria, live</b><span>The human lane · a person, not a bot</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar">
+            <span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span>
+            <span style="display:flex;align-items:center;gap:7px"><span style="width:26px;height:26px;border-radius:50%;background:var(--midnight);color:#fff;font-size:9.5px;font-weight:600;display:flex;align-items:center;justify-content:center">MT</span><span><b style="font-size:11px;display:block">Maria Torres</b><small style="font-size:8.5px;color:var(--ok)">Care navigator · online now</small></span></span>
+            <span style="width:28px"></span>
+          </div>
+          <div class="card tint" style="margin-top:2px;padding:8px 11px">
+            <p style="font-size:9px;color:var(--muted);line-height:1.5">Maria can see what you have entered so far. No need to repeat yourself.</p>
+          </div>
+          <div style="margin-top:10px;margin-left:36px;background:var(--peri);color:#fff;border-radius:14px 14px 4px 14px;padding:9px 11px;font-size:10.5px;line-height:1.5">My doctor says I need my knee operated but I'm honestly not sure which surgery it is</div>
+          <div style="margin-top:8px;margin-right:36px;background:var(--ice);border-radius:14px 14px 14px 4px;padding:9px 11px;font-size:10.5px;line-height:1.5">Happy to help, Jenny. Does your order mention a small camera, called an arthroscopy, or a replacement?</div>
+          <div style="margin-top:8px;margin-right:36px;background:var(--ice);border-radius:14px 14px 14px 4px;padding:9px 11px;font-size:10.5px;line-height:1.5">If you have the order handy, you can also send me a photo of it here.</div>
+          <div class="cta-dock" style="padding-bottom:22px">
+            <div id="s-h1" style="display:flex;gap:8px;align-items:center;border:1.5px solid var(--line);border-radius:999px;padding:9px 13px">
+              <span style="font-size:10.5px;color:var(--muted);flex:1">Write to Maria…</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--peri)" stroke-width="1.8"><path d="M4 8a2 2 0 012-2h1.5l1.5-2h6l1.5 2H18a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V8z"/><circle cx="12" cy="12.5" r="3.2"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--peri)" stroke-width="1.8"><path d="M5 12l14-7-4 14-4-5-6-2z"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- M2 · Maria's plan -->
+    <div class="frame" id="fr-h2" style="left:1040px; top:3160px">
+      <div class="frame-label"><b>H2 · Maria's answer</b><span>The human delivers the same components the product builds</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar">
+            <span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span>
+            <span style="display:flex;align-items:center;gap:7px"><span style="width:26px;height:26px;border-radius:50%;background:var(--midnight);color:#fff;font-size:9.5px;font-weight:600;display:flex;align-items:center;justify-content:center">MT</span><span><b style="font-size:11px;display:block">Maria Torres</b><small style="font-size:8.5px;color:var(--ok)">Care navigator · online now</small></span></span>
+            <span style="width:28px"></span>
+          </div>
+          <div style="margin-top:8px;margin-right:36px;background:var(--ice);border-radius:14px 14px 14px 4px;padding:9px 11px;font-size:10.5px;line-height:1.5">Found it. Your order is a knee arthroscopy. I checked your plan and your network, and this is the strongest option near you:</div>
+          <div class="provcard" style="margin-top:8px;margin-right:20px">
+            <span class="chip solid">Maria's pick · best value</span>
+            <div class="prov-head" style="margin-top:7px"><span class="pfp">DA</span><span><b>Dr. Adams</b><small>Lakeside Surgical Center · 15 min</small></span></div>
+            <div class="trow" style="margin-top:4px"><span class="lab">Quality</span><span class="chip ok">Excellent outcomes</span></div>
+            <div class="trow"><span class="lab">Your share</span><b>$1,380 – $1,640</b></div>
+            <a class="btn" id="s-h2" style="margin-top:8px;padding:9px">Open the full estimate</a>
+          </div>
+          <div style="margin-top:8px;margin-right:36px;background:var(--ice);border-radius:14px 14px 14px 4px;padding:9px 11px;font-size:10.5px;line-height:1.5">This is the same estimate the app builds. I just walked there with you. Want me to stay on while you book?</div>
+          <div style="margin-top:8px;margin-left:36px;background:var(--peri);color:#fff;border-radius:14px 14px 4px 14px;padding:9px 11px;font-size:10.5px;line-height:1.5">Thanks Maria, this helps a lot</div>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- S1 · Direct search -->
+    <div class="frame" id="fr-s1" style="left:560px; top:2400px">
+      <div class="frame-label"><b>S1 · Direct search</b><span>The expert door · skips questions, never the confirmation</span></div>
+      <div class="phone"><div class="screen">
+        <div class="island"></div><div class="sb"><span>9:41</span><span class="sb-ic"></span></div>
+        <div class="body">
+          <div class="appbar"><span class="back"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></span><span class="ttl">Search a procedure</span><span style="width:28px"></span></div>
+          <div class="input" style="margin-top:4px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--peri)" stroke-width="1.8" style="flex:none;margin-top:1px"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L20 20"/></svg>
+            <span>knee arthro<span style="display:inline-block;width:1.5px;height:12px;background:var(--peri);vertical-align:-2px"></span></span>
+          </div>
+          <div class="card" id="s-s1" style="border-color:var(--peri);background:#F6F8FE">
+            <b style="font-size:11.5px">Knee arthroscopy</b>
+            <p style="font-size:9.5px;color:var(--muted);margin-top:1px;line-height:1.45">Small-camera repair of the joint · outpatient</p>
+            <div style="margin-top:5px"><span class="chip ok">16 in your network</span></div>
+          </div>
+          <div class="card">
+            <b style="font-size:11.5px">Knee replacement, partial or total</b>
+            <p style="font-size:9.5px;color:var(--muted);margin-top:1px;line-height:1.45">Larger surgery · hospital stay likely</p>
+          </div>
+          <div class="card">
+            <b style="font-size:11.5px">Knee MRI, without contrast</b>
+            <p style="font-size:9.5px;color:var(--muted);margin-top:1px;line-height:1.45">Imaging · often needed before surgery</p>
+          </div>
+          <p class="p" style="margin-top:10px">Recent in your plan: <b style="color:var(--ink)">Annual physical</b> · <b style="color:var(--ink)">Blood panel</b></p>
+          <div class="hr"></div>
+          <p style="font-size:9px;color:var(--muted);line-height:1.5">You will confirm the exact procedure before any numbers appear. Same door as every path.</p>
+        </div>
+        <div class="homebar"></div>
+      </div></div>
+    </div>
+
+    <!-- ── Annotations ── -->
+    <div class="note" style="left:1520px; top:3160px">
+      <b>Maria is a person, not a bot</b>
+      <p>The human lane is a real conversation. She sees the user's context, reads the order, and hands back the exact components the product builds. Human warmth, system consistency: one source of truth for both.</p>
+    </div>
+    <div class="note" style="left:1830px; top:3160px">
+      <b>The expert door is still guarded</b>
+      <p>Direct search skips the questions but never the confirmation. Every path converges on the same "both names, three reassurances" screen before money appears. Four entries, one contract.</p>
+    </div>
+    <div class="note" style="left:2140px; top:3160px">
+      <b>Three doors by certainty</b>
+      <p>Order in hand, unsure, or expert: the user self-segments. No upfront quiz, no search bar demanding an answer they don't have.</p>
+    </div>
+    <div class="note" style="left:2450px; top:3160px">
+      <b>Guided, never chat</b>
+      <p>Bounded questions ("1 of 2") with options that teach. Structured triage completes at 90%+; open chat under anxiety stalls. "None of these" is always a valid answer.</p>
+    </div>
+    <div class="note" style="left:2760px; top:3160px">
+      <b>Recovery takes the blame</b>
+      <p>"The gap is on our side." Three self-serve paths plus Maria with full context, and every failed match is logged verbatim as free research.</p>
+    </div>
+    <div class="note" style="left:3070px; top:3160px">
+      <b>Words, never numbers</b>
+      <p>Every figure comes from rate tables and plan status, deterministic by architecture. The model chooses sentences, never prices.</p>
+    </div>
+    <div class="note" style="left:3380px; top:3160px">
+      <b>Confidence has a shape</b>
+      <p>Weaker data widens the range visibly and explains itself. The moment of least certainty gets the most support, never false precision.</p>
+    </div>
+    <div class="note" style="left:1520px; top:3500px; border-style:dashed">
+      <b>The loop no competitor closes</b>
+      <p>Estimate vs. final bill, reconciled as an experience. One accurate range becomes standing trust for every future estimate. That is the retention story of a twice-a-year product.</p>
+    </div>
+    <div class="note" style="left:1830px; top:3500px; border-style:dashed">
+      <b>Confidence drives depth</b>
+      <p>Unambiguous input skips clarification entirely. The system asks only when it must. High-confidence matches land straight on this screen.</p>
+    </div>
+  </div>
+</div>
+
+<div class="hud" id="titlebar">
+  <h1>ClearPath · Care guidance flow</h1>
+  <p>Handl design system · drag to pan · scroll to zoom · 17 screens · 4 entry flows</p>
+</div>
+<div class="hud" id="legend">
+  <div class="lg"><i></i>Member path</div>
+  <div class="lg alt"><i></i>Recovery / detail</div>
+  <div class="lg"><span class="dm"></span>&nbsp;System decision</div>
+</div>
+<div class="hud" id="zoombar">
+  <button id="z-out" aria-label="Zoom out">−</button>
+  <span id="pct">62%</span>
+  <button id="z-in" aria-label="Zoom in">+</button>
+  <button id="z-fit" aria-label="Fit to screen" style="font-size:13px">⤢</button>
+</div>
+
+<script>
+  const vp = document.getElementById('viewport');
+  const world = document.getElementById('world');
+  const pct = document.getElementById('pct');
+  const W = 4400, H = 4000;
+  let s = .6, tx = 0, ty = 0;
+
+  function apply(){
+    world.style.transform = `translate(${tx}px, ${ty}px) scale(${s})`;
+    pct.textContent = Math.round(s*100) + '%';
+  }
+  function fit(){
+    const pad = 70;
+    s = Math.min((innerWidth - pad*2)/W, (innerHeight - pad*2)/H);
+    s = Math.max(.12, Math.min(s, 2));
+    tx = (innerWidth - W*s)/2;
+    ty = (innerHeight - H*s)/2;
+    apply();
+  }
+  function zoomAt(f, cx, cy){
+    const ns = Math.max(.12, Math.min(s*f, 2.5));
+    tx = cx - (ns/s)*(cx - tx);
+    ty = cy - (ns/s)*(cy - ty);
+    s = ns; apply();
+  }
+
+  vp.addEventListener('wheel', e => {
+    e.preventDefault();
+    if (e.ctrlKey || Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      zoomAt(Math.exp(-e.deltaY * .0018), e.clientX, e.clientY);
+    } else { tx -= e.deltaX; apply(); }
+  }, {passive:false});
+
+  let drag = null;
+  const ptrs = new Map();
+  vp.addEventListener('pointerdown', e => {
+    ptrs.set(e.pointerId, {x:e.clientX, y:e.clientY});
+    if (ptrs.size === 1){ drag = {x:e.clientX, y:e.clientY}; vp.classList.add('dragging'); }
+    vp.setPointerCapture(e.pointerId);
+  });
+  vp.addEventListener('pointermove', e => {
+    if (!ptrs.has(e.pointerId)) return;
+    const prev = ptrs.get(e.pointerId);
+    if (ptrs.size === 2){
+      const pts = [...ptrs.values()];
+      const other = pts.find(p => p !== prev);
+      const d0 = Math.hypot(prev.x - other.x, prev.y - other.y);
+      const d1 = Math.hypot(e.clientX - other.x, e.clientY - other.y);
+      const cx = (e.clientX + other.x)/2, cy = (e.clientY + other.y)/2;
+      if (d0 > 0) zoomAt(d1/d0, cx, cy);
+    } else if (drag){
+      tx += e.clientX - drag.x; ty += e.clientY - drag.y;
+      drag = {x:e.clientX, y:e.clientY};
+      apply();
+    }
+    ptrs.set(e.pointerId, {x:e.clientX, y:e.clientY});
+  });
+  const up = e => { ptrs.delete(e.pointerId); if (!ptrs.size){ drag = null; vp.classList.remove('dragging'); } };
+  vp.addEventListener('pointerup', up); vp.addEventListener('pointercancel', up);
+
+  document.getElementById('z-in').onclick  = () => zoomAt(1.25, innerWidth/2, innerHeight/2);
+  document.getElementById('z-out').onclick = () => zoomAt(.8,  innerWidth/2, innerHeight/2);
+  document.getElementById('z-fit').onclick = fit;
+  addEventListener('resize', fit);
+
+  document.querySelectorAll('.sb-ic').forEach(el => {
+    el.innerHTML = `<svg width="62" height="12" viewBox="0 0 62 12" fill="#101A44">
+      <rect x="0" y="7" width="2.6" height="4" rx="1"/><rect x="4" y="5" width="2.6" height="6" rx="1"/>
+      <rect x="8" y="3" width="2.6" height="8" rx="1"/><rect x="12" y="1" width="2.6" height="10" rx="1"/>
+      <path d="M22 5.2c2.6-2.4 6.8-2.4 9.4 0l-1.5 1.6c-1.8-1.6-4.6-1.6-6.4 0zM24.4 7.7c1.3-1.1 3.3-1.1 4.6 0l-2.3 2.4z"/>
+      <rect x="38" y="1.5" width="20" height="9" rx="2.6" fill="none" stroke="#101A44" stroke-width="1" opacity=".45"/>
+      <rect x="40" y="3.5" width="13" height="5" rx="1.2"/>
+      <path d="M59.5 4.5v3a2 2 0 0 0 0 -3z" opacity=".45"/>
+    </svg>`;
+  });
+
+  /* ── curved wire engine: connectors start at the actual controls ── */
+  const NS = 'http://www.w3.org/2000/svg';
+  const wires = document.getElementById('wires');
+
+  function worldPos(el){
+    let x = 0, y = 0, n = el;
+    while (n && n !== world){ x += n.offsetLeft; y += n.offsetTop; n = n.offsetParent; }
+    return {x, y, w: el.offsetWidth, h: el.offsetHeight};
+  }
+  function anchor(el, side){
+    const p = worldPos(el);
+    switch(side){
+      case 'right':  return {x: p.x + p.w + 2, y: p.y + p.h/2};
+      case 'left':   return {x: p.x - 2,       y: p.y + p.h/2};
+      case 'bottom': return {x: p.x + p.w/2,   y: p.y + p.h + 2};
+      case 'top':    return {x: p.x + p.w/2,   y: p.y - 2};
+    }
+  }
+  const DIR = {right:[1,0], left:[-1,0], bottom:[0,1], top:[0,-1]};
+
+  const links = [
+    {from:'e-order',  to:'fr-capture',   label:''},
+    {from:'e-unsure', to:'fr-a1',        label:''},
+    {from:'e-search', to:'fr-s1',        label:''},
+    {from:'e-maria',  to:'fr-h1',        label:''},
+    {from:'s-photo',  to:'fr-processing',label:''},
+    {from:'s-scan',   to:'dm',           label:'', toSide:'left'},
+    {from:'dm',       to:'fr-confirm',   label:'Yes', fromSide:'right'},
+    {from:'dm',       to:'fr-recovery',  label:'No · clarify', fromSide:'bottom', kind:'branch'},
+    {from:'s-r1',     to:'fr-confirm',   label:'recovered · rejoins', kind:'branch'},
+    {from:'s-a1',     to:'fr-a2',        label:''},
+    {from:'s-a2',     to:'fr-confirm',   label:'answered · rejoins'},
+    {from:'s-s1',     to:'fr-confirm',   label:'same door as every path'},
+    {from:'s-h1',     to:'fr-h2',        label:''},
+    {from:'s-h2',     to:'fr-estimate',  label:'the same estimate card'},
+    {from:'s-confirm',to:'fr-options',   label:''},
+    {from:'s-options',to:'fr-estimate',  label:''},
+    {from:'s-hosp',   to:'fr-wider',     label:'hospital option · weaker data', kind:'branch'},
+    {from:'s-howbtn', to:'fr-breakdown', label:'tap · full breakdown', kind:'branch'},
+    {from:'s-estimate',to:'fr-booking',  label:''},
+    {from:'s-booking',to:'fr-checkin',   label:'a day later'},
+    {from:'s-checkin',to:'fr-receipt',   label:'after the claim'},
+  ];
+
+  function drawWires(){
+    wires.innerHTML = '<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>';
+    for (const L of links){
+      const fromEl = document.getElementById(L.from);
+      let toEl = document.getElementById(L.to);
+      if (!fromEl || !toEl) continue;
+      if (toEl.classList.contains('frame')) toEl = toEl.querySelector('.phone');
+      const fSide = L.fromSide || 'right';
+      const a = anchor(fromEl, fSide);
+      let tSide = L.toSide || 'left';
+      const tp = worldPos(toEl);
+      if (!L.toSide && tp.x + tp.w/2 < a.x - 80) tSide = 'right';
+      const b = anchor(toEl, tSide);
+      const dist = Math.hypot(b.x - a.x, b.y - a.y);
+      const K = Math.max(70, Math.min(dist * .42, 320));
+      const [fdx, fdy] = DIR[fSide], [tdx, tdy] = DIR[tSide];
+      const c1x = a.x + fdx*K, c1y = a.y + fdy*K;
+      const c2x = b.x + tdx*K, c2y = b.y + tdy*K;
+      const branch = L.kind === 'branch';
+      const path = document.createElementNS(NS, 'path');
+      path.setAttribute('d', `M${a.x} ${a.y} C${c1x} ${c1y}, ${c2x} ${c2y}, ${b.x} ${b.y}`);
+      path.setAttribute('fill','none');
+      path.setAttribute('stroke', branch ? '#B9C0DB' : '#5867B5');
+      path.setAttribute('stroke-width', branch ? 1.6 : 2);
+      if (branch) path.setAttribute('stroke-dasharray','6 6');
+      path.setAttribute('marker-end','url(#ah)');
+      wires.appendChild(path);
+      const dot = document.createElementNS(NS, 'circle');
+      dot.setAttribute('cx', a.x); dot.setAttribute('cy', a.y); dot.setAttribute('r', 4.5);
+      dot.setAttribute('fill', branch ? '#B9C0DB' : '#5867B5');
+      dot.setAttribute('stroke', '#fff'); dot.setAttribute('stroke-width', 1.5);
+      wires.appendChild(dot);
+      if (L.label){
+        const mx = .125*a.x + .375*c1x + .375*c2x + .125*b.x;
+        const my = .125*a.y + .375*c1y + .375*c2y + .125*b.y;
+        const t = document.createElementNS(NS, 'text');
+        t.setAttribute('x', mx); t.setAttribute('y', my - 9);
+        t.setAttribute('text-anchor','middle');
+        t.setAttribute('font-family','Poppins'); t.setAttribute('font-size','12');
+        t.setAttribute('font-weight','600');
+        t.setAttribute('fill', branch ? '#8A93B8' : '#5867B5');
+        t.setAttribute('paint-order','stroke'); t.setAttribute('stroke','#F2F4FB'); t.setAttribute('stroke-width','5');
+        t.setAttribute('stroke-linejoin','round');
+        t.textContent = L.label;
+        wires.appendChild(t);
+      }
+    }
+  }
+
+  fit();
+  drawWires();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => drawWires());
+  setTimeout(drawWires, 400);
+</script>
+</body>
+</html>
