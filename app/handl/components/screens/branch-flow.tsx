@@ -9,7 +9,6 @@ import {
   AppBar,
   Avatar,
   Button,
-  Chip,
   SearchIcon,
   MariaRow,
   PathCard,
@@ -71,10 +70,10 @@ export function Describe({ nav }: { nav: Nav }) {
 
   return (
     <motion.div variants={staggerContainer} initial="hidden" animate="show">
-      <AppBar title="Tell us what's going on." onBack={nav.back} />
+      <AppBar title="Tell us what's going on" onBack={nav.back} />
 
       <motion.h1 variants={fadeUp} className={s.h1} style={{ marginTop: 10 }}>
-        In your own words.
+        In your own words
       </motion.h1>
       <motion.p variants={fadeUp} className={s.sub}>
         Plain words are perfect. Whatever your doctor said, however you remember
@@ -140,7 +139,7 @@ export function Question({ nav }: { nav: Nav }) {
 
   return (
     <motion.div variants={staggerContainer} initial="hidden" animate="show">
-      <AppBar title="Question 1 of 2." onBack={nav.back} />
+      <AppBar title="Question 1 of 2" onBack={nav.back} />
 
       <motion.div variants={fadeUp} style={{ marginTop: 12 }}>
         <div className={s.progressTrack}>
@@ -181,10 +180,10 @@ export function Question({ nav }: { nav: Nav }) {
 export function Recovery({ nav }: { nav: Nav }) {
   return (
     <motion.div variants={staggerContainer} initial="hidden" animate="show">
-      <AppBar title="Let's try another way." onBack={nav.back} />
+      <AppBar title="Let's try another way" onBack={nav.back} />
 
       <motion.h1 variants={fadeUp} className={s.h1} style={{ marginTop: 10 }}>
-        We couldn't match that yet.
+        We couldn't match that yet
       </motion.h1>
       <motion.p variants={fadeUp} className={s.sub}>
         That is on us, not you. Your description was fine. Pick whichever feels
@@ -230,9 +229,9 @@ export function Recovery({ nav }: { nav: Nav }) {
  * ========================================================================== */
 const QUERY = "knee arthro";
 const RESULTS = [
-  { title: "Knee arthroscopy", sub: "Small-camera repair of the joint · outpatient", chip: "16 in your network", to: "confirm" as const },
-  { title: "Knee replacement, partial or total", sub: "Larger surgery · hospital stay likely", chip: null, to: null },
-  { title: "Knee MRI, without contrast", sub: "Imaging · often needed before surgery", chip: null, to: null },
+  { title: "Knee arthroscopy", sub: "Small-camera repair of the joint · outpatient", to: "confirm" as const },
+  { title: "Knee replacement, partial or total", sub: "Larger surgery · hospital stay likely", to: null },
+  { title: "Knee MRI, without contrast", sub: "Imaging · often needed before surgery", to: null },
 ];
 
 export function DirectSearch({ nav }: { nav: Nav }) {
@@ -241,7 +240,7 @@ export function DirectSearch({ nav }: { nav: Nav }) {
 
   return (
     <motion.div variants={staggerContainer} initial="hidden" animate="show">
-      <AppBar title="Search a procedure." onBack={nav.back} />
+      <AppBar title="Search a procedure" onBack={nav.back} />
 
       <motion.div variants={fadeUp} style={{ marginTop: 12 }}>
         <div className={s.input} style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -269,23 +268,10 @@ export function DirectSearch({ nav }: { nav: Nav }) {
                 <div className={s.altName}>{r.title}</div>
                 <div className={s.altFacility}>{r.sub}</div>
               </div>
-              {r.chip && (
-                <span style={{ marginLeft: "auto" }}>
-                  <Chip tone="ok">{r.chip}</Chip>
-                </span>
-              )}
             </motion.button>
           ))}
         </div>
       )}
-
-      <motion.div variants={fadeUp} className={s.card}>
-        <p className={s.cardTitle}>Recent in your plan:</p>
-        <p className={s.whisper}>
-          <strong style={{ color: "var(--ink)", fontWeight: 600 }}>Annual physical</strong> ·{" "}
-          <strong style={{ color: "var(--ink)", fontWeight: 600 }}>Blood panel</strong>
-        </p>
-      </motion.div>
 
       <motion.p variants={fadeUp} className={s.footnote}>
         You will confirm the exact procedure before any numbers appear. Same

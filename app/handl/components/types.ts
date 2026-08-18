@@ -1,20 +1,23 @@
-export type ScreenId =
-  | "entry"
-  | "capture"
-  | "processing"
-  | "confirm"
-  | "options"
-  | "estimate"
-  | "estimateWide"
-  | "booking"
-  | "checkin"
-  | "receipt"
-  | "describe"
-  | "question"
-  | "recovery"
-  | "directSearch"
-  | "chatMaria"
-  | "mariaPlan";
+export const SCREEN_IDS = [
+  "entry",
+  "capture",
+  "processing",
+  "confirm",
+  "options",
+  "estimate",
+  "estimateWide",
+  "booking",
+  "checkin",
+  "receipt",
+  "describe",
+  "question",
+  "recovery",
+  "directSearch",
+  "chatMaria",
+  "mariaPlan",
+] as const;
+
+export type ScreenId = (typeof SCREEN_IDS)[number];
 
 export type SheetId = "breakdown" | "ranking";
 

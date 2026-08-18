@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ClearPath · Provider card layout lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   Tokens copied verbatim from app/handl/handl.module.css (.root)
+   ========================================================================== */
+:root{
+  --midnight:#0a102f; --ink:#101a44; --peri:#5867b5; --peri-dark:#4a58a3;
+  --lav:#e8ecf9; --ice:#f2f4fb; --white:#fff; --muted:#5a628a; --line:#e3e6f0;
+  --ok:#1e7b54; --ok-bg:#e4f3ec; --warn:#9a5b2b; --warn-bg:#f7eee4;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:#0e1330; color:#e7eaf6;
+  font-family:Poppins,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased; padding:40px 32px 80px;
+}
+
+/* ---- Page chrome ---- */
+.page{max-width:1560px;margin:0 auto}
+h1{font-size:24px;font-weight:700;letter-spacing:-.01em;margin:0 0 6px}
+.sub{color:#9aa3ce;font-size:14px;max-width:760px;line-height:1.6;margin:0 0 22px}
+.diag{
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09);
+  border-radius:14px; padding:16px 18px; margin:0 0 28px; max-width:940px;
+}
+.diag h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:#8f9ad0;margin:0 0 10px}
+.diag ul{margin:0;padding-left:18px;color:#c3c9e8;font-size:13.5px;line-height:1.75}
+.diag b{color:#fff;font-weight:600}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 26px}
+.toolbar button{
+  font-family:inherit;font-size:12.5px;font-weight:600;color:#cfd5f0;cursor:pointer;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;padding:8px 15px;transition:background 140ms ease;
+}
+.toolbar button:hover{background:rgba(255,255,255,.12)}
+.toolbar button[aria-pressed="true"]{background:var(--peri);border-color:var(--peri);color:#fff}
+
+/* ---- Lab grid: every column is the true content width of the phone body ---- */
+.rail{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap}
+.col{width:326px} /* 390 shell − 24 shell pad − 40 body pad = 326px, the real width */
+.colhead{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--peri)}
+.tag.now{color:#8c93b8}
+.coltitle{font-size:15px;font-weight:600;color:#fff}
+.colnote{font-size:12.5px;line-height:1.6;color:#9aa3ce;margin:0 0 12px;min-height:60px}
+.stage{background:var(--ice);border-radius:20px;padding:14px 0}
+.h-badge{
+  display:inline-block;margin-top:10px;font-size:11.5px;font-weight:600;color:#8f9ad0;
+  background:rgba(255,255,255,.05);border-radius:6px;padding:3px 8px;
+}
+.wins{margin:8px 0 0;padding-left:16px;font-size:12px;line-height:1.65;color:#a8b0d8}
+.wins li::marker{color:var(--peri)}
+
+/* ==========================================================================
+   Shared card primitives (mirrors handl.module.css)
+   ========================================================================== */
+.provider{
+  background:var(--white); border:1.5px solid var(--line); border-radius:20px;
+  padding:16px; cursor:pointer; font-family:inherit; text-align:left; width:100%;
+  color:var(--ink);
+}
+.recommended{border-color:var(--peri);box-shadow:0 4px 16px rgba(88,103,181,.14)}
+.avatar{
+  width:44px;height:44px;border-radius:999px;background:var(--midnight);color:#fff;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;
+}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.avatar.sm{width:38px;height:38px}
+.chip{
+  display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 11px;
+  font-size:12.5px;font-weight:500;background:var(--lav);color:var(--peri);font-weight:600;
+}
+.chip.ok{background:var(--ok-bg);color:var(--ok)}
+.chip.lav{background:var(--lav);color:var(--ink)}
+.btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:44px;
+  border-radius:12px;font-size:14px;font-weight:600;font-family:inherit;border:none;
+  cursor:pointer;padding:12px 14px;background:var(--lav);color:var(--ink);
+}
+.pname{font-size:15px;font-weight:600;color:var(--ink)}
+.pfac{font-size:12.5px;color:var(--muted);margin-top:1px}
+.rule{height:1px;background:var(--line)}
+
+/* ==========================================================================
+   0 · CURRENT — avatar owns a 57px column for the card's full height
+   ========================================================================== */
+.v0{display:flex;gap:13px}
+.v0 .body{flex:1;position:relative}
+.v0 .meta{display:flex;flex-direction:column;gap:7px;margin-top:11px}
+.v0 .row{display:flex;justify-content:space-between;font-size:13px;gap:10px}
+.v0 .row .k{color:var(--muted);flex-shrink:0}
+.v0 .row .v{font-weight:600;color:var(--ink);text-align:right}
+.v0 .cta{margin-top:13px}
+
+/* dead-space overlay, toggled from the toolbar */
+body.showdead .v0{position:relative}
+body.showdead .v0::after{
+  content:"dead ~57 × 176"; position:absolute; left:0; top:44px; width:57px; bottom:0;
+  background:repeating-linear-gradient(45deg,rgba(214,60,80,.16) 0 6px,transparent 6px 12px);
+  border:1px dashed rgba(214,60,80,.5); border-radius:8px;
+  font-size:8.5px;color:#b03146;font-weight:700;letter-spacing:.02em;
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;text-align:center;
+}
+body.showdead .provider{outline:1px solid rgba(88,103,181,.35)}
+
+/* ==========================================================================
+   A · HEADER SPLIT — avatar lives only in the header row; everything below
+   is full-bleed to the card's inner width.
+   ========================================================================== */
+.vA .head{display:flex;align-items:center;gap:12px}
+.vA .head .txt{flex:1;min-width:0}
+.vA .chip{margin-bottom:10px}
+.vA .meta{display:flex;flex-direction:column;gap:0;margin-top:12px}
+.vA .row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;gap:12px;padding:8px 0}
+.vA .row + .row{border-top:1px solid var(--line)}
+.vA .row .k{color:var(--muted)}
+.vA .row .v{font-weight:600;color:var(--ink);text-align:right}
+.vA .row .v .sub{color:var(--muted);font-weight:400}
+.vA .cta{margin-top:14px}
+
+/* ==========================================================================
+   B · VALUE-FIRST — the number is the headline; attributes collapse to one
+   inline run, which deletes the label column entirely.
+   ========================================================================== */
+.vB .head{display:flex;align-items:center;gap:11px}
+.vB .head .txt{flex:1;min-width:0}
+.vB .ribbon{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;
+}
+.vB .price{
+  margin-top:14px;background:var(--ice);border-radius:14px;padding:12px 14px;
+  display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
+}
+.vB .price .lab{font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.vB .price .big{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.05;margin-top:3px}
+.vB .price .strike{font-size:12.5px;color:var(--muted);margin-top:4px}
+.vB .price .strike s{opacity:.75}
+.vB .save{
+  font-size:12.5px;font-weight:700;color:var(--ok);background:var(--ok-bg);
+  border-radius:999px;padding:5px 10px;white-space:nowrap;
+}
+.vB .attrs{
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:12px;
+  font-size:12.5px;color:var(--muted);
+}
+.vB .attrs b{color:var(--ink);font-weight:600}
+.vB .dot{color:var(--line)}
+.vB .cta{margin-top:14px}
+
+/* ==========================================================================
+   C · STAT GRID — header row, then a three-tile strip that spends the width
+   horizontally instead of stacking label/value pairs.
+   ========================================================================== */
+.vC{padding:16px 16px 16px}
+.vC .head{display:flex;align-items:center;gap:12px}
+.vC .head .txt{flex:1;min-width:0}
+.vC .grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;margin-top:14px;
+  background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+}
+.vC .cell{background:var(--white);padding:10px 11px}
+.vC .cell .k{font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.vC .cell .v{font-size:15px;font-weight:700;color:var(--ink);margin-top:4px;letter-spacing:-.01em}
+.vC .cell .s{font-size:11px;color:var(--muted);margin-top:2px}
+.vC .cell.hero{background:var(--lav)}
+.vC .foot{display:flex;align-items:center;gap:6px;margin-top:11px;font-size:12.5px;color:var(--muted)}
+.vC .foot b{color:var(--ink);font-weight:600}
+.vC .cta{margin-top:13px}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>Provider card · layout lab</h1>
+  <p class="sub">
+    Every column below is rendered at <b>326&nbsp;px</b> — the real content width inside the 390&nbsp;px
+    device shell (390 − 24 shell padding − 40 body padding). Same copy, same tokens, same photo as
+    <code>options-flow.tsx</code>, so what you see here is what ships.
+  </p>
+
+  <div class="diag">
+    <h2>Why the current card wastes space</h2>
+    <ul>
+      <li>The card is a <b>flex row</b>: the 44&nbsp;px avatar + 13&nbsp;px gap claim a <b>57&nbsp;px column for the card's entire height</b>, but only the top 44&nbsp;px of it is ever used. That's roughly <b>57 × 176 px ≈ 15% of the card's inner area</b> permanently blank.</li>
+      <li>Content is squeezed into <b>237&nbsp;px</b> instead of the available 294&nbsp;px — a 24% narrower text column than the card can offer.</li>
+      <li>The <b>label/value meta rows</b> pay for that twice: "Total cost" pushes <code>$3,292 · typical here: $6,200</code> into a wrap, so the most important number on the screen reads as a cramped afterthought.</li>
+      <li>The <b>CTA is indented</b> under the avatar column, so it doesn't align with anything else on the screen and loses ~20% of its tap width.</li>
+      <li>The card never states the <b>actual win</b> — a $2,908 gap vs. typical — it makes the user subtract.</li>
+    </ul>
+  </div>
+
+  <div class="toolbar">
+    <button id="deadBtn" aria-pressed="false">Show wasted space overlay</button>
+    <button id="bgBtn" aria-pressed="true">Screen background: on</button>
+  </div>
+
+  <div class="rail">
+
+    <!-- ================= CURRENT ================= -->
+    <div class="col">
+      <div class="colhead"><span class="tag now">Now</span><span class="coltitle">Current</span></div>
+      <p class="colnote">Avatar column runs the full card height. Meta values wrap. CTA indented.</p>
+      <div class="stage">
+        <div class="provider recommended v0" data-card>
+          <div class="avatar"><img src="/handl/img/dr-adams.jpg" alt=""></div>
+          <div class="body">
+            <span class="chip">Best value for you</span>
+            <div class="pname" style="margin-top:6px">Dr. Adams</div>
+            <div class="pfac">Lakeside Surgical Center · standalone facility</div>
+            <div class="meta">
+              <div class="row"><span class="k">Quality, this procedure</span><span class="v">Excellent outcomes</span></div>
+              <div class="row"><span class="k">Total cost</span><span class="v">$3,292 · <span style="color:var(--muted);font-weight:400">typical here: $6,200</span></span></div>
+              <div class="row"><span class="k">Distance · availability</span><span class="v">15 min · this week</span></div>
+            </div>
+            <div class="cta"><button class="btn">See your cost with Dr. Adams</button></div>
+          </div>
+        </div>
+      </div>
+      <span class="h-badge" data-h></span>
+    </div>
+
+    <!-- ================= A ================= -->
+    <div class="col">
+      <div class="colhead"><span class="tag">A</span><span class="coltitle">Header split</span></div>
+      <p class="colnote">Smallest change, biggest reclaim: the avatar only occupies the header row; meta and CTA go full width. Rows get hairlines so they scan as a table.</p>
+      <div class="stage">
+        <div class="provider recommended vA" data-card>
+          <span class="chip">Best value for you</span>
+          <div class="head">
+            <div class="avatar"><img src="/handl/img/dr-adams.jpg" alt=""></div>
+            <div class="txt">
+              <div class="pname">Dr. Adams</div>
+              <div class="pfac">Lakeside Surgical Center · standalone facility</div>
+            </div>
+          </div>
+          <div class="meta">
+            <div class="row"><span class="k">Quality, this procedure</span><span class="v">Excellent outcomes</span></div>
+            <div class="row"><span class="k">Total cost</span><span class="v">$3,292 <span class="sub">· typical here $6,200</span></span></div>
+            <div class="row"><span class="k">Distance · availability</span><span class="v">15 min · this week</span></div>
+          </div>
+          <div class="cta"><button class="btn">See your cost with Dr. Adams</button></div>
+        </div>
+      </div>
+      <span class="h-badge" data-h></span>
+      <ul class="wins">
+        <li>+57 px of usable width on every row</li>
+        <li>"Total cost" line stops wrapping</li>
+        <li>CTA aligns with the card edge</li>
+      </ul>
+    </div>
+
+    <!-- ================= B ================= -->
+    <div class="col">
+      <div class="colhead"><span class="tag">B</span><span class="coltitle">Value-first</span></div>
+      <p class="colnote">Leads with the number and states the win outright. Labels disappear — attributes become one inline run, which is what kills the wasted column.</p>
+      <div class="stage">
+        <div class="provider recommended vB" data-card>
+          <div class="ribbon">
+            <span class="chip">Best value for you</span>
+            <span class="save">Save $2,908</span>
+          </div>
+          <div class="head">
+            <div class="avatar sm"><img src="/handl/img/dr-adams.jpg" alt=""></div>
+            <div class="txt">
+              <div class="pname">Dr. Adams</div>
+              <div class="pfac">Lakeside Surgical Center · standalone facility</div>
+            </div>
+          </div>
+          <div class="price">
+            <div>
+              <div class="lab">Total cost</div>
+              <div class="big">$3,292</div>
+            </div>
+            <div class="strike">typical here <s>$6,200</s></div>
+          </div>
+          <div class="attrs">
+            <b>Excellent outcomes</b><span class="dot">•</span>
+            <b>15 min</b><span class="dot">•</span>
+            <b>Available this week</b>
+          </div>
+          <div class="cta"><button class="btn">See your cost with Dr. Adams</button></div>
+        </div>
+      </div>
+      <span class="h-badge" data-h></span>
+      <ul class="wins">
+        <li>Savings stated, not implied</li>
+        <li>Price readable at a glance from arm's length</li>
+        <li>3 label/value rows → 1 line</li>
+      </ul>
+    </div>
+
+    <!-- ================= C ================= -->
+    <div class="col">
+      <div class="colhead"><span class="tag">C</span><span class="coltitle">Stat grid</span></div>
+      <p class="colnote">Spends the width horizontally: three comparable tiles instead of three stacked pairs. Scales cleanly if you ever put two recommended cards side by side.</p>
+      <div class="stage">
+        <div class="provider recommended vC" data-card>
+          <div class="head">
+            <div class="avatar"><img src="/handl/img/dr-adams.jpg" alt=""></div>
+            <div class="txt">
+              <div class="pname">Dr. Adams</div>
+              <div class="pfac">Lakeside Surgical Center · standalone facility</div>
+            </div>
+          </div>
+          <div style="margin-top:11px"><span class="chip">Best value for you</span></div>
+          <div class="grid">
+            <div class="cell hero">
+              <div class="k">Total cost</div>
+              <div class="v">$3,292</div>
+              <div class="s">typical $6,200</div>
+            </div>
+            <div class="cell">
+              <div class="k">Quality</div>
+              <div class="v">Excellent</div>
+              <div class="s">this procedure</div>
+            </div>
+            <div class="cell">
+              <div class="k">Distance</div>
+              <div class="v">15 min</div>
+              <div class="s">this week</div>
+            </div>
+          </div>
+          <div class="foot">Standalone facility · <b>in network</b></div>
+          <div class="cta"><button class="btn">See your cost with Dr. Adams</button></div>
+        </div>
+      </div>
+      <span class="h-badge" data-h></span>
+      <ul class="wins">
+        <li>Three facts compared at equal weight</li>
+        <li>Zero label column, zero wrapping</li>
+        <li>Reusable as the compare-two-providers unit</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Measure what actually renders, so the height trade-off is a fact and not a guess.
+document.querySelectorAll('[data-card]').forEach(card => {
+  const badge = card.closest('.col').querySelector('[data-h]');
+  const r = card.getBoundingClientRect();
+  badge.textContent = Math.round(r.width) + ' × ' + Math.round(r.height) + ' px';
+});
+
+const deadBtn = document.getElementById('deadBtn');
+deadBtn.addEventListener('click', () => {
+  const on = document.body.classList.toggle('showdead');
+  deadBtn.setAttribute('aria-pressed', String(on));
+});
+
+const bgBtn = document.getElementById('bgBtn');
+bgBtn.addEventListener('click', () => {
+  const off = bgBtn.getAttribute('aria-pressed') === 'true';
+  document.querySelectorAll('.stage').forEach(s => s.style.background = off ? 'transparent' : 'var(--ice)');
+  bgBtn.setAttribute('aria-pressed', String(!off));
+  bgBtn.textContent = 'Screen background: ' + (off ? 'off' : 'on');
+});
+</script>
+</body>
+</html>

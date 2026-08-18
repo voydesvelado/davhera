@@ -13,6 +13,7 @@ export interface Provider {
   type?: string;
   photo: string;
   quality: string;
+  qualityTone: "ok" | "lav";
   cost: number; // contracted rate (total, before insurance)
   typical?: number; // local typical total
   distance: string;
@@ -48,6 +49,7 @@ export const DATA = {
       type: "standalone facility",
       photo: "/handl/img/dr-adams.jpg",
       quality: "Excellent outcomes",
+      qualityTone: "ok" as const,
       cost: 3292,
       typical: 6200,
       distance: "15 min",
@@ -59,19 +61,29 @@ export const DATA = {
       id: "chen",
       name: "Dr. Chen",
       facility: "Northside Ortho",
+      type: "surgery center",
       photo: "/handl/img/dr-chen.jpg",
       quality: "High quality",
+      qualityTone: "ok" as const,
       cost: 4110,
+      typical: 6200,
       distance: "9 min",
+      availability: "in 2 weeks",
+      estimate: [1500, 1780] as [number, number],
+      confidence: "high" as Confidence,
     },
     {
       id: "moore",
       name: "Dr. Moore",
       facility: "St. Vincent",
+      type: "hospital outpatient",
       photo: "/handl/img/dr-moore.jpg",
       quality: "Hospital-based",
+      qualityTone: "lav" as const,
       cost: 6312,
+      typical: 6200,
       distance: "12 min",
+      availability: "in 3 weeks",
       estimate: [1100, 2900] as [number, number],
       confidence: "moderate" as Confidence,
     },

@@ -120,19 +120,28 @@ export function Avatar({
   photo,
   size = 34,
   dark = false,
+  radius,
 }: {
   initials: string;
   photo?: string;
   size?: number;
   dark?: boolean;
+  /** Rounded-square crop for the photo. The initials fallback stays a circle. */
+  radius?: number;
 }) {
   const [failed, setFailed] = useState(false);
+  const showPhoto = Boolean(photo) && !failed;
   return (
     <div
       className={`${s.avatar} ${dark ? s.avatarDark : ""}`}
-      style={{ width: size, height: size, fontSize: size * 0.36 }}
+      style={{
+        width: size,
+        height: size,
+        fontSize: size * 0.36,
+        borderRadius: showPhoto && radius !== undefined ? radius : undefined,
+      }}
     >
-      {photo && !failed ? (
+      {showPhoto ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img src={photo} alt="" onError={() => setFailed(true)} />
       ) : (

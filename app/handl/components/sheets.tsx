@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import s from "../handl.module.css";
 import { breakdownMath, money, type Provider } from "../data";
 import type { Nav } from "./types";
+import { ProviderMicroHeader } from "./provider-context";
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
@@ -46,7 +47,9 @@ export function BreakdownSheet({
         transition={{ duration: 0.32, ease: EASE_OUT }}
       >
         <div className={s.grabber} />
-        <div className={s.sheetTitle}>How we got this number.</div>
+        <div className={s.sheetTitle}>How we got this number</div>
+
+        <ProviderMicroHeader provider={provider} />
 
         <div className={s.card} style={{ marginTop: 0 }}>
           {rows.map((row, i) => (

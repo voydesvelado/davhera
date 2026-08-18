@@ -418,6 +418,7 @@
   background: var(--midnight);
   border-radius: 22px;
   height: 260px;
+  padding-bottom: 8px;
   margin-top: 16px;
   position: relative;
   display: flex;
@@ -427,14 +428,39 @@
 }
 .corner {
   position: absolute;
-  width: 30px;
-  height: 30px;
-  border: 2.5px solid var(--peri);
+  width: 32px;
+  height: 32px;
+  border: 0 solid var(--peri);
+  pointer-events: none;
 }
-.cornerTL { top: 18px; left: 18px; border-right: none; border-bottom: none; border-radius: 4px 0 0 0; }
-.cornerTR { top: 18px; right: 18px; border-left: none; border-bottom: none; border-radius: 0 4px 0 0; }
-.cornerBL { bottom: 18px; left: 18px; border-right: none; border-top: none; border-radius: 0 0 0 4px; }
-.cornerBR { bottom: 18px; right: 18px; border-left: none; border-top: none; border-radius: 0 0 4px 0; }
+.cornerTL {
+  top: 18px;
+  left: 18px;
+  border-top-width: 3px;
+  border-left-width: 3px;
+  border-top-left-radius: 10px;
+}
+.cornerTR {
+  top: 18px;
+  right: 18px;
+  border-top-width: 3px;
+  border-right-width: 3px;
+  border-top-right-radius: 10px;
+}
+.cornerBL {
+  bottom: 36px;
+  left: 18px;
+  border-bottom-width: 3px;
+  border-left-width: 3px;
+  border-bottom-left-radius: 10px;
+}
+.cornerBR {
+  bottom: 36px;
+  right: 18px;
+  border-bottom-width: 3px;
+  border-right-width: 3px;
+  border-bottom-right-radius: 10px;
+}
 .ghostdoc {
   width: 150px;
   height: 190px;
@@ -538,7 +564,7 @@
   letter-spacing: -0.02em;
   color: var(--ink);
   font-variant-numeric: tabular-nums;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 /* ---- Deductible bar ---- */
@@ -562,32 +588,76 @@
   background: var(--peri);
 }
 
-/* ---- Provider card ---- */
+/* ==========================================================================
+ * Provider card — ONE anatomy for every provider.
+ * Recommended and alternative differ only by the badge, the border and
+ * whether the detail panel starts open. Structure, spacing and type are
+ * identical, so the two read as the same object in two states.
+ * ========================================================================== */
 .provider {
   background: var(--white);
   border: 1.5px solid var(--line);
-  border-radius: 20px;
-  padding: 16px;
-  margin-top: 14px;
-  display: flex;
-  gap: 13px;
-  cursor: pointer;
-  font-family: inherit;
-  text-align: left;
+  border-radius: 18px;
+  margin-top: 12px;
+  overflow: hidden;
   width: 100%;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+.providerOpen {
+  border-color: var(--lav);
+  box-shadow: 0 2px 12px rgba(88, 103, 181, 0.1);
 }
 .provider.recommended {
   border-color: var(--peri);
   box-shadow: 0 4px 16px rgba(88, 103, 181, 0.14);
 }
-.providerBody { flex: 1; }
-.providerName { font-size: 15px; font-weight: 600; color: var(--ink); }
-.providerFacility { font-size: 12.5px; color: var(--muted); margin-top: 1px; }
-.providerMeta { display: flex; flex-direction: column; gap: 7px; margin-top: 11px; }
-.metaRow { display: flex; justify-content: space-between; font-size: 13px; }
-.metaRow .k { color: var(--muted); }
-.metaRow .v { font-weight: 600; color: var(--ink); }
+
+/* Badge sits above the header row, full width, aligned with everything else */
+.providerBadge { padding: 14px 15px 0; }
+
+/* Header: avatar · identity · cost (· caret when the card can toggle) */
+.providerHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 13px 15px;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  text-align: left;
+  color: inherit;
+}
+.providerHeadButton { cursor: pointer; }
+.providerText { flex: 1; min-width: 0; }
+.providerName { font-size: 14px; font-weight: 600; color: var(--ink); }
+.providerFacility { font-size: 12px; color: var(--muted); margin-top: 1px; }
+.providerCost { margin-left: auto; font-weight: 600; font-size: 14px; color: var(--ink); }
+.providerCaret {
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+  flex-shrink: 0;
+  margin-left: -2px;
+}
+
+/* Detail: same rows, same rule, same CTA — recommended or not */
+.providerPanel { overflow: hidden; }
+.providerDetail { padding: 0 15px 15px; }
+.providerMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.metaRow { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; }
+.metaKey { color: var(--muted); }
+.metaVal { font-weight: 600; color: var(--ink); text-align: right; }
+.metaSub { color: var(--muted); font-weight: 400; }
 .providerCta { margin-top: 13px; }
+
+/* ---- Standalone list row (search results) ---- */
 .altRow {
   display: flex;
   align-items: center;
@@ -604,7 +674,79 @@
 }
 .altName { font-size: 14px; font-weight: 600; color: var(--ink); }
 .altFacility { font-size: 12px; color: var(--muted); margin-top: 1px; }
-.altCost { margin-left: auto; font-weight: 600; font-size: 14px; color: var(--ink); }
+
+/* ==========================================================================
+ * Provider context — the chosen provider, carried onto the money screens.
+ * ========================================================================== */
+.pcontext {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 10px;
+  background: var(--ice);
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+/* Press feedback only. The app bar owns the back arrow on this screen.
+   The companion scale lives in the component's whileTap, since framer-motion
+   owns this element's inline transform. */
+.pcontext:active { background: var(--lav); }
+
+.pcontextText { flex: 1; min-width: 0; display: block; }
+.pcontextName {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pcontextSub {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pcontextTag {
+  flex-shrink: 0;
+  max-width: 42%;
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pcontextTagOk { background: var(--ok-bg); color: var(--ok); }
+.pcontextTagLav { background: var(--lav); color: var(--ink); }
+
+/* Whisper-quiet provider line above the breakdown ledger */
+.pmicro {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 10.5px;
+  color: var(--muted);
+}
+.pmicro span {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 /* ---- Sheets ---- */
 .dim {

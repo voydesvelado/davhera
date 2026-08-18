@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import s from "../../handl.module.css";
 import { DATA, breakdownMath, DEFAULT_PROVIDER, money, type Provider } from "../../data";
 import type { Nav } from "../types";
+import { ProviderContext } from "../provider-context";
 import {
   AppBar,
   Avatar,
   Button,
   Chip,
+  EASE_OUT,
   PhoneIcon,
   PinIcon,
   ChevronRight,
@@ -20,8 +22,23 @@ import {
 
 /* ==========================================================================
  * Money range with count-up (both values, en dash static)
+ *
+ * The money owns the estimate screen, so the count-up starts early and the
+ * identity strip enters third. Mount sequence:
+ * eyebrow + count-up -> confidence dots -> identity strip -> deductible -> buttons.
  * ========================================================================== */
-function useCount(value: number, instant: boolean) {
+const COUNT_DELAY = 100;
+
+/** Slightly wider beat than the global stagger, to make room for the strip. */
+const estimateStagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
+};
+
+/** Lands between the confidence row (0.23s) and the deductible card (0.29s). */
+const CONTEXT_DELAY = 0.26;
+
+function useCount(value: number, instant: boolean, delay = 0) {
   const reduced = useReducedMotion();
   const [v, setV] = useState(reduced || instant ? value : 0);
   useEffect(() => {
@@ -30,21 +47,27 @@ function useCount(value: number, instant: boolean) {
       return;
     }
     let raf = 0;
-    const start = performance.now();
+    let start = 0;
     const tick = (now: number) => {
+      if (!start) start = now;
       const t = Math.min(1, (now - start) / 700);
       setV(Math.round(value * (1 - Math.pow(1 - t, 3))));
       if (t < 1) raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [value, reduced, instant]);
+    const timer = setTimeout(() => {
+      raf = requestAnimationFrame(tick);
+    }, delay);
+    return () => {
+      clearTimeout(timer);
+      cancelAnimationFrame(raf);
+    };
+  }, [value, reduced, instant, delay]);
   return v;
 }
 
-export function MoneyRange({ range }: { range: [number, number] }) {
-  const lo = useCount(range[0], false);
-  const hi = useCount(range[1], false);
+export function MoneyRange({ range, delay = 0 }: { range: [number, number]; delay?: number }) {
+  const lo = useCount(range[0], false, delay);
+  const hi = useCount(range[1], false, delay);
   return (
     <div className={s.money}>
       ${money(lo)} – ${money(hi)}
@@ -53,7 +76,65 @@ export function MoneyRange({ range }: { range: [number, number] }) {
 }
 
 /* ==========================================================================
- * Provider card (recommended + embedded)
+ * Provider card pieces — one anatomy, shared by the recommended card and the
+ * expandable alternatives so both render the exact same identity and facts.
+ * ========================================================================== */
+const AVATAR_SIZE = 38;
+
+function initialOf(name: string) {
+  return name.replace("Dr. ", "").slice(0, 1);
+}
+
+/** avatar · name and facility · type and distance · total cost */
+function ProviderIdentity({ provider }: { provider: Provider }) {
+  return (
+    <>
+      <Avatar initials={initialOf(provider.name)} photo={provider.photo} size={AVATAR_SIZE} dark />
+      <div className={s.providerText}>
+        <div className={s.providerName}>{provider.name} · {provider.facility}</div>
+        <div className={s.providerFacility}>{provider.type} · {provider.distance}</div>
+      </div>
+      <span className={s.providerCost}>${money(provider.cost)}</span>
+    </>
+  );
+}
+
+/** The detail block below the header: same rows, same CTA, for every card. */
+function ProviderDetail({
+  provider,
+  cta,
+  onCta,
+}: {
+  provider: Provider;
+  cta: string;
+  onCta?: () => void;
+}) {
+  return (
+    <div className={s.providerDetail}>
+      <div className={s.providerMeta}>
+        <div className={s.metaRow}>
+          <span className={s.metaKey}>Total cost</span>
+          <span className={s.metaVal}>
+            ${money(provider.cost)} · <span className={s.metaSub}>typical here: ${money(provider.typical ?? 0)}</span>
+          </span>
+        </div>
+        <div className={s.metaRow}>
+          <span className={s.metaKey}>Distance · availability</span>
+          <span className={s.metaVal}>{provider.distance} · {provider.availability}</span>
+        </div>
+      </div>
+      {onCta && (
+        <div className={s.providerCta}>
+          <Button variant="secondary" onClick={onCta}>{cta}</Button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ==========================================================================
+ * Recommended provider card — the same card as an alternative, permanently
+ * open, plus the badge and the peri border that mark it as the pick.
  * ========================================================================== */
 export function ProviderCard({
   provider,
@@ -68,31 +149,72 @@ export function ProviderCard({
 }) {
   return (
     <div className={`${s.provider} ${s.recommended}`}>
-      <Avatar initials={provider.name.replace("Dr. ", "").slice(0, 1)} photo={provider.photo} size={44} dark />
-      <div className={s.providerBody}>
+      <div className={s.providerBadge}>
         <Chip tone="peri">{badge}</Chip>
-        <div className={s.providerName} style={{ marginTop: 6 }}>{provider.name}</div>
-        <div className={s.providerFacility}>{provider.facility} · {provider.type}</div>
-        <div className={s.providerMeta}>
-          <div className={s.metaRow}>
-            <span className="k" style={{ color: "var(--muted)" }}>Quality, this procedure</span>
-            <span className="v">{provider.quality}</span>
-          </div>
-          <div className={s.metaRow}>
-            <span className="k" style={{ color: "var(--muted)" }}>Total cost</span>
-            <span className="v">${money(provider.cost)} · <span style={{ color: "var(--muted)", fontWeight: 400 }}>typical here: ${money(provider.typical ?? 0)}</span></span>
-          </div>
-          <div className={s.metaRow}>
-            <span className="k" style={{ color: "var(--muted)" }}>Distance · availability</span>
-            <span className="v">{provider.distance} · {provider.availability}</span>
-          </div>
-        </div>
-        {onCta && (
-          <div className={s.providerCta}>
-            <Button variant="secondary" onClick={onCta}>{cta}</Button>
-          </div>
-        )}
       </div>
+      <div className={s.providerHead}>
+        <ProviderIdentity provider={provider} />
+      </div>
+      <ProviderDetail provider={provider} cta={cta} onCta={onCta} />
+    </div>
+  );
+}
+
+/* ==========================================================================
+ * Alternative provider — the same card, collapsed until tapped.
+ * ========================================================================== */
+function AltProviderCard({
+  provider,
+  open,
+  onToggle,
+  onPick,
+}: {
+  provider: Provider;
+  open: boolean;
+  onToggle: () => void;
+  onPick: () => void;
+}) {
+  const reduced = useReducedMotion();
+  const panelId = `provider-panel-${provider.id}`;
+
+  return (
+    <div className={`${s.provider} ${open ? s.providerOpen : ""}`}>
+      <button
+        type="button"
+        className={`${s.providerHead} ${s.providerHeadButton}`}
+        onClick={onToggle}
+        aria-expanded={open}
+        aria-controls={panelId}
+      >
+        <ProviderIdentity provider={provider} />
+        <motion.span
+          className={s.providerCaret}
+          animate={{ rotate: open ? -90 : 90 }}
+          initial={false}
+          transition={{ duration: reduced ? 0 : 0.24, ease: EASE_OUT }}
+        >
+          <ChevronRight size={16} />
+        </motion.span>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            id={panelId}
+            className={s.providerPanel}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: reduced ? 0 : 0.3, ease: EASE_OUT }}
+          >
+            <ProviderDetail
+              provider={provider}
+              cta={`See your cost with ${provider.name}`}
+              onCta={onPick}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -102,11 +224,13 @@ export function ProviderCard({
  * ========================================================================== */
 export function Options({ nav, onPick }: { nav: Nav; onPick: (id: string) => void }) {
   const [expanded, setExpanded] = useState(false);
+  const [openAlt, setOpenAlt] = useState<string | null>(null);
   const [adams, chen, moore] = DATA.providers;
+  const toggleAlt = (id: string) => setOpenAlt((cur) => (cur === id ? null : id));
 
   return (
     <motion.div variants={staggerContainer} initial="hidden" animate="show">
-      <AppBar title="Knee arthroscopy." onBack={nav.back} />
+      <AppBar title="Knee arthroscopy" onBack={nav.back} />
 
       <motion.p variants={fadeUp} className={s.lead} style={{ marginTop: 10 }}>
         16 in-network options · ranked by quality and cost together
@@ -121,39 +245,35 @@ export function Options({ nav, onPick }: { nav: Nav; onPick: (id: string) => voi
         />
       </motion.div>
 
-      <motion.div variants={fadeUp}>
-        <button className={s.altRow} onClick={() => onPick("chen")}>
-          <Avatar initials="C" photo={chen.photo} dark />
-          <div>
-            <div className={s.altName}>{chen.name} · {chen.facility}</div>
-            <div className={s.altFacility}><Chip tone="lav">High quality</Chip> · {chen.distance}</div>
-          </div>
-          <span className={s.altCost}>${money(chen.cost)}</span>
-        </button>
-      </motion.div>
-
-      <motion.div variants={fadeUp}>
-        <button className={s.altRow} onClick={() => onPick("moore")}>
-          <Avatar initials="M" photo={moore.photo} dark />
-          <div>
-            <div className={s.altName}>{moore.name} · {moore.facility}</div>
-            <div className={s.altFacility}><Chip tone="lav">Hospital-based</Chip> · {moore.distance}</div>
-          </div>
-          <span className={s.altCost}>${money(moore.cost)}</span>
-        </button>
-      </motion.div>
+      {[chen, moore].map((p) => (
+        <motion.div key={p.id} variants={fadeUp}>
+          <AltProviderCard
+            provider={p}
+            open={openAlt === p.id}
+            onToggle={() => toggleAlt(p.id)}
+            onPick={() => onPick(p.id)}
+          />
+        </motion.div>
+      ))}
 
       {expanded && (
         <>
           {[0, 1, 2].map((i) => (
             <motion.div key={i} variants={fadeUp}>
-              <div className={s.altRow} style={{ opacity: 0.55, cursor: "default" }}>
-                <div className={s.avatar} style={{ background: "var(--lav)", color: "var(--muted)" }}>{"CDM"[i]}</div>
-                <div>
-                  <div className={s.altName}>Provider {i + 4}</div>
-                  <div className={s.altFacility}>Additional option · {["18 min", "22 min", "25 min"][i]}</div>
+              <div className={s.provider} style={{ opacity: 0.55 }}>
+                <div className={s.providerHead}>
+                  <div
+                    className={s.avatar}
+                    style={{ width: AVATAR_SIZE, height: AVATAR_SIZE, background: "var(--lav)", color: "var(--muted)" }}
+                  >
+                    {"CDM"[i]}
+                  </div>
+                  <div className={s.providerText}>
+                    <div className={s.providerName}>Provider {i + 4}</div>
+                    <div className={s.providerFacility}>Additional option · {["18 min", "22 min", "25 min"][i]}</div>
+                  </div>
+                  <span className={s.providerCost}>${money([4780, 5210, 5890][i])}</span>
                 </div>
-                <span className={s.altCost}>${money([4780, 5210, 5890][i])}</span>
               </div>
             </motion.div>
           ))}
@@ -183,20 +303,22 @@ export function Estimate({ nav, provider }: { nav: Nav; provider: Provider }) {
   const pct = Math.round((d.used / d.total) * 100);
 
   return (
-    <motion.div variants={staggerContainer} initial="hidden" animate="show">
-      <AppBar title={`Your cost · ${provider.name}.`} onBack={nav.back} />
+    <motion.div variants={estimateStagger} initial="hidden" animate="show">
+      <AppBar title="Your cost" onBack={nav.back} />
 
-      <motion.p variants={fadeUp} className={s.eyebrow} style={{ marginTop: 10 }}>
-        What you'd pay.
+      <ProviderContext provider={provider} onBack={nav.back} delay={CONTEXT_DELAY} />
+
+      <motion.p variants={fadeUp} className={s.eyebrow} style={{ marginTop: 22, marginBottom: 2 }}>
+        What you'd pay
       </motion.p>
       <motion.div variants={fadeUp}>
-        <MoneyRange range={provider.estimate ?? [0, 0]} />
+        <MoneyRange range={provider.estimate ?? [0, 0]} delay={COUNT_DELAY} />
       </motion.div>
-      <motion.p variants={fadeUp} className={s.sub}>
+      <motion.p variants={fadeUp} className={s.sub} style={{ marginTop: 4 }}>
         your part, after your plan pays its part
       </motion.p>
 
-      <motion.div variants={fadeUp}>
+      <motion.div variants={fadeUp} style={{ marginTop: 12 }}>
         <ConfidenceDots
           filled={provider.confidence === "high" ? 3 : 2}
           label={
@@ -207,7 +329,7 @@ export function Estimate({ nav, provider }: { nav: Nav; provider: Provider }) {
         />
       </motion.div>
 
-      <motion.div variants={fadeUp} className={s.card}>
+      <motion.div variants={fadeUp} className={s.card} style={{ marginTop: 16 }}>
         <div className={s.dedLabel}>
           <span className="l">Your deductible</span>
           <span className="r">${money(d.used)} of ${money(d.total)} used</span>
@@ -226,10 +348,10 @@ export function Estimate({ nav, provider }: { nav: Nav; provider: Provider }) {
       </motion.div>
 
       <motion.div variants={fadeUp} className={s.btnStack}>
-        <Button variant="secondary" icon={<ChevronRight />} onClick={() => nav.openSheet("breakdown")}>
+        <Button variant="secondary" onClick={() => nav.openSheet("breakdown")}>
           How we got this number
         </Button>
-        <Button onClick={() => nav.go("booking")}>Choose Dr. Adams.</Button>
+        <Button onClick={() => nav.go("booking")}>Choose {provider.name}</Button>
       </motion.div>
     </motion.div>
   );
@@ -240,27 +362,29 @@ export function Estimate({ nav, provider }: { nav: Nav; provider: Provider }) {
  * ========================================================================== */
 export function EstimateWide({ nav, provider }: { nav: Nav; provider: Provider }) {
   return (
-    <motion.div variants={staggerContainer} initial="hidden" animate="show">
-      <AppBar title={`Your cost · ${provider.facility}`} onBack={nav.back} />
+    <motion.div variants={estimateStagger} initial="hidden" animate="show">
+      <AppBar title="Your cost" onBack={nav.back} />
 
-      <motion.p variants={fadeUp} className={s.eyebrow} style={{ marginTop: 10 }}>
-        What you'd pay.
+      <ProviderContext provider={provider} onBack={nav.back} delay={CONTEXT_DELAY} />
+
+      <motion.p variants={fadeUp} className={s.eyebrow} style={{ marginTop: 22, marginBottom: 2 }}>
+        What you'd pay
       </motion.p>
       <motion.div variants={fadeUp}>
-        <MoneyRange range={provider.estimate ?? [0, 0]} />
+        <MoneyRange range={provider.estimate ?? [0, 0]} delay={COUNT_DELAY} />
       </motion.div>
-      <motion.p variants={fadeUp} className={s.sub}>
+      <motion.p variants={fadeUp} className={s.sub} style={{ marginTop: 4 }}>
         a wider range than usual. Here is why.
       </motion.p>
 
-      <motion.div variants={fadeUp}>
+      <motion.div variants={fadeUp} style={{ marginTop: 12 }}>
         <ConfidenceDots
           filled={2}
           label="Moderate confidence. This facility's billing varies more than most for this procedure."
         />
       </motion.div>
 
-      <motion.div variants={fadeUp} className={s.card}>
+      <motion.div variants={fadeUp} className={s.card} style={{ marginTop: 16 }}>
         <p className={s.whisper}>
           We would rather show you the honest spread than a precise-looking
           number we cannot stand behind. Two ways to firm it up:
@@ -293,10 +417,10 @@ export function EstimateWide({ nav, provider }: { nav: Nav; provider: Provider }
 export function Booking({ nav, provider }: { nav: Nav; provider: Provider }) {
   return (
     <motion.div variants={staggerContainer} initial="hidden" animate="show">
-      <AppBar title={`${provider.name} · chosen.`} onBack={nav.back} />
+      <AppBar title={`${provider.name} · chosen`} onBack={nav.back} />
 
       <motion.h1 variants={fadeUp} className={s.h1} style={{ marginTop: 10 }}>
-        You chose well. Here is everything to book it.
+        You chose well. Here is everything to book it
       </motion.h1>
 
       <motion.div variants={fadeUp} className={s.btnStack}>
@@ -327,8 +451,8 @@ export function Booking({ nav, provider }: { nav: Nav; provider: Provider }) {
       <motion.div variants={fadeUp} className={s.card}>
         <p className={s.cardTitle}>When they answer, you can say:</p>
         <p className={s.whisper} style={{ color: "var(--ink)", fontSize: 14, fontStyle: "italic" }}>
-          "I'd like to schedule a knee arthroscopy with Dr. Adams. My insurance
-          is Acme PPO."
+          "I'd like to schedule a knee arthroscopy with {provider.name}. My
+          insurance is Acme PPO."
         </p>
       </motion.div>
     </motion.div>
@@ -454,7 +578,7 @@ export function Receipt({ nav }: { nav: Nav }) {
       <AppBar title="Acme Benefits" avatar={{ initials: DATA.user.initials }} />
 
       <motion.p variants={fadeUp} className={s.eyebrow} style={{ marginTop: 10 }}>
-        Your final cost.
+        Your final cost
       </motion.p>
       <motion.div variants={fadeUp}>
         <MoneyValue value={bill} />

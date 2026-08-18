@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import s from "../handl.module.css";
 import { DATA, DEFAULT_PROVIDER } from "../data";
-import type { ScreenId, SheetId, Nav } from "./types";
+import { SCREEN_IDS, type ScreenId, type SheetId, type Nav } from "./types";
 import { Entry, Capture, Processing, Confirm } from "./screens/entry-flow";
 import {
   Options,
@@ -24,6 +24,28 @@ import { ChatMaria, MariaPlan } from "./screens/maria-flow";
 import { BreakdownSheet, RankingSheet } from "./sheets";
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+
+/* ==========================================================================
+ * Screen pinning — opt-in only.
+ *
+ * A plain refresh of /handl always starts from state zero (`entry`). The app
+ * never writes to the URL on its own, so ordinary navigation is never sticky.
+ * To iterate on one screen, put it in the URL yourself:
+ *   /handl#directSearch   or   /handl?screen=directSearch
+ * That pin survives refreshes and HMR. Delete it to get state zero back.
+ * ========================================================================== */
+function isScreenId(value: string | null | undefined): value is ScreenId {
+  return !!value && (SCREEN_IDS as readonly string[]).includes(value);
+}
+
+function readPinnedScreen(): ScreenId {
+  if (typeof window === "undefined") return "entry";
+  const hash = window.location.hash.replace(/^#/, "");
+  if (isScreenId(hash)) return hash;
+  const param = new URLSearchParams(window.location.search).get("screen");
+  if (isScreenId(param)) return param;
+  return "entry";
+}
 
 function StatusBar() {
   return (
@@ -47,15 +69,31 @@ function StatusBar() {
 }
 
 export function HandlApp() {
-  const [screen, setScreen] = useState<ScreenId>("entry");
+  // null until the client resolves the pinned screen, so SSR and hydration agree.
+  const [screen, setScreen] = useState<ScreenId | null>(null);
   const [history, setHistory] = useState<ScreenId[]>([]);
   const [direction, setDirection] = useState<"forward" | "back">("forward");
   const [providerId, setProviderId] = useState<string>(DEFAULT_PROVIDER.id);
   const [sheet, setSheet] = useState<SheetId | null>(null);
 
+  // Resolve the opt-in pin once on mount, then follow manual hash edits so you
+  // can jump screens by typing #recovery in the address bar.
+  useEffect(() => {
+    setScreen(readPinnedScreen());
+    const onHashChange = () => {
+      const hash = window.location.hash.replace(/^#/, "");
+      if (isScreenId(hash)) {
+        setDirection("forward");
+        setScreen(hash);
+      }
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
   const go = useCallback(
     (id: ScreenId) => {
-      setHistory((h) => [...h, screen]);
+      setHistory((h) => (screen ? [...h, screen] : h));
       setDirection("forward");
       setScreen(id);
     },
@@ -63,8 +101,13 @@ export function HandlApp() {
   );
 
   const back = useCallback(() => {
-    if (history.length === 0) return;
     setDirection("back");
+    // Entered deep (a #screen pin) with nothing behind us: fall back to entry
+    // so Back is never a dead button.
+    if (history.length === 0) {
+      setScreen("entry");
+      return;
+    }
     setScreen(history[history.length - 1]);
     setHistory((h) => h.slice(0, -1));
   }, [history]);
@@ -74,7 +117,6 @@ export function HandlApp() {
 
   const onPick = useCallback(
     (id: string) => {
-      if (id === "chen") return; // listed alternative, not in the demo path
       setProviderId(id);
       go(id === "moore" ? "estimateWide" : "estimate");
     },
@@ -90,6 +132,7 @@ export function HandlApp() {
     DATA.providers.find((p) => p.id === providerId) ?? DEFAULT_PROVIDER;
 
   const renderScreen = () => {
+    if (!screen) return null;
     switch (screen) {
       case "entry":
         return <Entry nav={nav} />;
@@ -135,6 +178,7 @@ export function HandlApp() {
           <div className={s.screen}>
             <StatusBar />
             <AnimatePresence mode="wait" initial={false}>
+              {screen && (
               <motion.div
                 key={screen}
                 className={s.body}
@@ -145,6 +189,7 @@ export function HandlApp() {
               >
                 {renderScreen()}
               </motion.div>
+              )}
             </AnimatePresence>
             <div className={s.homeindicator} />
             <AnimatePresence>

@@ -27,7 +27,7 @@ export function Entry({ nav }: { nav: Nav }) {
       <AppBar title="Acme Benefits" avatar={{ initials: DATA.user.initials }} />
 
       <motion.p variants={fadeUp} className={s.eyebrow} style={{ marginTop: 18 }}>
-        Find care.
+        Find care
       </motion.p>
       <motion.h1 variants={fadeUp} className={s.h1}>
         What brings you here today, Jenny?
@@ -70,6 +70,21 @@ export function Entry({ nav }: { nav: Nav }) {
 /* ==========================================================================
  * 5.2 capture
  * ========================================================================== */
+
+/** Viewfinder L brackets: each contracts 4px toward the document on capture. */
+const CORNERS = [
+  { key: "tl", cls: s.cornerTL, x: 4, y: 4 },
+  { key: "tr", cls: s.cornerTR, x: -4, y: 4 },
+  { key: "bl", cls: s.cornerBL, x: 4, y: -4 },
+  { key: "br", cls: s.cornerBR, x: -4, y: -4 },
+] as const;
+
+/* spec 6.3 — 160ms on --ease-out */
+const CORNER_CONTRACT = {
+  duration: 0.16,
+  ease: [0.22, 1, 0.36, 1],
+} as const;
+
 export function Capture({ nav }: { nav: Nav }) {
   const [capturing, setCapturing] = useState(false);
   const reduced = useReducedMotion();
@@ -82,10 +97,10 @@ export function Capture({ nav }: { nav: Nav }) {
 
   return (
     <motion.div variants={staggerContainer} initial="hidden" animate="show">
-      <AppBar title="Doctor's order." onBack={nav.back} />
+      <AppBar title="Doctor's order" onBack={nav.back} />
 
       <motion.h1 variants={fadeUp} className={s.h1} style={{ marginTop: 14 }}>
-        Photograph your order.
+        Photograph your order
       </motion.h1>
       <motion.p variants={fadeUp} className={s.sub}>
         We read it and find the exact procedure. Handwriting, abbreviations and
@@ -93,30 +108,14 @@ export function Capture({ nav }: { nav: Nav }) {
       </motion.p>
 
       <motion.div variants={fadeUp} className={s.viewfinder}>
-        <motion.span
-          className={s.corner}
-          style={{ top: 18, left: 18 }}
-          animate={capturing ? { transform: "translate(4px, 4px)" } : {}}
-          transition={{ duration: 0.2 }}
-        />
-        <motion.span
-          className={s.corner}
-          style={{ top: 18, right: 18 }}
-          animate={capturing ? { transform: "translate(-4px, 4px)" } : {}}
-          transition={{ duration: 0.2 }}
-        />
-        <motion.span
-          className={s.corner}
-          style={{ bottom: 18, left: 18 }}
-          animate={capturing ? { transform: "translate(4px, -4px)" } : {}}
-          transition={{ duration: 0.2 }}
-        />
-        <motion.span
-          className={s.corner}
-          style={{ bottom: 18, right: 18 }}
-          animate={capturing ? { transform: "translate(-4px, -4px)" } : {}}
-          transition={{ duration: 0.2 }}
-        />
+        {CORNERS.map(({ key, cls, x, y }) => (
+          <motion.span
+            key={key}
+            className={`${s.corner} ${cls}`}
+            animate={capturing ? { x, y } : { x: 0, y: 0 }}
+            transition={CORNER_CONTRACT}
+          />
+        ))}
         <motion.div
           className={s.ghostdoc}
           animate={capturing ? { scale: 0.96 } : {}}
@@ -269,13 +268,13 @@ export function Confirm({ nav }: { nav: Nav }) {
   const { procedure } = DATA;
   return (
     <motion.div variants={staggerContainer} initial="hidden" animate="show">
-      <AppBar title="Your procedure." onBack={nav.back} />
+      <AppBar title="Your procedure" onBack={nav.back} />
 
       <motion.p variants={fadeUp} className={s.eyebrow} style={{ marginTop: 14 }}>
-        Identified.
+        Identified
       </motion.p>
       <motion.h1 variants={fadeUp} className={s.h1}>
-        Knee arthroscopy.
+        Knee arthroscopy
       </motion.h1>
       <motion.p variants={fadeUp} className={s.sub}>
         On medical bills it appears as{" "}
@@ -301,7 +300,7 @@ export function Confirm({ nav }: { nav: Nav }) {
       </motion.div>
 
       <motion.div variants={fadeUp} className={s.btnStack}>
-        <Button onClick={() => nav.go("options")}>See your options.</Button>
+        <Button onClick={() => nav.go("options")}>See your options</Button>
       </motion.div>
 
       <motion.p variants={fadeUp} style={{ textAlign: "center", marginTop: 16 }}>
