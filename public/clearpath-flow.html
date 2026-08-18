@@ -18,6 +18,8 @@
   body{
     font-family:'Poppins',sans-serif; color:var(--ink); background:var(--ice);
     -webkit-font-smoothing:antialiased;
+    -webkit-user-select:none; -moz-user-select:none; user-select:none;
+    -webkit-touch-callout:none;
   }
 
   /* ── Canvas ────────────────────────────── */
@@ -34,14 +36,6 @@
   .hud{position:fixed; z-index:10; background:rgba(255,255,255,.85); backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px); border:1px solid var(--line); border-radius:16px;
     box-shadow:0 2px 14px rgba(16,26,68,.07);}
-  #titlebar{top:20px; left:20px; padding:14px 18px;}
-  #titlebar h1{font-size:14px; font-weight:600; letter-spacing:-.1px}
-  #titlebar p{font-size:12px; color:var(--muted); margin-top:3px}
-  #legend{top:20px; right:20px; padding:12px 16px; display:flex; gap:18px; align-items:center; font-size:12px; color:var(--muted);}
-  .lg{display:flex; align-items:center; gap:7px}
-  .lg i{width:22px; height:0; border-top:2px solid var(--peri); display:block}
-  .lg.alt i{border-top:1.5px dashed #B9C0DB}
-  .lg .dm{width:14px;height:14px;background:#fff;border:1px solid #C9CFE4;transform:rotate(45deg);display:block}
   #zoombar{bottom:20px; right:20px; padding:6px; display:flex; gap:2px; align-items:center;}
   #zoombar button{border:none; background:transparent; width:34px; height:34px; border-radius:10px;
     font-size:16px; color:var(--muted); cursor:pointer; font-family:inherit;}
@@ -640,15 +634,6 @@
   </div>
 </div>
 
-<div class="hud" id="titlebar">
-  <h1>ClearPath · Care guidance flow</h1>
-  <p>Handl design system · drag to pan · scroll to zoom · 17 screens · 4 entry flows</p>
-</div>
-<div class="hud" id="legend">
-  <div class="lg"><i></i>Member path</div>
-  <div class="lg alt"><i></i>Recovery / detail</div>
-  <div class="lg"><span class="dm"></span>&nbsp;System decision</div>
-</div>
 <div class="hud" id="zoombar">
   <button id="z-out" aria-label="Zoom out">−</button>
   <span id="pct">62%</span>
@@ -692,6 +677,7 @@
   let drag = null;
   const ptrs = new Map();
   vp.addEventListener('pointerdown', e => {
+    e.preventDefault();
     ptrs.set(e.pointerId, {x:e.clientX, y:e.clientY});
     if (ptrs.size === 1){ drag = {x:e.clientX, y:e.clientY}; vp.classList.add('dragging'); }
     vp.setPointerCapture(e.pointerId);
@@ -715,6 +701,8 @@
   });
   const up = e => { ptrs.delete(e.pointerId); if (!ptrs.size){ drag = null; vp.classList.remove('dragging'); } };
   vp.addEventListener('pointerup', up); vp.addEventListener('pointercancel', up);
+  vp.addEventListener('dragstart', e => e.preventDefault());
+  vp.addEventListener('selectstart', e => e.preventDefault());
 
   document.getElementById('z-in').onclick  = () => zoomAt(1.25, innerWidth/2, innerHeight/2);
   document.getElementById('z-out').onclick = () => zoomAt(.8,  innerWidth/2, innerHeight/2);
