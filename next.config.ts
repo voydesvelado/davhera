@@ -30,7 +30,13 @@ const nextConfig: NextConfig = {
     // public/, así que /prosa/assets/*.js sale como asset y solo las rutas del
     // router del SPA caen al index.html. Con 'beforeFiles' se romperían los assets.
     return {
-      beforeFiles: [],
+      beforeFiles: [
+        // davhera.com/games = la guía "Rehaz tus juegos con IA" (landing + Stripe + guía),
+        // que vive en el VPS (repo ~/dev/guia-juegos). Proxy transparente: el server sabe
+        // que está montado en /games (BASE_URL) y genera todos sus links con ese prefijo.
+        { source: "/games", destination: "https://guia.46.225.147.90.sslip.io/games" },
+        { source: "/games/:path*", destination: "https://guia.46.225.147.90.sslip.io/games/:path*" },
+      ],
       afterFiles: [
         { source: "/prosa", destination: "/prosa/index.html" },
         { source: "/prosa/:path*", destination: "/prosa/index.html" },
