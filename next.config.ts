@@ -25,6 +25,8 @@ const PROSA_CSP = [
 ].join("; ");
 
 const nextConfig: NextConfig = {
+  // El portafolio del VPS usa URLs con barra final (/finerio/); sin esto Next la quita y el VPS la repone: bucle 308.
+  skipTrailingSlashRedirect: true,
   async rewrites() {
     // 'afterFiles' es la clave: se evalúa DESPUÉS de servir los archivos reales de
     // public/, así que /prosa/assets/*.js sale como asset y solo las rutas del
