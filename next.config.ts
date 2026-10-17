@@ -48,6 +48,7 @@ const nextConfig: NextConfig = {
         // Quien todavía resuelva davhera.com a Vercel (DNS en caché) recibe el portafolio nuevo
         // por este proxy, en vez del sitio viejo.
         { source: "/", destination: "https://davhera.46.225.147.90.sslip.io/" },
+        { source: "/:path+/", destination: "https://davhera.46.225.147.90.sslip.io/:path+/" },
         { source: "/:path*", destination: "https://davhera.46.225.147.90.sslip.io/:path*" },
       ],
       afterFiles: [
