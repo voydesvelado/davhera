@@ -42,6 +42,11 @@ const nextConfig: NextConfig = {
         // solo cae a este proxy si la directa no contesta (src/core/sync/client.ts).
         { source: "/prosa-api/personal/:path*", destination: "https://46.225.147.90.sslip.io/:path*" },
         { source: "/prosa-api/public/:path*", destination: "https://public.46.225.147.90.sslip.io/:path*" },
+        // 2026-10-17: davhera.com ahora es el portafolio estático en el VPS (Caddy, /srv/portfolio).
+        // Quien todavía resuelva davhera.com a Vercel (DNS en caché) recibe el portafolio nuevo
+        // por este proxy, en vez del sitio viejo.
+        { source: "/", destination: "https://davhera.46.225.147.90.sslip.io/" },
+        { source: "/:path*", destination: "https://davhera.46.225.147.90.sslip.io/:path*" },
       ],
       afterFiles: [
         { source: "/prosa", destination: "/prosa/index.html" },
